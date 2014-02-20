@@ -42,9 +42,9 @@ class SinatraApp < Sinatra::Base
       erb :app
     else
       erb "<div class='jumbotron'>
-            <h1>Public page</h1>
-            <p class='lead'>This starter app is an example of Omniauth-cas and sinatra integration based on rack system.<br />
-            Please try to connect with CAS sso...
+            <h1>Page Publique</h1>
+            <p class='lead'> Bienvenu au publipostage... <br/>
+               à l'aide de cette application, vous pouvez envoyer des messages aux autres utilisateurs.
             </p>
             </div>"
     end  

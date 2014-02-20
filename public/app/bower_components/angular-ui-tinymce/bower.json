@@ -1,0 +1,35 @@
+{
+  "name": "angular-ui-tinymce",
+  "version": "0.0.4",
+  "description": "This directive allows you to TinyMCE in your form.",
+  "author": {
+    "name": "https://github.com/angular-ui/ui-tinymce/graphs/contributors"
+  },
+  "license": "MIT",
+  "homepage": "http://angular-ui.github.com",
+  "main": "./src/tinymce.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "test*",
+    "demo*",
+    "gruntFile.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "angular": "~1.x",
+    "tinymce": "git://github.com/jozzhart/tinymce.git#4.0.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.x"
+  },
+  "gitHead": "4f1b63124c4d16580ce5c9b964ab79b8399661bd",
+  "readme": "# ui-tinymce directive [![Build Status](https://travis-ci.org/angular-ui/ui-tinymce.png)](https://travis-ci.org/angular-ui/ui-tinymce)\n\nThis directive allows you to add a TinyMCE editor to your form elements.\n\n# Requirements\n\n- AngularJS\n- TinyMCE 4\n\n# Testing\n\nWe use karma and jshint to ensure the quality of the code.  The easiest way to run these checks is to use grunt:\n\n  npm install -g grunt-cli\n  npm install\n  bower install\n  grunt\n\nThe karma task will try to open Chrome as a browser in which to run the tests.  Make sure this is available or change the configuration in `test\\test.config.js` \n\n# Usage\n\nWe use [bower](http://twitter.github.com/bower/) for dependency management.  Add\n\n    dependencies: {\n        \"angular-ui-tinymce\": \"latest\"\n    }\n\nTo your `bower.json` file. Then run\n\n    bower install\n\nThis will copy the ui-tinymce files into your `components` folder, along with its dependencies. Load the script files in your application:\n\n    <script type=\"text/javascript\" src=\"components/tinymce/tinymce.js\"></script>\n    <script type=\"text/javascript\" src=\"components/angular/angular.js\"></script>\n    <script type=\"text/javascript\" src=\"components/angular-ui-tinymce/tinymce.js\"></script>\n\nAdd the tinymce module as a dependency to your application module:\n\n    var myAppModule = angular.module('MyApp', ['ui.tinymce'])\n\nApply the directive to your form elements:\n\n    <form method=\"post\">\n      <textarea ui-tinymce ng-model=\"tinymceModel\"></textarea>\n    </form>\n\n## Options\n\nAll the TinyMCE options can be passed through the directive.\n\n\tmyAppModule.controller('MyController', function($scope) {\n\t\t$scope.tinymceOptions = {\n\t\t\thandle_event_callback: function (e) {\n        // put logic here for keypress\n      }\n\t\t};\n\t});\n\n    <form method=\"post\">\n      <textarea ui-tinymce=\"tinymceOptions\" ng-model=\"tinymceModel\"></textarea>\n    </form>\n\n## Working with ng-model\n\nThe ui-tinymce directive plays nicely with the ng-model directive such as ng-required.\n\nIf you add the ng-model directive to same the element as ui-tinymce then the text in the editor is automatically synchronized with the model value.\n\n_The ui-tinymce directive stores and expects the model value to be a standard javascript tinymce object._\n\n",
+  "readmeFilename": "README.md",
+  "_id": "angular-ui-tinymce@0.0.4",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angular-ui/ui-tinymce.git"
+  }
+}

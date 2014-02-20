@@ -11,7 +11,9 @@
     "angular-cookies": "1.2.6",
     "angular-sanitize": "1.2.6",
     "angular-route": "~1.2.13",
-    "Font-Awesome": "~4.0.3"
+    "Font-Awesome": "~4.0.3",
+    "angular-ui-router":"0.2.8",
+    "angular-ui-tinymce": "latest"
   },
   "devDependencies": {
     "angular-mocks": "1.2.6",

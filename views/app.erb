@@ -1,7 +1,6 @@
-<div ng-app="myApp"> 
-    <div class="row-fluid">
-        <div ng-view></div>
-    </div>
-    <pre>Monde de sinatra <%=env['rack.session'][:current_user].to_html%></pre>
+<div class="row" ng-app="myApp"> 
+    <div ng-view></div>
+    <div ui-view></div>
+    <!--<pre>Monde de sinatra <%=env['rack.session'][:current_user].to_html%></pre>-->
     <!--<script src="<%= APP_PATH %>/js/lib/angular/angular.min.js"></script>-->
 </div>
