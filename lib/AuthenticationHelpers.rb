@@ -39,7 +39,7 @@ module AuthenticationHelpers
     if env['rack.session'][:user]
       env['rack.session'][:current_user][:user] ||= env['rack.session'][:user]
       env['rack.session'][:current_user][:info] ||= env['rack.session'][:extra]
-      env['rack.session'][:current_user][:info][:ENTStructureNomCourant] ||= env['rack.session'][:current_user][:extra][:ENTPersonStructRattachRNE]
+      #env['rack.session'][:current_user][:info][:ENTStructureNomCourant] ||= env['rack.session'][:current_user][:extra][:ENTPersonStructRattachRNE]
     end
     env['rack.session'][:current_user]
   end

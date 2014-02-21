@@ -78,6 +78,18 @@ class SinatraApp < Sinatra::Base
    get APP_PATH + '/logout' do
       logout! (env['rack.url_scheme'] + "://" + env['HTTP_HOST'] + APP_PATH + '/')
    end
+   
+   get APP_PATH + '/current-user' do
+      if is_logged?
+         data = env['rack.session'][:current_user]
+         {:login => data[:user],
+           :info => data[:info],
+           :roles => data[:info]['ENTPersonRoles'].split(',').map{|role| role.split(':')}
+         }.to_json
+      else
+         nil
+      end 
+   end
 
 end
 

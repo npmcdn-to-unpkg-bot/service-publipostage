@@ -1,0 +1,25 @@
+{
+  "name": "angular-underscore-string",
+  "version": "0.1.0",
+  "authors": [
+    "Tom Vincent <git@tlvince.com>"
+  ],
+  "description": "Underscore.string as Angular filters",
+  "main": "underscore.string.js",
+  "keywords": [
+    "angular",
+    "underscore",
+    "string",
+    "filter"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/tlvince/angular-underscore-string",
+  "gitHead": "696a38a487f7baa6d95a99eabf5c3a0ffcb84921",
+  "readme": "# angular-underscore-string\n\n> Underscore.string as Angular filters\n\nAssumes Underscore.string has been added to the global scope.\n\nExamples:\n\n```html\n{{ name | _.str: 'swapCase' }}\n{{ separator | _.str: 'join': ['foo', 'bar'] }}\n```\n\n## Install\n\n```bash\nbower install angular-underscore-string\n```\n\n## Usage\n\nAdd `underscore.string` as a module dependency, e.g.:\n\n```js\nangular.module('App', ['underscore.string']);\n```\n\n## Author\n\n© 2013 Tom Vincent <http://tlvince.com/contact>\n\n## License\n\nReleased under the [MIT License](http://tlvince.mit-license.org).\n",
+  "readmeFilename": "readme.md",
+  "_id": "angular-underscore-string@0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tlvince/angular-underscore-string.git"
+  }
+}

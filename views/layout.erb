@@ -46,7 +46,7 @@
                 </li>
               <% else %>  
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=env['rack.session'][:current_user][:info]['LaclassePrenom']%>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">bonjour <%=env['rack.session'][:current_user][:info]['LaclassePrenom']%>
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa fa-user fa-stack-1x"></i>
@@ -89,9 +89,13 @@
     <script src="<%= APP_PATH %>/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="<%= APP_PATH %>/bower_components/tinymce/tinymce.min.js"></script>
     <script src="<%= APP_PATH %>/bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+    <script src="<%= APP_PATH %>/bower_components/underscore/underscore.js"></script>
+    <script src="<%= APP_PATH %>/bower_components/underscore.string/dist/underscore.string.min.js"></script>
+    <script src="<%= APP_PATH %>/bower_components/angular-underscore-string/underscore.string.js"></script>
     <script src="<%= APP_PATH %>/scripts/controllers/main.js"></script>
     <script src="<%= APP_PATH %>/scripts/services/constant.js"></script>
     <script src="<%= APP_PATH %>/scripts/services/authentication.js"></script>
+    <script src="<%= APP_PATH %>/scripts/services/messages.js"></script>
     <script src="<%= APP_PATH %>/scripts/app.js"></script> 
   </body>
 </html>
