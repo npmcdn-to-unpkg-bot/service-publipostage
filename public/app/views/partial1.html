@@ -1,150 +1,183 @@
 <!-- Example row of columns -->
-    <tabset>
-        <tab heading="Mes Classes">
-            <br/>
-            <div class="row">
-                <div class="bs-glyphicons">
-                    <ul class="bs-glyphicons-list">
-                        <li>
-                          <span class="glyphicon">5.3</span>
-                          <span class="glyphicon-class">collège Charpak</span>
-                        </li>
-                      
-                        <li>
-                          <span class="glyphicon">5.5</span>
-                          <span class="glyphicon-class">collège Charpak</span>
-                        </li>
-                    </ul>
-                </div>
+    <div ng-controller="wizardController">
+        <script id="wizard.html" type="text/ng-template">
+            <div class="wizard">
+              <h1> PubliPostage </h1>
+              <div ng-transclude></div>
+                <div class="navbar navbar-inner block-header">
+			<a  class="btn btn-primary" ng-click="showPreviousStep()" ng-show="hasPrevious()"><i class="icon-white icon-chevron-left"></i> Precedante</a>
+			&nbsp;&nbsp;
+			<a  class="btn btn-primary" ng-click="showNextStep()" ng-show="hasNext()">Suivante <i class="icon-white icon-chevron-right"></i></a>
+			&nbsp;&nbsp;
+			<a  class="btn btn-warning" ng-click="reset()" ng-show="hasPrevious()">Tout Recommencer</a>
+		</div>
+      
             </div>
-            <!--<div class="row">
-                <div class="col-xs-2">
-                     <a href="#" class="thumbnail">
-                        <span class="glyphicon">
-                            5.3 College Charpack
-                        </span>
-                    </a>
-                </div>
-                  <div class="col-xs-2">
-                     <a href="#" class="thumbnail">
-                    <img src="http://placehold.it/140x100" alt="..." />
-                    </a>
-                </div>
-                 <div class="col-xs-2">
-                     <a href="#" class="thumbnail">
-                    <img src="http://placehold.it/140x100" alt="..." />
-                    </a>
-                </div>
-                 <div class="col-xs-2">
-                     <a href="#" class="thumbnail">
-                    <img src="http://placehold.it/140x100" alt="..." />
-                    </a>
-                </div>
-                 <div class="col-xs-2">
-                     <a href="#" class="thumbnail">
-                    <img src="http://placehold.it/140x100" alt="..." />
-                    </a>
-                </div>
-                 <div class="col-xs-2">
-                     <a href="#" class="thumbnail">
-                    <img src="http://placehold.it/140x100" alt="..." />
-                    </a>
-                </div>
-                 <div class="col-xs-2">
-                     <a href="#" class="thumbnail">
-                    <img src="http://placehold.it/140x100" alt="..." />
-                    </a>
-                </div>
-                  <div class="col-xs-2">
-                     <a href="#" class="thumbnail">
-                    <img src="http://placehold.it/140x100" alt="..." />
-                    </a>
-                </div>
-            </div>-->
-        </tab>
-        <tab heading="Mes Groupes">
-            <br/>
-            <div class="row">
-                <div class="bs-glyphicons">
-                    <ul class="bs-glyphicons-list">
-                        <li>
-                          <span class="glyphicon">5.3</span>
-                          <span class="glyphicon-class">collège Charpak</span>
-                        </li>
-                      
-                        <li>
-                          <span class="glyphicon">5.5</span>
-                          <span class="glyphicon-class">collège Charpak</span>
-                        </li>
-                    </ul>
-                </div>    
-            </div>
-        </tab>
-        <tab heading="Tous">
-            <h4>Quels établissements ?</h4>
-            <hr/>
-            <select>
-                <option>CLG CHARPAK</option>
-                <option>CLG VICTOR HUGO</option>
-            </select>
-            
-            <h4>Quels profils?</h4>
-             <select>
-                <option>parent</option>
-                <option>eleve</option>
-            </select>
-             
-            <h4>Quels groupes</h4>
-            <div class="row">
-                <div class="col-xs-4" >
-                    classes: <select>
-                    <option>classe 1</option>
-                    <option>classe 2</option>
+        </script>
+    <wizard on-before-step-change="log(event)" on-step-changing="log(event)" on-after-step-change="log(event)">
+        <step title="Etape 1: Choix des destinataires">
+            <tabset>
+                <tab heading="Mes Classes">
+                    <br/>
+                    <div class="row">
+                        <div class="bs-glyphicons">
+                            <ul class="bs-glyphicons-list">
+                                <li>
+                                  <span class="glyphicon">5.3</span>
+                                  <span class="glyphicon-class">collège Charpak</span>
+                                </li>
+                              
+                                <li>
+                                  <span class="glyphicon">5.5</span>
+                                  <span class="glyphicon-class">collège Charpak</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--<div class="row">
+                        <div class="col-xs-2">
+                             <a href="#" class="thumbnail">
+                                <span class="glyphicon">
+                                    5.3 College Charpack
+                                </span>
+                            </a>
+                        </div>
+                          <div class="col-xs-2">
+                             <a href="#" class="thumbnail">
+                            <img src="http://placehold.it/140x100" alt="..." />
+                            </a>
+                        </div>
+                         <div class="col-xs-2">
+                             <a href="#" class="thumbnail">
+                            <img src="http://placehold.it/140x100" alt="..." />
+                            </a>
+                        </div>
+                         <div class="col-xs-2">
+                             <a href="#" class="thumbnail">
+                            <img src="http://placehold.it/140x100" alt="..." />
+                            </a>
+                        </div>
+                         <div class="col-xs-2">
+                             <a href="#" class="thumbnail">
+                            <img src="http://placehold.it/140x100" alt="..." />
+                            </a>
+                        </div>
+                         <div class="col-xs-2">
+                             <a href="#" class="thumbnail">
+                            <img src="http://placehold.it/140x100" alt="..." />
+                            </a>
+                        </div>
+                         <div class="col-xs-2">
+                             <a href="#" class="thumbnail">
+                            <img src="http://placehold.it/140x100" alt="..." />
+                            </a>
+                        </div>
+                          <div class="col-xs-2">
+                             <a href="#" class="thumbnail">
+                            <img src="http://placehold.it/140x100" alt="..." />
+                            </a>
+                        </div>
+                    </div>-->
+                </tab>
+                <tab heading="Mes Groupes">
+                    <br/>
+                    <div class="row">
+                        <div class="bs-glyphicons">
+                            <ul class="bs-glyphicons-list">
+                                <li>
+                                  <span class="glyphicon">5.3</span>
+                                  <span class="glyphicon-class">collège Charpak</span>
+                                </li>
+                              
+                                <li>
+                                  <span class="glyphicon">5.5</span>
+                                  <span class="glyphicon-class">collège Charpak</span>
+                                </li>
+                            </ul>
+                        </div>    
+                    </div>
+                </tab>
+                <tab heading="Tous">
+                    <h4>Quels établissements ?</h4>
+                    <hr/>
+                    <select  ng-model="etablissements" multiple>
+                        <option value="1">CLG CHARPAK</option>
+                        <option value="2">CLG VICTOR HUGO</option>
                     </select>
-                </div>
-                <div class="col-xs-4" >
-                    groupes: <select>
-                    <option>classe 1</option>
-                    <option>classe 2</option>
+                    {{etablissements}}
+                    <input type="checkbox" name="myboxes" ng-repeat="etab in etablissements">{{etab}}</input>
+                    <h4>Quels profils?</h4>
+                     <select>
+                        <option>parent</option>
+                        <option>eleve</option>
                     </select>
-                </div>
-                
-                <div class="col-xs-4" >
-                    groupes libres: <select>
-                    <option>classe 1</option>
-                    <option>classe 2</option>
-                    </select>
-                </div>
-            </div>
-            
-           <h4>Votre Sélection</h4>
-           <hr>
-            Tous les élèves, les prof, et les parents des classes de ... et des groupes ..
-            <span class="badge badge-success">1264 utilisateurs</span>
-            <span class="badge badge-warning">354 utilisateur n'ont pas d'adresse mail, pour eux, PDF!</span>
-            <br/>
-            <h4>Comment?</h4>
-            <hr/>
-            <a class="btn btn-primary">Notification</a> <a class="btn btn-default">Mail/Pdf</a>
-            <br/>
+                     
+                    <h4>Quels groupes</h4>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            classes: <select>
+                            <option>classe 1</option>
+                            <option>classe 2</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4">
+                            groupes: <select>
+                            <option>classe 1</option>
+                            <option>classe 2</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-xs-4">
+                            groupes libres: <select>
+                            <option>classe 1</option>
+                            <option>classe 2</option>
+                            </select>
+                        </div>
+                    </div>
+                </tab>
+            </tabset>  
+        </step>
+        <step title="Etape 2: Creation d'un publipostage">
             <div class="row">
-            <div class="col-xs-10">    
-                <form method="post">
-                    <textarea  ui-tinymce="tinymceOptions" ng-model="tinymceModel"></textarea>
-                </form>
+            <div class="col-xs-10">
+            <form role="form">
+                <div class="form-group">
+                  <label for="titre">Titre</label>
+                  <input type="text" class="form-control" id="titre" placeholder="">
+                </div>
+                <div class="form-group">
+                  <label for="corps">Corps</label>
+                  <textarea  ui-tinymce="tinymceOptions" ng-model="tinymceModel" id="corps"></textarea>
+                </div>
+            </form>
+            {{tinymceModel}}
             </div>
             <div class="col-xs-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Données de l'ENT</div>
                     <div class="panel-body">
-                      Panel content
+                      civilité, Nom, Prenom, Adresse Postal, etc..
                     </div>
                 </div>
             </div>
             </div>
-            {{tinymceModel}}
-        </tab>
-    </tabset>
+        </step>
+  
+        <step title="Etape 3: Choix de l'envoi">
+            <h4>Votre Sélection</h4>
+            <hr>
+             Tous les élèves, les prof, et les parents des classes de ... et des groupes ..
+             <span class="badge badge-success">1264 utilisateurs</span>
+             <span class="badge badge-warning">354 utilisateur n'ont pas d'adresse mail, pour eux, PDF!</span>
+             <br/>
+             <h4>Comment?</h4>
+             <hr/>
+             <a class="btn btn-primary">Notification</a> <a class="btn btn-default">Mail/Pdf</a>
+             <br/>
+        </step> 
+    </wizard>
+          
+    </div>    
     
 
-<a href="#/view2">view2</a>
+<a href="#/"> retour à la page publique</a>
