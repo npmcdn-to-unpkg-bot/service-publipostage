@@ -1,5 +1,12 @@
-require "bundler"
-require 'rake/clean'
+begin; require 'rubygems'; rescue LoadError; end
 
-include Rake::DSL
-Bundler::GemHelper.install_tasks
+require 'rake'
+require 'rake/clean'
+#require 'rspec/core/rake_task'
+#require 'resque/tasks'
+
+Dir.glob(File.expand_path('../tasks/*.rake', __FILE__)).each do |f|
+  import(f)
+end
+
+

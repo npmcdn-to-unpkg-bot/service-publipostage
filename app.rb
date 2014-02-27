@@ -8,6 +8,8 @@ Bundler.require( :default, ENV['RACK_ENV'].to_sym )     # require tout les gems 
 
 require_relative './lib/AuthenticationHelpers'
 
+#require './config/init'
+
 # https://gist.github.com/chastell/1196800
 class Hash
    def to_html
@@ -90,6 +92,14 @@ class SinatraApp < Sinatra::Base
          nil
       end 
    end
+   
+   #get APP_PATH + '/api/publipostage' do
+   #   if is_logged?
+   #      
+   #   else
+   #      nil
+   #   end   
+   #end
 
 end
 

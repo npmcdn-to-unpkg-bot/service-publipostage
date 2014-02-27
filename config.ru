@@ -3,6 +3,8 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require './config/init'
 require 'app'
+require './api/api.rb'
+require './models/init.rb'
 
 use Rack::Rewrite do
   #rewrite %r{/app/.*(css|js)/(.*)}, '/$1/$2'
@@ -21,5 +23,7 @@ use OmniAuth::Builder do
     end
     provider :cas,  CASLaclasseCom::OPTIONS
 end
-
-run SinatraApp
+run Rack::URLMap.new(
+                      "/app/api" => Api.new,
+                      "/" => SinatraApp.new)
+#run SinatraApp

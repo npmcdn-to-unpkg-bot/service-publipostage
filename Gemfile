@@ -11,6 +11,12 @@ gem 'thin'
 gem 'savon'
 gem 'nokogiri'
 gem 'rack-rewrite'
+gem 'sequel'
+gem 'sinatra-sequel'
+gem 'sequel_plus'
+gem 'mysql2'
+gem 'ruby-oci8'
+gem 'rake'
 
 group :development do
   gem 'sinatra-contrib'

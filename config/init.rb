@@ -13,3 +13,7 @@ require __DIR__('env')
 puts "loading config/CASLaclasseCom"
 require __DIR__('CASLaclasseCom')
 
+puts "loading database"
+require __DIR__('database.rb')
+
+
