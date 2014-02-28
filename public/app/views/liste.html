@@ -1,5 +1,4 @@
 <!-- Example row of columns -->
-<p>liste des publipostage</p>
 <table class="table">
     <thead>
         <th>Date</th>
@@ -8,15 +7,17 @@
         <th>Actions</th>
     </thead>
     <tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>dupliquer/supprimer</td>
+        <tr ng-repeat="publi in publis">
+            <td>{{publi.id}}</td>
+            <td>{{publi.message}}</td>
+            <td>{{publi.descriptif}}</td>
+            <td><a class="btn btn-default btn-sm" tooltip="dupliquer"><i class="fa fa-copy"></i></a>
+                <a class="btn btn-default btn-sm" tooltip="supprimer"><i class="fa fa-trash-o" ></i></a>
+            </td>
         </tr>
     </tbody>
 </table>
 
-<a class="btn btn-default" href="#/creer">Nouveau</a>
+<a class="btn btn-default" tooltip="Nouveau" href="#/creer"><i class="fa fa-plus"></i></a>
 
 <a class="btn btn-default" href="#/" tooltip="retour à la page publique"><i class="fa fa-reply"></i> </a>

@@ -13,12 +13,8 @@ class Api < Sinatra::Base
   end
   get "/publipostages" do
     content_type :json
-    if is_logged?
-      response = Publipostage.naked.all
-      response.to_json
-    else
-      401
-    end
+    response = Publipostage.naked.all
+    response.to_json
   end
   
   get '/publipostages/:id' do

@@ -2,19 +2,17 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', []).controller('MyCtrl1', ['$scope','security', function($scope, security) {
+angular.module('myApp.controllers', []).controller('MyCtrl1', ['$scope','security', 'Publipostages', function($scope, security, Publipostages) {
     $scope.tinymceOptions = {
         language:"fr"
     };
-    
     //var user = security.requestCurrentUser().then(function(user) {
     //    console.log(user);
     //});
-    $scope.showForm = false;
-    //console.log(security.isAuthenticated());
-    $scope.toggle = function(){
-        $scope.showForm = !$scope.showForm;
-    }
+    Publipostages.all({}, function(publis){
+        $scope.publis = publis
+    })
+    
 }]).controller('MyCtrl2', [function() {
 
 }]).controller('wizardController', ['$scope', function($scope){
