@@ -2,25 +2,33 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.constants', 'ui.bootstrap',
-                         'ui.tinymce', 'services.messages', 'services.authentication', 'angular-underscore','underscore.string', 'wizardDirective', 'ui.select2']).
+                         'ui.tinymce', 'services.messages', 'services.authentication', 'angular-underscore',
+                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources']).
 config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function($urlRouterProvider, $stateProvider, APPLICATION_PREFIX){
             
     /* defining states for routing */
     var home = {
         name: 'home',
         url: '/',
-        templateUrl: APPLICATION_PREFIX+'/views/partial2.html',
+        templateUrl: APPLICATION_PREFIX+'/views/home.html',
         controller: 'MyCtrl1'
     };
     
     var gestion = {
         name: 'gestion',
         url: '/publi',
-        templateUrl: APPLICATION_PREFIX+ '/views/partial1.html', 
+        templateUrl: APPLICATION_PREFIX+ '/views/liste.html', 
         controller:  'MyCtrl1'
     }
     
-    $stateProvider.state(home).state(gestion);
+    var createPublipostage = {
+      name:'create',
+      url: '/creer', 
+      templateUrl: APPLICATION_PREFIX+'/views/create_publipostage.html',
+      controller: 'MyCtrl1'
+    }
+    
+    $stateProvider.state(home).state(gestion).state(createPublipostage);
     $urlRouterProvider.otherwise('/');
     
 }]).config(function ($provide, $httpProvider) {

@@ -4,11 +4,13 @@ require 'rubygems'
 require 'bundler'
 require "sinatra/reloader"
 
+require './config/init'
+require './models/init.rb'
 Bundler.require( :default, ENV['RACK_ENV'].to_sym )     # require tout les gems définis dans Gemfile
 
 require_relative './lib/AuthenticationHelpers'
 
-#require './config/init'
+
 
 # https://gist.github.com/chastell/1196800
 class Hash

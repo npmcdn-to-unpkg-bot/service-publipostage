@@ -1,24 +1,4 @@
-<!-- Example row of columns -->
-<p>liste des publipostage</p>
-<table class="table">
-    <thead>
-        <th>Date</th>
-        <th>Descriptif</th>
-        <th>Destinataire</th>
-        <th>Actions</th>
-    </thead>
-    <tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>dupliquer/supprimer</td>
-        </tr>
-    </tbody>
-</table>
-
-<a class="btn btn-default" ng-click="toggle()">Nouveau</a>
-    <div ng-show="showForm" ng-controller="wizardController">
+<div ng-controller="wizardController">
         <a href=""></a>
         <script id="wizard.html" type="text/ng-template">
             <div class="wizard">
@@ -53,7 +33,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-xs-2">
                              <a href="#" class="thumbnail">
                                 <span class="glyphicon">
@@ -96,7 +76,7 @@
                             <img src="http://placehold.it/140x100" alt="..." />
                             </a>
                         </div>
-                    </div>
+                    </div>-->
                 </tab>
                 <tab heading="Mes Groupes">
                     <br/>
@@ -192,11 +172,7 @@
                 <hr/>
                 <a class="btn btn-primary">Notification</a> <a class="btn btn-default">Mail/Pdf</a>
                 <br/>
-                <button class="btn" ng-click="log('clicked')ity">Generer/Envoyer</button>
+                <button class="btn" ng-click="log('clicked')">Generer/Envoyer</button>
         </step> 
-    </wizard>
-          
-    </div>    
-    
-
-<a href="#/"> retour à la page publique</a>
+    </wizard>        
+</div> 
