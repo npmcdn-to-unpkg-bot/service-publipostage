@@ -99,16 +99,20 @@
                     <h4>Quels établissements ?</h4>
                     <hr/>
                     <select ng-model="etablissements" multiple>
-                        <option value="1">CLG CHARPAK</option>
-                        <option value="2">CLG VICTOR HUGO</option>
+                        <option value="0690096Z">CLG CHARPAK</option>
+                        <option value="0690078K">CLG VICTOR HUGO</option>
                     </select>
                     {{etablissements}}
+		    <hr/>
                     <h4>Quels profils?</h4>
-                     <select>
-                        <option>parent</option>
-                        <option>eleve</option>
-                    </select>
-                     
+                     <select ng-model="profil">
+                        <option>Parent</option>
+                        <option>Eleve</option>
+			<option>Enseignant</option>
+			<option>Personnel de rectorat, DRAF, inspection</option>
+		     </select>
+		    {{profil}}
+		    <hr/>
                     <h4>Quels groupes</h4>
                     <div class="row">
                         <div class="col-xs-4">
@@ -119,20 +123,20 @@
                         </div>
                         <div class="col-xs-4">
                             groupes: <select>
-                            <option>classe 1</option>
-                            <option>classe 2</option>
+                            <option>groupe 1</option>
+                            <option>groupe 2</option>
                             </select>
                         </div>
                         
                         <div class="col-xs-4">
                             groupes libres: <select>
-                            <option>classe 1</option>
-                            <option>classe 2</option>
+                            <option>groupe 1</option>
+                            <option>groupe 2</option>
                             </select>
                         </div>
                     </div>
                 </tab>
-            </tabset>  
+            </tabset>
         </step>
         <step title="Etape 2: Creation d'un publipostage">
             <div class="row">
@@ -153,7 +157,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Données de l'ENT</div>
                     <div class="panel-body">
-                      civilité, Nom, Prenom, Adresse Postal, etc..
+                      <a  ng-click="">Civilité</a>,<a ng-click="">Nom</a>, <a ng-click="">Prenom</a>, <a ng-click="">Adresse Postal</a>
                     </div>
                 </div>
             </div>
@@ -169,9 +173,11 @@
                 <br/>
                 <h4>Comment?</h4>
                 <hr/>
-                <a class="btn btn-primary">Notification</a> <a class="btn btn-default">Mail/Pdf</a>
-                <br/>
+		<input type="radio" name="sendMethod" value="notification">Notification
+		<input type="radio" name="sendMethod" value="Mail/pdf">Mail/pdf
+                <br/> <br/>
                 <button class="btn" ng-click="log('clicked')">Generer/Envoyer</button>
         </step> 
-    </wizard>        
+    </wizard>
+    <a  class="btn  btn-info"  href="#/" tooltip="retour à la page publique"><i class="fa fa-reply"></i></a>
 </div> 
