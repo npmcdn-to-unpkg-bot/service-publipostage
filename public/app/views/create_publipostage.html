@@ -2,7 +2,6 @@
         <a href=""></a>
         <script id="wizard.html" type="text/ng-template">
             <div class="wizard">
-              <h1> PubliPostage </h1>
               <div ng-transclude></div>
                 <div class="navbar navbar-inner block-header">
 			<a  class="btn btn-primary" ng-click="showPreviousStep()" ng-show="hasPrevious()"><i class="icon-white icon-chevron-left"></i> Precedante</a>
@@ -141,7 +140,7 @@
             <form role="form">
                 <div class="form-group">
                   <label for="titre">Titre</label>
-                  <input type="text" class="form-control" id="titre" placeholder="">
+                  <input type="text" class="form-control" ng-model="title" id="titre" placeholder="">
                 </div>
                 <div class="form-group">
                   <label for="corps">Corps</label>

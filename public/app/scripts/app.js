@@ -25,10 +25,17 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name:'create',
       url: '/creer', 
       templateUrl: APPLICATION_PREFIX+'/views/create_publipostage.html',
-      controller: 'MyCtrl1'
+      controller: 'CreatePublipostage'
     }
     
-    $stateProvider.state(home).state(gestion).state(createPublipostage);
+    var profil = {
+      name:'profil',
+      url:'/profil',
+      templateUrl: APPLICATION_PREFIX+'/views/profil.html',
+      controller:'MyCtrl1'
+    }
+    
+    $stateProvider.state(home).state(gestion).state(createPublipostage).state(profil);
     $urlRouterProvider.otherwise('/');
     
 }]).config(function ($provide, $httpProvider) {
@@ -93,13 +100,13 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       //console.log(user);
       currentUser = user;
       if (security.isAuthenticated()) {
+        // for the moment only admin can see the page of publipostage ..
         var admin = _.find(currentUser.roles, function(role){return role[0]=="TECH"});
         if (typeof(admin) == 'undefined' && toState.url!=fromState.url && fromState.url!='^') {
           // you don not have rights ..
-          console.log('not admin');
+          console.log('vous n\'etes pas admin');
           event.preventDefault();
           $state.transitionTo('home');
-          //$location.path("/"); //does not work with states ..
         }
       }
     });

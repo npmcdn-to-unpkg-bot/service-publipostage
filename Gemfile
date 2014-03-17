@@ -17,6 +17,8 @@ gem 'sequel_plus'
 gem 'mysql2'
 gem 'ruby-oci8'
 gem 'rake'
+gem 'pdfkit'
+gem 'wkhtmltopdf-binary'
 
 group :development do
   gem 'sinatra-contrib'

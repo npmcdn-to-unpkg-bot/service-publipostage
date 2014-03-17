@@ -32,6 +32,7 @@ GEM
       addressable (~> 2.3)
       nokogiri (~> 1.6)
       omniauth (~> 1.1.0)
+    pdfkit (0.5.2)
     pry (0.9.12.4)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -81,6 +82,7 @@ GEM
     wasabi (3.1.0)
       httpi (~> 2.0)
       nokogiri (>= 1.4.0)
+    wkhtmltopdf-binary (0.9.9.1)
 
 PLATFORMS
   ruby
@@ -91,6 +93,7 @@ DEPENDENCIES
   nokogiri
   omniauth
   omniauth-cas
+  pdfkit
   pry
   rack-rewrite
   rake
@@ -103,3 +106,4 @@ DEPENDENCIES
   sinatra-contrib
   sinatra-sequel
   thin
+  wkhtmltopdf-binary

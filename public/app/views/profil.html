@@ -1,0 +1,146 @@
+<div class="row-fluid" >
+    <div class="navbar">
+        <div class="navbar-inner">
+            <ul class="breadcrumb">
+                <li><a href="#/">Home</a> <span class="divider">/</span></li>
+                <li class="active">Profil</li>
+            </ul>
+        </div>
+    </div>
+    <div class="block">
+        <div class="navbar navbar-inner block-header">
+	    <div class="carnet" style="background-color:#1AA1CC; width: 127.561px;height: 127.561px;">
+		<div class="carnet-eleve ">
+		    <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+			 width="100%" height="100%" viewBox="0 0 127.561 127.561" enable-background="new 0 0 127.561 127.561"
+			 xml:space="preserve">
+			<g>
+			<path fill="{{color}}" d="{{avatar}}"/>
+			</g>
+		    </svg>
+		    <span class="carnet-eleve-prenom">{{currentUser.info['LaclassePrenom']}}</span>
+		    <span class="carnet-eleve-nom">{{currentUser.info['LaclasseNom']}}</span>
+		</div>
+	    </div>
+        </div>
+        <div class="block-content">
+            <tabset>
+		<tab heading="Informations Generales" >
+			<table class="table table-hover table-striped">
+				<tr>
+				    <td>Nom</td>
+				    <td>{{user.nom}}</td>
+				</tr>
+				<tr>
+				    <td>Prenom</td>
+				    <td>{{user.prenom}}</td>
+				</tr>
+				<tr>
+				    <td>Telephones</td>
+				    <td>
+                                        <ul class="thumbnails">
+					  <li ng-repeat="telephone in user.telephones"  class="alert alert-info">
+                                                <button type="button" class="close" data-dismiss="alert" ng-click="delete_telephone(telephone.id)" rel="tooltip" title="supprimer">×</button>
+						   {{telephone.numero}}
+					  </li>
+					</ul>
+                                        <a class='btn btn-mini' rel='tooltip' title='Ajouter un telephone' ng-click='show_telephone_modal()'><i class='icon-plus'></i></a>
+				    </td>
+				</tr>
+				<tr>
+				    <td>Adresse</td>
+				    <td>{{user.adresse}}</td>
+				</tr>
+				<tr>
+				    <td>Code Postal </td>
+				    <td>{{user.code_postal}}</td>
+				</tr>
+				<tr>
+				    <td>Ville</td>
+				    <td>{{user.ville}}</td>
+				</tr>
+				<tr>
+				    <td>Emails</td>
+				    <td>
+					<ul class="thumbnails">
+					    <li ng-repeat="email in user.emails" class="alert alert-info">
+                                                <button class="close" rel="tooltip" title="supprimer" ng-click="delete_email(email.id)">×</button>{{email.adresse}} 
+                                            </li>   
+					</ul>
+                                        <a class='btn btn-mini' rel='tooltip' title='Ajouter un email' ng-click='show_email_modal()'><i class='icon-plus'></i></a>
+				    </td>
+				</tr>
+				<tr>
+				    <td>Date de naissance</td>
+				    <td>{{user.date_naissance | date: 'dd/MM/yyyy'}}</td>
+				</tr>
+				<tr>
+				    <td>Compte créé le</td>
+				    <td>{{user.date_creation}}</td>
+				</tr>
+				<tr>
+				    <td>Date derniere connexion</td>
+				    <td>{{user.date_derniere_connexion}}</td>
+				</tr>
+			</table>	
+		</tab>
+		<tab heading="Profils">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <th> Etablissement </th>
+                            <th> Profil </th>
+                            <th> Action</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="profil in user.profils">
+                                <td> {{profil.etablissement_nom}} </td>
+                                <td> {{profil.profil_nom}} </td>
+                                <td><a class="btn" ng-click="delete_profil(profil.etablissement_code_uai, profil.profil_id)" rel="tooltip" title="Supprimer le Profil"><i class="icon-remove-circle"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                    <hr/>            
+                    <dl>
+                        <dt> Classes:
+                            <ul  class="thumbnails" >
+                                <li ng-repeat="class in user.classes">
+				    <a href="#/admin_etab/regroupements/classes/{{class.classe_id}}" class="label label-info">
+					{{class.classe_libelle}}
+				    </a>
+				</li>   
+                            </ul>
+                        </dt>
+                            
+                        <dt> Groupes:
+                            <ul class="thumbnails">
+                                <li ng-repeat="group in user.groupes_eleves">
+				    <a href="#/admin_etab/regroupements/groupe_eleves/{{group.groupe_id}}" class="label label-success">
+					{{group.groupe_libelle}}
+				    </a>
+				</li>   
+                            </ul>
+                        </dt>
+                        <dt> Groupes Libres:
+                            <ul class="thumbnails">
+                                <li ng-repeat="group in user.groupes_libres" >
+				    <a href="#/admin_etab/regroupements/groupes_libres/{{group.regroupement_libre_id}}" class="label label-important" >
+					{{group.libelle}}
+				    </a>	
+				</li>   
+                            </ul>
+                        </dt>
+                            
+                        <dt> Matieres Enseignees:
+                            <ul ng-repeat="matiere in user.matieres_enseignees | unique:'libelle_long'"">
+                                <li class = "label label-info">Matieres: {{matiere.libelle_long}}</li>   
+                            </ul>
+                        </dt>
+                        
+                        
+                    </dl>
+                        
+		</tab>
+            </tabset>    
+        </div>
+    </div>
+</div>    
