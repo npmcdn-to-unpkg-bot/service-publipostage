@@ -12,7 +12,7 @@ USE `publipostage` ;
 DROP TABLE IF EXISTS `publipostage`.`publipostage` ;
 
 CREATE  TABLE IF NOT EXISTS `publipostage`.`publipostage` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `date` DATETIME NULL ,
   `message` VARCHAR(255) NULL ,
   `descriptif` VARCHAR(45) NULL ,

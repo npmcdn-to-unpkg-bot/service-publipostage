@@ -11,6 +11,7 @@ class Api < Sinatra::Base
   error 401 do
     'Not authenticated'
   end
+  
   get "/publipostages" do
     content_type :json
     response = Publipostage.naked.all
@@ -24,8 +25,12 @@ class Api < Sinatra::Base
  
   post '/publipostages' do
     content_type :json
-    if params.has_key?('date') and params.has_key?('descriptif') and params.has_key?('message')
+    if params.has_key?('descriptif') and params.has_key?('message')
       # new Publi
+      publi = Publipostage.create(:descriptif => params['descriptif'], :message => params['message'],:date => DateTime.now)
+      publi
+    else
+      error 400
     end
   end
 
@@ -33,7 +38,8 @@ class Api < Sinatra::Base
     
   end
   
-  delete '/color/:id' do
+  delete '/publipostages/:id' do
+    #'ok'
     content_type :json
     Publipostage.where(:id => params['id']).destroy
   end
