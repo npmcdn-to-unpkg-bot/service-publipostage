@@ -24,6 +24,6 @@ use OmniAuth::Builder do
     provider :cas,  CASLaclasseCom::OPTIONS
 end
 run Rack::URLMap.new(
-                      "/app/api" => Api.new,
+                      "/app/api" => API.new,
                       "/" => SinatraApp.new)
 #run SinatraApp

@@ -19,6 +19,7 @@ gem 'ruby-oci8'
 gem 'rake'
 gem 'pdfkit'
 gem 'wkhtmltopdf-binary'
+gem 'grape'
 
 group :development do
   gem 'sinatra-contrib'
