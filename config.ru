@@ -3,7 +3,7 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require './config/init'
 require 'app'
-require './api/api.rb'
+require './api/init.rb'
 require './models/init.rb'
 
 use Rack::Rewrite do

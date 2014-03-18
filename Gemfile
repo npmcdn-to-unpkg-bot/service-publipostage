@@ -20,9 +20,12 @@ gem 'rake'
 gem 'pdfkit'
 gem 'wkhtmltopdf-binary'
 gem 'grape'
+gem 'rest-client'
 
 group :development do
   gem 'sinatra-contrib'
   gem 'shotgun'
   gem 'pry'
+  gem 'rack-test'
+  gem 'rspec'
 end

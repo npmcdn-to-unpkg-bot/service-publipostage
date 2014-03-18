@@ -7,13 +7,10 @@ def __DIR__(*args)
   ::File.expand_path(::File.join(dir, *args.map{|a| a.to_s}))
 end
 
-puts "loading config/env"
+puts "loading configuration"
 require __DIR__('env')
-
-puts "loading config/CASLaclasseCom"
 require __DIR__('CASLaclasseCom')
-
-puts "loading database"
 require __DIR__('database.rb')
+require __DIR__('annuaire')
 
 

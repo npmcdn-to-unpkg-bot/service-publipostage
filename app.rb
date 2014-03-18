@@ -6,9 +6,10 @@ require "sinatra/reloader"
 
 require './config/init'
 require './models/init.rb'
+require './lib/init.rb'
 Bundler.require( :default, ENV['RACK_ENV'].to_sym )     # require tout les gems définis dans Gemfile
 
-require_relative './lib/AuthenticationHelpers'
+#require_relative './lib/AuthenticationHelpers'
 
 
 
