@@ -101,10 +101,10 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       currentUser = user;
       if (security.isAuthenticated()) {
         // for the moment only admin can see the page of publipostage ..
-        var admin = _.find(currentUser.roles, function(role){return role[0]=="TECH"});
-        if (typeof(admin) == 'undefined' && toState.url!=fromState.url && fromState.url!='^') {
+        var allowed = _.find(currentUser.roles, function(role){return role[0]=="TECH"||role[0]=="PROF_ETB"||role[0]=="ADM_ETB"});
+        if (typeof(allowed) == 'undefined' && toState.url!=fromState.url && fromState.url!='^') {
           // you don not have rights ..
-          console.log('vous n\'etes pas admin');
+          console.log('vous pouvez pas acceder');
           event.preventDefault();
           $state.transitionTo('home');
         }

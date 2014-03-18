@@ -50,6 +50,11 @@ module Annuaire
     response = send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_user] + uid.to_s, {"expand" => "true"})
     response
   end
+  
+  def get_profils
+    response = send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_profils],{})
+    response 
+  end
 
   #retourne les infos sur plusieurs utilisateurs.
   def get_users(uids)
@@ -71,25 +76,24 @@ module Annuaire
     etablissements = []
     classes =[]
     groupes = []
-    response["etablissements"].each do |etab|
-      etablissements.push(hash_regroupement(etab["id"],etab["nom"], nil)) if !etablissements.include?(hash_regroupement(etab["id"],etab["nom"], nil))
+    if (!response.nil?)
+      #code
+      response["etablissements"].each do |etab|
+      etablissements.push(hash_regroupement(etab["id"],etab["nom"], nil, nil)) if !etablissements.include?(hash_regroupement(etab["id"],etab["nom"], nil, nil))
+      end
+      { :etablissements => etablissements, :classes => response["classes"], :groupes_eleves => response["groupes_eleves"]}
+    else
+      return []
     end
-    response["classes"].each do |classe|
-      classes.push hash_regroupement(classe["classe_id"], classe["classe_libelle"], classe["etablissement_id"]) if !classes.include?(hash_regroupement(classe["classe_id"], classe["classe_libelle"], classe["etablissement_id"]))
-    end
-    response["groupes_eleves"].each do |groupe|
-      groupes.push hash_regroupement(groupe["groupe_id"], groupe["groupe_libelle"], groupe["etablissement_id"]) if !groupes.include?(hash_regroupement(groupe["groupe_id"], groupe["groupe_libelle"], groupe["etablissement_id"]))
-    end
-    regroupements = liste_regroupements etablissements, classes, groupes
-    regroupements
   end
 
   #retourne un hash d'un regroupements avec son id et son nom
-  def hash_regroupement(id, nom, etab_id)
+  def hash_regroupement(id, nom, etab_id, etab_nom)
     {
       :id => id,
       :nom => nom,
-      :etab_id => etab_id
+      :etab_id => etab_id,
+      :etab_nom => etab_nom
     }
   end
 

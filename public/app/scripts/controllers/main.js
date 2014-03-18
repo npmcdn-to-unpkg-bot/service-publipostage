@@ -28,28 +28,39 @@ Controllers.controller('MyCtrl1', ['$scope','security', 'Publipostages', 'curren
       }
       
     });
-    
-    
-    
-}]).controller('MyCtrl2', [function() {
-
-}]).controller('wizardController', ['$scope', function($scope){
-    $scope.log = function(event){
-    console.log(event);
-  }
-  $scope.user = {};
-  $scope.etablissements = [];
 }]);
 
+Controllers.controller('MyCtrl2', [function() {
 
-Controllers.controller('CreatePublipostage', ['$scope', function($scope){
+}]);
+
+Controllers.controller('wizardController', ['$scope', function($scope){
+    $scope.log = function(event){
+        console.log(event);
+    }
+    $scope.user = {};
+    $scope.etablissements = [];
+}]);
+
+Controllers.controller('CreatePublipostage', ['$scope', 'security','Regroupements', function($scope, security, Regroupements){
     // option tinyMce ;
     $scope.tinymceOptions = {
         language:"fr"
     };
     
     $scope.title = "title";
-    $scope.tinymceModel = "Message"; 
+    $scope.tinymceModel = "Message";
+    
+    security.requestCurrentUser().then(function(user) {
+        //console.log(user);
+        $scope.currentUser = user;
+        console.log(user.info['uid']);
+        Regroupements.get({id:user.info['uid']}, function(regroupements){
+            console.log(regroupements);
+            $scope.regroupements = regroupements
+        });
+    });
+    
 }]);
 
 

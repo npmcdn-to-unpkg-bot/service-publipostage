@@ -23,8 +23,23 @@ describe 'API' do
   end
 
   # problem to test with real data
-  it "should return the list of publipostage" do
+  it "should return  a list of all publipostage" do
     get('/app/api/publipostages').status.should == 200
     JSON.parse(last_response.body).count.should == Publipostage.all.count
   end
+  
+  it "should return the details of a specific publipostage" do
+    publi = Publipostage.first
+    get("/app/api/publipostages/#{publi.id}").status.should == 200
+  end
+  
+  it "should create a publipostage" do
+    
+  end
+  
+  it "should modify a publipostage" do
+  end
+  
+  it "should delete a publipostage" do
+  end 
 end

@@ -46,12 +46,7 @@ class SinatraApp < Sinatra::Base
     if is_logged?
       erb :app
     else
-      erb "<div class='jumbotron'>
-            <h1>Page Publique</h1>
-            <p class='lead'> Bienvenu au publipostage... <br/>
-               à l'aide de cette application, vous pouvez envoyer des messages aux autres utilisateurs.
-            </p>
-            </div>"
+      erb :public_page
     end  
    end
 

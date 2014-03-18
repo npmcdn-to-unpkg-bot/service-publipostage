@@ -1,183 +1,190 @@
-<div ng-controller="wizardController">
+<div class="col-xs-1"></div>
+<div class="col-xs-2">
+    <div class="row">
+        Etab: Quel type de message?
+    </div>
+</div>
+<div class="col-xs-8" >
+    <div id="flashMessage" ng-class="flashStyle" ng-show="flashMessage">
+            {{flashMessage}}
+    </div>
+    <div ng-controller="wizardController">
         <a href=""></a>
         <script id="wizard.html" type="text/ng-template">
             <div class="wizard">
-              <div ng-transclude></div>
-                <div class="navbar navbar-inner block-header">
-			<a  class="btn btn-primary" ng-click="showPreviousStep()" ng-show="hasPrevious()"><i class="icon-white icon-chevron-left"></i> Precedante</a>
+		<div ng-transclude></div>
+                <div class="panel panel-footer">
+			<a  class="btn btn-primary btn-sm" ng-click="showPreviousStep()" ng-show="hasPrevious()"><i class="icon-white icon-chevron-left"></i> Precedante</a>
 			&nbsp;&nbsp;
-			<a  class="btn btn-primary" ng-click="showNextStep()" ng-show="hasNext()">Suivante <i class="icon-white icon-chevron-right"></i></a>
+			<a  class="btn btn-primary btn-sm" ng-click="showNextStep()" ng-show="hasNext()">Suivante <i class="icon-white icon-chevron-right"></i></a>
 			&nbsp;&nbsp;
-			<a  class="btn btn-warning" ng-click="reset()" ng-show="hasPrevious()">Tout Recommencer</a>
+			<a  class="btn btn-warning btn-sm" ng-click="reset()" ng-show="hasPrevious()">Tout Recommencer</a>
 		</div>
             </div>
         </script>
-    <wizard on-before-step-change="log(event)" on-step-changing="log(event)" on-after-step-change="log(event)">
-        <step title="Etape 1: Choix des destinataires">
-            <tabset>
-                <tab heading="Mes Classes">
-                    <br/>
-                    <div class="row">
-                        <div class="bs-glyphicons">
-                            <ul class="bs-glyphicons-list">
-                                <li>
-                                  <span class="glyphicon">5.3</span>
-                                  <span class="glyphicon-class">collège Charpak</span>
-                                </li>
-                              
-                                <li>
-                                  <span class="glyphicon">5.5</span>
-                                  <span class="glyphicon-class">collège Charpak</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--<div class="row">
-                        <div class="col-xs-2">
-                             <a href="#" class="thumbnail">
-                                <span class="glyphicon">
-                                    5.3 College Charpack
-                                </span>
-                            </a>
-                        </div>
-                          <div class="col-xs-2">
-                            <a href="#" class="thumbnail">
-                            <img src="http://placehold.it/200x100" alt="..." /> ClassE 1</img>
-                            </a>
-                        </div>
-                         <div class="col-xs-2">
-                             <a href="#" class="thumbnail">
-                            <img src="http://placehold.it/140x100" alt="..." />
-                            </a>
-                        </div>
-                         <div class="col-xs-2">
-                             <a href="#" class="thumbnail">
-                            <img src="http://placehold.it/140x100" alt="..." />
-                            </a>
-                        </div>
-                         <div class="col-xs-2">
-                             <a href="#" class="thumbnail">
-                            <img src="http://placehold.it/140x100" alt="..." />
-                            </a>
-                        </div>
-                         <div class="col-xs-2">
-                             <a href="#" class="thumbnail">
-                            <img src="http://placehold.it/140x100" alt="..." />
-                            </a>
-                        </div>
-                         <div class="col-xs-2">
-                             <a href="#" class="thumbnail">
-                            <img src="http://placehold.it/140x100" alt="..." />
-                            </a>
-                        </div>
-                          <div class="col-xs-2">
-                             <a href="#" class="thumbnail">
-                            <img src="http://placehold.it/140x100" alt="..." />
-                            </a>
-                        </div>
-                    </div>-->
-                </tab>
-                <tab heading="Mes Groupes">
-                    <br/>
-                    <div class="row">
-                        <div class="bs-glyphicons">
-                            <ul class="bs-glyphicons-list">
-                                <li>
-                                  <span class="glyphicon">5.3</span>
-                                  <span class="glyphicon-class">collège Charpak</span>
-                                </li>
-                              
-                                <li>
-                                  <span class="glyphicon">5.5</span>
-                                  <span class="glyphicon-class">collège Charpak</span>
-                                </li>
-                            </ul>
-                        </div>    
-                    </div>
-                </tab>
-                <tab heading="Tous">
-                    <h4>Quels établissements ?</h4>
-                    <hr/>
-                    <select ng-model="etablissements" multiple>
-                        <option value="0690096Z">CLG CHARPAK</option>
-                        <option value="0690078K">CLG VICTOR HUGO</option>
-                    </select>
-                    {{etablissements}}
+	<wizard on-before-step-change="log(event)" on-step-changing="log(event)" on-after-step-change="log(event)">
+	    <step title="Etape 1: Choix des destinataires">
+		<tabset>
+		    <tab heading="Mes Classes">
+			<br/>
+			<div class="row">
+			    <div class="bs-glyphicons">
+				<ul class="bs-glyphicons-list">
+				    <li ng-repeat = "classe in regroupements['classes']" ng-click="classe.checked=!classe.checked">
+				      <span class="glyphicon">{{classe.classe_libelle}}</span>
+				      <span class="glyphicon-class">{{classe.etablissement_nom}}</span>
+				      <span class="glyphicon-class" ng-show="classe.checked"><i class="fa fa-check-square-o fa-lg"></i></span>
+				    </li>
+				</ul>
+			    </div>
+			</div>
+			<!--<div class="row">
+			    <div class="col-xs-2">
+				 <a href="#" class="thumbnail">
+				    <span class="glyphicon">
+					5.3 College Charpack
+				    </span>
+				</a>
+			    </div>
+			      <div class="col-xs-2">
+				<a href="#" class="thumbnail">
+				<img src="http://placehold.it/200x100" alt="..." /> ClassE 1</img>
+				</a>
+			    </div>
+			     <div class="col-xs-2">
+				 <a href="#" class="thumbnail">
+				<img src="http://placehold.it/140x100" alt="..." />
+				</a>
+			    </div>
+			     <div class="col-xs-2">
+				 <a href="#" class="thumbnail">
+				<img src="http://placehold.it/140x100" alt="..." />
+				</a>
+			    </div>
+			     <div class="col-xs-2">
+				 <a href="#" class="thumbnail">
+				<img src="http://placehold.it/140x100" alt="..." />
+				</a>
+			    </div>
+			     <div class="col-xs-2">
+				 <a href="#" class="thumbnail">
+				<img src="http://placehold.it/140x100" alt="..." />
+				</a>
+			    </div>
+			     <div class="col-xs-2">
+				 <a href="#" class="thumbnail">
+				<img src="http://placehold.it/140x100" alt="..." />
+				</a>
+			    </div>
+			      <div class="col-xs-2">
+				 <a href="#" class="thumbnail">
+				<img src="http://placehold.it/140x100" alt="..." />
+				</a>
+			    </div>
+			</div>-->
+		    </tab>
+		    <tab heading="Mes Groupes">
+			<br/>
+			<div class="row">
+			    <div class="bs-glyphicons">
+				<ul class="bs-glyphicons-list">
+				    <li ng-repeat = "groupe in regroupements['groupes_eleves']" ng-click="groupe.checked=!groupe.checked">
+				      <span class="glyphicon">{{groupe.groupe_libelle}}</span>
+				      <span class="glyphicon-class">{{groupe.etablissement_nom}}</span>
+				      <span class="glyphicon-class" ng-show="groupe.checked"><i class="fa fa-check-square-o fa-lg"></i></span>
+				    </li>
+				</ul>
+			    </div>    
+			</div>
+		    </tab>
+		    <tab heading="Tous">
+			<h4>Quels établissements ?</h4>
+			<hr/>
+			<select ng-model="etablissements" multiple>
+			    <option value="0690096Z">CLG CHARPAK</option>
+			    <option value="0690078K">CLG VICTOR HUGO</option>
+			</select>
+			{{etablissements}}
+			<hr/>
+			<h4>Quels profils?</h4>
+			 <select ng-model="profil">
+			    <option>Parent</option>
+			    <option>Eleve</option>
+			    <option>Enseignant</option>
+			    <option>Personnel de rectorat, DRAF, inspection</option>
+			 </select>
+			{{profil}}
+			<hr/>
+			<h4>Quels groupes</h4>
+			<div class="row">
+			    <div class="col-xs-4">
+				classes: <select>
+				<option>classe 1</option>
+				<option>classe 2</option>
+				</select>
+			    </div>
+			    <div class="col-xs-4">
+				groupes: <select>
+				<option>groupe 1</option>
+				<option>groupe 2</option>
+				</select>
+			    </div>
+			    
+			    <div class="col-xs-4">
+				groupes libres: <select>
+				<option>groupe 1</option>
+				<option>groupe 2</option>
+				</select>
+			    </div>
+			</div>
+		    </tab>
+		</tabset>
+	    </step>
+	    <step title="Etape 2: Creation d'un publipostage">
+		<div class="row">
+		<div class="col-xs-10">
+		<form role="form">
+		    <div class="form-group">
+		      <label for="titre">Titre</label>
+		      <input type="text" class="form-control" ng-model="title" id="titre" placeholder="">
+		    </div>
+		    <div class="form-group">
+		      <label for="corps">Corps</label>
+		      <textarea  ui-tinymce="tinymceOptions" ng-model="tinymceModel" id="corps"></textarea>
+		    </div>
+		</form>
+		{{tinymceModel}}
+		</div>
+		<div class="col-xs-2">
+		    <div class="panel panel-default">
+			<div class="panel-heading">Données de l'ENT</div>
+			<div class="panel-body">
+			  <a  ng-click="">Civilité</a>,<a ng-click="">Nom</a>, <a ng-click="">Prenom</a>, <a ng-click="">Adresse Postal</a>
+			</div>
+		    </div>
+		</div>
+		</div>
+	    </step>
+      
+	    <step title="Etape 3: Choix de l'envoi">
+		<h4>Votre Sélection</h4>
+		<hr>
+		    Tous les élèves, les prof, et les parents des classes de ... et des groupes ..
+		    <span class="badge badge-success">1264 utilisateurs</span>
+		    <span class="badge badge-warning">354 utilisateur n'ont pas d'adresse mail, pour eux, PDF!</span>
+		    <br/>
+		    <h4>Comment?</h4>
 		    <hr/>
-                    <h4>Quels profils?</h4>
-                     <select ng-model="profil">
-                        <option>Parent</option>
-                        <option>Eleve</option>
-			<option>Enseignant</option>
-			<option>Personnel de rectorat, DRAF, inspection</option>
-		     </select>
-		    {{profil}}
-		    <hr/>
-                    <h4>Quels groupes</h4>
-                    <div class="row">
-                        <div class="col-xs-4">
-                            classes: <select>
-                            <option>classe 1</option>
-                            <option>classe 2</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-4">
-                            groupes: <select>
-                            <option>groupe 1</option>
-                            <option>groupe 2</option>
-                            </select>
-                        </div>
-                        
-                        <div class="col-xs-4">
-                            groupes libres: <select>
-                            <option>groupe 1</option>
-                            <option>groupe 2</option>
-                            </select>
-                        </div>
-                    </div>
-                </tab>
-            </tabset>
-        </step>
-        <step title="Etape 2: Creation d'un publipostage">
-            <div class="row">
-            <div class="col-xs-10">
-            <form role="form">
-                <div class="form-group">
-                  <label for="titre">Titre</label>
-                  <input type="text" class="form-control" ng-model="title" id="titre" placeholder="">
-                </div>
-                <div class="form-group">
-                  <label for="corps">Corps</label>
-                  <textarea  ui-tinymce="tinymceOptions" ng-model="tinymceModel" id="corps"></textarea>
-                </div>
-            </form>
-            {{tinymceModel}}
-            </div>
-            <div class="col-xs-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Données de l'ENT</div>
-                    <div class="panel-body">
-                      <a  ng-click="">Civilité</a>,<a ng-click="">Nom</a>, <a ng-click="">Prenom</a>, <a ng-click="">Adresse Postal</a>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </step>
-  
-        <step title="Etape 3: Choix de l'envoi">
-            <h4>Votre Sélection</h4>
-            <hr>
-                Tous les élèves, les prof, et les parents des classes de ... et des groupes ..
-                <span class="badge badge-success">1264 utilisateurs</span>
-                <span class="badge badge-warning">354 utilisateur n'ont pas d'adresse mail, pour eux, PDF!</span>
-                <br/>
-                <h4>Comment?</h4>
-                <hr/>
-		<input type="radio" name="sendMethod" value="notification">Notification
-		<input type="radio" name="sendMethod" value="Mail/pdf">Mail/pdf
-                <br/> <br/>
-                <button class="btn" ng-click="log('clicked')">Generer/Envoyer</button>
-        </step> 
-    </wizard>
-    <a  class="btn  btn-info"  href="#/" tooltip="retour à la page publique"><i class="fa fa-reply"></i></a>
-</div> 
+		    <input type="radio" name="sendMethod" value="notification">Notification
+		    <input type="radio" name="sendMethod" value="Mail/pdf">Mail/pdf
+		    <br/> <br/>
+		    <button class="btn" ng-click="log('clicked')">Generer/Envoyer</button>
+	    </step> 
+	</wizard>
+	<a  class="btn  btn-primary btn-sm"  href="#/" tooltip="retour à la page publique"><i class="fa fa-reply"></i></a>
+	</div> 
+    	
+</div>
+<div class="col-xs-1"></div>
+
+

@@ -31,9 +31,25 @@ class API < Grape::API
   put '/publipostages/:id' do
     
   end
-  
+
   desc "supprimer un publipostage"
   delete '/publipostages/:id' do
     Publipostage.where(:id => params['id']).destroy
   end
+
+  desc "retourner la liste des profil"
+  get '/profils' do
+    Annuaire.get_profils()
+  end
+
+  desc "retourner les info de l'utilisateur"
+  get '/user/:id' do
+    Annuaire.get_user(params[:id])
+  end
+
+  desc "retourner les regroupements d'un utilisateur"
+  get "/regroupements/:id" do
+    Annuaire.get_regroupements(params[:id])
+  end
+
 end
