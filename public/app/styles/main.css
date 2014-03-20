@@ -208,18 +208,17 @@ span.carnet-eleve-prenom{
 	left: 5%;
 }
 
-.logos{margin:0 -19px 20px -16px;overflow:hidden}
-.logos-list{padding-left:0;list-style:none}
-li.logos{float:left;
-          width:25%;
-          height:115px;
-          padding:10px;
-          font-size:10px;
-          line-height:1.4;
-          text-align:center;
-          border:1px solid #fff;
-          background-color:#f9f9f9}
-.glyphicon{margin-top:5px;margin-bottom:10px;font-size:24px}.logos
-.glyphicon-class{display:block;text-align:center;word-wrap:break-word}
+/* The CSS */
+.styled-select select {
+   background: transparent;
+   width: 268px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;
+   }
 
 

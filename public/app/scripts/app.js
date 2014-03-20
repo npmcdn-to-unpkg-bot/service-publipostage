@@ -3,7 +3,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.constants', 'ui.bootstrap',
                          'ui.tinymce', 'services.messages', 'services.authentication', 'angular-underscore',
-                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources']).
+                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize']).
 config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function($urlRouterProvider, $stateProvider, APPLICATION_PREFIX){
             
     /* defining states for routing */
@@ -35,7 +35,55 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       controller:'MyCtrl1'
     }
     
-    $stateProvider.state(home).state(gestion).state(createPublipostage).state(profil);
+    var info_famille = {
+      name:'info_famille',
+      url:'/info_famille',
+      templateUrl: APPLICATION_PREFIX+'/views/info_famille.html',
+      controller:'CreatePublipostage'
+    }
+    
+    var historique = {
+      name:'histroique',
+      url:'/historique/:id',
+      templateUrl: APPLICATION_PREFIX+'/views/historique.html',
+      controller:'MyCtrl1'
+    }
+    
+    var destinataire = {
+      name:'destinataire',
+      url:'/destinataire',
+      templateUrl: APPLICATION_PREFIX+'/views/destinataire.html',
+      controller:'CreatePublipostage'
+    }
+    
+    var message = {
+      name:'message',
+      url:'/message',
+      templateUrl: APPLICATION_PREFIX+'/views/message.html',
+      controller:'CreatePublipostage'
+    }
+    
+    var apercu = {
+      name:'apercu',
+      url:'/apercu',
+      templateUrl: APPLICATION_PREFIX+'/views/apercu.html',
+      controller:'CreatePublipostage'
+    }
+    
+    var envoi = {
+      name:'envoi',
+      url:'/envoi',
+      templateUrl: APPLICATION_PREFIX+'/views/envoi.html',
+      controller:'CreatePublipostage'
+    }
+    
+    $stateProvider.state(home).state(gestion).state(createPublipostage).state(profil)
+    .state(info_famille)
+    .state(historique)
+    .state(destinataire)
+    .state(message)
+    .state(apercu)
+    .state(envoi);
     $urlRouterProvider.otherwise('/');
     
 }]).config(function ($provide, $httpProvider) {

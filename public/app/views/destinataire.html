@@ -1,0 +1,48 @@
+<div class="col-xs-1"></div>
+<div class="col-xs-2">
+    <div class="row">
+        <p style="color:#64BDF5">  Etape 1: type de message</p>
+        <p style="color:#64BDF5"> <strong>Etape 2: les destinataire</strong></p>
+    
+        <p style="color:#64BDF5"> Selectionner les classes destinataire des messages</p>
+        </br>
+        </br>
+        <a class='btn btn-info btn-sm' href="#/message">valider</a>
+            
+        </br>
+        </br>
+        <p style="color:#D3D8DB"><strong>Récpitualif</strong></p>
+        <p style="color:#D3D8DB"><strong> Message aux famille des: <span ng-repeat= "classe in regroupements['classes']"> <span ng-show="classe.checked">{{classe.classe_libelle}}</span></span>
+        <span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></strong></p>
+    </div>
+</div>
+<div class="col-xs-8">
+    <div class="row">
+        <div class="bs-glyphicons">
+            <ul class="bs-glyphicons-list">
+                <li ng-click="goTo('/info_famille')">
+                  <span class="glyphicon"><i class="fa fa-users"></i></span>
+                  <span class="glyphicon-class">info famille</span>
+                  <span class="glyphicon-class" ng-show="false"><i class="fa fa-check-square-o fa-lg"></i></span>
+                </li>
+                <li ng-repeat = "classe in regroupements['classes']" ng-click="classe.checked=!classe.checked">
+                    <span class="glyphicon">{{classe.classe_libelle}}</span>
+                    <span class="glyphicon-class">{{classe.etablissement_nom}}</span>
+                    <span class="glyphicon-class" ng-show="classe.checked"><i class="fa fa-check-square-o fa-lg"></i></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="bs-glyphicons">
+            <ul class="bs-glyphicons-list">
+                <li ng-repeat = "groupe in regroupements['groupes_eleves']" ng-click="groupe.checked=!groupe.checked">
+                  <span class="glyphicon">{{groupe.groupe_libelle}}</span>
+                  <span class="glyphicon-class">{{groupe.etablissement_nom}}</span>
+                  <span class="glyphicon-class" ng-show="groupe.checked"><i class="fa fa-check-square-o fa-lg"></i></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="col-xs-1"></div>

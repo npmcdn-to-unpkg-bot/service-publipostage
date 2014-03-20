@@ -3,7 +3,7 @@
 /* Controllers */
 
 var Controllers  =  angular.module('myApp.controllers', []);
-Controllers.controller('MyCtrl1', ['$scope','security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', function($scope, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M) {
+Controllers.controller('MyCtrl1', ['$scope','security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", function($scope, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location) {
     $scope.tinymceOptions = {
         language:"fr"
     };
@@ -28,6 +28,10 @@ Controllers.controller('MyCtrl1', ['$scope','security', 'Publipostages', 'curren
       }
       
     });
+    
+    $scope.goTo = function(location){
+        $location.path(location);
+    }
 }]);
 
 Controllers.controller('MyCtrl2', [function() {
@@ -42,10 +46,14 @@ Controllers.controller('wizardController', ['$scope', function($scope){
     $scope.etablissements = [];
 }]);
 
-Controllers.controller('CreatePublipostage', ['$scope', 'security','Regroupements', function($scope, security, Regroupements){
+Controllers.controller('CreatePublipostage', ['$scope', 'security','Regroupements', '$location', function($scope, security, Regroupements, $location){
     // option tinyMce ;
     $scope.tinymceOptions = {
-        language:"fr"
+        language:"fr",
+        menubar: false,
+        theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
+        font_size_style_values: "12px,13px,14px,16px,18px,20px",
+        toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist"
     };
     
     $scope.title = "title";
@@ -60,6 +68,14 @@ Controllers.controller('CreatePublipostage', ['$scope', 'security','Regroupement
             $scope.regroupements = regroupements
         });
     });
+    
+    $scope.goTo = function(location){
+        $location.path(location);
+    }
+    
+    $scope.goToHistory=function(id){
+        $location.path('/historique/'+id);    
+    }
     
 }]);
 

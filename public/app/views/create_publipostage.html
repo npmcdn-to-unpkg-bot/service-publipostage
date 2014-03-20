@@ -103,16 +103,17 @@
 			<select ng-model="etablissements" multiple>
 			    <option value="0690096Z">CLG CHARPAK</option>
 			    <option value="0690078K">CLG VICTOR HUGO</option>
+			    <option value="0600067J">CLG VAL d'argent</option>
 			</select>
-			{{etablissements}}
+			<!--{{etablissements}}-->
 			<hr/>
 			<h4>Quels profils?</h4>
-			 <select ng-model="profil">
-			    <option>Parent</option>
-			    <option>Eleve</option>
-			    <option>Enseignant</option>
-			    <option>Personnel de rectorat, DRAF, inspection</option>
-			 </select>
+				<select class="styled-select" ng-model="profil" multiple>
+				   <option>Parent</option>
+				   <option>Eleve</option>
+				   <option>Enseignant</option>
+				   <option>Personnel de rectorat, DRAF, inspection</option>
+				</select>
 			{{profil}}
 			<hr/>
 			<h4>Quels groupes</h4>
