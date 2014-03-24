@@ -1,0 +1,19 @@
+{
+  "name": "charte-graphique-laclasse-com",
+  "version": "0.0.0",
+  "private": true,
+  "main": "css/main.css",
+  "ignore": [],
+  "dependencies": {},
+  "devDependencies": {},
+  "gitHead": "847bcde64da30d24434cf41e81e0e4bf8385ec02",
+  "readme": "Comment ça marche ?\n===================\n\nAjoutez\n<pre>\n\t\"charte-graphique-laclasse-com\": \"http://gitlab.erasme.org/laclasse/charte-graphique-laclasse-com.git#latest\"\n</pre>\ndans le bower.json du projet\n",
+  "readmeFilename": "README",
+  "_id": "charte-graphique-laclasse-com@0.0.1",
+  "description": "Comment ça marche ? ===================",
+  "commit": "847bcde64da30d24434cf41e81e0e4bf8385ec02",
+  "repository": {
+    "type": "git",
+    "url": "http://gitlab.erasme.org/laclasse/charte-graphique-laclasse-com.git"
+  }
+}

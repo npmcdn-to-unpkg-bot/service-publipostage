@@ -13,7 +13,8 @@
     "angular-route": "~1.2.13",
     "Font-Awesome": "~4.0.3",
     "angular-ui-router":"0.2.8",
-    "angular-ui-tinymce": "latest"
+    "angular-ui-tinymce": "latest",
+    "charte-graphique-laclasse-com": "http://gitlab.erasme.org/laclasse/charte-graphique-laclasse-com.git#latest"
   },
   "devDependencies": {
     "angular-mocks": "1.2.6",

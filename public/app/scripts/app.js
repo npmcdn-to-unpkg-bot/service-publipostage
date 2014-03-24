@@ -11,70 +11,70 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
         name: 'home',
         url: '/',
         templateUrl: APPLICATION_PREFIX+'/views/home.html',
-        controller: 'MyCtrl1'
+        controller: 'HomeCtrl'
     };
     
     var gestion = {
         name: 'gestion',
         url: '/publi',
         templateUrl: APPLICATION_PREFIX+ '/views/liste.html', 
-        controller:  'MyCtrl1'
+        controller:  'TestCtrl'
     }
     
     var createPublipostage = {
       name:'create',
       url: '/creer', 
       templateUrl: APPLICATION_PREFIX+'/views/create_publipostage.html',
-      controller: 'CreatePublipostage'
+      controller: 'MainCtl'
     }
     
     var profil = {
       name:'profil',
       url:'/profil',
       templateUrl: APPLICATION_PREFIX+'/views/profil.html',
-      controller:'MyCtrl1'
+      controller:'TestCtrl'
     }
     
     var info_famille = {
       name:'info_famille',
       url:'/info_famille',
       templateUrl: APPLICATION_PREFIX+'/views/info_famille.html',
-      controller:'CreatePublipostage'
+      controller:'MainCtrl'
     }
     
     var historique = {
       name:'histroique',
       url:'/historique/:id',
       templateUrl: APPLICATION_PREFIX+'/views/historique.html',
-      controller:'MyCtrl1'
+      controller:'TestCtrl'
     }
     
     var destinataire = {
       name:'destinataire',
       url:'/destinataire',
       templateUrl: APPLICATION_PREFIX+'/views/destinataire.html',
-      controller:'CreatePublipostage'
+      controller:'MainCtrl'
     }
     
     var message = {
       name:'message',
       url:'/message',
       templateUrl: APPLICATION_PREFIX+'/views/message.html',
-      controller:'CreatePublipostage'
+      controller:'MainCtrl'
     }
     
     var apercu = {
       name:'apercu',
       url:'/apercu',
       templateUrl: APPLICATION_PREFIX+'/views/apercu.html',
-      controller:'CreatePublipostage'
+      controller:'MainCtrl'
     }
     
     var envoi = {
       name:'envoi',
       url:'/envoi',
       templateUrl: APPLICATION_PREFIX+'/views/envoi.html',
-      controller:'CreatePublipostage'
+      controller:'MainCtrl'
     }
     
     $stateProvider.state(home).state(gestion).state(createPublipostage).state(profil)
@@ -133,6 +133,8 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
 })
 .run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state) {
   $rootScope.$location = $location;
+  $rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
+  
   security.requestCurrentUser().then(function(user) {
       console.log(user);
       currentUser = user;
@@ -163,7 +165,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
   FlashServiceStyled.show('bienvenu au publispostage', 'alert alert-success');
   }]);
 /*config(['$routeProvider', function($routeProvider) {
- $routeProvider.when('/', {templateUrl: '/app/views/partial1.html', controller: 'MyCtrl1'});
+ $routeProvider.when('/', {templateUrl: '/app/views/partial1.html', controller: 'TestCtrl'});
   $routeProvider.when('/view2', {templateUrl: '/app/views/partial2.html', controller: 'MyCtrl2'});
   $routeProvider.otherwise({redirectTo: '/'});
 }])*/

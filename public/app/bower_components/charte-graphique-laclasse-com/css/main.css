@@ -1,0 +1,49 @@
+/* couleurs */
+.bleu {background-color:#1aa1cc}
+.bleu-clear {background-color:#1aa1cc;
+            opacity:0.4;
+            filter:alpha(opacity=40);}
+
+.vert {background-color:#80ba66}
+.vert-clear {background-color:#80ba66;
+            opacity:0.4;
+            filter:alpha(opacity=40);}
+
+.rouge {background-color:#eb5454}
+.rouge-clear {background-color:#eb5454;
+             opacity:0.4;
+             filter:alpha(opacity=40);}
+
+.violet {background-color:#9c75ab}
+.violet-clear { background-color:#9c75ab;
+                opacity:0.4;
+                filter:alpha(opacity=40);
+}
+
+.orange {background-color:#ff5f00}
+.orange-clear {background-color:#ff5f00;
+                opacity:0.4;
+                filter:alpha(opacity=40);
+}
+                             
+.orange-brillant {background-color:#ff7814}
+
+.jaune {background-color:#e8c254}
+.jaune-clear {background-color:#e8c254;
+                opacity:0.4;
+                filter:alpha(opacity=40);
+            }
+.gris1 {background-color:#b2b2b2}
+.gris1-clear{ background-color:#b2b2b2;
+              opacity:0.4;
+            filter:alpha(opacity=40);
+            }
+            
+.gris2 {background-color:#8e8e8e}
+.gris2-clear {background-color:#8e8e8e; opacity: 0.4; filter:alpha(opacity=40);}
+
+.gris3 {background-color:#505050}
+.gris3-clear {background-color:#505050; opacity: 0.4; filter:alpha(opacity=40);}
+
+.gris4 {background-color:#323232}
+.gris4-clear {background-color:##323232; opacity: 0.4; filter:alpha(opacity=40);}
