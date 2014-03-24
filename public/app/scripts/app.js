@@ -35,10 +35,10 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       controller:'TestCtrl'
     }
     
-    var info_famille = {
-      name:'info_famille',
-      url:'/info_famille',
-      templateUrl: APPLICATION_PREFIX+'/views/info_famille.html',
+    var type_message = {
+      name:'type_message',
+      url:'/type_message/:type',
+      templateUrl: APPLICATION_PREFIX+'/views/type_message.html',
       controller:'MainCtrl'
     }
     
@@ -51,7 +51,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     
     var destinataire = {
       name:'destinataire',
-      url:'/destinataire',
+      url:'/destinataire/:type',
       templateUrl: APPLICATION_PREFIX+'/views/destinataire.html',
       controller:'MainCtrl'
     }
@@ -78,7 +78,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     }
     
     $stateProvider.state(home).state(gestion).state(createPublipostage).state(profil)
-    .state(info_famille)
+    .state(type_message)
     .state(historique)
     .state(destinataire)
     .state(message)
@@ -161,6 +161,8 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       }
     });
   });
+  
+  $rootScope.$state = $state;
   window.scope = $rootScope;
   FlashServiceStyled.show('bienvenu au publispostage', 'alert alert-success');
   }]);

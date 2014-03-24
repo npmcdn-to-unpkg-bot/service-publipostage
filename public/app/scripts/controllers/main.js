@@ -39,27 +39,13 @@ Controllers.controller('TestCtrl', ['$rootScope','security', 'Publipostages', 'c
     
 }]);
 
-Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", "$rootScope", function($scope, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location, $rootScope) {
+Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", "$rootScope", "$stateParams" , function($scope, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location, $rootScope,  $stateParams) {
     $scope.tinymceOptions = {
         language:"fr"
     };
     Publipostages.all({}, function(publis){
         $scope.publis = publis
     });
-    
-    $scope.menus = {}; 
-    $scope.menus["profs"] = [{url:"#/info_famille", text:"info_famille", icon:"icon"},
-                    {url:"#/ecrire_profs", text:"écrire aux profs", icon:"icon"},
-                    {url:"#/ecrire_eleves", text:"écrire aux eleves", icon:"icon"},
-                    {url:"#/ecrire_tous", text:"écrire à tous", icon:"icon"},
-                    {url:"#/ecrire_tous", text:"écrire à tous", icon:"icon"},
-                    {url:"#/ecrire_tous", text:"écrire à tous", icon:"icon"}];
-    $scope.menus["eleve"] = [{url:"#/ecrire_profs", text:"écrire aux profs", icon:"icon"},
-                    {url:"#/ecrire_eleves", text:"écrire aux eleves", icon:"icon"},
-                    {url:"#/ecrire_tous", text:"écrire à tous", icon:"icon"},
-                    {url:"#/ecrire_tous", text:"écrire à tous", icon:"icon"},
-                    {url:"#/ecrire_tous", text:"écrire à tous", icon:"icon"}];
-    
     
     $scope.squares = [ { id: '',
                       icon: $rootScope.racine_images + '00_vide.svg',
@@ -93,28 +79,28 @@ Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'curre
                       icon: $rootScope.racine_images + '00_vide.svg',
                       color: 'rouge',
                       text: 'info famille',
-                      url: '/info_famille',
+                      url: '/type_message/info_famille',
                       active: false
                     },
                     { id: 'write_profs',
                       icon: $rootScope.racine_images + '00_vide.svg',
                       color: 'vert',
                       text: 'écrire aux profs',
-                      url: '',
+                      url: '/type_message/ecrire_profs',
                       active: false
                     },
                     { id: 'write_eleves',
                       icon: $rootScope.racine_images + '00_vide.svg',
                       color: 'bleu',
                       text: 'écrire aux élèves',
-                      url: '',
+                      url: '/type_message/ecrire_eleves',
                       active: false
                     },
                     { id: 'write_all',
                       icon: $rootScope.racine_images + '00_vide.svg',
                       color: 'jaune',
                       text: 'écrire à tous',
-                      url: '',
+                      url: '/type_message/ecrire_tous',
                       active: false
                     },
                     { id: 'distribute_code',
@@ -259,8 +245,25 @@ Controllers.controller('MainCtrl', ['$scope', 'security','Regroupements', '$loca
         });
     });
     
+    $scope.menus = {
+        info_famille: {
+            left_menu_text:'info famille : pour diffuser un message aux famille d\'élèves',
+            left_menu_button_text: 'écrire une nouvelle info famille',
+            right_menu_text: 'info famille'
+        },
+        ecrire_profs:{
+            left_menu_text:'écrire aux prof : pour diffuser un message aux enseignants',
+            left_menu_button_text: 'écrire aux enseignant',
+            right_menu_text: 'écrire aux prof'
+        }
+    };  
+    
     $scope.goTo = function(location){
         $location.path(location);
+    }
+    
+    $scope.goToDestinataire = function(service){
+        $location.path('/destinataire/'+service);
     }
     
     $scope.goToHistory=function(id){
