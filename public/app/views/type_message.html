@@ -10,7 +10,7 @@
                     </br>
                     </br>
                     </br>
-                    <a class='btn btn-info btn-sm' ng-click="goToDestinataire($state.params['type'])">{{menus[$state.params["type"]]['left_menu_button_text']}}</a>
+                    <a class='btn btn-info btn-sm' ng-click="goToDestinataire($state.params['type'])">suivant</a>
                 </p>
             </div>
         </div>
@@ -21,9 +21,9 @@
                 <a ng-click="goTo('/type_message/info_famille')">
                     <div class="square-icon">
                       <data-ng-include class="svg" src="square.icone"></data-ng-include>
-                      <span><i class="fa fa-users"></i></span>
+                      <span class="square-text"><i class="fa fa-users"></i></span>
                       <br>
-                      <span>{{menus[$state.params["type"]]['right_menu_text']}}</span>
+                      <span class="square-text">{{menus[$state.params["type"]]['right_menu_text']}}</span>
                     </div>
                 </a>
             </div>
@@ -32,10 +32,10 @@
                 <a ng-click="goToHistory(classe.classe_id)">
                   <div class="square-icon">
                     <data-ng-include class="svg" src="square.icone"></data-ng-include>
-                    <span><i class="fa fa-users"></i></span>
+                    <span class="square-text"><i class="fa fa-users"></i></span>
                     <!--<br>-->
-                    <span>{{classe.classe_libelle}}</span>
-                    <span>{{classe.etablissement_nom}}</span>
+                    <span class="square-text">{{classe.classe_libelle}}</span>
+                    <span class="square-text">{{classe.etablissement_nom}}</span>
                   </div>
                 </a>
             </div>
@@ -44,21 +44,21 @@
                 <a ng-click="goToHistory(groupe.groupe_id)">
                   <div class="square-icon">
                     <data-ng-include class="svg" src="square.icone"></data-ng-include>
-                    <span><i class="fa fa-users"></i></span>
+                    <span class="square-text"><i class="fa fa-users"></i></span>
                     <!--<br>-->
-                    <span>{{groupe.groupe_libelle}}</span>
-                    <span>{{groupe.etablissement_nom}}</span>
+                    <span class="square-text">{{groupe.groupe_libelle}}</span>
+                    <span class="square-text">{{groupe.etablissement_nom}}</span>
                   </div>
                 </a>
             </div>
             
             <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}">
-                <a ng-click="goTo(square.lien)">
+                <a>
                   <div class="square-icon">
                     <data-ng-include class="svg" src="square.icone"></data-ng-include>
-                    <span>empty</span>
+                    <span class="square-text"></span>
                     <br>
-                    <span>empty</span>
+                    <span class="square-text"></span>
                   </div>
                 </a>
             </div>

@@ -20,80 +20,13 @@
               <a ng-click="goTo(square.url)">
                 <div class="square-icon">
                   <data-ng-include class="svg" src="square.icon"></data-ng-include>
-                  <span></span>
-                  <br>
-                  <span>{{ square.text }}</span>
+                  <span class="square-text"><i class="fa fa-users"></i></span>
+                  </br>
+                  <div class="square-text">{{ square.text }}</div>
                 </div>
               </a>
             </div>
        </div>
-    
-    <!-- display menus depends on user profil -->
-    <!--<div class="row-fluid">
-        <div class="squares">
-            <ul class="squares-list">
-                <li ng-repeat="square in squares" ng-click="goTo('#/profil')">
-                  <div class="square {{ square.couleur }}"><i class="fa fa-users"></i><data-ng-include class="svg" src="square.icone"></data-ng-include></div>
-                  <span class="square">{{square.nom}}</span>
-                  <span class="square-class" ng-show="false"><i class="fa fa-check-square-o fa-lg"></i></span>
-                </li>
-            </ul>
-        </div>
-    </div> -->
-    
-    <!--<div class="row">
-        <div class="bs-glyphicons">
-            <ul class="bs-glyphicons-list">
-                <li ng-click="goTo('/info_famille')">
-                  <span class="glyphicon"><i class="fa fa-users"></i></span>
-                  <span class="glyphicon-class">info famille</span>
-                  <span class="glyphicon-class" ng-show="false"><i class="fa fa-check-square-o fa-lg"></i></span>
-                </li>
-                <li>
-                  <span class="glyphicon"><i class="fa fa-users"></i></span>
-                  <span class="glyphicon-class">écrire aux profs</span>
-                  <span class="glyphicon-class" ng-show="false"><i class="fa fa-check-square-o fa-lg"></i></span>
-                </li>
-                <li>
-                  <span class="glyphicon"><i class="fa fa-users"></i></span>
-                  <span class="glyphicon-class">écrire aux eleves</span>
-                  <span class="glyphicon-class" ng-show="false"><i class="fa fa-check-square-o fa-lg"></i></span>
-                </li>
-                <li>
-                  <span class="glyphicon"><i class="fa fa-users"></i></span>
-                  <span class="glyphicon-class">écrire aux tous</span>
-                  <span class="glyphicon-class" ng-show="false"><i class="fa fa-check-square-o fa-lg"></i></span>
-                </li>
-            </ul>
-        </div>    
-    </div>  
-    <div class="row">
-        <div class="bs-glyphicons">
-            <ul class="bs-glyphicons-list">
-                <li>
-                  <span class="glyphicon"></span>
-                  <span class="glyphicon-class">distribuer les codes</span>
-                  <span class="glyphicon-class" ng-show="false"><i class="fa fa-check-square-o fa-lg"></i></span>
-                </li>
-                <li>
-                  <span class="glyphicon"></span>
-                  <span class="glyphicon-class">faire une annonce</span>
-                  <span class="glyphicon-class" ng-show="false"><i class="fa fa-check-square-o fa-lg"></i></span>
-                </li>
-                <li>
-                  <span class="glyphicon"></span>
-                  <span class="glyphicon-class">utiliser un modèle</span>
-                  <span class="glyphicon-class" ng-show="false"><i class="fa fa-check-square-o fa-lg"></i></span>
-                </li>
-                <li>
-                  <span class="glyphicon"></span>
-                  <span class="glyphicon-class">ma messagerie</span>
-                  <span class="glyphicon-class" ng-show="false"><i class="fa fa-check-square-o fa-lg"></i></span>
-                </li>
-            </ul>
-        </div>    
-    </div>-->
-    
     <!--<a  href="#/publi">Gestion des publipostage</a>-->
     </div>
 </div>    

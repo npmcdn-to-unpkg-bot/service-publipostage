@@ -20,26 +20,30 @@
     </div>
     <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8">
         <div class="row-fluid">
-            <div class="col-xs-8">
+            <div class="col-xs-8 vert">
                 <form role="form">
                     <div class="form-group">
                       <label for="titre">Titre du message:</label>
                       <input type="text" class="form-control" ng-model="title" id="titre" placeholder="">
                     </div>
                     <div class="form-group">
-                      <label for="corps">Corps du message:</label>
-                      <textarea  ui-tinymce="tinymceOptions" ng-model="tinymceModel" id="corps"></textarea>
+                      <textarea  ui-tinymce="tinymceOptions" ng-model="tinyMessage" id="corps"></textarea>
                     </div>
                 </form>
                 <label>Titre:</label><p>{{title}}</p>
-                <label>message en html:</label><p ng-bind-html="tinymceModel"></p>
-                <label>message en texte:</label>{{tinymceModel}}
+                <label>message en html:</label><p ng-bind-html="toTrustedHtml(tinyMessage)"></p>
+                <label>message en texte:</label>{{tinyMessage}}
+                <label>message en root:</label><p ng-bind-html="message"></p>
+                
+                <div style="text-align: center">
+                    <a class='btn btn-default btn-sm' ng-click="goToPreview()">prévisualiser</a>
+                </div>
             </div>
             <div class="col-xs-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Données de l'ENT</div>
                     <div class="panel-body">
-                      <a  ng-click="">Civilité</a>,<a ng-click="">Nom</a>, <a ng-click="">Prenom</a>, <a ng-click="">Adresse Postal</a>
+                      <a  ng-click="addToMessage('civilite')">Civilité</a>,<a ng-click="">Nom</a>, <a ng-click="">Prenom</a>, <a ng-click="">Adresse Postal</a>
                     </div>
                 </div>
             </div>

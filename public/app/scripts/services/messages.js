@@ -26,4 +26,18 @@ angular.module('services.messages').factory("FlashServiceStyled", ['$rootScope',
     }
   }
 }]);
+
+angular.module('services.messages').factory("Message", ['$rootScope', function($rootScope) {
+  return {
+    add: function(message) {
+      $rootScope.message = message;
+    },
+    clear: function() {
+      $rootScope.message = "";
+    },
+    get: function(){
+        return $rootScope.message;
+    }
+  }
+}]);
 /************************************************************************************/

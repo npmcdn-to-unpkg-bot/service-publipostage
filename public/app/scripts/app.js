@@ -58,7 +58,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     
     var message = {
       name:'message',
-      url:'/message',
+      url:'/message/:type',
       templateUrl: APPLICATION_PREFIX+'/views/message.html',
       controller:'MainCtrl'
     }
@@ -67,6 +67,13 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name:'apercu',
       url:'/apercu',
       templateUrl: APPLICATION_PREFIX+'/views/apercu.html',
+      controller:'MainCtrl'
+    }
+    
+    var mode_diffusion = {
+      name: 'mode_diffusion',
+      url:'/mode_diffusion',
+      templateUrl: APPLICATION_PREFIX+'/views/mode_diffusion.html',
       controller:'MainCtrl'
     }
     
@@ -83,6 +90,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     .state(destinataire)
     .state(message)
     .state(apercu)
+    .state(mode_diffusion)
     .state(envoi);
     $urlRouterProvider.otherwise('/');
     
@@ -131,7 +139,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     // Add the interceptor to the $httpProvider.
     $httpProvider.interceptors.push('MyHttpInterceptor');
 })
-.run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state) {
+.run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message) {
   $rootScope.$location = $location;
   $rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
   
@@ -163,6 +171,9 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
   });
   
   $rootScope.$state = $state;
+  $rootScope.title = "title";
+  $rootScope.tinymceModel = "Message";
+  Message.add('Test message');
   window.scope = $rootScope;
   FlashServiceStyled.show('bienvenu au publispostage', 'alert alert-success');
   }]);

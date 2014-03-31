@@ -8,12 +8,12 @@
                 <p style="color:#64BDF5"> Selectionner les classes  et les groupes destinataire des messages</p>
                 </br>
                 </br>
-                <a class='btn btn-info btn-sm' href="#/message">valider</a>
+                <a class='btn btn-info btn-sm' ng-click="goToMessage($state.params['type'])">suivant</a>
                     
                 </br>
                 </br>
-                <p style="color:#D3D8DB"><strong>Récpitualif</strong></p>
-                <p style="color:#D3D8DB"><strong> Message aux famille des: <span ng-repeat= "classe in regroupements['classes']"> <span ng-show="classe.checked">{{classe.classe_libelle}}</span></span>
+                
+                <p style="color:#D3D8DB"><strong> {{menus[$state.params["type"]]['recpitualif']}}: <span ng-repeat= "classe in regroupements['classes']"> <span ng-show="classe.checked">{{classe.classe_libelle}}</span></span>
                 <span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></strong></p>
             </div>
         </div>
@@ -24,35 +24,35 @@
                 <a ng-click="goTo('/type_message/info_famille')">  
                     <div class="square-icon">
                       <data-ng-include class="svg" src="square.icone"></data-ng-include>
-                      <span><i class="fa fa-users"></i></span>
+                      <span class="square-text"><i class="fa fa-users"></i></span>
                       <br>
-                      <span>{{menus[$state.params["type"]]['right_menu_text']}}</span>
+                      <span class="square-text">{{menus[$state.params["type"]]['right_menu_text']}}</span>
                     </div>
                 </a>
             </div>
             
-            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 gris3" ng-show="$state.params['type']=='ecrire_profs'">
+            <!--<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 gris3" ng-show="$state.params['type']=='ecrire_profs'">
                 <a ng-click="goTo('/type_message/info_famille')">  
                     <div class="square-icon">
                       <data-ng-include class="svg" src="square.icone"></data-ng-include>
-                      <span><select><option>mathematique</option>
+                      <span class="square-text"><select><option>mathematique</option>
                         <option>autre</option>
                       </select></span>
                       <br>
-                      <span>Choisissez une matiere</span>
+                      <span class="square-text"> &nbsp;</span>
+                       <span class="square-text"> </span>
                     </div>
                 </a>
-            </div>
+            </div>-->
             
             <div ng-repeat="classe in regroupements['classes']" class="col-xs-12 col-sm-6 col-md-3 col-lg-3" ng-class="classe.color">
                 <a ng-click="changeClassColor($index);classe.checked=!classe.checked">
                   <div class="square-icon">
                     <data-ng-include class="svg" src="square.icone"></data-ng-include>
-                    <span><i class="fa fa-users"></i></span>
+                    <span class="square-text"><i class="fa fa-users"></i></span>
                     <!--<br>-->
-                    <span>{{classe.classe_libelle}}</span>
-                    <span>{{classe.etablissement_nom}}</span>
-                    <span class="glyphicon-class" ng-show="classe.checked"><i class="fa fa-check-square-o fa-lg"></i></span>
+                    <span class="square-text">{{classe.classe_libelle}}</span>
+                    <span class="square-text">{{classe.etablissement_nom}}</span>
                   </div>
                 </a>
             </div>
@@ -61,29 +61,25 @@
                 <a ng-click="changeGroupColor($index);groupe.checked=!groupe.checked">
                   <div class="square-icon">
                     <data-ng-include class="svg" src="square.icone"></data-ng-include>
-                    <span><i class="fa fa-users"></i></span>
+                    <span class="square-text"><i class="fa fa-users"></i></span>
                     <!--<br>-->
-                    <span>{{groupe.groupe_libelle}}</span>
-                    <span>{{groupe.etablissement_nom}}</span>
-                    <span class="glyphicon-class" ng-show="groupe.checked"><i class="fa fa-check-square-o fa-lg"></i></span>
+                    <span class="square-text">{{groupe.groupe_libelle}}</span>
+                    <span class="square-text">{{groupe.etablissement_nom}}</span>
                   </div>
                 </a>
             </div>
             
-           <!-- <div class="bs-glyphicons">
-                <ul class="bs-glyphicons-list">
-                    <li ng-click="goTo('/info_famille')">
-                      <span class="glyphicon"><i class="fa fa-users"></i></span>
-                      <span class="glyphicon-class">info famille</span>
-                      <span class="glyphicon-class" ng-show="false"><i class="fa fa-check-square-o fa-lg"></i></span>
-                    </li>
-                    <li ng-repeat = "classe in regroupements['classes']" ng-click="classe.checked=!classe.checked">
-                        <span class="glyphicon">{{classe.classe_libelle}}</span>
-                        <span class="glyphicon-class">{{classe.etablissement_nom}}</span>
-                        <span class="glyphicon-class" ng-show="classe.checked"><i class="fa fa-check-square-o fa-lg"></i></span>
-                    </li>
-                </ul>
+            <!--<div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}">
+                <a>
+                  <div class="square-icon">
+                    <data-ng-include class="svg" src="square.icone"></data-ng-include>
+                    <span class="square-text"></span>
+                    <br>
+                    <span class="square-text"></span>
+                  </div>
+                </a>
             </div>-->
+            
         </div>
     </div>
 </div>

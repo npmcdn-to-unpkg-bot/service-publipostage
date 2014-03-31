@@ -79,14 +79,14 @@ Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'curre
                       icon: $rootScope.racine_images + '00_vide.svg',
                       color: 'rouge',
                       text: 'info famille',
-                      url: '/type_message/info_famille',
+                      url: '/destinataire/info_famille',
                       active: false
                     },
                     { id: 'write_profs',
                       icon: $rootScope.racine_images + '00_vide.svg',
                       color: 'vert',
                       text: 'écrire aux profs',
-                      url: '/type_message/ecrire_profs',
+                      url: '/destinataire/ecrire_profs',
                       active: false
                     },
                     { id: 'write_eleves',
@@ -96,18 +96,18 @@ Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'curre
                       url: '/type_message/ecrire_eleves',
                       active: false
                     },
-                    { id: 'write_all',
+                    { id: 'write_personnels',
                       icon: $rootScope.racine_images + '00_vide.svg',
                       color: 'jaune',
-                      text: 'écrire à tous',
-                      url: '/type_message/ecrire_tous',
+                      text: 'écrire aux personnels',
+                      url: '/type_message/ecrire_personnels',
                       active: false
                     },
-                    { id: 'distribute_code',
+                    { id: 'write_all',
                       icon: $rootScope.racine_images + '00_vide.svg',
                       color: 'violet',
-                      text: 'distribuer le code',
-                      url: '',
+                      text: 'écrire à tous',
+                      url: '/type_message/ecrire_personnels',
                       active: false
                     },
                     { id: '',
@@ -204,7 +204,7 @@ Controllers.controller('wizardController', ['$scope', function($scope){
     $scope.etablissements = [];
 }]);
 
-Controllers.controller('MainCtrl', ['$scope', 'security','Regroupements', '$location', '$rootScope', function($scope, security, Regroupements, $location, $rootScope){
+Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', function($scope, $sce, security, Regroupements, $location, $rootScope, Message){
     // option tinyMce ;
     $scope.tinymceOptions = {
         language:"fr",
@@ -213,9 +213,6 @@ Controllers.controller('MainCtrl', ['$scope', 'security','Regroupements', '$loca
         font_size_style_values: "12px,13px,14px,16px,18px,20px",
         toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist"
     };
-    
-    $scope.title = "title";
-    $scope.tinymceModel = "Message";
     
     security.requestCurrentUser().then(function(user) {
         //console.log(user);
@@ -234,12 +231,12 @@ Controllers.controller('MainCtrl', ['$scope', 'security','Regroupements', '$loca
                 element['color'] = $scope.randomColor();
             });
             
-            //
+            // Add colors to empty squres
             $scope.empty_squares = new Array(15 - ($scope.regroupements['classes'].length + $scope.regroupements['groupes_eleves'].length));
             console.log($scope.empty_squares);
-            $scope.empty_squares.forEach(function(element, index, array){
-                element = { color:$scope.randomColor()}
-            });
+            for (var i=0;i<$scope.empty_squares.length;i++){
+                $scope.empty_squares[i]={ color:$scope.randomTransparentColor()};
+            }    
             console.log($scope.empty_squares);  
             
         });
@@ -249,12 +246,14 @@ Controllers.controller('MainCtrl', ['$scope', 'security','Regroupements', '$loca
         info_famille: {
             left_menu_text:'info famille : pour diffuser un message aux famille d\'élèves',
             left_menu_button_text: 'écrire une nouvelle info famille',
-            right_menu_text: 'info famille'
+            right_menu_text: 'info famille',
+            recpitualif:'familles de'
         },
         ecrire_profs:{
             left_menu_text:'écrire aux prof : pour diffuser un message aux enseignants',
             left_menu_button_text: 'écrire aux enseignant',
-            right_menu_text: 'écrire aux prof'
+            right_menu_text: 'écrire aux prof',
+            recpitualif:'profs de'
         }
     };  
     
@@ -263,17 +262,40 @@ Controllers.controller('MainCtrl', ['$scope', 'security','Regroupements', '$loca
     }
     
     $scope.goToDestinataire = function(service){
-        $location.path('/destinataire/'+service);
+ 
+        $location.path('/destinataire/'+ service);
     }
     
-    $scope.goToHistory=function(id){
+    $scope.goToMessage = function(service){
+        $location.path('/message/'+ service);
+    }
+    
+    $scope.goToHistory = function(id){
         $location.path('/historique/'+id);    
     }
     
+    $scope.addToMessage = function(text){
+        $scope.tinyMessage = $scope.tinyMessage + text;
+    }
     
+    $scope.goToPreview = function(){
+        Message.add($scope.tinyMessage);
+        $location.path('/apercu');
+    }
+    
+    $scope.goBackToMessage = function(){
+        console.log(Message.get());
+        $scope.tinyMessage = Message.get();
+        $location.path('/message/info_famille');
+    }
+    // load message from the root ..
+    $scope.tinyMessage = Message.get();
     
     $scope.colors = [ 'bleu', 'vert', 'rouge', 'violet', 'orange',
                         'jaune', 'gris1','gris2', 'gris3', 'gris4' ];
+    
+    $scope.transparentColors = [ 'bleu-clear', 'vert-clear', 'rouge-clear', 'violet-clear', 'orange-clear',
+                        'jaune-clear', 'gris1-clear','gris2-clear', 'gris3-clear', 'gris4-clear' ];
     
     
     $scope.randomColor = function() {
@@ -281,6 +303,18 @@ Controllers.controller('MainCtrl', ['$scope', 'security','Regroupements', '$loca
         console.log(index);
         return $scope.colors[index];
     };
+    
+    $scope.randomTransparentColor = function() {
+        var index = Math.floor(Math.random()*($scope.transparentColors.length));
+        console.log(index);
+        return $scope.transparentColors[index];
+    };
+    
+    
+    $scope.toTrustedHtml = function(html_code) {
+        return $sce.trustAsHtml(html_code);
+    }
+
     
     $scope.changeClassColor = function($index){
         var color = $scope.regroupements['classes'][$index]['color']; 

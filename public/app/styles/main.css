@@ -235,7 +235,69 @@ row {
 .squares .squares-list{padding-left:0;list-style:none}
 .squares-list li{float:left;width:25%;height:127.56px;font-size:100%;text-align:center;}
 .square {margin-top:5px;margin-bottom:10px;font-size:24px}
-.squares .square-class{display:block;text-align:center;word-wrap:break-word; z-index:1!important}
+.square-text{display:block;text-align:center;word-wrap:break-word; z-index:1!important}
 /*.squares li:hover{opacity:0.1;}@media (min-width:768px){.bs-glyphicons{margin-left:0;margin-right:0}.bs-glyphicon*/
 
-.square-icon{display:block;text-align:center;word-wrap:break-word;padding:25%; font-size:100%;}
+.square-icon{display:block;text-align:center;word-wrap:break-word;padding:20%; font-size:100%;}
+
+
+/*input[type=checkbox].css-checkbox {
+        display:none;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+        padding-left:37px;
+        height:32px; 
+        display:inline-block;
+        line-height:32px;
+        background-repeat:no-repeat;
+        background-position: 0 0;
+        font-size:32px;
+        vertical-align:middle;
+        cursor:pointer;
+
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+        background-position: 0 -32px;
+}
+
+label.css-label {
+  background-image:url(http://csscheckbox.com/checkboxes/u/csscheckbox_c277ab9d9ec677eb91e7b8c18d9285d8.png);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}*/
+
+
+input[type=checkbox].css-checkbox {
+position: absolute; 
+overflow: hidden; 
+clip: rect(0 0 0 0); 
+height:1px; 
+width:1px; 
+margin:-1px; 
+padding:0;
+border:0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+padding-left:20px;
+height:15px; 
+display:inline-block;
+line-height:15px;
+background-repeat:no-repeat;
+background-position: 0 0;
+font-size:15px;
+vertical-align:middle;
+cursor:pointer;
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+background-position: 0 -15px;
+}
+
+.css-label{ background-image:url(http://csscheckbox.com/checkboxes/lite-plus.png); }
