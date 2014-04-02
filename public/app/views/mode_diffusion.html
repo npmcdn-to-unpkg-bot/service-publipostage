@@ -25,6 +25,7 @@
                 <label><strong>Destinataires:</strong></label> <p> Les famille de classe1, classe2 </p>
                 <p><strong>Titre de message:</strong> Titre </p>
                 <p ng-bind-html="toTrustedHtml(message)"></p>
+                {{messageObject['message']}}
                 </p>
             </div>
         </div>
@@ -33,10 +34,10 @@
             <form  role="form" class="form-horizontal" name="Form" >
                 <p style="text-align: justify">
                     <h4>Mode de diffusion :</h4> <br/>
-                    <input class="css-checkbox" id="byMail" type="checkbox" ng-model="value1"> <label for="byMail" class="css-label">() mails à envoyer</label><br/>
-                    <input class="css-checkbox" id="byPdf" type="checkbox" ng-model="value2"
+                    <input class="css-checkbox" id="byMail" type="checkbox" ng-model="byMail"> <label for="byMail" class="css-label">() mails à envoyer</label><br/>
+                    <input class="css-checkbox" id="byPdf" type="checkbox" ng-model="byPdf"
                                    ng-true-value="YES" ng-false-value="NO"> <label for="byPdf" class="css-label">() fichiers pdf à imprimer </label><br/>
-                    <input class="css-checkbox" id="byNotification" type="checkbox" ng-model="value3"> <label for="byNotification" class="css-label">diffuser ne ligner sur la page info famille </label><br/>
+                    <input class="css-checkbox" id="byNotification" type="checkbox" ng-model="byNotif"> <label for="byNotification" class="css-label">diffuser ne ligner sur la page info famille </label><br/>
                 </p>
             </form>
             

@@ -35,6 +35,7 @@
                 <label><strong>Destinataires:</strong></label> <p> Les famille de classe1, classe2 </p>
                 <p><strong>Titre de message:</strong> Titre </p>
                 <p ng-bind-html="toTrustedHtml(message)"></p>
+                {{messageObject['message']}}
                 <p style="text-align: center">
                     <a class="btn btn-default btn-sm" ng-click="goBackToMessage()">reéditer</a>
                     <a class='btn btn-default btn-sm'  href="#/mode_diffusion">choisir le mode de diffusion</a>

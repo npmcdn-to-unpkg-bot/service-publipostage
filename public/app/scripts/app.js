@@ -3,22 +3,22 @@
 // Declare app level module which depends on filters, and services
 angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.constants', 'ui.bootstrap',
                          'ui.tinymce', 'services.messages', 'services.authentication', 'angular-underscore',
-                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize']).
+                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize', 'services.utils']).
 config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function($urlRouterProvider, $stateProvider, APPLICATION_PREFIX){
             
     /* defining states for routing */
     var home = {
-        name: 'home',
-        url: '/',
-        templateUrl: APPLICATION_PREFIX+'/views/home.html',
-        controller: 'HomeCtrl'
+      name: 'home',
+      url: '/',
+      templateUrl: APPLICATION_PREFIX+'/views/home.html',
+      controller: 'HomeCtrl'
     };
     
     var gestion = {
-        name: 'gestion',
-        url: '/publi',
-        templateUrl: APPLICATION_PREFIX+ '/views/liste.html', 
-        controller:  'TestCtrl'
+      name: 'gestion',
+      url: '/publi',
+      templateUrl: APPLICATION_PREFIX+ '/views/liste.html', 
+      controller:  'TestCtrl'
     }
     
     var createPublipostage = {
@@ -97,62 +97,62 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
 }]).config(function ($provide, $httpProvider) {
     // Intercept http calls.
     $provide.factory('MyHttpInterceptor', function ($q, $location) {
-          return {
-            // On request success
-            request: function (config) {
-              //console.log(config); // Contains the data about the request before it is sent.
-              // Return the config or wrap it in a promise if blank.
-              return config || $q.when(config);
-            },
-            // On request failure
-            requestError: function (rejection) {
-              //console.log(rejection); // Contains the data about the error on the request.
-              // Return the promise rejection.
-              return $q.reject(rejection);
-            },
-            // On response success
-            response: function (response) {
-              //console.log(response); // Contains the data from the response.
-              // Return the response or promise.
-              return response || $q.when(response);
-            },
-            // On response failture
-            responseError: function (rejection) {
-              console.log(rejection); // Contains the data about the error.
-              if (rejection.status == 0 ) {
-                    $location.path('/');
-                    //FlashServiceStyled.show("vous n\'êtes pas authorizé à faire cette action", "alert alert-error");
-              }
-              if (rejection.status== 403 || rejection.status == 401) {
-                    // go to public page
-                    $location.path('/');
-              }
-              if (rejection.status == 400 || rejection.status == 404 || rejection.status == 500) {
-                  //FlashServiceStyled.show("une erreur s\'est produite: " + rejection.data["error"], "alert alert-error");
-                  $location.path('/');
-              }
-              // Return the promise rejection.
-              return $q.reject(rejection);
-            }
-          };
+        return {
+        // On request success
+        request: function (config) {
+          //console.log(config); // Contains the data about the request before it is sent.
+          // Return the config or wrap it in a promise if blank.
+          return config || $q.when(config);
+        },
+        // On request failure
+        requestError: function (rejection) {
+          //console.log(rejection); // Contains the data about the error on the request.
+          // Return the promise rejection.
+          return $q.reject(rejection);
+        },
+        // On response success
+        response: function (response) {
+          //console.log(response); // Contains the data from the response.
+          // Return the response or promise.
+          return response || $q.when(response);
+        },
+        // On response failture
+        responseError: function (rejection) {
+          console.log(rejection); // Contains the data about the error.
+          if (rejection.status == 0 ) {
+                $location.path('/');
+                //FlashServiceStyled.show("vous n\'êtes pas authorizé à faire cette action", "alert alert-error");
+          }
+          if (rejection.status== 403 || rejection.status == 401) {
+                // go to public page
+                $location.path('/');
+          }
+          if (rejection.status == 400 || rejection.status == 404 || rejection.status == 500) {
+              //FlashServiceStyled.show("une erreur s\'est produite: " + rejection.data["error"], "alert alert-error");
+              $location.path('/');
+          }
+          // Return the promise rejection.
+          return $q.reject(rejection);
+        }
+        };
     });
     // Add the interceptor to the $httpProvider.
     $httpProvider.interceptors.push('MyHttpInterceptor');
 })
-.run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message) {
-  $rootScope.$location = $location;
-  $rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
-  
-  security.requestCurrentUser().then(function(user) {
+.run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService) {
+    $rootScope.$location = $location;
+    $rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
+
+    security.requestCurrentUser().then(function(user) {
       console.log(user);
       currentUser = user;
-  });
-  
-  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+    });
+
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
     console.log('state changed');
-    console.log(fromState);
-    console.log(toState);
-    
+    //console.log(fromState);
+    //console.log(toState);
+
     // before loading the new state => check rights
     security.requestCurrentUser().then(function(user) {
       //console.log(user);
@@ -168,14 +168,15 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
         }
       }
     });
-  });
+    });
   
-  $rootScope.$state = $state;
-  $rootScope.title = "title";
-  $rootScope.tinymceModel = "Message";
-  Message.add('Test message');
-  window.scope = $rootScope;
-  FlashServiceStyled.show('bienvenu au publispostage', 'alert alert-success');
+    $rootScope.$state = $state;
+    $rootScope.title = "title";
+    $rootScope.messageObject = MessageService.getMessage()
+    $rootScope.tinymceModel = "Message";
+    Message.add('Test message');
+    window.scope = $rootScope;
+    FlashServiceStyled.show('bienvenu au publispostage', 'alert alert-success');
   }]);
 /*config(['$routeProvider', function($routeProvider) {
  $routeProvider.when('/', {templateUrl: '/app/views/partial1.html', controller: 'TestCtrl'});
