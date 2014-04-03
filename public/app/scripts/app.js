@@ -83,6 +83,19 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       templateUrl: APPLICATION_PREFIX+'/views/envoi.html',
       controller:'MainCtrl'
     }
+
+    var annonce = {
+      name:'annonce',
+      url:'/annonce',
+      templateUrl:APPLICATION_PREFIX+'/views/annonce.html',
+      controller:'AnnonceCtrl'
+    }
+
+    var annonce_for = {
+      name:'annonce_for',
+      url:'/annonce/:param',
+      template:'annonce pour',
+    }
     
     $stateProvider.state(home).state(gestion).state(createPublipostage).state(profil)
     .state(type_message)
@@ -91,7 +104,9 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     .state(message)
     .state(apercu)
     .state(mode_diffusion)
-    .state(envoi);
+    .state(envoi)
+    .state(annonce_for)
+    .state(annonce);
     $urlRouterProvider.otherwise('/');
     
 }]).config(function ($provide, $httpProvider) {

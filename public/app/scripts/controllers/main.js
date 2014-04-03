@@ -55,18 +55,6 @@ Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'curre
 
         $scope.squares = Squares;
         
-        
-        //$scope.menus = { "prof" : ["info_famille", "écrire aux profs", "écrire aux eleves"
-        //                           , "écrire à tous", "faire une annonce", "utiliser un modèle", "ma messagerie"],
-        //                "eleve" : ["écrire aux eleves","faire une annonce", "utiliser un modèle", "ma messagerie"],
-        //                "parent":["info_famille", "écrire aux profs", "écrire aux eleves"
-        //                           , "écrire à tous", "faire une annonce", "utiliser un modèle", "ma messagerie"],
-        //                "admin":["info_famille", "écrire aux profs", "écrire aux eleves"
-        //                           , "écrire à tous", "faire une annonce", "utiliser un modèle", "ma messagerie"],
-        //                "admin_etab":["info_famille", "écrire aux profs", "écrire aux eleves"
-        //                           , "écrire à tous", "faire une annonce", "utiliser un modèle", "ma messagerie"],
-        //                };
-        
         security.requestCurrentUser().then(function(user) {
             //console.log(user);
             $scope.currentUser = user;
@@ -79,7 +67,6 @@ Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'curre
             else{
                 $scope.avatar = "";
             }
-          
         });
 }]);
 
@@ -95,20 +82,17 @@ Controllers.controller('wizardController', ['$scope', function($scope){
     $scope.etablissements = [];
 }]);
 
-Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 'colors', 'transparentColors',
-    function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, colors, transparentColors){
+/*                                          Main controller of the application                                           */
+Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
+    'colors', 'transparentColors', 'MENUS','tinymceOptions',
+    function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, colors, transparentColors, MENUS, tinymceOptions){
         // making Redirect utils accesible in the scope 
         $scope.Redirect = Redirect;
         
         // editor tinyMce  options;
-        $scope.tinymceOptions = {
-            language:"fr",
-            menubar: false,
-            theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-            font_size_style_values: "12px,13px,14px,16px,18px,20px",
-            toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist"
-        };
+        $scope.tinymceOptions =  tinymceOptions;
 
+        //initialize destinations 
         $scope.destinations = [];
         
         security.requestCurrentUser().then(function(user) {
@@ -144,34 +128,9 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
                 
             });
         });
-
-        $scope.menus = {
-            info_famille: {
-                left_menu_text:'info famille : pour diffuser un message aux famille d\'élèves',
-                left_menu_button_text: 'écrire une nouvelle info famille',
-                right_menu_text: 'info famille',
-                recpitualif:'familles de:'
-            },
-            ecrire_profs:{
-                left_menu_text:'écrire aux prof : pour diffuser un message aux enseignants',
-                left_menu_button_text: 'écrire aux enseignant',
-                right_menu_text: 'écrire aux prof',
-                recpitualif:'enseignant de:'
-            },
-            ecrire_eleves:{
-                left_menu_text:'écrire aux élèves : pour diffuser un message aux enseignants',
-                left_menu_button_text: 'écrire aux élèves',
-                right_menu_text: 'écrire aux élèves',
-                recpitualif:'élèves de: '
-            },
-            ecrire_tous:{
-                left_menu_text:'écrire à tous',
-                left_menu_button_text: 'écrire à tous',
-                right_menu_text: 'écrire à tous',
-                recpitualif:'profils de: '
-            }
-
-        };
+        
+        // get the list of menus
+        $scope.menus = MENUS;
         
         /* select all functionality */
         $scope.selectAllMode = true;
@@ -281,37 +240,8 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         }
         
         $scope.square = {icone: $rootScope.racine_images + '00_vide.svg'};
-        /*
-        $scope.squares = [{ id: '',
-                          icone: $rootScope.racine_images + '00_vide.svg',
-                          couleur: 'rouge',
-                          nom: '',
-                          lien: '',
-                          active: false
-                        }, 
-                          { id: '',
-                          icone: $rootScope.racine_images + '00_vide.svg',
-                          couleur: 'bleu',
-                          nom: '',
-                          lien: '',
-                          active: false
-                        },
-                        { id: '',
-                          icone: $rootScope.racine_images + '00_vide.svg',
-                          couleur: 'jaune',
-                          nom: '',
-                          lien: '',
-                          active: false
-                        },
-                        { id: '',
-                          icone: $rootScope.racine_images + '00_vide.svg',
-                          couleur: 'violet',
-                          nom: '',
-                          lien: '',
-                          active: false
-                        }];
-                        */
         
+        /*              watch variables                             */
         $scope.$watch("byMail", function(newVal) {
             if (angular.isUndefined(newVal) || newVal == null) return;
             console.log(newVal);
@@ -356,6 +286,11 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             console.log(newVal);
         }, true);
     
+}]);
+
+Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', 'Redirect', function($scope, AnnonceSquares, Redirect){
+    $scope.annonceSquares = AnnonceSquares;
+    $scope.Redirect = Redirect;
 }]);
 
 Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){

@@ -52,7 +52,7 @@ angular.module('services.constants').service('Squares', function($rootScope){
                       icon: $rootScope.racine_images + '00_vide.svg',
                       color: 'bleu',
                       text: 'faire une annonce',
-                      url: '',
+                      url: '/annonce',
                       active: false
                     },
                     { id: '',
@@ -128,10 +128,164 @@ angular.module('services.constants').service('Squares', function($rootScope){
                   ];
     return squares;        
 });
+
+angular.module('services.constants').service('AnnonceSquares', function($rootScope){
+	var squares = [
+                    { id: 'annonce_personnels',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'rouge',
+                      text: 'annonce aux personnels',
+                      url: '/annonce/personnels',
+                      active: false
+                    },
+                    { id: 'annonce_eleves',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'bleu',
+                      text: 'annonce aux élèves',
+                      url: '/annonce/eleves',
+                      active: false
+                    },
+                    { id: 'annonce_profs',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'jaune',
+                      text: 'annonce aux profs',
+                      url: '/annonce/profs',
+                      active: false
+                    },
+                    { id: 'annonce_tous',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'violet',
+                      text: 'annonce à tous',
+                      url: '/annonce/tous',
+                      active: false
+                    },
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'bleu-clear',
+                      text: '',
+                      url: '',
+                      active: false
+                    },
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'vert-clear',
+                      text: '',
+                      url: '',
+                      active: false
+                    },
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'violet-clear',
+                      text: '',
+                      url: '',
+                      active: false
+                    },
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'jaune-clear',
+                      text: '',
+                      url: '',
+                      active: false
+                    },
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'jaune-clear',
+                      text: '',
+                      url: '',
+                      active: false
+                    },
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'rouge-clear',
+                      text: '',
+                      url: '',
+                      active: false
+                    },
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'vert-clear',
+                      text: '',
+                      url: '',
+                      active: false
+                    },
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'bleu-clear',
+                      text: '',
+                      url:'' ,
+                      active: false
+                    },
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'violet-clear',
+                      text: '',
+                      url: '',
+                      active: false
+                    },
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'bleu-clear',
+                      text: '',
+                      url: '',
+                      active: true
+                    },
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'jaune-clear',
+                      text: '',
+                      url: '',
+                      active: true
+                    },
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'rouge-clear',
+                      text: '',
+                      url: '',
+                      active: true
+                    }
+                  ];
+    return squares;        
+});
+
 angular.module('services.constants').constant('colors' , [ 'bleu', 'vert', 'rouge', 'violet', 'orange','jaune', 'gris1','gris2', 'gris3', 'gris4' ]);
 
 angular.module('services.constants').constant('transparentColors', [ 'bleu-clear', 'vert-clear', 'rouge-clear', 'violet-clear', 'orange-clear',
                             'jaune-clear', 'gris1-clear','gris2-clear', 'gris3-clear', 'gris4-clear' ]);
+
+angular.module('services.constants').constant('MENUS', {
+				info_famille: {
+				    left_menu_text:'info famille : pour diffuser un message aux famille d\'élèves',
+				    left_menu_button_text: 'écrire une nouvelle info famille',
+				    right_menu_text: 'info famille',
+				    recpitualif:'familles de:'
+				},
+				ecrire_profs:{
+				    left_menu_text:'écrire aux prof : pour diffuser un message aux enseignants',
+				    left_menu_button_text: 'écrire aux enseignant',
+				    right_menu_text: 'écrire aux prof',
+				    recpitualif:'enseignant de:'
+				},
+				ecrire_eleves:{
+				    left_menu_text:'écrire aux élèves : pour diffuser un message aux enseignants',
+				    left_menu_button_text: 'écrire aux élèves',
+				    right_menu_text: 'écrire aux élèves',
+				    recpitualif:'élèves de: '
+				},
+				ecrire_tous:{
+				    left_menu_text:'écrire à tous',
+				    left_menu_button_text: 'écrire à tous',
+				    right_menu_text: 'écrire à tous',
+				    recpitualif:'profils de: '
+				}
+});
+
+angular.module('services.constants').value('tinymceOptions', {
+            language:"fr",
+            menubar: false,
+            theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
+            font_size_style_values: "12px,13px,14px,16px,18px,20px",
+            toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist"
+        });
 
 
 
