@@ -11,90 +11,103 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name: 'home',
       url: '/',
       templateUrl: APPLICATION_PREFIX+'/views/home.html',
-      controller: 'HomeCtrl'
+      controller: 'HomeCtrl',
+      authorizedRoles: "all"
     };
     
     var gestion = {
       name: 'gestion',
       url: '/publi',
       templateUrl: APPLICATION_PREFIX+ '/views/liste.html', 
-      controller:  'TestCtrl'
+      controller:  'TestCtrl',
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
     var createPublipostage = {
       name:'create',
       url: '/creer', 
       templateUrl: APPLICATION_PREFIX+'/views/create_publipostage.html',
-      controller: 'MainCtl'
+      controller: 'MainCtl',
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
     var profil = {
       name:'profil',
       url:'/profil',
       templateUrl: APPLICATION_PREFIX+'/views/profil.html',
-      controller:'TestCtrl'
+      controller:'TestCtrl',
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
     var type_message = {
       name:'type_message',
       url:'/type_message/:type',
       templateUrl: APPLICATION_PREFIX+'/views/type_message.html',
-      controller:'MainCtrl'
+      controller:'MainCtrl',
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
     var historique = {
       name:'histroique',
       url:'/historique/:id',
       templateUrl: APPLICATION_PREFIX+'/views/historique.html',
-      controller:'TestCtrl'
+      controller:'TestCtrl',
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
     var destinataire = {
       name:'destinataire',
       url:'/destinataire/:type',
       templateUrl: APPLICATION_PREFIX+'/views/destinataire.html',
-      controller:'MainCtrl'
+      controller:'MainCtrl',
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
     var message = {
       name:'message',
       url:'/message/:type',
       templateUrl: APPLICATION_PREFIX+'/views/message.html',
-      controller:'MainCtrl'
+      controller:'MainCtrl',
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
     var apercu = {
       name:'apercu',
       url:'/apercu',
       templateUrl: APPLICATION_PREFIX+'/views/apercu.html',
-      controller:'MainCtrl'
+      controller:'MainCtrl',
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
     var mode_diffusion = {
       name: 'mode_diffusion',
       url:'/mode_diffusion',
       templateUrl: APPLICATION_PREFIX+'/views/mode_diffusion.html',
-      controller:'MainCtrl'
+      controller:'MainCtrl',
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
     var envoi = {
       name:'envoi',
       url:'/envoi',
       templateUrl: APPLICATION_PREFIX+'/views/envoi.html',
-      controller:'MainCtrl'
+      controller:'MainCtrl',
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
 
     var annonce = {
       name:'annonce',
       url:'/annonce',
       templateUrl:APPLICATION_PREFIX+'/views/annonce.html',
-      controller:'AnnonceCtrl'
+      controller:'AnnonceCtrl',
+      authorizedRoles: ["TECH"]
     }
 
     var annonce_for = {
       name:'annonce_for',
       url:'/annonce/:param',
       template:'annonce pour',
+      authorizedRoles: ["TECH"]
     }
     
     $stateProvider.state(home).state(gestion).state(createPublipostage).state(profil)
@@ -155,6 +168,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $httpProvider.interceptors.push('MyHttpInterceptor');
 })
 .run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService) {
+    
     $rootScope.$location = $location;
     $rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
 
@@ -163,38 +177,31 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       currentUser = user;
     });
 
+    // check authorization before changing states .
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-    console.log('state changed');
-    //console.log(fromState);
-    //console.log(toState);
+      console.log('state changed');
+      console.log(toState);
 
-    // before loading the new state => check rights
-    security.requestCurrentUser().then(function(user) {
-      //console.log(user);
-      currentUser = user;
-      if (security.isAuthenticated()) {
-        // for the moment only admin can see the page of publipostage ..
-        var allowed = _.find(currentUser.roles, function(role){return role[0]=="TECH"||role[0]=="PROF_ETB"||role[0]=="ADM_ETB"});
-        if (typeof(allowed) == 'undefined' && toState.url!=fromState.url && fromState.url!='^') {
-          // you don not have rights ..
-          console.log('vous pouvez pas acceder');
-          event.preventDefault();
-          $state.transitionTo('home');
+      // before loading the new state => check rights
+      security.requestCurrentUser().then(function(user) {
+        currentUser = user;
+        if (security.isAuthenticated()) {
+          var authorized = security.isAuthorized(toState.authorizedRoles);
+          if (!authorized && toState.url!=fromState.url && fromState.url!='^') {
+            // you don not have rights ..
+            console.log('désolé, vous pouvez pas acceder');
+            event.preventDefault();
+            $state.transitionTo('home');
+          }
         }
-      }
-    });
+      });
     });
   
     $rootScope.$state = $state;
     $rootScope.title = "title";
-    $rootScope.messageObject = MessageService.getMessage()
+    $rootScope.messageObject = MessageService.getMessage();
     $rootScope.tinymceModel = "Message";
-    Message.add('Test message');
+    //Message.add('Test message');
     window.scope = $rootScope;
     FlashServiceStyled.show('bienvenu au publispostage', 'alert alert-success');
-  }]);
-/*config(['$routeProvider', function($routeProvider) {
- $routeProvider.when('/', {templateUrl: '/app/views/partial1.html', controller: 'TestCtrl'});
-  $routeProvider.when('/view2', {templateUrl: '/app/views/partial2.html', controller: 'MyCtrl2'});
-  $routeProvider.otherwise({redirectTo: '/'});
-}])*/
+}]);
