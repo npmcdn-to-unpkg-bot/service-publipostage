@@ -59,10 +59,11 @@ angular.module('services.messages').factory("MessageObject", ['$rootScope', func
 }]);
 
 
+/* MessageService is the service that represents the sent message */
 angular.module('services.messages').service('MessageService', function () {
     var messageObject = { message:'',
                         title:'',
-                        destination:[],
+                        destinations:[],
                         messageType:'',
                         sendType:[]
     };
@@ -82,18 +83,12 @@ angular.module('services.messages').service('MessageService', function () {
         return messageObject;
     }
     
-    this.addDestinations = function(d){
-        messageObject['destination'].push(d);
+    this.addDestinations = function(arry){
+        messageObject['destinations'] = arry;
     }
     
-    this.deleteDestination = function(d){
-        var index = messageObject['destination'].indexOf(d);
-        if (index > -1) {
-            messageObject['destination'].splice(index,1);
-        }
-    }
-    this.clearDestination = function(){
-        messageObject['destination'] = [];
+    this.clearDestinations = function(){
+        messageObject['destinations'] = [];
     }
     
     this.addSendType = function(sendType){
@@ -107,7 +102,7 @@ angular.module('services.messages').service('MessageService', function () {
         }
     }
     
-    this.addType = function(type){
+    this.addMessageType = function(type){
         messageObject['messageType'] = type;
         console.log(messageObject);
     }  

@@ -130,5 +130,8 @@ angular.module('services.constants').service('Squares', function($rootScope){
 });
 angular.module('services.constants').constant('colors' , [ 'bleu', 'vert', 'rouge', 'violet', 'orange','jaune', 'gris1','gris2', 'gris3', 'gris4' ]);
 
+angular.module('services.constants').constant('transparentColors', [ 'bleu-clear', 'vert-clear', 'rouge-clear', 'violet-clear', 'orange-clear',
+                            'jaune-clear', 'gris1-clear','gris2-clear', 'gris3-clear', 'gris4-clear' ]);
+
 
 

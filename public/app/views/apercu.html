@@ -14,10 +14,8 @@
                     <a class='btn btn-info btn-sm' href="#/envoi">diffuser le message en ligne</a>
                 </p>
                 <p>
-                    
                     <a class="btn btn-info btn-sm"> génerer un pdf</a>
                 </p>-->
-    
                 </br>
                 </br>
                 <a class='btn btn-info btn-sm'>voir l'historique des info famille</a>
@@ -32,9 +30,9 @@
         <div class="row-fluid">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12 vert">
                 <p style="text-align: justify">
-                <label><strong>Destinataires:</strong></label> <p> Les famille de classe1, classe2 </p>
-                <p><strong>Titre de message:</strong> Titre </p>
-                <p ng-bind-html="toTrustedHtml(message)"></p>
+                <label><strong>Destinataires:</strong></label> <p> <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}</span></p>
+                <p><strong>Titre de message:</strong>{{messageObject['title']}}</p>
+                <p ng-bind-html="toTrustedHtml(MessageService.getMessage()['message'])"></p>
                 {{messageObject['message']}}
                 <p style="text-align: center">
                     <a class="btn btn-default btn-sm" ng-click="goBackToMessage()">reéditer</a>
