@@ -27,7 +27,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name:'create',
       url: '/creer', 
       templateUrl: APPLICATION_PREFIX+'/views/create_publipostage.html',
-      controller: 'MainCtl',
+      controller: 'MainCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
