@@ -3,7 +3,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.constants', 'ui.bootstrap',
                          'ui.tinymce', 'services.messages', 'services.authentication', 'angular-underscore',
-                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize', 'services.utils']).
+                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize', 'services.utils', 'chieffancypants.loadingBar']).
 config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function($urlRouterProvider, $stateProvider, APPLICATION_PREFIX){
             
     /* defining states for routing */
@@ -124,7 +124,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     
 }]).config(function ($provide, $httpProvider) {
     // Intercept http calls.
-    $provide.factory('MyHttpInterceptor', function ($q, $location) {
+    $provide.factory('HttpInterceptor', function ($q, $location) {
         return {
         // On request success
         request: function (config) {
@@ -146,7 +146,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
         },
         // On response failture
         responseError: function (rejection) {
-          console.log(rejection); // Contains the data about the error.
+          //console.log(rejection); // Contains the data about the error.
           if (rejection.status == 0 ) {
                 $location.path('/');
                 //FlashServiceStyled.show("vous n\'êtes pas authorizé à faire cette action", "alert alert-error");
@@ -165,9 +165,10 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
         };
     });
     // Add the interceptor to the $httpProvider.
-    $httpProvider.interceptors.push('MyHttpInterceptor');
-})
-.run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService) {
+    $httpProvider.interceptors.push('HttpInterceptor');
+}).config(function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
+  }).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService) {
     
     $rootScope.$location = $location;
     $rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
@@ -200,8 +201,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $rootScope.$state = $state;
     $rootScope.title = "title";
     $rootScope.messageObject = MessageService.getMessage();
-    $rootScope.tinymceModel = "Message";
-    //Message.add('Test message');
+    $rootScope.tinymceModel = "";
     window.scope = $rootScope;
     FlashServiceStyled.show('bienvenu au publispostage', 'alert alert-success');
 }]);
