@@ -1,5 +1,5 @@
 <div class="row-fluid">
-    <div class="col-xs-4 col-s-m4 col-md-4 col-lg-4 aside">
+    <div class="col-xs-4 col-s-m4 col-md-4 col-lg-4 aside" style="border-left:10px solide #ff0000;">
       <div class="row-fluid">
           <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
               <p style="color: #64BDF5">
@@ -19,9 +19,8 @@
             <div ng-repeat="square in squares" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 {{ square.color }}" >
               <a ng-click="addMessageType('message type');Redirect.goTo(square.url)">
                 <div class="square-icon">
-                  <data-ng-include class="svg" src="square.icon"></data-ng-include>
-                  <span class="square-text"></span>
-                  </br>
+                  <div><data-ng-include class="svg" src="square.icon"></data-ng-include></div>
+                  <!--<span class="square-text"></span>-->
                   <div class="square-text">{{ square.text }}</div>
                 </div>
               </a>

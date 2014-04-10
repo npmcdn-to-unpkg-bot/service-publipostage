@@ -3,7 +3,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.constants', 'ui.bootstrap',
                          'ui.tinymce', 'services.messages', 'services.authentication', 'angular-underscore',
-                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize', 'services.utils', 'chieffancypants.loadingBar']).
+                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize', 'services.utils']).
 config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function($urlRouterProvider, $stateProvider, APPLICATION_PREFIX){
             
     /* defining states for routing */
@@ -166,12 +166,11 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     });
     // Add the interceptor to the $httpProvider.
     $httpProvider.interceptors.push('HttpInterceptor');
-}).config(function(cfpLoadingBarProvider) {
-    cfpLoadingBarProvider.includeSpinner = false;
-  }).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService) {
+}).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService) {
     
     $rootScope.$location = $location;
-    $rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
+    $rootScope.racine_images ='/app/images/';
+    //$rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
 
     security.requestCurrentUser().then(function(user) {
       console.log(user);

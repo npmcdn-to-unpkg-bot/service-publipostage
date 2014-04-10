@@ -235,10 +235,19 @@ row {
 .squares .squares-list{padding-left:0;list-style:none}
 .squares-list li{float:left;width:25%;height:127.56px;font-size:100%;text-align:center;}
 .square {margin-top:5px;margin-bottom:10px;font-size:24px}
-.square-text{display:block;text-align:center;word-wrap:break-word; z-index:1!important}
+.square-text{
+  display:block;
+  text-align:center;
+  word-wrap:break-word;
+  position: relative;
+  font-size: 150%;
+  width: 100%;
+  color: white;
+  font-family: Futura Bold; 
+  z-index:1!important}
 /*.squares li:hover{opacity:0.1;}@media (min-width:768px){.bs-glyphicons{margin-left:0;margin-right:0}.bs-glyphicon*/
 
-.square-icon{display:block;text-align:center;word-wrap:break-word;padding:20%; font-size:100%;}
+.square-icon{display:block;text-align:center;word-wrap:break-word;padding:5%; font-size:100%;}
 
 
 /*input[type=checkbox].css-checkbox {
