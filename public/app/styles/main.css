@@ -224,13 +224,6 @@ row {
     display: table;
 }
 
-/*.row [class*="col-"] {
-    float: none;
-    display: table-cell;
-    vertical-align: top;
-}*/
-
-
 .squares{margin:0 -19px 20px -16px;overflow:hidden}
 .squares .squares-list{padding-left:0;list-style:none}
 .squares-list li{float:left;width:25%;height:127.56px;font-size:100%;text-align:center;}
@@ -243,8 +236,71 @@ row {
   font-size: 150%;
   width: 100%;
   color: white;
+  font-family: Futura Bold;
+  z-index:1!important
+}
+
+.menu-text {
+  font-size: 150%;
+  width: 100%;
+  color:#64BDF5;
+  font-family: Futura Bold;
+}
+
+.menu-text-hidden {
+  font-size: 150%;
+  width: 100%;
+  color:#D3D8DB;
+  font-family: Futura Bold;
+}
+.menu-text-black {
+  font-size: 150%;
+  width: 100%;
+  font-family: Futura Bold;
+}
+.classe-text  {
+  margin-top:5px;margin-bottom:10px;
+  text-align:center;
+  word-wrap:break-word;
+  position: absulute;
+  font-size: 200%;
+  color: white;
   font-family: Futura Bold; 
-  z-index:1!important}
+  z-index:1!important
+}
+
+.groupe-text {
+  margin-top:5px;margin-bottom:10px;
+  text-align:center;
+  word-wrap:break-word;
+  position: absulute;
+  font-size: 150%;
+  color: white;
+  font-family: Futura Bold; 
+  z-index:1!important
+}
+
+.empty-icon {
+  background-image: url("public/images/00_vide.svg");
+  width:213.333px;
+  height:200px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+  word-wrap:break-word;
+  font-size: 300%;
+  color: white;
+  font-family: Futura Bold; 
+  z-index:1!important
+}
+
+.famille-icon {
+  background-image: url("../images/famille.svg");
+  width:213.333px;
+  height:200px;
+}
+
+
 /*.squares li:hover{opacity:0.1;}@media (min-width:768px){.bs-glyphicons{margin-left:0;margin-right:0}.bs-glyphicon*/
 
 .square-icon{display:block;text-align:center;word-wrap:break-word;padding:5%; font-size:100%;}
@@ -334,4 +390,46 @@ background-position: 0 -15px;
   left: 0;
   width: 100%;
   height: 10px;
+}
+
+/* transparent colors */
+.bleu-clear {
+  background-color:#1aa1cc;
+  opacity:0.3;
+}
+.vert-clear {
+  background-color:#80ba66;
+  opacity:0.3;
+}
+.rouge-clear {
+  background-color:#eb5454;
+  opacity:0.3;
+}
+.orange-clear {
+  background-color:#ff5f00;
+  opacity:0.3;
+}
+.violet-clear { 
+  background-color:#9c75ab;
+  opacity:0.3;
+}
+.jaune-clear {
+  background-color:#e8c254;
+  opacity:0.3;
+}
+.gris1-clear{ 
+  background-color:#b2b2b2;
+  opacity:0.3;
+}
+.gris2-clear {
+  background-color:#8e8e8e; 
+  opacity: 0.3;
+}
+.gris3-clear {
+  background-color:#505050; 
+  opacity: 0.3;
+}
+.gris4-clear {
+  background-color:#323232; 
+  opacity: 0.3;
 }

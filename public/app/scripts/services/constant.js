@@ -252,31 +252,37 @@ angular.module('services.constants').constant('colors' , [ 'bleu', 'vert', 'roug
 angular.module('services.constants').constant('transparentColors', [ 'bleu-clear', 'vert-clear', 'rouge-clear', 'violet-clear', 'orange-clear',
                             'jaune-clear', 'gris1-clear','gris2-clear', 'gris3-clear', 'gris4-clear' ]);
 
-angular.module('services.constants').constant('MENUS', {
+angular.module('services.constants').service('Menus', function($rootScope){
+  return {
 				info_famille: {
 				    left_menu_text:'info famille : pour diffuser un message aux famille d\'élèves',
 				    left_menu_button_text: 'écrire une nouvelle info famille',
-				    right_menu_text: 'info famille',
-				    recpitualif:'familles de:'
+				    right_menu_text: 'écrire aux familles',
+				    recpitualif: 'familles de ',
+            icon :$rootScope.racine_images + 'famille.svg'
 				},
 				ecrire_profs:{
 				    left_menu_text:'écrire aux prof : pour diffuser un message aux enseignants',
 				    left_menu_button_text: 'écrire aux enseignant',
 				    right_menu_text: 'écrire aux prof',
-				    recpitualif:'enseignant de:'
+				    recpitualif:'enseignant de:',
+            icon :$rootScope.racine_images + 'famille.svg'
 				},
 				ecrire_eleves:{
 				    left_menu_text:'écrire aux élèves : pour diffuser un message aux enseignants',
 				    left_menu_button_text: 'écrire aux élèves',
 				    right_menu_text: 'écrire aux élèves',
-				    recpitualif:'élèves de: '
+				    recpitualif:'élèves de: ',
+            icon :$rootScope.racine_images + 'famille.svg'
 				},
 				ecrire_tous:{
 				    left_menu_text:'écrire à tous',
 				    left_menu_button_text: 'écrire à tous',
 				    right_menu_text: 'écrire à tous',
-				    recpitualif:'profils de: '
+				    recpitualif:'profils de: ',
+            icon :$rootScope.racine_images + 'famille.svg'
 				}
+      };
 });
 
 angular.module('services.constants').value('tinymceOptions', {

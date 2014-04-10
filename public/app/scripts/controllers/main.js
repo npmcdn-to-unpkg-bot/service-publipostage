@@ -84,11 +84,15 @@ Controllers.controller('wizardController', ['$scope', function($scope){
 
 /*                                          Main controller of the application                                           */
 Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'MENUS','tinymceOptions',
-    function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, colors, transparentColors, MENUS, tinymceOptions){
+    'colors', 'transparentColors', 'Menus','tinymceOptions',
+    function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, colors, transparentColors, Menus, tinymceOptions){
         // making Redirect utils accesible in the scope 
         $scope.Redirect = Redirect;
-        
+        /*
+        $scope.square_style = {
+            'background-image' : $scope.menus[$state.params['type']].icon
+        }
+        */
         // editor tinyMce  options;
         $scope.tinymceOptions =  tinymceOptions;
 
@@ -130,7 +134,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         });
         
         // get the list of menus
-        $scope.menus = MENUS;
+        $scope.menus = Menus;
         
         /* select all functionality */
         $scope.selectAllMode = true;
