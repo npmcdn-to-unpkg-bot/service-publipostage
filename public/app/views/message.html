@@ -2,49 +2,49 @@
     <div class="col-xs-4 col-s-m4 col-md-4 col-lg-4">
         <div class="row-fluid">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <p style="color:#64BDF5">Etape 1: type de message</p>
-                <p style="color:#64BDF5">Etape 2: les destinataire</strong></p>
-                <p style="color:#64BDF5"><strong>Etepe 3: Message</strong></p>
-                
-                <p style="color:#64BDF5">Ecrire le message</p>
+                <p class="menu-text">Etape 1: type de message</p>
+                <p class="menu-text">Etape 2: les destinataires</strong></p>
+                <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}</span></p>
+                <p class="menu-text"><strong>Etepe 3: Message</strong></p>
+                <p class="menu-text">Ecrire le message</p>
                 </br>
                 </br>
-                <!--<a class='btn btn-info btn-sm' href="#/apercu">valider</a>-->
-                </br>
-                </br>
-                <h5>Récpitualif</h5>
-                Message aux famille des: <span ng-repeat= "classe in regroupements['classes']"> <span ng-show="classe.checked">{{classe.classe_libelle}}</span></span>
-                <span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span>
             </div>    
         </div>        
     </div>
     <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8">
-        <div class="row-fluid">
-            <div class="col-xs-8 vert">
-                <form role="form">
+        <div class="row" ng-class="menus[$state.params['type']].color">
+            <div class="col-xs-8">
+                <form role="form" >
                     <div class="form-group">
-                      <label for="titre">Titre du message:</label>
-                      <input type="text" class="form-control" ng-model="title" id="titre" placeholder="">
-                    </div>
-                    <div class="form-group">
-                      <textarea  ui-tinymce="tinymceOptions" ng-model="tinyMessage" id="corps"></textarea>
+                      <label for="title">Titre du message:</label>
+                      <input type="text" class="form-control" ng-model="title" id="titre"  placeholder="titre">
                     </div>
                 </form>
-                <label>Titre:</label><p>{{title}}</p>
-                <label>message en html:</label><p ng-bind-html="toTrustedHtml(tinyMessage)"></p>
-                <label>message en texte:</label>{{tinyMessage}}
-                <label>message en root:</label><p ng-bind-html="message"></p>
-                
-                <div style="text-align: center">
-                    <a class='btn btn-default btn-sm' ng-click="goToPreview()">prévisualiser</a>
+                <div class="form-group">
+                    <a class="btn btn-default" ng-click="showtoolbar=!showtoolbar">inserer des données</a><br/>
+                    <div ng-show="showtoolbar"><a  class="btn btn-default" ng-click="addToMessage('civilite')">Civilité</a> <a class="btn btn-default" ng-click="">Nom</a> <a class="btn btn-default"ng-click="">Prenom</a> <a  class="btn btn-default" ng-click="">Adresse</a>  <a  class="btn btn-default" ng-click="">Date du Jours</a>  <a  class="btn btn-default" ng-click="">Singature</a>   <a  class="btn btn-default" ng-click="">Nom de l'élève</a>  <a  class="btn btn-default" ng-click="">Prénom de l'élève</a>   <a  class="btn btn-default" ng-click="">Classe</a>  <a  class="btn btn-default" ng-click="">Lien blog de l'etablissement</a>    <a  class="btn btn-default" ng-click="">Lien blog de groupe</a>     <a  class="btn btn-default" ng-click="">Lien blog de classe</a> <a  class="btn btn-default" ng-click="">Lirn Laclasse.com</a>
+                    </div> 
                 </div>
             </div>
             <div class="col-xs-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Données de l'ENT</div>
-                    <div class="panel-body">
-                      <a  ng-click="addToMessage('civilite')">Civilité</a>,<a ng-click="">Nom</a>, <a ng-click="">Prenom</a>, <a ng-click="">Adresse Postal</a>
+                <div ng-class="menus[$state.params['type']].icon_div"></div>
+            </div>
+        </div>
+        <div class="row" ng-class="menus[$state.params['type']].color">
+            <div class="col-xs-10">
+                <form role="form">
+                    <div class="form-group">
+                      <textarea  ui-tinymce="tinymceOptions" ng-model="tinyMessage" id="corps"></textarea>
                     </div>
+                </form> 
+                <label>Titre:</label><p>{{title}}</p>
+                <label>Message en html:</label><p ng-bind-html="toTrustedHtml(tinyMessage)"></p>
+                <!--<label>message en texte:</label>{{tinyMessage}}
+                <label>message en root:</label><p ng-bind-html="message"></p> -->
+                
+                <div style="text-align: center">
+                    <a class='btn btn-default btn-sm' ng-click="goToPreview($state.params['type'])">prévisualiser</a>
                 </div>
             </div>
         </div>

@@ -259,21 +259,27 @@ angular.module('services.constants').service('Menus', function($rootScope){
 				    left_menu_button_text: 'écrire une nouvelle info famille',
 				    right_menu_text: 'écrire aux familles',
 				    recpitualif: 'familles de ',
-            icon :$rootScope.racine_images + 'famille.svg'
+            icon :$rootScope.racine_images + 'famille.svg',
+            color: "vert",
+            icon_div:"famille-icon"
 				},
 				ecrire_profs:{
 				    left_menu_text:'écrire aux prof : pour diffuser un message aux enseignants',
 				    left_menu_button_text: 'écrire aux enseignant',
 				    right_menu_text: 'écrire aux prof',
 				    recpitualif:'enseignant de:',
-            icon :$rootScope.racine_images + 'famille.svg'
+            icon :$rootScope.racine_images + 'profs.svg',
+            color: "bleu",
+            icon_div:"profs-icon"
 				},
 				ecrire_eleves:{
 				    left_menu_text:'écrire aux élèves : pour diffuser un message aux enseignants',
 				    left_menu_button_text: 'écrire aux élèves',
 				    right_menu_text: 'écrire aux élèves',
 				    recpitualif:'élèves de: ',
-            icon :$rootScope.racine_images + 'famille.svg'
+            icon :$rootScope.racine_images + 'famille.svg',
+            color: "jaune",
+            icon_div:"eleves-icon"
 				},
 				ecrire_tous:{
 				    left_menu_text:'écrire à tous',

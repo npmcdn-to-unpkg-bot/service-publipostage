@@ -165,16 +165,16 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             $scope.tinyMessage = $scope.tinyMessage + text;
         }
         
-        $scope.goToPreview = function(){
+        $scope.goToPreview = function(location){
             MessageService.addMessage($scope.tinyMessage, $scope.title)
             console.log(MessageService.getMessage());
-            $location.path('/apercu');
+            $location.path('/apercu/'+location);
         }
         
-        $scope.goBackToMessage = function(){
+        $scope.goBackToMessage = function(location){
             console.log(Message.get());
             $scope.tinyMessage = MessageService.getMessage()['message'];
-            $location.path('/message/info_famille');
+            $location.path('/message/'+location);
         }
         
         $scope.addType = function(){

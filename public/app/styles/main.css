@@ -300,6 +300,17 @@ row {
   height:200px;
 }
 
+.profs-icon {
+  background-image: url("../images/profs.svg");
+  width:213.333px;
+  height:200px;
+}
+
+.eleves-icon {
+  background-image: url("../images/eleves.svg");
+  width:213.333px;
+  height:200px;
+}
 
 /*.squares li:hover{opacity:0.1;}@media (min-width:768px){.bs-glyphicons{margin-left:0;margin-right:0}.bs-glyphicon*/
 
@@ -432,4 +443,9 @@ background-position: 0 -15px;
 .gris4-clear {
   background-color:#323232; 
   opacity: 0.3;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
 }

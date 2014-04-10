@@ -2,41 +2,37 @@
     <div class="col-xs-4 col-s-m4 col-md-4 col-lg-4">
         <div class="row-fluid">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <p style="color:#64BDF5">Etape 1: type de message</p>
-                <p style="color:#64BDF5">Etape 2: les destinataire</strong></p>
-                <p style="color:#64BDF5">Etape 3: message</p>
-                <p style="color:#64BDF5"><strong>Etape 4: aperçu</strong></p>
-                <p style="color:#64BDF5">Vérifier le message avant l'envoi</p>
+                <p class="menu-text">Etape 1: type de message</p>
+                <p class="menu-text">Etape 2: les destinataire</strong></p>
+                <p class="menu-text">Etape 3: message</p>
+                <p class="menu-text"><strong>Etape 4: aperçu</strong></p>
+                <p class="menu-text">Vérifier le message avant l'envoi</p>
                 </br>
                 </br>
                 </br>
-                <!--<p>
-                    <a class='btn btn-info btn-sm' href="#/envoi">diffuser le message en ligne</a>
-                </p>
-                <p>
-                    <a class="btn btn-info btn-sm"> génerer un pdf</a>
-                </p>-->
                 </br>
                 </br>
-                <a class='btn btn-info btn-sm'>voir l'historique des info famille</a>
-                <!--<h5>Récpitualif</h5>
-                Message aux famille des:
-                () mails
-                () pdfs-->
+                <a class='btn btn-info btn-sm'>voir l'historique</a>
             </div>
         </div>
     </div>
-    <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8">
-        <div class="row-fluid">
-            <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12 vert">
+    <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8" ng-class="menus[$state.params['type']].color">
+        <div class="row" ng-class="menus[$state.params['type']].color">
+            <div ng-class="menus[$state.params['type']].icon_div" class="famille-icon col-md-2 col-md-offset-5"></div>  <!-- col-md-2  col-md-2 to center content -->
+        </div>
+        <div class="row" ng-class="menus[$state.params['type']].color">
+            <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+                <div style="margin-left:10%; margin-right:10%">
                 <p style="text-align: justify">
                 <label><strong>Destinataires:</strong></label> <p> <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}</span></p>
                 <p><strong>Titre de message:</strong>{{messageObject['title']}}</p>
                 <p ng-bind-html="toTrustedHtml(MessageService.getMessage()['message'])"></p>
                 {{messageObject['message']}}
+                
+            </div>
                 <p style="text-align: center">
-                    <a class="btn btn-default btn-sm" ng-click="goBackToMessage()">reéditer</a>
-                    <a class='btn btn-default btn-sm'  href="#/mode_diffusion">choisir le mode de diffusion</a>
+                    <a class="btn btn-default btn-sm" ng-click="goBackToMessage($state.params['type'])">reéditer</a>
+                    <a class='btn btn-default btn-sm'  href="#/mode_diffusion/{{$state.params['type']}}">choisir le mode de diffusion</a>
                 </p>
                 </p>
             </div>

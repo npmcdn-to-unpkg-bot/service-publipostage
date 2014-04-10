@@ -73,7 +73,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     
     var apercu = {
       name:'apercu',
-      url:'/apercu',
+      url:'/apercu/:type',
       templateUrl: APPLICATION_PREFIX+'/views/apercu.html',
       controller:'MainCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
@@ -81,7 +81,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     
     var mode_diffusion = {
       name: 'mode_diffusion',
-      url:'/mode_diffusion',
+      url:'/mode_diffusion/:type',
       templateUrl: APPLICATION_PREFIX+'/views/mode_diffusion.html',
       controller:'MainCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]

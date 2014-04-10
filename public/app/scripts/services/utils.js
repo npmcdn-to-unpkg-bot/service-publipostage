@@ -17,6 +17,10 @@ angular.module('services.utils').factory("Redirect", ['$location', function($loc
         },
         goToHistory: function(location){
             $location.path('/historique/'+location);
+        },
+        goToPreview: function(location){
+            $location.path('/apercu/'+location);
         }
+
   	}
 }]);
