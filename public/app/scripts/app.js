@@ -89,7 +89,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     
     var envoi = {
       name:'envoi',
-      url:'/envoi',
+      url:'/envoi/:type',
       templateUrl: APPLICATION_PREFIX+'/views/envoi.html',
       controller:'MainCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]

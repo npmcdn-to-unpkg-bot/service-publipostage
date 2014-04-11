@@ -312,6 +312,19 @@ row {
   height:200px;
 }
 
+.tous-icon {
+  background-image: url("../images/tous.svg");
+  width:213.333px;
+  height:200px;
+}
+
+.personnel-icon {
+  background-image: url("../images/personnel.svg");
+  width:213.333px;
+  height:200px;
+}
+
+
 /*.squares li:hover{opacity:0.1;}@media (min-width:768px){.bs-glyphicons{margin-left:0;margin-right:0}.bs-glyphicon*/
 
 .square-icon{display:block;text-align:center;word-wrap:break-word;padding:5%; font-size:100%;}
@@ -443,9 +456,4 @@ background-position: 0 -15px;
 .gris4-clear {
   background-color:#323232; 
   opacity: 0.3;
-}
-
-.col-centered{
-    float: none;
-    margin: 0 auto;
 }

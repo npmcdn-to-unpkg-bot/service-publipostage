@@ -41,10 +41,10 @@
                 </form>
                 </br>
                 </br>
-                <p style="text-align: center"><a class='btn btn-info btn-sm' ng-show="destinations.length>0" ng-click="addDestinations();Redirect.goToMessage($state.params['type'])">suivant</a></p>
+                <p style="text-align: center"><a class='btn btn-info btn-sm' ng-disabled="destinations.length<=0" ng-click="addDestinations();Redirect.goToMessage($state.params['type'])">suivant</a></p>
                 </br>
                 </br>
-                <p class="menu-text-black">Vous avez selectionné <span class="label label-info">{{destinations.length}}</span> classes et groupes</p>
+                <p class="menu-text-black">Vous avez selectionné <span class="label label-default">{{destinations.length}}</span> classes et groupes</p>
                 <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat= "classe in regroupements['classes']"><span ng-show="classe.checked">{{classe.classe_libelle}} </span></span><span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></p>
                 <br/>
                 <a class="btn btn-info btn-sm">voir l'historique</a>

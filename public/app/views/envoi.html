@@ -14,7 +14,11 @@
             </div>
         </div>
     </div>    
-    <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8 vert"  style="background-image: url('/app/bower_components/charte-graphique-laclasse-com/images/00_vide.svg');">
+    <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8" ng-class="menus[$state.params['type']].color">
+        <!-- icon -->
+        <div class="row" ng-class="menus[$state.params['type']].color">
+            <div ng-class="menus[$state.params['type']].icon_div" class="col-md-2 col-md-offset-5"></div>  <!-- col-md-2  col-md-2 to center content -->
+        </div>
         <p style="text-align: center;"> Le message est créée! </p>
         <p style="text-align: center;">Le message a été diffusé en ligne  sur la page info famille.</p>
         <p style="text-align: center;">(0) messages ont été envoyés par mails.
