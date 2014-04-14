@@ -39,7 +39,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
-    var type_message = {
+    var type_message = {  
       name:'type_message',
       url:'/type_message/:type',
       templateUrl: APPLICATION_PREFIX+'/views/type_message.html',
@@ -208,14 +208,12 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     //$rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
 
     security.requestCurrentUser().then(function(user) {
-      console.log(user);
       currentUser = user;
     });
 
     // check authorization before changing states .
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
       console.log('state changed');
-      console.log(toState);
       // before loading the new state => check rights
       security.requestCurrentUser().then(function(user) {
         currentUser = user;

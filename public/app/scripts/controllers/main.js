@@ -8,10 +8,12 @@ Controllers.controller('TestCtrl', ['$rootScope','security', 'Publipostages', 'c
     $scope.tinymceOptions = {
         language:"fr"
     };
-    
-    Publipostages.all({}, function(publis){
+    $scope.getPublipostages = function(){
+        Publipostages.all({}, function(publis){
         $scope.publis = publis
-    });
+        });
+    }
+    $scope.getPublipostages();
     
     security.requestCurrentUser().then(function(user) {
       //console.log(user);
@@ -34,6 +36,17 @@ Controllers.controller('TestCtrl', ['$rootScope','security', 'Publipostages', 'c
     
     $scope.colors = [ 'bleu', 'vert', 'rouge', 'violet', 'orange',
                         'jaune', 'gris1','gris2', 'gris3', 'gris4' ];
+    
+    $scope.removePubli = function(id){
+        if(confirm("Voulez-vous supprimer le publipostage?")){
+            Publipostages.remove({id:id}, function(success){
+                $scope.getPublipostages();
+            }, function(error){
+                console.log(error);
+            });
+        }
+    }
+
 
 }]);
 
