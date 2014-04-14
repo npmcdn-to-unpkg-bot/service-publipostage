@@ -60,7 +60,19 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       url:'/destinataire/:type',
       templateUrl: APPLICATION_PREFIX+'/views/destinataire.html',
       controller:'MainCtrl',
-      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
+      resolve :{
+        checkMessage: function($q, $timeout, MessageService){
+          var message = MessageService.getMessage();
+          console.log(message);
+          var deferred = $q.defer();
+          if (message['messageType']=="")
+            deferred.reject("empty message type");
+          else
+            deferred.resolve("message exist");
+          return deferred.promise;
+        }
+      }
     }
     
     var message = {
@@ -68,7 +80,19 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       url:'/message/:type',
       templateUrl: APPLICATION_PREFIX+'/views/message.html',
       controller:'MainCtrl',
-      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
+      resolve :{
+        checkMessage: function($q, $timeout, MessageService){
+          var message = MessageService.getMessage();
+          console.log(message);
+          var deferred = $q.defer();
+          if (message['messageType']==""|| message['destinations'].length==0)
+            deferred.reject("empty message type or no destinations");
+          else
+            deferred.resolve("message exist");
+          return deferred.promise;
+        }
+      }
     }
     
     var apercu = {
@@ -84,7 +108,18 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       url:'/mode_diffusion/:type',
       templateUrl: APPLICATION_PREFIX+'/views/mode_diffusion.html',
       controller:'MainCtrl',
-      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
+      resolve :{
+        checkMessage: function($q, $timeout, MessageService){
+          var message = MessageService.getMessage();
+          var deferred = $q.defer();
+          if (message['messageType']==""|| message['destinations'].length==0 || message['message'] =="")
+            deferred.reject("empty message type or no destinations");
+          else
+            deferred.resolve("message exist");
+          return deferred.promise;
+        }  
+      }
     }
     
     var envoi = {
@@ -181,7 +216,6 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
       console.log('state changed');
       console.log(toState);
-
       // before loading the new state => check rights
       security.requestCurrentUser().then(function(user) {
         currentUser = user;
@@ -196,6 +230,21 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
         }
       });
     });
+
+    //check resolve errors ..  
+    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
+      if (error == "empty message type") {
+        event.preventDefault();
+        alert('pas de type de message');
+        $state.transitionTo('home');
+      }
+      if (error == "empty message type or no destinations") {
+        event.preventDefault();
+        alert('pas de type de message ou pas de destinations');
+        $state.transitionTo('home');
+      } 
+    });   
+
   
     $rootScope.$state = $state;
     $rootScope.title = "title";

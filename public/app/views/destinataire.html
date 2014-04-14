@@ -5,7 +5,7 @@
                 <p class="menu-text">  Etape 1: type de message</p>
                 <p class="menu-text"> &ensp; {{menus[$state.params["type"]]['right_menu_text']}} {{}}</p>
                 <p class="menu-text"> <strong>Etape 2: les destinataire</strong></p>
-            
+                {{greeting}}
                 <p class="menu-text"> Selectionner les classes  et les groupes destinataire des messages</p>
                 <form role="form" class="form-inline">
                     <div ng-show="$state.params['type']=='ecrire_profs'">
@@ -41,7 +41,7 @@
                 </form>
                 </br>
                 </br>
-                <p style="text-align: center"><a class='btn btn-info btn-sm' ng-disabled="destinations.length<=0" ng-click="addDestinations();Redirect.goToMessage($state.params['type'])">suivant</a></p>
+                <p style="text-align: center"><a class='btn btn-info btn-sm' ng-disabled="destinations.length==0" ng-click="addDestinations();Redirect.goToMessage($state.params['type'])">suivant</a></p>
                 </br>
                 </br>
                 <p class="menu-text-black">Vous avez selectionné <span class="label label-default">{{destinations.length}}</span> classes et groupes</p>
@@ -67,21 +67,8 @@
                     </div>
                 </a>
             </div>
-            
-            <!--<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 gris3" ng-show="$state.params['type']=='ecrire_profs'">
-                <a ng-click="goTo('/type_message/info_famille')">  
-                    <div class="square-icon">
-                      <data-ng-include class="svg" src="square.icone"></data-ng-include>
-                      <span class="square-text"><select><option>mathematique</option>
-                        <option>autre</option>
-                      </select></span>
-                      <br>
-                      <span class="square-text"> &nbsp;</span>
-                       <span class="square-text"> </span>
-                    </div>
-                </a>
-            </div>-->
-            
+
+            <!--show classes-->
             <div ng-repeat="classe in regroupements['classes'] | filter:searchText" class="col-xs-12 col-sm-6 col-md-3 col-lg-3" ng-class="classe.color">
                 <a ng-click="changeClassColor($index);classe.checked=!classe.checked;addRemoveDestination(classe);">
                   <div class="square-icon">
@@ -93,6 +80,7 @@
                 </a>
             </div>
             
+            <!--show groupes -->
             <div ng-repeat="groupe in regroupements['groupes_eleves']" class="col-xs-12 col-sm-6 col-md-3 col-lg-3" ng-class="groupe.color">
                 <a ng-click="changeGroupColor($index);groupe.checked=!groupe.checked;addRemoveDestination(groupe)">
                   <div class="square-icon">

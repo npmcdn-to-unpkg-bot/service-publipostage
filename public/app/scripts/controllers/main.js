@@ -45,6 +45,8 @@ Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'curre
             language:"fr"
         };
 
+        $scope.security = security;
+
         Publipostages.all({}, function(publis){
             $scope.publis = publis
         });
@@ -84,10 +86,23 @@ Controllers.controller('wizardController', ['$scope', function($scope){
 
 /*                                          Main controller of the application                                           */
 Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus','tinymceOptions',
-    function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, colors, transparentColors, Menus, tinymceOptions){
-        // making Redirect utils accesible in the scope 
+    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages',
+    function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, colors, transparentColors, Menus, tinymceOptions, $state, Publipostages){
+        // making Redirect utils accesible in the scope
         $scope.Redirect = Redirect;
+        $scope.security = security;
+        // if current state == destinataire
+        if ($state.current.name == "destinataire") {
+            MessageService.addMessageType($state.params['type']);
+            console.log(MessageService.getMessage());
+            //console.log($scope.greeting);
+            //$scope.greeting = greeting;
+            /*$scope.greeting().then(function(data){
+                  conosle.log(data);
+            }, function(error){
+                conosle.log(error);
+            })*/
+        }
         /*
         $scope.square_style = {
             'background-image' : $scope.menus[$state.params['type']].icon
@@ -96,7 +111,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         // editor tinyMce  options;
         $scope.tinymceOptions =  tinymceOptions;
 
-        //initialize destinations 
+        //initialize destinations
         $scope.destinations = [];
         
         security.requestCurrentUser().then(function(user) {
@@ -199,7 +214,19 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
                 $scope.destinations.push(object);
             }
         }
-        
+        $scope.sendMessage = function(location){
+            var message = MessageService.getMessage();
+            if (message.title != "" && message.message!=""){
+                Publipostages.save({'descriptif': message.title, 'message': message.message}, function(succcess){
+                    console.log(success);
+                }
+                    , function(error){
+                        console.log(error);
+                });
+            }
+            $location.path('/envoi/'+location);
+        }
+
         $scope.randomColor = function() {
             var index = Math.floor(Math.random()*(colors.length));
             console.log(index);

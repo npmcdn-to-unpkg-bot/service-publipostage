@@ -457,3 +457,6 @@ background-position: 0 -15px;
   background-color:#323232; 
   opacity: 0.3;
 }
+a {
+  cursor: pointer; 
+}

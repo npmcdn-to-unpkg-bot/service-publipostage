@@ -104,8 +104,12 @@ angular.module('services.messages').service('MessageService', function () {
     
     this.addMessageType = function(type){
         messageObject['messageType'] = type;
-        console.log(messageObject);
-    }  
+    }
+
+    this.isValid = function(){
+        return true;
+    }
+
 });
 
 /************************************************************************************/

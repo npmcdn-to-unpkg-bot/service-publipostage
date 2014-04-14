@@ -43,6 +43,7 @@ angular.module('services.authentication').factory('security', ['$http', '$q', '$
     
     // Is the current user a super adminstrator?
     isSuperAdmin: function() {
+      console.log('called');
       return !!(_.find(service.currentUser.roles, function (role) {
           return  _.contains(role, "TECH");
       }));
