@@ -77,7 +77,7 @@ Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'curre
             if (user.info['LaclasseSexe']=="M") {
                 $scope.avatar = SVG_AVATAR_M
             } else if (user.info['LaclasseSexe']=="F") {
-                $scope.avatar = SVG-AVATAR_F;
+                $scope.avatar = SVG_AVATAR_F;
             }
             else{
                 $scope.avatar = "";
@@ -217,9 +217,9 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', 'Redirect', f
 }]);
 
 /******************************************* Destinataire Controller ****************************************/
-Controllers.controller('destinatairesCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages', function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, 
-    colors, transparentColors, Menus, tinymceOptions, $state, Publipostages){
+Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
+    'colors', 'transparentColors', 'Menus', '$state', function($scope,security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, 
+    colors, transparentColors, Menus, $state){
     // making Redirect utils accesible in the scope
     $scope.Redirect = Redirect;
     $scope.security = security;
@@ -229,10 +229,10 @@ Controllers.controller('destinatairesCtrl', ['$scope', '$sce', 'security','Regro
     }
     //initialize destinations
     $scope.destinations = [];
+
+    // get the list of user regroupements 
     security.requestCurrentUser().then(function(user) {
-        //console.log(user);
         $scope.currentUser = user;
-        console.log(user.info['uid']);
         Regroupements.get({id:user.info['uid']}, function(regroupements){
             console.log(regroupements);
             $scope.regroupements = regroupements;
@@ -272,8 +272,8 @@ Controllers.controller('destinatairesCtrl', ['$scope', '$sce', 'security','Regro
                 $scope.changeClassColor(index);
             }
         });
-    }
-    
+    };
+
     $scope.deselectAll = function(){
         $scope.selectAllMode = true;
         $scope.destinations = [];
@@ -309,10 +309,6 @@ Controllers.controller('destinatairesCtrl', ['$scope', '$sce', 'security','Regro
     $scope.randomTransparentColor = function() {
         var index = Math.floor(Math.random()*(transparentColors.length));
         return transparentColors[index];
-    };
-
-    $scope.toTrustedHtml = function(html_code) {
-        return $sce.trustAsHtml(html_code);
     };
 
     $scope.changeClassColor = function($index){
