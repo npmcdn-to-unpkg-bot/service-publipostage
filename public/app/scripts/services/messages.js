@@ -67,7 +67,6 @@ angular.module('services.messages').service('MessageService', function () {
                         messageType:'',
                         sendType:[]
     };
-     
     // add Message  
     this.addMessage = function(message, title) {
         messageObject['message'] = message;

@@ -18,9 +18,24 @@ class API < Grape::API
  
   desc "creer un nouveau publipostag" 
   post '/publipostages' do
-    if params.has_key?('descriptif') and params.has_key?('message')
+    if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires')
       # new Publi
-      publi = Publipostage.create(:descriptif => params['descriptif'], :message => params['message'],:date => DateTime.now)
+      puts params['destinataires'].inspect
+      publi = Publipostage.create(:descriptif => params['descriptif'], :message => params['message'], 
+                                  :date => DateTime.now)
+      destinations = params['destinataires']
+      destinations.each do |d|
+        puts d.inspect
+      end
+      destinations.each do |dest|
+        if dest.respond_to?('classe_id')
+          Destinataire.create(:etablissement_code_uai => dest.etablissement_code , :regroupement_id => dest.classe_id, :publipostage_id => publi.id)
+        elsif dest.respond_to?('groupe_id')
+          Destinataire.create(:etablissement_code_uai => dest.etablissement_code , :regroupement_id => dest.groupe_id, :publipostage_id => publi.id)
+        else
+           "error"
+        end
+      end
       publi
     else
       error!('Mauvaise requête', 400)

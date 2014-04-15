@@ -19,8 +19,8 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name: 'gestion',
       url: '/publi',
       templateUrl: APPLICATION_PREFIX+ '/views/liste.html', 
-      controller:  'TestCtrl',
-      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
+      controller:  'publiCtrl',
+      authorizedRoles: ["TECH"]
     }
     
     var createPublipostage = {
@@ -35,7 +35,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name:'profil',
       url:'/profil',
       templateUrl: APPLICATION_PREFIX+'/views/profil.html',
-      controller:'TestCtrl',
+      controller:'publiCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
@@ -51,7 +51,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name:'histroique',
       url:'/historique/:id',
       templateUrl: APPLICATION_PREFIX+'/views/historique.html',
-      controller:'TestCtrl',
+      controller:'publiCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     

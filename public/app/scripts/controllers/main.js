@@ -4,7 +4,7 @@
 
 var Controllers  =  angular.module('myApp.controllers', []);
 
-Controllers.controller('TestCtrl', ['$rootScope','security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", function($scope, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location) {
+Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", function($scope, $sce, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location) {
     $scope.tinymceOptions = {
         language:"fr"
     };
@@ -15,6 +15,10 @@ Controllers.controller('TestCtrl', ['$rootScope','security', 'Publipostages', 'c
     }
     $scope.getPublipostages();
     
+    $scope.toTrustedHtml = function(html_code) {
+        return $sce.trustAsHtml(html_code);
+    };
+
     security.requestCurrentUser().then(function(user) {
       //console.log(user);
       $scope.currentUser = user;
@@ -27,10 +31,8 @@ Controllers.controller('TestCtrl', ['$rootScope','security', 'Publipostages', 'c
       else{
         $scope.avatar = "";
       }
-      
     });
-    
-    $scope.goTo = function(location){le
+    $scope.goTo = function(location){
         $location.path(location);
     }
     
@@ -46,10 +48,8 @@ Controllers.controller('TestCtrl', ['$rootScope','security', 'Publipostages', 'c
             });
         }
     }
-
-
 }]);
-
+/********************************* Home page controller  *****************************************/
 Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", "$rootScope", "$stateParams", "MessageService", 'Redirect','Squares',
     function($scope, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location, $rootScope,  $stateParams, MessageService, Redirect, Squares) {
         $scope.Redirect = Redirect;   
@@ -89,6 +89,7 @@ Controllers.controller('Ctrl2', [function() {
 
 }]);
 
+/********************************* Wizard Controller *****************************************/
 Controllers.controller('wizardController', ['$scope', function($scope){
     $scope.log = function(event){
         console.log(event);
@@ -97,7 +98,7 @@ Controllers.controller('wizardController', ['$scope', function($scope){
     $scope.etablissements = [];
 }]);
 
-/*                                          Main controller of the application                                           */
+/********************************* Main controller of the application *****************************************/
 Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
     'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages',
     function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, colors, transparentColors, Menus, tinymceOptions, $state, Publipostages){
@@ -156,8 +157,10 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 
         $scope.sendMessage = function(location){
             var message = MessageService.getMessage();
+            console.log(message.destinations);
+            // check if message is valid ..
             if (message.title != "" && message.message!=""){
-                Publipostages.save({'descriptif': message.title, 'message': message.message}, function(success){
+                Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations}, function(success){
                     console.log(success);
                 }
                     , function(error){
