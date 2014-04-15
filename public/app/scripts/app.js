@@ -59,17 +59,15 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name:'destinataire',
       url:'/destinataire/:type',
       templateUrl: APPLICATION_PREFIX+'/views/destinataire.html',
-      controller:'MainCtrl',
+      controller:'destinatairesCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
       resolve :{
         checkMessage: function($q, $timeout, MessageService){
-          var message = MessageService.getMessage();
-          console.log(message);
           var deferred = $q.defer();
-          if (message['messageType']=="")
-            deferred.reject("empty message type");
+          if (!MessageService.isValid('destinataire'))
+            deferred.reject("invalid message");
           else
-            deferred.resolve("message exist");
+            deferred.resolve("valid message");
           return deferred.promise;
         }
       }
@@ -83,13 +81,11 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
       resolve :{
         checkMessage: function($q, $timeout, MessageService){
-          var message = MessageService.getMessage();
-          console.log(message);
           var deferred = $q.defer();
-          if (message['messageType']==""|| message['destinations'].length==0)
-            deferred.reject("empty message type or no destinations");
+          if (!MessageService.isValid('message'))
+            deferred.reject("invalid message");
           else
-            deferred.resolve("message exist");
+            deferred.resolve("valid message");
           return deferred.promise;
         }
       }
@@ -100,7 +96,14 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       url:'/apercu/:type',
       templateUrl: APPLICATION_PREFIX+'/views/apercu.html',
       controller:'MainCtrl',
-      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
+      resolve:{
+        checkMessage: function($q, $timeout, MessageService){
+          var message = MessageService.getMessage();
+          var d = $q.defer();
+
+        }
+      }
     }
     
     var mode_diffusion = {
@@ -114,9 +117,9 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
           var message = MessageService.getMessage();
           var deferred = $q.defer();
           if (message['messageType']==""|| message['destinations'].length==0 || message['message'] =="")
-            deferred.reject("empty message type or no destinations");
+            deferred.reject("invalid message");
           else
-            deferred.resolve("message exist");
+            deferred.resolve("valid message");
           return deferred.promise;
         }  
       }
@@ -161,42 +164,38 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     // Intercept http calls.
     $provide.factory('HttpInterceptor', function ($q, $location) {
         return {
-        // On request success
-        request: function (config) {
-          //console.log(config); // Contains the data about the request before it is sent.
-          // Return the config or wrap it in a promise if blank.
-          return config || $q.when(config);
-        },
-        // On request failure
-        requestError: function (rejection) {
-          //console.log(rejection); // Contains the data about the error on the request.
-          // Return the promise rejection.
-          return $q.reject(rejection);
-        },
-        // On response success
-        response: function (response) {
-          //console.log(response); // Contains the data from the response.
-          // Return the response or promise.
-          return response || $q.when(response);
-        },
-        // On response failture
-        responseError: function (rejection) {
-          //console.log(rejection); // Contains the data about the error.
-          if (rejection.status == 0 ) {
+          // On request success
+          request: function (config) {
+            // Return the config or wrap it in a promise if blank.
+            return config || $q.when(config);
+          },
+          // On request failure
+          requestError: function (rejection) {
+            // Return the promise rejection.
+            return $q.reject(rejection);
+          },
+          // On response success
+          response: function (response) {
+            // Return the response or promise.
+            return response || $q.when(response);
+          },
+          // On response failture
+          responseError: function (rejection) {
+            if (rejection.status == 0 ) {
+                  $location.path('/');
+                  //FlashServiceStyled.show("vous n\'êtes pas authorizé à faire cette action", "alert alert-error");
+            }
+            if (rejection.status== 403 || rejection.status == 401) {
+                  // go to public page
+                  $location.path('/');
+            }
+            if (rejection.status == 400 || rejection.status == 404 || rejection.status == 500) {
+                //FlashServiceStyled.show("une erreur s\'est produite: " + rejection.data["error"], "alert alert-error");
                 $location.path('/');
-                //FlashServiceStyled.show("vous n\'êtes pas authorizé à faire cette action", "alert alert-error");
+            }
+            // Return the promise rejection.
+            return $q.reject(rejection);
           }
-          if (rejection.status== 403 || rejection.status == 401) {
-                // go to public page
-                $location.path('/');
-          }
-          if (rejection.status == 400 || rejection.status == 404 || rejection.status == 500) {
-              //FlashServiceStyled.show("une erreur s\'est produite: " + rejection.data["error"], "alert alert-error");
-              $location.path('/');
-          }
-          // Return the promise rejection.
-          return $q.reject(rejection);
-        }
         };
     });
     // Add the interceptor to the $httpProvider.
@@ -207,10 +206,10 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $rootScope.racine_images ='/app/images/';
     //$rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
 
-    security.requestCurrentUser().then(function(user) {
+/*    security.requestCurrentUser().then(function(user) {
       currentUser = user;
     });
-
+*/
     // check authorization before changing states .
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
       console.log('state changed');
@@ -231,16 +230,11 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
 
     //check resolve errors ..  
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
-      if (error == "empty message type") {
+      if (error == "invalid message") {
         event.preventDefault();
-        alert('pas de type de message');
+        alert('le message est pas valide');
         $state.transitionTo('home');
       }
-      if (error == "empty message type or no destinations") {
-        event.preventDefault();
-        alert('pas de type de message ou pas de destinations');
-        $state.transitionTo('home');
-      } 
     });   
 
   

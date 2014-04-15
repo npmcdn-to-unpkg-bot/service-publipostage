@@ -30,8 +30,10 @@ angular.module('services.authentication').factory('security', ['$http', '$q', '$
       } else {
         return $http.get('/app/current-user').then(function(response) {
           service.currentUser = response.data;
-          console.log(response.data);
+          return service.currentUser;return $http.get('/app/current-user').then(function(response) {
+          service.currentUser = response.data;
           return service.currentUser;
+        });
         });
       }
     },
@@ -43,16 +45,23 @@ angular.module('services.authentication').factory('security', ['$http', '$q', '$
     
     // Is the current user a super adminstrator?
     isSuperAdmin: function() {
-      console.log('called');
-      return !!(_.find(service.currentUser.roles, function (role) {
+      if (service.isAuthenticated()) {
+        return !!(_.find(service.currentUser.roles, function (role) {
           return  _.contains(role, "TECH");
-      }));
+        }));
+      } else {
+        return false;
+      }
     },
     
     isAdminEtab:function(){
-      return !!(_.find(service.currentUser.roles, function (role) {
-        return  _.contains(role, "ADM_ETB");
-      }));
+      if(service.isAuthenticated()){
+        return !!(_.find(service.currentUser.roles, function (role) {
+          return  _.contains(role, "ADM_ETB");
+        }));
+      }else{
+        return false;
+      }
     },
     
     isEnseignant:function(){

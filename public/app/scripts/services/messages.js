@@ -106,8 +106,18 @@ angular.module('services.messages').service('MessageService', function () {
         messageObject['messageType'] = type;
     }
 
-    this.isValid = function(){
-        return true;
+    this.isValid = function(forPage){
+        switch(forPage) {
+            case "destinataire":
+                var valid = (messageObject['messageType']== '' || messageObject['messageType']== null) ? false : true;
+                return valid;
+                break;
+            case "message":
+                var valid = (messageObject['messageType']==""|| messageObject['destinations'].length==0) ? false : true;
+                return valid;
+                break;
+
+        }
     }
 
 });

@@ -26,14 +26,11 @@
                 <p style="text-align: justify">
                 <label><strong>Destinataires:</strong></label> <p> <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}</span></p>
                 <p><strong>Titre de message:</strong>{{messageObject['title']}}</p>
-                <p ng-bind-html="toTrustedHtml(MessageService.getMessage()['message'])"></p>
-                {{messageObject['message']}}
-                
+                <p ng-bind-html="toTrustedHtml(messageObject['message'])"></p>
             </div>
                 <p style="text-align: center">
                     <a class="btn btn-default btn-sm" ng-click="goBackToMessage($state.params['type'])">reéditer</a>
                     <a class='btn btn-default btn-sm'  href="#/mode_diffusion/{{$state.params['type']}}">choisir le mode de diffusion</a>
-                </p>
                 </p>
             </div>
         </div>
