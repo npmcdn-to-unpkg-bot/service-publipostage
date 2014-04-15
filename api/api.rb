@@ -17,9 +17,9 @@ class ApplicationAPI < Grape::API
  
   desc "creer un nouveau publipostag" 
   post '/publipostages' do
-    if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type')
+    if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type') and params.has_key?('send_type')
       # new Publi
-      puts params['message_type'].inspect
+      puts params['send_type'].inspect
       publi = Publipostage.create(:descriptif => params['descriptif'], :message => params['message'], 
                                   :date => DateTime.now, :message_type => params['message_type'])
       destinations = params['destinataires']
@@ -32,6 +32,19 @@ class ApplicationAPI < Grape::API
           "error"
         end
       end
+      diffusion_types = params['send_type']
+      diffusion_types.each do |type|
+        case type
+        when "byMail"
+          publi.difusion_email = true
+        when "byPdf"
+          publi.difusion_pdf = true
+        when "byNotif"
+          publi.difusion_notif = true
+        else
+        end
+      end
+      publi.save
       publi
     else
       error!('Mauvaise requête', 400)

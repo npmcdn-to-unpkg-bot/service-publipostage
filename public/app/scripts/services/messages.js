@@ -91,7 +91,10 @@ angular.module('services.messages').service('MessageService', function () {
     }
     
     this.addSendType = function(sendType){
-        messageObject['sendType'].push(sendType);
+        var index = messageObject['sendType'].indexOf(sendType);
+        if (index ==-1){
+            messageObject['sendType'].push(sendType);
+        }
     }
     
     this.removeSendType = function(sendType){
@@ -117,6 +120,14 @@ angular.module('services.messages').service('MessageService', function () {
                 break;
 
         }
+    }
+
+    this.init = function(){
+        messageObject = { message:'',
+                        title:'',
+                        destinations:[],
+                        messageType:'',
+                        sendType:[] };
     }
 
 });

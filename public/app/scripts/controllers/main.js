@@ -160,13 +160,16 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             console.log(message.destinations);
             // check if message is valid ..
             if (message.title != "" && message.message!=""){
-                Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations, 'message_type':message.messageType}, function(success){
+                Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations, 
+                    'message_type':message.messageType, 'send_type':message.sendType}, function(success){
                     console.log(success);
                 }
                     , function(error){
                         console.log(error);
                 });
             }
+            // reinitialize message service     
+            MessageService.init();
             $location.path('/envoi/'+location);
         }
 

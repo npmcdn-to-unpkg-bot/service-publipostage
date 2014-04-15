@@ -42,7 +42,7 @@
                         <input class="css-checkbox" id="byMail" type="checkbox" ng-model="byMail"> <label for="byMail" class="css-label">() mails à envoyer</label><br/>
                         <input class="css-checkbox" id="byPdf" type="checkbox" ng-model="byPdf"
                                        ng-true-value="YES" ng-false-value="NO"> <label for="byPdf" class="css-label">() fichiers pdf à imprimer </label><br/>
-                        <div ng-show="MessageType=='info famille'"><input class="css-checkbox" id="byNotification" type="checkbox" ng-model="byNotif"> <label for="byNotification" class="css-label">diffuser ne ligner sur la page info famille </label></div><br/>
+                        <div ng-show="messageObject['messageType']=='info_famille'"><input class="css-checkbox" id="byNotification" type="checkbox" ng-model="byNotif"> <label for="byNotification" class="css-label">diffuser ne ligner sur la page info famille </label></div><br/>
                     </p>
                 </form>
             </div>    
