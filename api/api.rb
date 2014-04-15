@@ -1,15 +1,14 @@
 # coding: utf-8
 require 'grape'
 
-class API < Grape::API
+class ApplicationAPI < Grape::API
   format :json
   
   desc "Retourner la listes des publipostage"
   get "/publipostages" do
-    response = Publipostage.naked.all
-    response
+    publis = Publipostage.all
+    present publis, with: API::Entities::PublipostageEntity
   end
-  
   
   desc "Retourner un  publipostage par id"
   get '/publipostages/:id' do
@@ -29,17 +28,21 @@ class API < Grape::API
       end
       destinations.each do |dest|
         if dest.respond_to?('classe_id')
-          Destinataire.create(:etablissement_code_uai => dest.etablissement_code , :regroupement_id => dest.classe_id, :publipostage_id => publi.id)
+          Destinataire.create(:etablissement_code_uai => dest.etablissement_code , :regroupement_id => dest.classe_id, :publipostage_id => publi.id, :libelle => dest.classe_libelle)
         elsif dest.respond_to?('groupe_id')
-          Destinataire.create(:etablissement_code_uai => dest.etablissement_code , :regroupement_id => dest.groupe_id, :publipostage_id => publi.id)
+          Destinataire.create(:etablissement_code_uai => dest.etablissement_code , :regroupement_id => dest.groupe_id, :publipostage_id => publi.id, :libelle => dest.groupe_libelle)
         else
-           "error"
+          "error"
         end
       end
       publi
     else
       error!('Mauvaise requête', 400)
     end
+  end
+
+  desc "duppliquer un publipostage"
+  post '/publipostage/:id' do
   end
 
   desc "modifier un publipostage"

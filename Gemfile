@@ -21,6 +21,7 @@ gem 'pdfkit'
 gem 'wkhtmltopdf-binary'
 gem 'grape'
 gem 'rest-client'
+gem 'grape-entity'
 
 group :development do
   gem 'sinatra-contrib'

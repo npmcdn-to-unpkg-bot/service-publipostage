@@ -6,7 +6,7 @@
 # ------------------------------+---------------------+----------+----------+------------+--------------------
 # id                            | int                 | false    | PRI      |            | 
 # date                          | DateTime            | true     |          |            | 
-# descriptif                    | varchar(45)        | true     |          |            | 
+# descriptif                    | varchar(45)         | true     |          |            | 
 # code_men                      | varchar(45)         | true     |          |            | 
 # ------------------------------+---------------------+----------+----------+------------+--------------------
 
@@ -23,6 +23,7 @@ class Publipostage < Sequel::Model(:publipostage)
   unrestrict_primary_key()
 
   # Referential integrity
+  one_to_many :destinataire
 
   # Not nullable cols
   def validate

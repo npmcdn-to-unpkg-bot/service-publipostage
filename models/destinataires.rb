@@ -6,7 +6,7 @@
 # ------------------------------+---------------------+----------+----------+------------+--------------------
 # etablissement_code_uai        | varchare            | false    | PRI      |            | 
 # regroupement_id               | INT                 | false    | PRI      |            | 
-# publpostage_id                | INT                 | true     |          |            | 
+# publpostage_id                | INT                 | true     | PRI      |            | 
 # ------------------------------+---------------------+----------+----------+------------+--------------------
 
 class Destinataire < Sequel::Model(:destinataire)
@@ -18,6 +18,7 @@ class Destinataire < Sequel::Model(:destinataire)
   unrestrict_primary_key()
 
   # Referential integrity
+  many_to_one :publipostage
 
   # Not nullable cols
   def validate
