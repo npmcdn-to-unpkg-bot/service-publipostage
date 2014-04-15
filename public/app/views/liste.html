@@ -16,6 +16,7 @@
         <th>Descriptif</th>
         <th>Destinataire</th>
         <th>Date</th>
+        <th>Type de message</th>
         <th>Actions</th>
     </thead>
     <tbody>
@@ -25,6 +26,14 @@
             <td>{{publi.descriptif}}</td>
             <td>{{publi.destinataires}}</td>
             <td>{{publi.date}}</td>
+            <td><span ng-switch on="publi.message_type">
+                    <span ng-switch-when="info_famille" class="label label-success">{{publi.message_type}}</span>
+                    <span ng-switch-when="ecrire_profs" class="label label-primary">{{publi.message_type}}</span>
+                    <span ng-switch-when="ecrire_eleves" class="label label-warning">{{publi.message_type}}</span>
+                    <span ng-switch-when="ecrire_personnels" class="label label-danger">{{publi.message_type}}</span>
+                    <span ng-switch-default>{{publi.message_type}}</span>
+                </span>
+            </td>
             <td><a class="btn btn-default btn-sm" tooltip="dupliquer" ng-click="alert(dupliquer);"><i class="fa fa-copy"></i></a>
             <a class="btn btn-default btn-sm" tooltip="supprimer" ng-click="removePubli(publi.id)"><i class="fa fa-trash-o"></i></a>
             </td>

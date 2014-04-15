@@ -5,6 +5,7 @@ module API
 	      expose :message
 	      expose :descriptif
 	      expose :date
+	      expose :message_type
 	      expose :destinataires do |publi, options|
 	      	publi.destinataire
 	      end
