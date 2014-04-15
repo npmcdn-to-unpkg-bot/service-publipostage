@@ -49,7 +49,7 @@ angular.module('services.authentication').factory('security', ['$http', '$q', '$
         return !!(_.find(service.currentUser.roles, function (role) {
           return  _.contains(role, "TECH");
         }));
-      } else {
+      } else{
         return false;
       }
     },
@@ -65,27 +65,44 @@ angular.module('services.authentication').factory('security', ['$http', '$q', '$
     },
     
     isEnseignant:function(){
-      return !!(_.find(service.currentUser.roles, function (role) {
-        return  _.contains(role, "PROF_ETB");
-      }));
+      if(service.isAuthenticated()){
+        return !!(_.find(service.currentUser.roles, function (role) {
+          return  _.contains(role, "PROF_ETB");
+        }));
+      }else{
+        return false;
+      }
     },
     
     isCPE: function(){
-      return !!(_.find(service.currentUser.roles, function (role) {
-        return  _.contains(role, "CPE_ETB");
-      }));
+      if(service.isAuthenticated()){
+        return !!(_.find(service.currentUser.roles, function (role) {
+          return  _.contains(role, "CPE_ETB");
+        }));
+      }else{
+        return false;
+      }
     },
     
     isEleve: function(){
-      return !!(_.find(service.currentUser.roles, function (role) {
-        return  _.contains(role, "ELV_ETB");
-      }));
+      if(service.isAuthenticated()){
+        return !!(_.find(service.currentUser.roles, function (role) {
+          return  _.contains(role, "ELV_ETB");
+        }));
+      }else
+      {
+        return false;
+      }
     },
     
     isParent:function(){
-      return !!(_.find(service.currentUser.roles, function (role) {
-        return  _.contains(role, "PAR_ETB");
-      }));
+      if(service.isAuthenticated()){
+        return !!(_.find(service.currentUser.roles, function (role) {
+          return  _.contains(role, "PAR_ETB");
+        }));
+      }else{
+        return false;
+      }
     },
 
     isAuthorized:function(allowedRoles){
