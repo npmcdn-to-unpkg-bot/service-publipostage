@@ -22,6 +22,8 @@ gem 'wkhtmltopdf-binary'
 gem 'grape'
 gem 'rest-client'
 gem 'grape-entity'
+gem 'ent_notifs'
+gem 'htmlentities'
 
 group :development do
   gem 'sinatra-contrib'

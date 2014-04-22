@@ -107,7 +107,18 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         $scope.security = security;
 
         // editor tinyMce  options;
-        $scope.tinymceOptions =  tinymceOptions;
+        //$scope.tinymceOptions =  tinymceOptions;
+        $scope.tinymceOptions = {
+            language:"fr",
+            menubar: false,
+            theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
+            font_size_style_values: "12px,13px,14px,16px,18px,20px",
+            toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist",
+            handle_event_callback: function (e) {
+                // put logic here for keypress
+                console.log("callback called");
+            }
+        };
         $scope.tinyMessage = "";
 
         //initialize destinations
@@ -133,7 +144,9 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         $scope.menus = Menus;
         
         $scope.addToMessage = function(text){
-            $scope.tinyMessage = $scope.tinyMessage + text;
+            console.log('clicked');
+            console.log($scope.tinyMessage);
+            $scope.tinyMessage = text +$scope.tinyMessage
         }
         
         $scope.goToPreview = function(location){
@@ -217,6 +230,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
     
 }]);
 
+/******************************************* Annonce Controller ****************************************/
 Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', 'Redirect', function($scope, AnnonceSquares, Redirect){
     $scope.annonceSquares = AnnonceSquares;
     $scope.Redirect = Redirect;

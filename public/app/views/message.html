@@ -24,7 +24,7 @@
                     </form>
                     <div class="form-group">
                         <a class="btn btn-default" ng-click="showtoolbar=!showtoolbar">inserer des données</a><br/>
-                        <div ng-show="showtoolbar"><a  class="btn btn-default" ng-click="addToMessage('civilite')">Civilité</a> <a class="btn btn-default" ng-click="">Nom</a> <a class="btn btn-default"ng-click="">Prenom</a> <a  class="btn btn-default" ng-click="">Adresse</a>  <a  class="btn btn-default" ng-click="">Date du Jours</a>  <a  class="btn btn-default" ng-click="">Singature</a>   <a  class="btn btn-default" ng-click="">Nom de l'élève</a>  <a  class="btn btn-default" ng-click="">Prénom de l'élève</a>   <a  class="btn btn-default" ng-click="">Classe</a>  <a  class="btn btn-default" ng-click="">Lien blog de l'etablissement</a>    <a  class="btn btn-default" ng-click="">Lien blog de groupe</a>     <a  class="btn btn-default" ng-click="">Lien blog de classe</a> <a  class="btn btn-default" ng-click="">Lirn Laclasse.com</a>
+                        <div ng-show="showtoolbar"><a  class="btn btn-default" ng-click="addToMessage('<p><civilite></civilite></p>')">Civilité</a> <a class="btn btn-default" ng-click="">Nom</a> <a class="btn btn-default"ng-click="">Prenom</a> <a  class="btn btn-default" ng-click="">Adresse</a>  <a  class="btn btn-default" ng-click="">Date du Jours</a>  <a  class="btn btn-default" ng-click="">Singature</a>   <a  class="btn btn-default" ng-click="">Nom de l'élève</a>  <a  class="btn btn-default" ng-click="">Prénom de l'élève</a>   <a  class="btn btn-default" ng-click="">Classe</a>  <a  class="btn btn-default" ng-click="">Lien blog de l'etablissement</a>    <a  class="btn btn-default" ng-click="">Lien blog de groupe</a>     <a  class="btn btn-default" ng-click="">Lien blog de classe</a> <a  class="btn btn-default" ng-click="">Lirn Laclasse.com</a>
                         </div> 
                     </div>
                 </div>
@@ -43,9 +43,7 @@
                     </form> 
                     <label>Titre:</label><p>{{title}}</p>
                     <label>Message en html:</label><p ng-bind-html="toTrustedHtml(tinyMessage)"></p>
-                    <!-- <label>message en texte:</label>{{tinyMessage}} 
-                    <label>message en root:</label><p ng-bind-html="message"></p> -->
-                    
+                    <label>message en texte:</label>{{tinyMessage}}
                     <div style="text-align: center">
                         <a class='btn btn-default btn-sm' ng-click="goToPreview($state.params['type'])">prévisualiser</a>
                     </div>
