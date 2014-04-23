@@ -146,7 +146,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         $scope.addToMessage = function(text){
             console.log('clicked');
             console.log($scope.tinyMessage);
-            $scope.tinyMessage = text +$scope.tinyMessage
+            $scope.tinyMessage = $scope.tinyMessage + text; 
         }
         
         $scope.goToPreview = function(location){
