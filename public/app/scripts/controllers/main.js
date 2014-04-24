@@ -128,7 +128,8 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         //initialize destinations
         //$scope.destinations = [];
         $scope.tinyMessage = MessageService.getMessage()['message'];
-        
+        console.log($scope.tinyMessage);
+
         security.requestCurrentUser().then(function(user) {
             //console.log(user);
             console.log(security.currentUser);
@@ -160,7 +161,6 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         }
         
         $scope.goBackToMessage = function(location){
-            console.log(Message.get());
             $scope.tinyMessage = MessageService.getMessage()['message'];
             $location.path('/message/'+location);
         }

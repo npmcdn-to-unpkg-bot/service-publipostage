@@ -460,3 +460,10 @@ background-position: 0 -15px;
 a {
   cursor: pointer; 
 }
+
+.area {
+  width:50%;
+  height: 300px;
+  padding: 0;
+  border: 1px solid #ccc;
+}

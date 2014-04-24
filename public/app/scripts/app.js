@@ -144,7 +144,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     var annonce_for = {
       name:'annonce_for',
       url:'/annonce/:param',
-      template:'annonce pour',
+      templateUrl:APPLICATION_PREFIX+'/views/annonce_pour.html',
       authorizedRoles: ["TECH"]
     }
     
@@ -213,6 +213,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     // check authorization before changing states .
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
       console.log('state changed');
+      console.log(MessageService.getMessage());
       // before loading the new state => check rights
       security.requestCurrentUser().then(function(user) {
         currentUser = user;
@@ -220,7 +221,6 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
           var authorized = security.isAuthorized(toState.authorizedRoles);
           if (!authorized && toState.url!=fromState.url && fromState.url!='^') {
             // you don not have rights ..
-            console.log('désolé, vous pouvez pas acceder');
             event.preventDefault();
             $state.transitionTo('home');
           }
