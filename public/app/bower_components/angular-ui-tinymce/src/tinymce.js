@@ -58,7 +58,7 @@ angular.module('ui.tinymce', [])
                 }
                 if (tinyInstance) {
                     //ngModel.$setViewValue(ngModel.$viewValue)
-                    tinyInstance.setContent(ngModel.$viewValue || '');
+                    tinyInstance.setContent(ngModel.$viewValue || '', {format:'raw'});
                 }
             };
         }

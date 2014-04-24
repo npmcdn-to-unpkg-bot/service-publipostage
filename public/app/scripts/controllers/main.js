@@ -114,12 +114,16 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
             font_size_style_values: "12px,13px,14px,16px,18px,20px",
             toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist",
+            extended_valid_elements : "nom,civilite",
+            custom_elements: "nom,civilite",
+            verify_html : false,
+            height : 200,
             handle_event_callback: function (e) {
                 // put logic here for keypress
                 console.log("callback called");
             }
         };
-        $scope.tinyMessage = "";
+        //$scope.tinyMessage = "";
 
         //initialize destinations
         //$scope.destinations = [];

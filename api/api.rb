@@ -17,7 +17,7 @@ class ApplicationAPI < Grape::API
  
   desc "creer un nouveau publipostag" 
   post '/publipostages' do
-    nodes = ['civilite', 'date', 'nom', 'prenom', 'nom_eleve', 'prenom_eleve', 'adresse', 'signature']
+    nodes = ['.civilite', '.date', '.nom', '.prenom', 'nom_eleve', 'prenom_eleve', 'adresse', 'signature']
     if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type') and params.has_key?('send_type')
       # new Publi
       puts params['send_type'].inspect
@@ -53,9 +53,11 @@ class ApplicationAPI < Grape::API
       nodes.each do |node_name|
         node = document.at_css(node_name)
         if !node.nil?
-          if node_name=='civilite'
+          if node_name=='.civilite'
             node.content = "MR"
-          elsif node_name =="date"
+          elsif node_name=='.prenom'
+            node.content="Jaun"
+          elsif node_name ==".date"
             node.content = DateTime.now
           end
         end

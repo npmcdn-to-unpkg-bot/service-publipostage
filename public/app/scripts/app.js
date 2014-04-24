@@ -85,7 +85,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
           if (!MessageService.isValid('message'))
             deferred.reject("invalid message");
           else
-            deferred.resolve("valid message");
+          deferred.resolve("valid message");
           return deferred.promise;
         }
       }
