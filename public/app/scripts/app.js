@@ -77,7 +77,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name:'message',
       url:'/message/:type',
       templateUrl: APPLICATION_PREFIX+'/views/message.html',
-      controller:'MainCtrl',
+      controller:'MassageCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
       resolve :{
         checkMessage: function($q, $timeout, MessageService){
@@ -97,12 +97,16 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       templateUrl: APPLICATION_PREFIX+'/views/apercu.html',
       controller:'MainCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
-      resolve:{
+      resolve:{ /*
         checkMessage: function($q, $timeout, MessageService){
           var message = MessageService.getMessage();
           var d = $q.defer();
-
-        }
+          if (!MessageService.isValid('message'))
+            deferred.reject("invalid message");
+          else
+          deferred.resolve("valid message");
+          return deferred.promise;
+        } */
       }
     }
     

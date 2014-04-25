@@ -367,6 +367,56 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
 
 Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 
-}]); 
+}]);
+
+/********************************* Massage controller*****************************************/
+Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state',
+    function($scope, $sce, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state){
+
+        //$scope.tinymceOptions =  tinymceOptions;
+        $scope.tinymceOptions = {
+            language:"fr",
+            menubar: false,
+            theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
+            font_size_style_values: "12px,13px,14px,16px,18px,20px",
+            toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist",
+            extended_valid_elements : "nom,civilite",
+            custom_elements: "nom,civilite",
+            verify_html : false,
+            height : 200,
+            handle_event_callback: function (e) {
+                // put logic here for keypress
+                console.log("callback called");
+            }
+        };
+
+        // load message from the root ..
+        $scope.tinyMessage = MessageService.getMessage()['message'];
+        console.log('tinyMessage');
+        console.log($scope.tinyMessage);
+
+        $scope.toTrustedHtml = function(html_code) {
+            return $sce.trustAsHtml(html_code);
+        };
+        
+        // get the list of menus
+        $scope.menus = Menus;
+        
+        $scope.addToMessage = function(text){
+            console.log('add to message');
+            console.log($scope.tinyMessage);
+            $scope.tinyMessage = $scope.tinyMessage + text; 
+        }
+        
+        $scope.goToPreview = function(location){
+            MessageService.addMessage($scope.tinyMessage, $scope.title)
+            $location.path('/apercu/'+location);
+        }
+        
+        $scope.addType = function(){
+            MessageService.addType('test');
+        }
+    
+}]);
 
 
