@@ -55,7 +55,7 @@
                         </div>
                     </form>
                     <div style="text-align: center">
-                        <a class='btn btn-default btn-sm' ng-click="goToPreview($state.params['type'])">prévisualiser</a>
+                        <a class='btn btn-default btn-sm' ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  ng-click="goToPreview($state.params['type'])">prévisualiser</a>
                     </div>
                 </div>    
             </div>

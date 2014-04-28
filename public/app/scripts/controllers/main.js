@@ -161,7 +161,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         }
         
         $scope.goBackToMessage = function(location){
-            $scope.tinyMessage = MessageService.getMessage()['message'];
+            //$scope.tinyMessage = MessageService.getMessage()['message'];
             $location.path('/message/'+location);
         }
         

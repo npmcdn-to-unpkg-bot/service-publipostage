@@ -116,7 +116,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       templateUrl: APPLICATION_PREFIX+'/views/mode_diffusion.html',
       controller:'MainCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
-      resolve :{
+      resolve :{ /*
         checkMessage: function($q, $timeout, MessageService){
           var message = MessageService.getMessage();
           var deferred = $q.defer();
@@ -125,7 +125,8 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
           else
             deferred.resolve("valid message");
           return deferred.promise;
-        }  
+
+        } */ 
       }
     }
     
@@ -245,7 +246,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $rootScope.$state = $state;
     $rootScope.title = "title";
     $rootScope.messageObject = MessageService.getMessage();
-    $rootScope.tinymceModel = "";
+    $rootScope.tinymceModel = "template";
     window.scope = $rootScope;
     FlashServiceStyled.show('bienvenu au publispostage', 'alert alert-success');
 }]);

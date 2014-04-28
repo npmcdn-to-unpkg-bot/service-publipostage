@@ -2,20 +2,26 @@
 require 'grape'
 
 class ApplicationAPI < Grape::API
-  format :json
-  
+  content_type :pdf, 'application/pdf'
+  format :pdf
+  ############################################################################
   desc "Retourner la listes des publipostage"
   get "/publipostages" do
+    content_type 'application/json'
     publis = Publipostage.all
-    present publis, with: API::Entities::PublipostageEntity
+    #present publis, with: API::Entities::PublipostageEntity
+    publis.to_json
   end
-  
+
+  ############################################################################
   desc "Retourner un  publipostage par id"
   get '/publipostages/:id' do
-    Publipostage[:id => params['id']]
+    content_type 'application/json'
+    Publipostage[:id => params['id']].to_json
   end
- 
-  desc "creer un nouveau publipostag" 
+
+  ############################################################################ 
+  desc "creer un nouveau publipostage" 
   post '/publipostages' do
     nodes = ['.civilite', '.date', '.nom', '.prenom', 'nom_eleve', 'prenom_eleve', '.adresse', '.signature']
     if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type') and params.has_key?('send_type')
@@ -44,10 +50,23 @@ class ApplicationAPI < Grape::API
           publi.difusion_notif = true
         else
         end
-      end
-      
+      end  
       publi.save
-      html = HTMLEntities.new.decode params['message']
+      publi
+    else
+      error!('Mauvaise requête', 400)
+    end
+  end
+  ############################################################################
+
+  desc "duppliquer un publipostage"
+  post '/publipostage/:id' do
+  end
+
+  ############################################################################
+  desc "retourner le fichier pdf d\'un publipostage"
+  get '/publipostage/:id/pdf'do
+    html = HTMLEntities.new.decode params['message']
       document = Nokogiri::HTML(html)
       # loop over nodes 
       nodes.each do |node_name|
@@ -69,42 +88,47 @@ class ApplicationAPI < Grape::API
       end
       #
       kit = PDFKit.new(document.to_html, :page_size => 'Letter')
-      filename = "public/pdfs/file_#{publi.id}.pdf"
-      puts filename
-      file = kit.to_file(filename)
-      publi
-    else
-      error!('Mauvaise requête', 400)
-    end
+      #filename = "public/pdfs/file_#{publi.id}.pdf"
+      #puts filename
+      #file = kit.to_file(filename)
+      #kit = PDFKit.new('<html><head><meta name="pdfkit-page_size" content="Letter"')
+      #file = kit.to_file(filename)
+      #{
+        #pdf: file
+      #}
+      pdf = kit.to_pdf
   end
-
-  desc "duppliquer un publipostage"
-  post '/publipostage/:id' do
-  end
+  ############################################################################
 
   desc "modifier un publipostage"
   put '/publipostages/:id' do
-    
   end
 
+  ############################################################################
   desc "supprimer un publipostage"
   delete '/publipostages/:id' do
     Publipostage.where(:id => params['id']).destroy
   end
 
+  ############################################################################
   desc "retourner la liste des profil"
   get '/profils' do
-    Annuaire.get_profils()
+    content_type 'application/json'
+    Annuaire.get_profils().to_json
   end
 
+  ############################################################################
   desc "retourner les info de l'utilisateur"
   get '/user/:id' do
-    Annuaire.get_user(params[:id])
+    content_type 'application/json'
+    Annuaire.get_user(params[:id]).to_json
   end
 
+  ############################################################################
   desc "retourner les regroupements d'un utilisateur"
   get "/regroupements/:id" do
-    Annuaire.get_regroupements(params[:id])
+    content_type 'application/json'
+    Annuaire.get_regroupements(params[:id]).to_json
   end
 
 end
