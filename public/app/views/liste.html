@@ -17,6 +17,7 @@
         <th>Destinataire</th>
         <th>Date</th>
         <th>Type de message</th>
+        <th>PDF</th>
         <th>Actions</th>
     </thead>
     <tbody>
@@ -35,6 +36,7 @@
                     <span ng-switch-default>{{publi.message_type}}</span>
                 </span>
             </td>
+            <td><a href="#fichier/{{publi.id}}"><i class="fa fa-file fa-5x" style="color:red; text-shadow:1px 1px 1px #ccc;"></i></p></td>
             <td><a class="btn btn-default btn-sm" tooltip="dupliquer" ng-click="alert(dupliquer);"><i class="fa fa-copy"></i></a>
             <a class="btn btn-default btn-sm" tooltip="supprimer" ng-click="removePubli(publi.id)"><i class="fa fa-trash-o"></i></a>
             </td>

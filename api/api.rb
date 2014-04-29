@@ -2,28 +2,29 @@
 require 'grape'
 
 class ApplicationAPI < Grape::API
+  # response format = pdf 
+  content_type :json, 'application/json'
   content_type :pdf, 'application/pdf'
-  format :pdf
+  format :json
   ############################################################################
   desc "Retourner la listes des publipostage"
   get "/publipostages" do
     content_type 'application/json'
     publis = Publipostage.all
     #present publis, with: API::Entities::PublipostageEntity
-    publis.to_json
+    publis
   end
 
   ############################################################################
   desc "Retourner un  publipostage par id"
   get '/publipostages/:id' do
-    content_type 'application/json'
-    Publipostage[:id => params['id']].to_json
+    Publipostage[:id => params['id']]
   end
 
   ############################################################################ 
   desc "creer un nouveau publipostage" 
   post '/publipostages' do
-    nodes = ['.civilite', '.date', '.nom', '.prenom', '.nom_eleve', '.prenom_eleve', '.adresse', '.signature']
+    puts params.inspect
     if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type') and params.has_key?('send_type')
       # new Publi
       puts params['send_type'].inspect
@@ -66,15 +67,18 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "retourner le fichier pdf d\'un publipostage"
   get '/publipostage/:id/pdf'do
-    html = HTMLEntities.new.decode params['message']
+    nodes = ['.civilite', '.date', '.nom', '.prenom', '.nom_eleve', '.prenom_eleve', '.adresse', '.signature']
+    publi = Publipostage[:id => params[:id]]
+    if !publi.nil?&&publi[:difusion_pdf]
+    html = HTMLEntities.new.decode publi[:message]
       document = Nokogiri::HTML(html)
-      # loop over nodes 
+      #loop over nodes 
       nodes.each do |node_name|
         node = document.at_css(node_name)
         if !node.nil?
           case node_name
           when '.civilite'
-              node.content = "MR"
+            node.content = "MR"
           when '.prenom'
             node.content="Jaun"
           when ".date"
@@ -87,7 +91,11 @@ class ApplicationAPI < Grape::API
         end
       end
       #
-      kit = PDFKit.new(document.to_html, :page_size => 'Letter')
+      html = document.to_html
+      (1..5).each  do |i|
+        html = html + html
+      end
+      kit = PDFKit.new(html, :page_size => 'Letter')
       #filename = "public/pdfs/file_#{publi.id}.pdf"
       #puts filename
       #file = kit.to_file(filename)
@@ -96,7 +104,11 @@ class ApplicationAPI < Grape::API
       #{
         #pdf: file
       #}
+      content_type 'application/pdf'
       pdf = kit.to_pdf
+    else
+      error!('Ressource non trouvee', 404)
+    end
   end
   ############################################################################
 
@@ -114,21 +126,21 @@ class ApplicationAPI < Grape::API
   desc "retourner la liste des profil"
   get '/profils' do
     content_type 'application/json'
-    Annuaire.get_profils().to_json
+    Annuaire.get_profils()
   end
 
   ############################################################################
   desc "retourner les info de l'utilisateur"
   get '/user/:id' do
     content_type 'application/json'
-    Annuaire.get_user(params[:id]).to_json
+    Annuaire.get_user(params[:id])
   end
 
   ############################################################################
   desc "retourner les regroupements d'un utilisateur"
   get "/regroupements/:id" do
     content_type 'application/json'
-    Annuaire.get_regroupements(params[:id]).to_json
+    Annuaire.get_regroupements(params[:id])
   end
 
 end

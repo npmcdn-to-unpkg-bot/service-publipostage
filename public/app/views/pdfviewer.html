@@ -1,18 +1,19 @@
-<nav ng-class="{'pdf-controls fixed': scroll > 100, 'pdf-controls': scroll <= 100}">
-  <button ng-click="goPrevious()"><</span></button>
-  <button ng-click="goNext()">></span></button>
+<div class="row-fluid">
+    <div class="col-xs-4 col-s-m4 col-md-4 col-lg-4 aside">
+	    <div class="row-fluid">
+	        <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+	        </div>
+	    </div>
+    </div>
+    <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8">
+        <div class="row-fluid">
+			<div class="wrapper">
+				<ng-pdf template-url="/app/views/viewer.html"></ng-pdf>
+			</div>
+       </div>
+    </div>
+</div>
 
-  <button ng-click="zoomIn()">+</span></button>
-  <button ng-click="zoomOut()">-</span></button>
 
-  <button ng-click="rotate()">90</span></button>
 
-  <span>Page: </span>
-  <input type="text" min=1 ng-model="pageNum">
-  <span> / {{pageCount}}</span>
 
-</nav>
-
-<hr>
-
-<canvas id="pdf-canvas" class="rotate0"></canvas>

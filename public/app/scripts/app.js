@@ -3,7 +3,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.constants', 'ui.bootstrap',
                          'ui.tinymce', 'services.messages', 'services.authentication', 'angular-underscore',
-                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize', 'services.utils']).
+                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize', 'services.utils', 'pdf', 'chieffancypants.loadingBar']).
 config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function($urlRouterProvider, $stateProvider, APPLICATION_PREFIX){
             
     /* defining states for routing */
@@ -152,6 +152,14 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       templateUrl:APPLICATION_PREFIX+'/views/annonce_pour.html',
       authorizedRoles: ["TECH"]
     }
+
+    var fichier = {
+      name:'fichier',
+      url:'/fichier/:id',
+      templateUrl:APPLICATION_PREFIX+'/views/pdfviewer.html',
+      controller: 'DocCtrl',
+      authorizedRoles: "all"
+    }
     
     $stateProvider.state(home).state(gestion).state(createPublipostage).state(profil)
     .state(type_message)
@@ -162,7 +170,8 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     .state(mode_diffusion)
     .state(envoi)
     .state(annonce_for)
-    .state(annonce);
+    .state(annonce)
+    .state(fichier);
     $urlRouterProvider.otherwise('/');
     
 }]).config(function ($provide, $httpProvider) {
@@ -205,6 +214,8 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     });
     // Add the interceptor to the $httpProvider.
     $httpProvider.interceptors.push('HttpInterceptor');
+}).config(function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
 }).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService) {
     
     $rootScope.$location = $location;

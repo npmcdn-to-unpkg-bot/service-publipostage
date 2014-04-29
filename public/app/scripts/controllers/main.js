@@ -178,14 +178,15 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             // check if message is valid ..
             if (message.title != "" && message.message!=""){
                 Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations, 
-                    'message_type':message.messageType, 'send_type':message.sendType}, function(success){
-                    console.log(success);
+                    'message_type':message.messageType, 'send_type':message.sendType}, function(data){
+                    $rootScope.created_publi = data;
+                    console.log($scope.created_publi);
                 }
                     , function(error){
                         console.log(error);
                 });
             }
-            // reinitialize message service     
+            // reinitialize message service
             MessageService.init();
             $location.path('/envoi/'+location);
         }
@@ -418,5 +419,14 @@ Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScop
         }
     
 }]);
+
+/******************************************* Doc Controller ****************************************/
+Controllers.controller('DocCtrl', ['$scope', '$state', function($scope, $state){
+    $scope.pdfUrl = 'http://localhost:9292/app/api/publipostage/'+$state.params['id']+'/pdf';
+}]);
+
+/***************************************************************************************************/
+
+
 
 
