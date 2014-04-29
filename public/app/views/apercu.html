@@ -27,7 +27,7 @@
                     <strong>Titre de message:</strong>{{messageObject['title']}} <br/>
                     <strong>Destinataires:</strong><span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}</span>
                     </p>
-                    <p style="background-color:white; padding-left:5%%; padding-right:5%; padding-top:1%; height:200px;" ng-bind-html="toTrustedHtml(messageObject['message'])"></p>
+                    <p style="background-color:white; padding-left:5%%; padding-right:5%; padding-top:1%;" ng-bind-html="toTrustedHtml(messageObject['message'])"></p>
                 </div>
                 <p style="text-align: center">
                     <a class="btn btn-default btn-sm" ng-class="menus[$state.params['type']].color" style="border-color:white;color:white" ng-click="goBackToMessage($state.params['type'])">reéditer</a>

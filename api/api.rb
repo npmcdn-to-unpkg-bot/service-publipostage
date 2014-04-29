@@ -11,8 +11,7 @@ class ApplicationAPI < Grape::API
   get "/publipostages" do
     content_type 'application/json'
     publis = Publipostage.all
-    #present publis, with: API::Entities::PublipostageEntity
-    publis
+    present publis, with: API::Entities::PublipostageEntity
   end
 
   ############################################################################
@@ -69,41 +68,35 @@ class ApplicationAPI < Grape::API
   get '/publipostage/:id/pdf'do
     nodes = ['.civilite', '.date', '.nom', '.prenom', '.nom_eleve', '.prenom_eleve', '.adresse', '.signature']
     publi = Publipostage[:id => params[:id]]
-    if !publi.nil?&&publi[:difusion_pdf]
-    html = HTMLEntities.new.decode publi[:message]
-      document = Nokogiri::HTML(html)
-      #loop over nodes 
-      nodes.each do |node_name|
-        node = document.at_css(node_name)
-        if !node.nil?
-          case node_name
-          when '.civilite'
-            node.content = "MR"
-          when '.prenom'
-            node.content="Jaun"
-          when ".date"
-            node.content = DateTime.now
-          when ".nom"
-            node.content = "nom"
-          when ".adresse"
-            node.content = "adresse"
+    destinataires = publi.destinataire 
+    if !publi.nil?&&publi[:difusion_pdf]&&!destinataires.empty?
+      final_document = ""
+      destinataires.each do |dest|
+        html = HTMLEntities.new.decode publi[:message]
+          document = Nokogiri::HTML(html)
+          #loop over nodes 
+          nodes.each do |node_name|
+            node = document.at_css(node_name)
+            # mockup data
+            if !node.nil?
+              case node_name
+              when '.civilite'
+                node.content = "MR"
+              when '.prenom'
+                node.content="Jaun"
+              when ".date"
+                node.content = DateTime.now
+              when ".nom"
+                node.content = "Carlos"
+              when ".adresse"
+                node.content = "rue des etoils"
+              end
+            end
           end
-        end
+        # fill final document
+        final_document = final_document+ document.to_html
       end
-      #
-      html = document.to_html
-      (1..5).each  do |i|
-        html = html + html
-      end
-      kit = PDFKit.new(html, :page_size => 'Letter')
-      #filename = "public/pdfs/file_#{publi.id}.pdf"
-      #puts filename
-      #file = kit.to_file(filename)
-      #kit = PDFKit.new('<html><head><meta name="pdfkit-page_size" content="Letter"')
-      #file = kit.to_file(filename)
-      #{
-        #pdf: file
-      #}
+      kit = PDFKit.new(final_document, :page_size => 'Letter')
       content_type 'application/pdf'
       pdf = kit.to_pdf
     else
