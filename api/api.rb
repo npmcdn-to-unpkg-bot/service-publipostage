@@ -23,7 +23,7 @@ class ApplicationAPI < Grape::API
   ############################################################################ 
   desc "creer un nouveau publipostage" 
   post '/publipostages' do
-    nodes = ['.civilite', '.date', '.nom', '.prenom', 'nom_eleve', 'prenom_eleve', '.adresse', '.signature']
+    nodes = ['.civilite', '.date', '.nom', '.prenom', '.nom_eleve', '.prenom_eleve', '.adresse', '.signature']
     if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type') and params.has_key?('send_type')
       # new Publi
       puts params['send_type'].inspect

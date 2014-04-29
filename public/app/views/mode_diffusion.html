@@ -25,22 +25,24 @@
         </div>
         <!-- destinataire -->
         <div class="row" ng-class="menus[$state.params['type']].color">
-            <div style="margin-left:5%;margin-right:5%;padding:1%">
-                <p style="margin-left:5%;margin-right:5%;padding:1%;text-align:justify;background-color:white">
-                    <strong>Destinataires:</strong> <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}</span>
-                    </br>
-                    <strong>Titre de message:</strong>  {{messageObject['title']}}
-                    </br> 
-                    <strong>Message en html:</strong>  {{messageObject['message']}}
-                </p>
-                <p style="margin-left:5%;margin-right:5%;padding:1%;text-align:justify;background-color:white">
-                    <h4>Mode de diffusion :</h4> <br/>
-                    <input class="css-checkbox" id="byMail" type="checkbox" ng-model="byMail"> <label for="byMail" class="css-label">() mails à envoyer</label><br/>
-                    <input class="css-checkbox" id="byPdf" type="checkbox" ng-model="byPdf" ng-true-value="YES" ng-false-value="NO"> <label for="byPdf" class="css-label">() fichiers pdf à imprimer </label><br/>
-                    <div ng-show="messageObject['messageType']=='info_famille'"><input class="css-checkbox" id="byNotification" type="checkbox" ng-model="byNotif">
-                    <label for="byNotification" class="css-label">diffuser ne ligner sur la page info famille </label></div><br/>
-                </p>
-                <p style="text-align:center;">
+            <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+                <div style="margin-left:10%; margin-right:10%;">
+                    <p style="text-align: ustify; background-color:white; padding-left:5%%; padding-right:5%; padding-top:1%;">
+                        <strong>Destinataires:</strong> <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}</span>
+                        </br>
+                        <strong>Titre de message:</strong>  {{messageObject['title']}}
+                        </br> 
+                        <strong>Message en html:</strong>  {{messageObject['message']}}
+                    </p>
+                    <p style="background-color:white; padding-left:5%%; padding-right:5%; padding-top:1%; height:200px;">
+                        <strong>Mode de diffusion</strong><br/>
+                        <input class="css-checkbox" id="byMail" type="checkbox" ng-model="byMail"> <label for="byMail" class="css-label">() mails à envoyer</label></br>
+                        <input class="css-checkbox" id="byPdf" type="checkbox" ng-model="byPdf" ng-true-value="YES" ng-false-value="NO"> <label for="byPdf" class="css-label">() fichiers pdf à imprimer </label><br/>
+                        <span ng-show="messageObject['messageType']=='info_famille'"><input class="css-checkbox" id="byNotification" type="checkbox" ng-model="byNotif">
+                        <label for="byNotification" class="css-label">diffuser en ligne sur la page info famille </label></span><br/>
+                    </p>
+                </div>
+                <p style="text-align: center">
                     <a class="btn btn-sm" ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  ng-click="sendMessage($state.params['type'])">envoyer</a>
                 </p>
             </div>
