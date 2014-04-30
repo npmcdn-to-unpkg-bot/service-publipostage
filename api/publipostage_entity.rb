@@ -7,7 +7,7 @@ module API
 	      expose :date
 	      expose :message_type
 	      expose :destinataires do |publi, options|
-	      	publi.destinataire
+	      	publi.destinataires
 	      end
 	    end
  	end

@@ -7,13 +7,8 @@
 # id                            | int                 | false    | PRI      |            | 
 # date                          | DateTime            | true     |          |            | 
 # descriptif                    | varchar(45)         | true     |          |            | 
-# code_men                      | varchar(45)         | true     |          |            | 
+# message                       | MEDIUMTEXT          | true     |          |            | 
 # ------------------------------+---------------------+----------+----------+------------+--------------------
-
-# profil_id deleted in the new version
-# profil_id                     | char(8)             | false    | MUL      |            | 
-
-#
 class Publipostage < Sequel::Model(:publipostage)
 
   # Plugins
@@ -23,7 +18,7 @@ class Publipostage < Sequel::Model(:publipostage)
   unrestrict_primary_key()
 
   # Referential integrity
-  one_to_many :destinataire
+  one_to_many :destinataires
 
   # Not nullable cols
   def validate

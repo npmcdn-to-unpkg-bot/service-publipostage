@@ -3,7 +3,7 @@ require 'sequel'
 require 'mysql2'
 
 DB = Sequel.mysql2(
-  'publipostage',
+  'annuairev3',
   :user=>'root',
   :password=>'root',
   :charset=>'utf8')

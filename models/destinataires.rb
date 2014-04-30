@@ -9,7 +9,7 @@
 # publpostage_id                | INT                 | true     | PRI      |            | 
 # ------------------------------+---------------------+----------+----------+------------+--------------------
 
-class Destinataire < Sequel::Model(:destinataire)
+class Destinataire < Sequel::Model(:destinataires)
 
   # Plugins
   plugin :validation_helpers
@@ -18,6 +18,7 @@ class Destinataire < Sequel::Model(:destinataire)
   unrestrict_primary_key()
 
   # Referential integrity
+  many_to_one :regroupement
   many_to_one :publipostage
 
   # Not nullable cols

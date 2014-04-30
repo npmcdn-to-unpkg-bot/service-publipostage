@@ -23,7 +23,6 @@ class ApplicationAPI < Grape::API
   ############################################################################ 
   desc "creer un nouveau publipostage" 
   post '/publipostages' do
-    puts params.inspect
     if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type') and params.has_key?('send_type')
       # new Publi
       puts params['send_type'].inspect
@@ -32,9 +31,9 @@ class ApplicationAPI < Grape::API
       destinations = params['destinataires']
       destinations.each do |dest|
         if dest.respond_to?('classe_id')
-          Destinataire.create(:etablissement_code_uai => dest.etablissement_code , :regroupement_id => dest.classe_id, :publipostage_id => publi.id, :libelle => dest.classe_libelle)
+          Destinataire.create(:regroupement_id => dest.classe_id, :publipostage_id => publi.id)
         elsif dest.respond_to?('groupe_id')
-          Destinataire.create(:etablissement_code_uai => dest.etablissement_code , :regroupement_id => dest.groupe_id, :publipostage_id => publi.id, :libelle => dest.groupe_libelle)
+          Destinataire.create(:regroupement_id => dest.groupe_id, :publipostage_id => publi.id)
         else
           "error"
         end
@@ -68,7 +67,7 @@ class ApplicationAPI < Grape::API
   get '/publipostage/:id/pdf'do
     nodes = ['.civilite', '.date', '.nom', '.prenom', '.nom_eleve', '.prenom_eleve', '.adresse', '.signature']
     publi = Publipostage[:id => params[:id]]
-    destinataires = publi.destinataire 
+    destinataires = publi.destinataires 
     if !publi.nil?&&publi[:difusion_pdf]&&!destinataires.empty?
       final_document = ""
       destinataires.each do |dest|
