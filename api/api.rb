@@ -70,31 +70,15 @@ class ApplicationAPI < Grape::API
     destinataires = publi.destinataires 
     if !publi.nil?&&publi[:difusion_pdf]&&!destinataires.empty?
       final_document = ""
-      destinataires.each do |dest|
-        html = HTMLEntities.new.decode publi[:message]
-          document = Nokogiri::HTML(html)
-          #loop over nodes 
-          nodes.each do |node_name|
-            node = document.at_css(node_name)
-            # mockup data
-            if !node.nil?
-              case node_name
-              when '.civilite'
-                node.content = "MR"
-              when '.prenom'
-                node.content="Jaun"
-              when ".date"
-                node.content = DateTime.now
-              when ".nom"
-                node.content = "Carlos"
-              when ".adresse"
-                node.content = "rue des etoils"
-              end
-            end
-          end
-        # fill final document
-        final_document = final_document+ document.to_html
+      case publi.message_type
+      when 'info_famille'
+        final_document = PdfGenerator::generate_info_famille_pdf(publi[:message], destinataires)
+      when 'ecrire_profs'
+        final_document = PdfGenerator::generate_profs_pdf(publi[:message], destinataires)
+      when 'ecrire_eleves'
+        final_document = PdfGenerator::generate_eleves_pdf(publi[:message], destinataires)
       end
+      # generate pdf
       kit = PDFKit.new(final_document, :page_size => 'Letter')
       content_type 'application/pdf'
       pdf = kit.to_pdf
