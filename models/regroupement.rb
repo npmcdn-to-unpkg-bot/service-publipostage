@@ -58,12 +58,12 @@ class Regroupement < Sequel::Model(:regroupement)
   end
 
   def is_classe
-    type_regroupement_id == TYP_REG_CLS 
+    type_regroupement_id == 'CLS'
   end
 
   def is_groupe
-    type_regroupement_id == TYP_REG_GRP 
-  end  
+    type_regroupement_id == 'GRP'
+  end
 
   # Liste des membres du regroupement dont le profil est Prof
   def profs
@@ -82,9 +82,20 @@ class Regroupement < Sequel::Model(:regroupement)
         :matieres => u.matiere_enseigne(self.id)}} 
 =end
   end
+
   # Liste des membres du regroupement dont le profil est élève
   def eleves
     DB[:user].filter(:id => DB[:eleve_dans_regroupement].filter(:regroupement_id => self.id).select(:user_id))
     .join(:profil_user, :profil_user__user_id => :id).filter(:profil_id => 'ELV').naked.all
+  end
+
+  # Liste les parents des eleves dans un regroupement
+  def parents
+    DB[:user].filter(:id => DB[:relation_eleve].filter(
+        :eleve_id => DB[:user].filter(
+          :id => DB[:eleve_dans_regroupement].filter(:regroupement_id => self.id).select(:user_id))
+                .join(:profil_user, :profil_user__user_id => :id).filter(:profil_id => 'ELV').select(:id)
+        ).select(:user_id)
+      ).naked.all
   end
 end
