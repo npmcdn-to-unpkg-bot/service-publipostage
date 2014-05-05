@@ -123,4 +123,10 @@ class ApplicationAPI < Grape::API
     Annuaire.get_regroupements(params[:id])
   end
 
+  ############################################################################
+  desc "send a notification"
+  post "/notification/:type" do
+    
+  end
+
 end

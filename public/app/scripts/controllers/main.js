@@ -185,6 +185,8 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
                 }
                     , function(error){
                         console.log(error);
+                        $location.path('/error/'+error);
+                        // show a message interface ..
                 });
             }
         }
@@ -234,9 +236,25 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 }]);
 
 /******************************************* Annonce Controller ****************************************/
-Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', 'Redirect', function($scope, AnnonceSquares, Redirect){
+Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', 'Redirect', 'Menus', function($scope, AnnonceSquares, Redirect, Menus){
     $scope.annonceSquares = AnnonceSquares;
     $scope.Redirect = Redirect;
+    $scope.menus = Menus;
+    $scope.tinymceOptions = {
+            language:"fr",
+            theme: "modern",
+            menubar:false,
+            toolbar: false,
+            verify_html : false,
+            height : 200,
+            handle_event_callback: function (e) {
+                // put logic here for keypress
+                console.log("callback called");
+            }
+        };
+    $scope.sendNotification = function(message){
+        console.log(message);
+    }
 }]);
 
 /******************************************* Destinataire Controller ****************************************/

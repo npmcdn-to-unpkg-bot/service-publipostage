@@ -18,8 +18,20 @@
     </div>
     <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8">
         <div class="row" ng-class="menus[$state.params['param']].color">
-            <textarea class="area"></textarea></br>
-            <a class="btn btn-default" ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  ng-click="">envoyer</a>
+            <div class="col-xs-10">
+                <div style="padding:4%">
+                    <form role="form">
+                        <div class="form-group">
+                          <textarea  ui-tinymce="tinymceOptions" ng-model="notification"></textarea>
+                          {{notification}}
+                        </div>
+                    </form>
+                    <div style="text-align: center">
+                        <a class="btn" ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  ng-click="sendNotification(notification)">envoyer
+                        </a>
+                    </div>
+                </div>    
+            </div>
        </div>
     </div>
 </div>

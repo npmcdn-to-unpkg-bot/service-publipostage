@@ -149,6 +149,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     var annonce_for = {
       name:'annonce_for',
       url:'/annonce/:param',
+      controller:'AnnonceCtrl',
       templateUrl:APPLICATION_PREFIX+'/views/annonce_pour.html',
       authorizedRoles: ["TECH"]
     }
@@ -158,6 +159,13 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       url:'/fichier/:id',
       templateUrl:APPLICATION_PREFIX+'/views/pdfviewer.html',
       controller: 'DocCtrl',
+      authorizedRoles: "all"
+    }
+
+    var error = {
+      name:'error',
+      url:'/error/:message',
+      template: '<p> une erreur sest produite </p>',
       authorizedRoles: "all"
     }
     
@@ -171,6 +179,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     .state(envoi)
     .state(annonce_for)
     .state(annonce)
+    .state(error)
     .state(fichier);
     $urlRouterProvider.otherwise('/');
     
@@ -222,7 +231,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $rootScope.racine_images ='/app/images/';
     //$rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
 
-    
+
     // check authorization before changing states .
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
       console.log('state changed');
