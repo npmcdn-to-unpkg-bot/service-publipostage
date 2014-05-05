@@ -222,10 +222,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $rootScope.racine_images ='/app/images/';
     //$rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
 
-/*    security.requestCurrentUser().then(function(user) {
-      currentUser = user;
-    });
-*/
+    
     // check authorization before changing states .
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
       console.log('state changed');

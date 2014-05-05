@@ -174,21 +174,19 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 
         $scope.sendMessage = function(location){
             var message = MessageService.getMessage();
-            console.log(message.destinations);
             // check if message is valid ..
             if (message.title != "" && message.message!=""){
-                Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations, 
+                Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations,
                     'message_type':message.messageType, 'send_type':message.sendType}, function(data){
                     $rootScope.created_publi = data;
-                    console.log($scope.created_publi);
+                    // reinitialize message service
+                    MessageService.init();
+                    $location.path('/envoi/'+location);
                 }
                     , function(error){
                         console.log(error);
                 });
             }
-            // reinitialize message service
-            MessageService.init();
-            $location.path('/envoi/'+location);
         }
 
         $scope.square = {icone: $rootScope.racine_images + '00_vide.svg'};
@@ -410,6 +408,7 @@ Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScop
         }
         
         $scope.goToPreview = function(location){
+            console.log('add message to preview');
             MessageService.addMessage($scope.tinyMessage, $scope.title)
             $location.path('/apercu/'+location);
         }
