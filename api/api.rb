@@ -77,6 +77,10 @@ class ApplicationAPI < Grape::API
         final_document = PdfGenerator::generate_profs_pdf(publi[:message], destinataires)
       when 'ecrire_eleves'
         final_document = PdfGenerator::generate_eleves_pdf(publi[:message], destinataires)
+      when 'ecrire_personnels'
+        final_document = publi[:message]
+      when 'ecrire_tous'
+        final_document = publi[:message]    
       end
       # generate pdf
       kit = PDFKit.new(final_document, :page_size => 'Letter')
