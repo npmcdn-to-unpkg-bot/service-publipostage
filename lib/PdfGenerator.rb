@@ -19,7 +19,7 @@ module PdfGenerator
           if !node.nil?
             case node_name
             when '.civilite'
-              parent[:sexe] == 'M'? node.content = "MR" : node.content = "MMD"
+              parent[:sexe] == 'M'? node.content = "MR" : node.content = "MME"
             when '.prenom'
               node.content= parent[:prenom]
             when ".date"
@@ -52,7 +52,7 @@ module PdfGenerator
           if !node.nil?
             case node_name
             when '.civilite'
-              prof[:sexe] == 'M'? node.content = "MR" : node.content = "MMD"
+              prof[:sexe] == 'M'? node.content = "MR" : node.content = "MME"
             when '.prenom'
               node.content= prof[:prenom]
             when ".date"
@@ -78,14 +78,14 @@ module PdfGenerator
       regroupement.eleves.each do |eleve|
         html = HTMLEntities.new.decode message
         document = Nokogiri::HTML(html)
-        #loop over nodes 
+        #loop over nodes
         Nodes.each do |node_name|
           node = document.at_css(node_name)
           # mockup data
           if !node.nil?
             case node_name
             when '.civilite'
-              eleve[:sexe] == 'M'? node.content = "MR" : node.content = "MMD"
+              eleve[:sexe] == 'M'? node.content = "MR" : node.content = "MME"
             when '.prenom'
               node.content= eleve[:prenom]
             when ".date"
