@@ -3,7 +3,7 @@
 /************************************************************************************/
 /*                   utils service      								            */
 /************************************************************************************/
-angular.module('services.utils', []); 
+angular.module('services.utils', ['faye']); 
 angular.module('services.utils').factory("Redirect", ['$location', function($location) {
   	return {
 	    goTo: function(location) {
@@ -24,3 +24,9 @@ angular.module('services.utils').factory("Redirect", ['$location', function($loc
 
   	}
 }]);
+
+// faye client angular..
+angular.module('services.utils').factory('Faye', ['$faye', function($faye){
+        return $faye("http://localhost:7000/faye");
+    }
+]);

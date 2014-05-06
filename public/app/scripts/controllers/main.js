@@ -443,6 +443,16 @@ Controllers.controller('DocCtrl', ['$scope', '$state', function($scope, $state){
 }]);
 /***************************************************************************************************/
 
-
+Controllers.controller('FayeCtrl', ['$scope', '$http', 'Faye', '$rootScope', function($scope, $http, Faye, $rootScope) {
+    $scope.publish = function(){
+        Faye.publish("/browser", {msg: $scope.message});
+    };
+    //  Subscribe
+    $rootScope.data = [];
+    Faye.subscribe("/server", function(msg) {
+        $rootScope.data.push(msg);
+        $scope.$emit('growlMessage', msg);
+    });
+}]);
 
 

@@ -125,8 +125,8 @@ class ApplicationAPI < Grape::API
 
   ############################################################################
   desc "send a notification"
-  post "/notification/:type" do
-    
+  post "/notification/:uai/:profil/:uid/:type" do
+    puts request.inspect
   end
 
 end
