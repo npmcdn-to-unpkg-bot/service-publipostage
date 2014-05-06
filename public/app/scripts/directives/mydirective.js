@@ -17,7 +17,7 @@ angular.module('myApp.directives')
 		        scope.$watch('grittorMessage', function(newmsg){
 		        	if (!angular.isUndefined(newmsg)){
 			        	element.gritter.add({
-			            title: 'recieved from server',
+			            title: newmsg.title,
 			            text: newmsg.msg,
 			            image: 'http://a0.twimg.com/profile_images/59268975/jquery_avatar_bigger.png',
 			            sticky: false,

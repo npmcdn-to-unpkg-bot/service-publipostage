@@ -236,7 +236,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 }]);
 
 /******************************************* Annonce Controller ****************************************/
-Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', 'Redirect', 'Menus', function($scope, AnnonceSquares, Redirect, Menus){
+Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope', 'Redirect', 'Menus','Faye',  function($scope, AnnonceSquares,$rootScope, Redirect, Menus, Faye){
     $scope.annonceSquares = AnnonceSquares;
     $scope.Redirect = Redirect;
     $scope.menus = Menus;
@@ -253,8 +253,17 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', 'Redirect', '
             }
         };
     $scope.sendNotification = function(message){
+        Faye.publish("/etablissement/uai/personnels", {msg: message, title:'titre de message'});
         console.log(message);
-    }
+    };
+
+    //  Subscribe
+    $rootScope.data = [];
+    Faye.subscribe("/etablissement/uai/personnels", function(msg) {
+        $rootScope.data.push(msg);
+        $scope.$emit('growlMessage', msg);
+    });
+
 }]);
 
 /******************************************* Destinataire Controller ****************************************/
@@ -443,7 +452,13 @@ Controllers.controller('DocCtrl', ['$scope', '$state', function($scope, $state){
 }]);
 /***************************************************************************************************/
 
-Controllers.controller('FayeCtrl', ['$scope', '$http', 'Faye', '$rootScope', function($scope, $http, Faye, $rootScope) {
+Controllers.controller('FayeCtrl', ['$scope', '$http', 'Faye', '$rootScope', 'security','currentUser', function($scope, $http, Faye, $rootScope, security, currentUser) {
+    security.requestCurrentUser().then(function(user) {
+        currentUser = user;
+        if (security.isAuthenticated()) {
+            console.log(currentUser);   
+        }
+    });
     $scope.publish = function(){
         Faye.publish("/browser", {msg: $scope.message});
     };
