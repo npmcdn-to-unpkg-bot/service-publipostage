@@ -241,6 +241,7 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
     $scope.annonceSquares = AnnonceSquares;
     $scope.Redirect = Redirect;
     $scope.menus = Menus;
+    $scope.notification = 'Ecrire une annonce de 300 caractères maximum.';
     var destinataires = MessageService.getMessage()['destinations'];
     console.log(destinataires);
     $scope.tinymceOptions = {

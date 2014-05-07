@@ -1,0 +1,30 @@
+<div class="row-fluid">
+    <div class="col-xs-4 col-s-m4 col-md-4 col-lg-4">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+                <p class="menu-text"><strong>Faire une annonce</strong></p>
+                <p class="menu-text">Un court message sera envoyé
+                    aux destinataires. L’annonce
+                    s’affichera en direct en haut à
+                    droite de l’écran.</p>
+                <p class="menu-text">Etape 1: type de message</p>
+                <p class="menu-text">faire une annonce</p>
+                <p class="menu-text">Etape 2: destinataires</p>
+                <p class="menu-text"><strong>Envoi</strong></p>
+                </br>
+                </br>
+                </br>
+            </div>
+        </div>
+    </div>    
+    <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8" ng-class="menus[$state.params['type']].color">
+        <!-- icon -->
+        <div class="row" ng-class="menus[$state.params['type']].color">
+            <div ng-class="" class="col-md-2 col-md-offset-5 annonce_icon"></div>  <!-- col-md-2  col-md-2 to center content -->
+        </div>
+        <p style="text-align: center;">Annonce envoyée</p>
+        <p style="text-align: center;">L’annonce a été diffusée sur</p>
+        <p style="text-align: center;">tous les comptes indiqués.</p>
+        <p style="text-align:center"><a class='btn btn-default btn-sm' ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  href="#/">écrire un autre message</a></p>
+    </div>
+</div>

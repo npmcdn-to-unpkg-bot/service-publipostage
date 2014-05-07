@@ -324,6 +324,12 @@ row {
   height:200px;
 }
 
+.annonce_icon {
+  background-image: url("../images/annonce.svg");
+  width:213.333px;
+  height:200px;
+}
+
 
 /*.squares li:hover{opacity:0.1;}@media (min-width:768px){.bs-glyphicons{margin-left:0;margin-right:0}.bs-glyphicon*/
 

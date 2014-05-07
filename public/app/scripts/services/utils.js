@@ -23,6 +23,9 @@ angular.module('services.utils').factory("Redirect", ['$location', function($loc
         },
         goToAnnonce: function(location){
             $location.path('/annonce/'+location);
+        },
+        goToEnvoi: function(location){
+            $location.path('/envoi_annonce/'+location);
         }
 
   	}

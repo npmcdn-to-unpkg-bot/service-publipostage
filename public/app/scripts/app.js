@@ -177,8 +177,20 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       template: '<p> une erreur sest produite </p>',
       authorizedRoles: "all"
     }
+
+    var envoi_annonce = {
+      name:'envoi_annonce',
+      url:'/envoi_annonce/:type',
+      templateUrl: APPLICATION_PREFIX+'/views/envoi_annonce.html',
+      controller:'AnnonceCtrl',
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
+    }
+
     
-    $stateProvider.state(home).state(gestion).state(createPublipostage).state(profil)
+    $stateProvider.state(home)
+    .state(gestion)
+    .state(createPublipostage)
+    .state(profil)
     .state(type_message)
     .state(historique)
     .state(destinataire)
@@ -190,7 +202,8 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     .state(annonce)
     .state(annonce_destinataires)
     .state(error)
-    .state(fichier);
+    .state(fichier)
+    .state(envoi_annonce);
     $urlRouterProvider.otherwise('/');
     
 }]).config(function ($provide, $httpProvider) {
