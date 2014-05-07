@@ -147,6 +147,14 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       authorizedRoles: ["TECH"]
     }
 
+    var annonce_destinataires = {
+      name:'annonce_destinataires',
+      url:'/annonce_destinataires/:annonce_type',
+      templateUrl: APPLICATION_PREFIX+'/views/annonce_destinataires.html',
+      controller:'destinatairesCtrl',
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
+    }
+
     var annonce_for = {
       name:'annonce_for',
       url:'/annonce/:param',
@@ -180,6 +188,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     .state(envoi)
     .state(annonce_for)
     .state(annonce)
+    .state(annonce_destinataires)
     .state(error)
     .state(fichier);
     $urlRouterProvider.otherwise('/');
@@ -226,12 +235,11 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $httpProvider.interceptors.push('HttpInterceptor');
 }).config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
-}).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService) {
+}).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService', 'Faye', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService, Faye) {
     
     $rootScope.$location = $location;
     $rootScope.racine_images ='/app/images/';
     //$rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
-
 
     // check authorization before changing states .
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
@@ -260,7 +268,6 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       }
     });   
 
-  
     $rootScope.$state = $state;
     $rootScope.title = "title";
     $rootScope.messageObject = MessageService.getMessage();

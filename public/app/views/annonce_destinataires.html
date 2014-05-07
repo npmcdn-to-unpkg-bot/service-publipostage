@@ -1,0 +1,107 @@
+<div class="row-fluid">
+    <div class="col-xs-4 col-s-m4 col-md-4 col-lg-4">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+                <p class="menu-text">  Etape 1: type de message</p>
+                <p class="menu-text"> &ensp; {{menus[$state.params["type"]]['right_menu_text']}} {{}}</p>
+                <p class="menu-text"> <strong>Etape 2: les destinataire</strong></p>
+                {{greeting}}
+                <p class="menu-text"> Selectionner les classes  et les groupes destinataire des messages</p>
+                <form role="form" class="form-inline">
+                    <div ng-show="$state.params['type']=='ecrire_profs'">
+                        <label>Choisir une matiere: </label><select class="form-control">
+                            <option>Matimatique</option>
+                            <option>Autre chose</option>
+                        </select>
+                    </div>
+                    <br/>
+                    <div  ng-show="$state.params['type']=='ecrire_tous'">
+                        <div style="text-align: center" class="checkbox">
+                            <label>
+                              <input type="checkbox"> Elèves
+                            </label>
+                        </div><br/>
+                        <div style="text-align: center" class="checkbox">
+                            <label>
+                              <input type="checkbox"> Professeurs
+                            </label>
+                        </div><br/>
+                        <div style="text-align: center" class="checkbox">
+                            <label>
+                              <input type="checkbox"> Parents
+                            </label>
+                        </div><br/>
+                        <div class="checkbox">
+                            <label>
+                              <input type="checkbox"> Personnels
+                            </label>
+                        </div><br/>
+                    </div>
+                </form>
+                </br>
+                </br>
+                <p style="text-align:center;"><a class='btn btn-sm'  style="color:#1aa1cc;border-color:#1aa1cc;background-color:white;" ng-disabled="destinations.length==0" ng-click="addDestinations();Redirect.goToAnnonce($state.params['annonce_type'])">suivant</a></p>
+                </br>
+                </br>
+                <p class="menu-text-black">Vous avez selectionné <span class="label label-default">{{destinations.length}}</span> classes et groupes</p>
+                <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat= "classe in regroupements['classes']"><span ng-show="classe.checked">{{classe.classe_libelle}} </span></span><span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></p>
+                <br/>
+                <a class="btn btn-info btn-sm">voir l'historique</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 gris3" >
+                <a ng-click="selectAll()" ng-show="selectAllMode">
+                    <div class="square-icon">
+                      <div class="famille-icon"><!--<data-ng-include class="svg" src="menus[$state.params['type']].icon"></data-ng-include>--></div>
+                      <span class="square-text">tous sélectionner</span>
+                    </div>
+                </a>
+                <a ng-click="deselectAll()" ng-hide="selectAllMode">
+                    <div class="square-icon">
+                      <div class="famille-icon"><!--<data-ng-include class="svg" src="menus[$state.params['type']].icon"></data-ng-include>--></div>
+                      <span class="square-text">annuler la selection</span>
+                    </div>
+                </a>
+            </div>
+
+            <!--show classes-->
+            <div ng-repeat="classe in regroupements['classes'] | filter:searchText" class="col-xs-12 col-sm-6 col-md-3 col-lg-3" ng-class="classe.color">
+                <a ng-click="changeClassColor($index);classe.checked=!classe.checked;addRemoveDestination(classe);">
+                  <div class="square-icon">
+                    <div class="empty-icon"><!--<data-ng-include class="svg" src="square.icone"></data-ng-include>-->
+                        <span class="classe-text">{{classe.classe_libelle}}</span>
+                    </div>
+                    <span class="square-text">{{classe.etablissement_nom}}</span>
+                  </div>
+                </a>
+            </div>
+            
+            <!--show groupes -->
+            <div ng-repeat="groupe in regroupements['groupes_eleves']" class="col-xs-12 col-sm-6 col-md-3 col-lg-3" ng-class="groupe.color">
+                <a ng-click="changeGroupColor($index);groupe.checked=!groupe.checked;addRemoveDestination(groupe)">
+                  <div class="square-icon">
+                    <div class="empty-icon"> <!--<data-ng-include class="svg" src="square.icone"></data-ng-include>-->
+                        <span class="groupe-text">{{groupe.groupe_libelle}}</span>
+                    </div>
+                    <span class="square-text">{{groupe.etablissement_nom}}</span>
+                  </div>
+                </a>
+            </div>
+            
+            <!-- empty squares -->
+            <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}">
+                <a>
+                  <div class="square-icon">
+                    <div class="empty-icon">
+                        <span class="classe-text">&nbsp;</span>
+                    </div>
+                    <span class="square-text">&nbsp;</span>
+                  </div>
+                </a>
+            </div> 
+        </div>
+    </div>
+</div>

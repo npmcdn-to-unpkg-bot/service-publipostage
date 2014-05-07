@@ -20,6 +20,9 @@ angular.module('services.utils').factory("Redirect", ['$location', function($loc
         },
         goToPreview: function(location){
             $location.path('/apercu/'+location);
+        },
+        goToAnnonce: function(location){
+            $location.path('/annonce/'+location);
         }
 
   	}

@@ -236,10 +236,13 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 }]);
 
 /******************************************* Annonce Controller ****************************************/
-Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope', 'Redirect', 'Menus','Faye',  function($scope, AnnonceSquares,$rootScope, Redirect, Menus, Faye){
+Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope', 'Redirect', 'Menus','Faye','security', 'currentUser', '$state', 'MessageService',
+    function($scope, AnnonceSquares,$rootScope, Redirect, Menus, Faye, security, currentUser, $state, MessageService){
     $scope.annonceSquares = AnnonceSquares;
     $scope.Redirect = Redirect;
     $scope.menus = Menus;
+    var destinataires = MessageService.getMessage()['destinations'];
+    console.log(destinataires);
     $scope.tinymceOptions = {
             language:"fr",
             theme: "modern",
@@ -248,21 +251,33 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
             verify_html : false,
             height : 200,
             handle_event_callback: function (e) {
-                // put logic here for keypress
-                console.log("callback called");
             }
-        };
-    $scope.sendNotification = function(message){
-        Faye.publish("/etablissement/uai/personnels", {msg: message, title:'titre de message'});
-        console.log(message);
     };
-
-    //  Subscribe
-    $rootScope.data = [];
-    Faye.subscribe("/etablissement/uai/personnels", function(msg) {
-        $rootScope.data.push(msg);
-        $scope.$emit('growlMessage', msg);
+    var personel_channel = "";
+    security.requestCurrentUser().then(function(user){
+        currentUser = user;
+        console.log(currentUser);
+        personel_channel = "/etablissement/"+(currentUser.info['uid'])+"/personnels";
+        console.log(personel_channel);
     });
+
+    $scope.sendNotification = function(message){
+        switch($state.params['param']) {
+            case 'ecrire_personnels':
+                Faye.publish(personel_channel, {msg: message, title:'Personnels <br/><hr/>'});
+                break;
+            case 'ecrire_eleves':
+                destinataires.forEach(function(dest, index, array){
+                    if(angular.isDefined(dest['classe_id']))
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/ELV"), {msg: message, title:'Message aux eleves de '+dest['classe_libelle']+'<br/><hr/>'});
+                    if(angular.isDefined(dest['groupe_id']))
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/ELV"), {msg: message, title:'Message aux eleves de '+dest['groupe_libelle']+'<br/><hr/>'});
+                });
+                break;
+            default:
+                console.log("default");
+        }
+    };
 
 }]);
 
@@ -452,22 +467,49 @@ Controllers.controller('DocCtrl', ['$scope', '$state', function($scope, $state){
 }]);
 /***************************************************************************************************/
 
-Controllers.controller('FayeCtrl', ['$scope', '$http', 'Faye', '$rootScope', 'security','currentUser', function($scope, $http, Faye, $rootScope, security, currentUser) {
-    security.requestCurrentUser().then(function(user) {
+Controllers.controller('NotificationCtrl', ['$scope', '$http', 'Faye', '$rootScope', 'security','currentUser', 'Regroupements',
+    function($scope, $http, Faye, $rootScope, security, currentUser, Regroupements) {
+    // subscribe users to channels..
+    security.requestCurrentUser().then(function(user){
         currentUser = user;
-        if (security.isAuthenticated()) {
-            console.log(currentUser);   
+        console.log(currentUser);
+        var channels = [];
+        /*
+        Regroupements.get({id:user.info['uid']}, function(regroupements){
+            $scope.regroupements = regroupements;
+            $scope.regroupements['classes'].forEach(function(element, index, array){
+            });
+            $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
+            });
+        });
+        */
+        // push profil channels.
+        for(var i=0; i<currentUser.roles.length; i++){
+            //moi channels
+            channels.push("/etablissement/"+currentUser.roles[i][1]+"/"+currentUser.roles[i][0]+"/"+currentUser.info['uid']);
+            //etablissement channels
+            channels.push("/etablissement/"+currentUser.roles[i][1]+"/"+currentUser.roles[i][0]);
+            // push classe channels.
+            channels.push("/etablissement/"+currentUser.roles[i][1]+"/classe/classe_id");
+            //push groupe channels.
+            channels.push("/etablissement/"+currentUser.roles[i][1]+"/groupe/groupe_id");
+        };
+
+        var channel = "/etablissement/"+(currentUser.info['uid'])+"/personnels";
+        console.log(channel);
+        channels.push(channel);
+        console.log(channels);
+
+        // le problem et de generer plusieur subscribe automatiquement.
+        $rootScope.data = [];
+        var process_message = function(msg){
+            $rootScope.data.push(msg);
+            $scope.$emit('growlMessage', msg);
+        };
+        //subscribe to channel;
+        for(var ch in channels){
+            Faye.subscribe(channels[ch], process_message);
         }
     });
-    $scope.publish = function(){
-        Faye.publish("/browser", {msg: $scope.message});
-    };
-    //  Subscribe
-    $rootScope.data = [];
-    Faye.subscribe("/server", function(msg) {
-        $rootScope.data.push(msg);
-        $scope.$emit('growlMessage', msg);
-    });
 }]);
-
 
