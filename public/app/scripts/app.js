@@ -144,7 +144,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       url:'/annonce',
       templateUrl:APPLICATION_PREFIX+'/views/annonce.html',
       controller:'AnnonceCtrl',
-      authorizedRoles: ["TECH"]
+      authorizedRoles: ["TECH", "PROF_ETB", "ADM_ETB"]
     }
 
     var annonce_destinataires = {
@@ -160,7 +160,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       url:'/annonce/:param',
       controller:'AnnonceCtrl',
       templateUrl:APPLICATION_PREFIX+'/views/annonce_pour.html',
-      authorizedRoles: ["TECH"]
+      authorizedRoles: ["TECH","ADM_ETB","PROF_ETB"]
     }
 
     var fichier = {

@@ -274,11 +274,21 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
                         Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/ELV"), {msg: message, title:'Message aux eleves de '+dest['groupe_libelle']+'<br/><hr/>'});
                 });
                 break;
+            case 'ecrire_profs':
+                destinataires.forEach(function(dest, index, array){
+                    if(angular.isDefined(dest['classe_id']))
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/PROF_ETB"), {msg: message, title:'Message aux enseignants de '+dest['classe_libelle']+'<br/><hr/>'});
+                    if(angular.isDefined(dest['groupe_id']))
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/PROF_ETB"), {msg: message, title:'Message aux enseignants de '+dest['groupe_libelle']+'<br/><hr/>'});
+                });
+                break;
+            case 'ecrire_parents':
+                console.log('ecrire_parents');
+                break;
             default:
                 console.log("default");
         }
     };
-
 }]);
 
 /******************************************* Destinataire Controller ****************************************/
@@ -472,44 +482,38 @@ Controllers.controller('NotificationCtrl', ['$scope', '$http', 'Faye', '$rootSco
     // subscribe users to channels..
     security.requestCurrentUser().then(function(user){
         currentUser = user;
-        console.log(currentUser);
+        //console.log(currentUser);
         var channels = [];
-        /*
-        Regroupements.get({id:user.info['uid']}, function(regroupements){
+        Regroupements.get({id:user.info['uid']},function(regroupements){
             $scope.regroupements = regroupements;
-            $scope.regroupements['classes'].forEach(function(element, index, array){
-            });
-            $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
-            });
+            console.log(regroupements);
+            console.log(currentUser);
+            for(var i=0; i<currentUser.roles.length; i++){
+                //moi channel
+                channels.push("/etablissement/"+currentUser.roles[i][1]+"/"+currentUser.roles[i][0]+"/"+currentUser.info['uid']);
+                //etablissement channels
+                channels.push("/etablissement/"+currentUser.roles[i][1]+"/"+currentUser.roles[i][0]);
+                $scope.regroupements['classes'].forEach(function(classe, index, array){
+                    channels.push("/etablissement/"+classe['etablissement_code']+"/classe/"+classe['classe_id']+"/"+currentUser.roles[i][0]);
+                });
+                $scope.regroupements['groupes_eleves'].forEach(function(groupe, index, array){
+                    channels.push("/etablissement/"+groupe['etablissement_code']+"/groupe/"+groupe['groupe_id']+"/"+currentUser.roles[i][0]);
+                });
+                var channel = "/etablissement/"+(currentUser.info['uid'])+"/personnels";
+                channels.push(channel);
+
+                // le problem et de generer plusieur subscribe automatiquement.
+                $rootScope.data = [];
+                var process_message = function(msg){
+                    $rootScope.data.push(msg);
+                    $scope.$emit('growlMessage', msg);
+                };
+                //subscribe to channels;
+                for(var ch in channels){
+                    Faye.subscribe(channels[ch], process_message);
+                }
+            }
         });
-        */
-        // push profil channels.
-        for(var i=0; i<currentUser.roles.length; i++){
-            //moi channels
-            channels.push("/etablissement/"+currentUser.roles[i][1]+"/"+currentUser.roles[i][0]+"/"+currentUser.info['uid']);
-            //etablissement channels
-            channels.push("/etablissement/"+currentUser.roles[i][1]+"/"+currentUser.roles[i][0]);
-            // push classe channels.
-            channels.push("/etablissement/"+currentUser.roles[i][1]+"/classe/classe_id");
-            //push groupe channels.
-            channels.push("/etablissement/"+currentUser.roles[i][1]+"/groupe/groupe_id");
-        };
-
-        var channel = "/etablissement/"+(currentUser.info['uid'])+"/personnels";
-        console.log(channel);
-        channels.push(channel);
-        console.log(channels);
-
-        // le problem et de generer plusieur subscribe automatiquement.
-        $rootScope.data = [];
-        var process_message = function(msg){
-            $rootScope.data.push(msg);
-            $scope.$emit('growlMessage', msg);
-        };
-        //subscribe to channel;
-        for(var ch in channels){
-            Faye.subscribe(channels[ch], process_message);
-        }
     });
 }]);
 
