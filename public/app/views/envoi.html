@@ -19,11 +19,11 @@
         <div class="row" ng-class="menus[$state.params['type']].color">
             <div ng-class="menus[$state.params['type']].icon_div" class="col-md-2 col-md-offset-5"></div>  <!-- col-md-2  col-md-2 to center content -->
         </div>
-        <p style="text-align: center;">Le message est creé! </p>
-        <p style="text-align: center;" ng-show="$state.params['type']=='info_famille'">Le message a été diffusé en ligne  sur la page info famille.</p>
-        <p style="text-align: center;">() messages ont été envoyés par mails.
-        <p style="text-align: center;">() messages sont à télécharger en fichier pdf :</p>
-        <p style="text-align: center;"><a ng-show="created_publi.difusion_pdf" href="http://localhost:9292/app/api/publipostage/{{created_publi.id}}/pdf" target="_blank"> <i class="fa fa-file fa-5x" style="color:#fff; text-shadow:1px 1px 1px #ccc;"></i></p>
+        <p class="square-text">Le message est creé! </p>
+        <p class="square-text" ng-show="$state.params['type']=='info_famille'">Le message a été diffusé en ligne  sur la page info famille.</p>
+        <p class="square-text">() messages ont été envoyés par mails.
+        <p class="square-text">() messages sont à télécharger en fichier pdf :</p>
+        <p class="square-text"><a ng-show="created_publi.difusion_pdf" href="http://localhost:9292/app/api/publipostage/{{created_publi.id}}/pdf" target="_blank"> <i class="fa fa-file fa-5x" style="color:#fff; text-shadow:1px 1px 1px #ccc;"></i></p>
         <p></p>
         <p style="text-align:center"><a class='btn btn-default btn-sm' ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  href="#/">écrire un autre message</a></p>   
     </div>
