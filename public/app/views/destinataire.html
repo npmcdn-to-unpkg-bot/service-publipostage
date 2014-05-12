@@ -53,7 +53,7 @@
     </div>
     <div class="col-md-8 col-lg-8">
         <div class="row-fluid">
-            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 gris3" >
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris3" >
                 <a ng-click="selectAll()" ng-show="selectAllMode">
                     <div class="square-icon">
                       <div class="famille-icon"><!--<data-ng-include class="svg" src="menus[$state.params['type']].icon"></data-ng-include>--></div>
@@ -69,7 +69,7 @@
             </div>
 
             <!--show classes-->
-            <div ng-repeat="classe in regroupements['classes'] | filter:searchText" class="col-xs-12 col-sm-6 col-md-3 col-lg-3" ng-class="classe.color">
+            <div ng-repeat="classe in regroupements['classes'] | filter:searchText" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="classe.color">
                 <a ng-click="changeClassColor($index);classe.checked=!classe.checked;addRemoveDestination(classe);">
                   <div class="square-icon">
                     <div class="empty-icon"><!--<data-ng-include class="svg" src="square.icone"></data-ng-include>-->
@@ -81,7 +81,7 @@
             </div>
             
             <!--show groupes -->
-            <div ng-repeat="groupe in regroupements['groupes_eleves']" class="col-xs-12 col-sm-6 col-md-3 col-lg-3" ng-class="groupe.color">
+            <div ng-repeat="groupe in regroupements['groupes_eleves']" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="groupe.color">
                 <a ng-click="changeGroupColor($index);groupe.checked=!groupe.checked;addRemoveDestination(groupe)">
                   <div class="square-icon">
                     <div class="empty-icon"> <!--<data-ng-include class="svg" src="square.icone"></data-ng-include>-->
@@ -93,7 +93,7 @@
             </div>
             
             <!-- empty squares -->
-            <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}">
+            <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}">
                 <a>
                   <div class="square-icon">
                     <div class="empty-icon">

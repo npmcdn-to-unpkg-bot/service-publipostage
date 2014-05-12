@@ -1,18 +1,16 @@
 <div class="row-fluid">
-    <div class="col-xs-4 col-s-m4 col-md-4 col-lg-4">
-        <div class="row-fluid">
+    <div class="col-md-4 col-lg-4">
+        <div class="row">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <p class="menu-text">Etape 1: type de message</p>
-                <p class="menu-text">Etape 2: les destinataires</strong></p>
-                <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}</span></p>
-                <p class="menu-text"><strong>Etepe 3: Message</strong></p>
-                <p class="menu-text">Ecrire le message</p>
-                </br>
-                </br>
-            </div>    
-        </div>        
+                <h2 class="visible-md visible-lg">étape 1: type de message</h2>
+                <h2 class="visible-md visible-lg">étape 2: les destinataires</strong></h2>
+                <p class="menu-text-hidden visible-md visible-lg"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}</span></p>
+                <h2><strong>étape 3: message</strong></h2>
+                <h2 class="visible-md visible-lg">Ecrire le message</h2>
+            </div>
+        </div>
     </div>
-    <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8">
+    <div class="col-md-8 col-lg-8">
         <div class="row" ng-class="menus[$state.params['type']].color">
             <div class="col-xs-8">
                 <div style="padding:5%">
@@ -23,31 +21,33 @@
                         </div>
                     </form>
                     <div class="form-group">
-                        <a class="btn btn-default" ng-click="showtoolbar=!showtoolbar">inserer des données</a><br/>
+                        <a class="btn btn-default btn-sm" ng-click="showtoolbar=!showtoolbar">inserer des données</a><br/>
                         <div ng-show="showtoolbar">
-                            <a  class="btn btn-default" ng-click="addToMessage('<h4 class=\'civilite\'>[civilite]</h4>')">Civilité</a>
-                            <a class="btn btn-default" ng-click="addToMessage('<h4 class=\'nom\'>[nom]</h4>')">Nom</a> 
-                            <a class="btn btn-default" ng-click="addToMessage('<h4 class=\'prenom\'>[prenom]</h4>')">Prenom</a> 
-                            <a  class="btn btn-default" ng-click="addToMessage('<h4 class=\'adresse\'>[adresse]</h4>')">Adresse</a>  
-                            <a  class="btn btn-default" ng-click="addToMessage('<h4 class=\'date\'>[date]</h4>')">Date du Jours</a>  
-                            <a  class="btn btn-default" ng-click="addToMessage('<h4 class=\'signature\'>[singature]</h4>')">Singature</a>   
-                            <a  class="btn btn-default" ng-click="addToMessage('<h4 class=\'nomEleve\'>[nomEleve]</h4>')">Nom de l'élève</a>  
-                            <a  class="btn btn-default" ng-click="addToMessage('<h4 class=\'prenomEleve\'>[prenomEleve]</h4>')">Prénom de l'élève</a>   
-                            <a  class="btn btn-default" ng-click="addToMessage('<h4 class=\'classe\'>[classe]</h4>')">Classe</a>  
-                            <a  class="btn btn-default" ng-click="addToMessage('<h4 class=\'blogEtab\'>[blogEtab]</h4>')">Lien blog de l'etablissement</a>    
-                            <a  class="btn btn-default" ng-click="addToMessage('<h4 class=\'blogGroupe\'>[blogGroupe]</h4>')">Lien blog de groupe</a>
-                            <a  class="btn btn-default" ng-click="addToMessage('<h4 class=\'blogClasse\'>[blogGroupe]</h4>')">Lien blog de classe</a> 
-                            <a  class="btn btn-default" ng-click="addToMessage('<a href=\'http://www.laclasse.com\'>Laclasse</a>')">Lien Laclasse.com</a>
-                        </div> 
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'civilite\'>[civilite]</h4>')">Civilité</a>
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'nom\'>[nom]</h4>')">Nom</a> 
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'prenom\'>[prenom]</h4>')">Prenom</a> 
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'adresse\'>[adresse]</h4>')">Adresse</a>  
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'date\'>[date]</h4>')">Date du Jours</a>  
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'signature\'>[singature]</h4>')">Singature</a>   
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'nomEleve\'>[nomEleve]</h4>')">Nom de l'élève</a>  
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'prenomEleve\'>[prenomEleve]</h4>')">Prénom de l'élève</a>   
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'classe\'>[classe]</h4>')">Classe</a>  
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'blogEtab\'>[blogEtab]</h4>')">Lien blog de l'etablissement</a>    
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'blogGroupe\'>[blogGroupe]</h4>')">Lien blog de groupe</a>
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'blogClasse\'>[blogGroupe]</h4>')">Lien blog de classe</a> 
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<a href=\'http://www.laclasse.com\'>Laclasse</a>')">Lien Laclasse.com</a>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-xs-2">
                 <div ng-class="menus[$state.params['type']].icon_div"></div>
             </div>
+            <div class="col-xs-2">
+            </div>
         </div>
         <div class="row" ng-class="menus[$state.params['type']].color">
-            <div class="col-xs-10">
+            <div class="col-xs-12">
                 <div style="padding:4%">
                     <form role="form">
                         <div class="form-group">
