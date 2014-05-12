@@ -498,3 +498,26 @@ a {
   height: 10px;
 }
 
+.banner {
+}
+.banner .container {
+    background-color: white;
+    min-height: 200px;
+    padding: 40px 30px 30px 40px;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+h1{
+    font-family: Futura Bold;
+    font-weight: 300;
+    color:#64BDF5;
+}
+
+h2{
+    font-family: Futura Bold;
+    font-weight: 200;
+    color:#64BDF5;
+}
+p {
+    font-family: 'Lato', sans-serif;
+}

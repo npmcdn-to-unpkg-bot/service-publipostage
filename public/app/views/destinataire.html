@@ -1,8 +1,8 @@
 <div class="row-fluid">
-    <div class="col-xs-4 col-s-m4 col-md-4 col-lg-4">
+    <div class="col-md-4 col-lg-4">
         <div class="row-fluid">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <p class="menu-text">  Etape 1: type de message</p>
+                <p class="menu-text visible-md visible-lg">  Etape 1: type de message</p>
                 <p class="menu-text"> &ensp; {{menus[$state.params["type"]]['right_menu_text']}} {{}}</p>
                 <p class="menu-text"> <strong>Etape 2: les destinataire</strong></p>
                 {{greeting}}
@@ -14,8 +14,9 @@
                             <option>Autre chose</option>
                         </select>
                     </div>
-                    <br/> 
-                    <label><p class="menu-text-black">filtrer les classes et groupes: <i class="fa fa-search"></i></label> <input type="text" ng-model="searchText" class="form-control" placeholder="chercher"/>
+                    <br/>
+                    <!-- 
+                    <label><p class="menu-text-black">filtrer les classes et groupes: <i class="fa fa-search"></i></label> <input type="text" ng-model="searchText" class="form-control" placeholder="chercher"/> -->
                     <div  ng-show="$state.params['type']=='ecrire_tous'">
                         <div style="text-align: center" class="checkbox">
                             <label>
@@ -51,7 +52,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8">
+    <div class="col-md-8 col-lg-8">
         <div class="row-fluid">
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 gris3" >
                 <a ng-click="selectAll()" ng-show="selectAllMode">
