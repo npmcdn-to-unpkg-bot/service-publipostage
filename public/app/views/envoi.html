@@ -1,30 +1,34 @@
 <div class="row-fluid">
-    <div class="col-xs-4 col-s-m4 col-md-4 col-lg-4">
-        <div class="row-fluid">
+    <div class="col-md-4 col-lg-4">
+        <div class="row">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <p style="color:#64BDF5">Etape 1: type de message</p>
-                <p style="color:#64BDF5">Etape 2: les destinataire</strong></p>
-                <p style="color:#64BDF5">Etape 3: message</p>
-                <p style="color:#64BDF5">Etape 4: aperçu</p>
-                <p style="color:#64BDF5"><strong>Etape 5: envoi</strong></p>
-                <p style="color:#64BDF5"><strong>Le message a étè sauvegardé dans les modèles</strong></p>
-                </br>
-                </br>
-                </br>
+                <h2 class="visible-md visible-lg">Etape 1: type de message</h2>
+                <h2 class="visible-md visible-lg">Etape 2: les destinataire</h2>
+                <h2 class="visible-md visible-lg">Etape 3: message</h2>
+                <h2 class="visible-md visible-lg">Etape 4: aperçu</h2>
+                <h2><strong>Etape 5: envoi </strong></h2>
+                <p class="menu-text">Le message a étè sauvegardé dans les modèles</p>
             </div>
         </div>
-    </div>    
-    <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8" ng-class="menus[$state.params['type']].color">
+    </div>
+    <div class="col-md-8 col-lg-8" ng-class="menus[$state.params['type']].color">
         <!-- icon -->
         <div class="row" ng-class="menus[$state.params['type']].color">
             <div ng-class="menus[$state.params['type']].icon_div" class="col-md-2 col-md-offset-5"></div>  <!-- col-md-2  col-md-2 to center content -->
         </div>
-        <p class="square-text">Le message est creé! </p>
-        <p class="square-text" ng-show="$state.params['type']=='info_famille'">Le message a été diffusé en ligne  sur la page info famille.</p>
-        <p class="square-text">() messages ont été envoyés par mails.
-        <p class="square-text">() messages sont à télécharger en fichier pdf :</p>
-        <p class="square-text"><a ng-show="created_publi.difusion_pdf" href="http://localhost:9292/app/api/publipostage/{{created_publi.id}}/pdf" target="_blank"> <i class="fa fa-file fa-5x" style="color:#fff; text-shadow:1px 1px 1px #ccc;"></i></p>
-        <p></p>
-        <p style="text-align:center"><a class='btn btn-default btn-sm' ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  href="#/">écrire un autre message</a></p>   
+        <!-- text -->
+        <div class="row" ng-class="menus[$state.params['type']].color">
+            <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+                <p class="square-text">Le message est creé! </p>
+                <p class="square-text" ng-show="$state.params['type']=='info_famille'">Le message a été diffusé en ligne  sur la page info famille.</p>
+                <p class="square-text">() messages ont été envoyés par mails.
+                <p class="square-text">() messages sont à télécharger en fichier pdf :</p>
+                <p class="square-text"><a ng-show="created_publi.difusion_pdf" href="http://localhost:9292/app/api/publipostage/{{created_publi.id}}/pdf" target="_blank"> <i class="fa fa-file fa-5x" style="color:#fff; text-shadow:1px 1px 1px #ccc;"></i></p>
+                <p></p>
+                <p style="text-align:center">
+                    <a class='btn btn-default btn-sm' ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  href="#/">écrire un autre message</a>
+                </p>
+            </div>
+        </div>    
     </div>
 </div>
