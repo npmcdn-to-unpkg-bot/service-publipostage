@@ -1,30 +1,32 @@
 <div class="row-fluid">
-    <div class="col-xs-4 col-s-m4 col-md-4 col-lg-4">
-        <div class="row-fluid">
+    <div class="col-md-4 col-lg-4">
+        <div class="row">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <p class="menu-text"><strong>Faire une annonce</strong></p>
+                <h2><strong>Faire une annonce</strong></h2>
                 <p class="menu-text">Un court message sera envoyé
                     aux destinataires. L’annonce
                     s’affichera en direct en haut à
                     droite de l’écran.</p>
-                <p class="menu-text">Etape 1: type de message</p>
-                <p class="menu-text">faire une annonce</p>
-                <p class="menu-text">Etape 2: destinataires</p>
-                <p class="menu-text"><strong>Envoi</strong></p>
-                </br>
-                </br>
-                </br>
+                <h2 class="visibile-md visible-lg">Etape 1: type de message</h2>
+                <h2 class="visibile-md visible-lg">faire une annonce</h2>
+                <h2 class="visibile-md visible-lg">Etape 2: destinataires</h2>
+                <h2><strong>Envoi</strong></h2>
             </div>
         </div>
     </div>    
-    <div class="col-xs-4 col-s-m8 col-md-8 col-lg-8" ng-class="menus[$state.params['type']].color">
-        <!-- icon -->
-        <div class="row" ng-class="menus[$state.params['type']].color">
-            <div ng-class="" class="col-md-2 col-md-offset-5 annonce_icon"></div>  <!-- col-md-2  col-md-2 to center content -->
-        </div>
-        <p class="square-text">Annonce envoyée!</p>
-        <p class="square-text">L’annonce a été diffusée sur</p>
-        <p class="square-text">tous les comptes indiqués.</p>
-        <p style="text-align:center"><a class='btn btn-default btn-sm' ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  href="#/">écrire un autre message</a></p>
+    <div class="col-md-8 col-lg-8" ng-class="menus[$state.params['type']].color">
+        <div class="row">
+            <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+                <!-- icon -->
+                <div class="row" ng-class="menus[$state.params['type']].color">
+                    <div ng-class="" class="col-md-2 col-md-offset-5 annonce_icon"></div>  <!-- col-md-2  col-md-2 to center content -->
+                </div>
+
+                <p class="square-text">Annonce envoyée!</p>
+                <p class="square-text">L’annonce a été diffusée sur</p>
+                <p class="square-text">tous les comptes indiqués.</p>
+                <p style="text-align:center"><a class='btn btn-default btn-sm' ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  href="#/">écrire un autre message</a></p>
+            </div>
+        </div>    
     </div>
 </div>
