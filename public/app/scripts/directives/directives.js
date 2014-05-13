@@ -1,7 +1,7 @@
 'use strict';
 
-var myDirectives = angular.module('myApp.directives',[]);
-angular.module('myApp.directives')
+var myDirectives = angular.module('services.directives',[]);
+angular.module('services.directives')
   .directive('myDirective', function () {
     return {
       template: '<div></div>',
