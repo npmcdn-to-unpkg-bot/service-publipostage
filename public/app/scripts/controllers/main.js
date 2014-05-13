@@ -236,8 +236,8 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 }]);
 
 /******************************************* Annonce Controller ****************************************/
-Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope', 'Redirect', 'Menus','Faye','security', 'currentUser', '$state', 'MessageService',
-    function($scope, AnnonceSquares,$rootScope, Redirect, Menus, Faye, security, currentUser, $state, MessageService){
+Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope', 'Redirect', 'Menus','Faye','security', 'currentUser', '$state', 'MessageService', '$filter',
+    function($scope, AnnonceSquares,$rootScope, Redirect, Menus, Faye, security, currentUser, $state, MessageService, $filter){
     $scope.annonceSquares = AnnonceSquares;
     $scope.Redirect = Redirect;
     $scope.menus = Menus;
@@ -265,26 +265,73 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
     $scope.sendNotification = function(message){
         switch($state.params['param']) {
             case 'ecrire_personnels':
-                Faye.publish(personel_channel, {msg: message, title:'Personnels <br/><hr/>'});
+                Faye.publish(personel_channel, 
+                    {
+                        msg: message,
+                        title:'Personnels <br/><hr/>',
+                        from:currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                        at: $filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
+                    });
                 break;
             case 'ecrire_eleves':
                 destinataires.forEach(function(dest, index, array){
                     if(angular.isDefined(dest['classe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/ELV"), {msg: message, title:'Message aux eleves de '+dest['classe_libelle']+'<br/><hr/>'});
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/ELV_ETB"), 
+                            {
+                                msg: message,
+                                title:'Message aux eleves de '+dest['classe_libelle']+'<br/><hr/>',
+                                from:currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                                at: $filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
+                            });
                     if(angular.isDefined(dest['groupe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/ELV"), {msg: message, title:'Message aux eleves de '+dest['groupe_libelle']+'<br/><hr/>'});
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/ELV_ETB"), 
+                            {
+                                msg: message,
+                                title:'Message aux eleves de '+dest['groupe_libelle']+'<br/><hr/>',
+                                from:currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                                at: $filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
+                            });
                 });
                 break;
             case 'ecrire_profs':
                 destinataires.forEach(function(dest, index, array){
                     if(angular.isDefined(dest['classe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/PROF_ETB"), {msg: message, title:'Message aux enseignants de '+dest['classe_libelle']+'<br/><hr/>'});
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/PROF_ETB"),
+                            {   msg: message,
+                                title:'Message aux enseignants de '+dest['classe_libelle']+'<br/><hr/>',
+                                from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                                at: ''+ $filter('date')(new Date(), 'yyyy-MM-dd  à HH:mm:ss')
+                            });
                     if(angular.isDefined(dest['groupe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/PROF_ETB"), {msg: message, title:'Message aux enseignants de '+dest['groupe_libelle']+'<br/><hr/>'});
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/PROF_ETB"), 
+                            {
+                                msg: message,
+                                title:'Message aux enseignants de '+dest['groupe_libelle']+'<br/><hr/>',
+                                from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                                at: ''+$filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
+                            });
                 });
                 break;
             case 'ecrire_parents':
-                console.log('ecrire_parents');
+                destinataires.forEach(function(dest, index, array){
+                    if(angular.isDefined(dest['classe_id']))
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/PAR_ETB"), 
+                            {
+                                msg: message,
+                                title:'Message aux enseignants de '+dest['classe_libelle']+'<br/><hr/>',
+                                from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                                at: ''+$filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
+
+                            });
+                    if(angular.isDefined(dest['groupe_id']))
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/PAR_ETB"), 
+                            {
+                                msg: message,
+                                title:'Message aux enseignants de '+dest['groupe_libelle']+'<br/><hr/>',
+                                from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                                at: ''+$filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
+                            });
+                });
                 break;
             default:
                 console.log("default");

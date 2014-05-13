@@ -17,7 +17,7 @@ angular.module('myApp.directives')
 		        scope.$watch('grittorMessage', function(newmsg){
 		        	if (!angular.isUndefined(newmsg)){
 			        	element.gritter.add({
-			            title: newmsg.title,
+			            title: 'Annonce de '+newmsg.from +' le ' + newmsg.at,
 			            text: newmsg.msg,
 			            image: '',
 			            sticky: true,
