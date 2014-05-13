@@ -214,7 +214,6 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
                 MessageService.addSendType('byPdf');
                 console.log(MessageService.getMessage());
             }else{
-                
                 MessageService.removeSendType('byPdf');
                 console.log(MessageService.getMessage());
             }
@@ -265,7 +264,7 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
     $scope.sendNotification = function(message){
         switch($state.params['param']) {
             case 'ecrire_personnels':
-                Faye.publish(personel_channel, 
+                Faye.publish(personel_channel,
                     {
                         msg: message,
                         title:'Personnels <br/><hr/>',
@@ -276,7 +275,7 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
             case 'ecrire_eleves':
                 destinataires.forEach(function(dest, index, array){
                     if(angular.isDefined(dest['classe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/ELV_ETB"), 
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/ELV_ETB"),
                             {
                                 msg: message,
                                 title:'Message aux eleves de '+dest['classe_libelle']+'<br/><hr/>',
@@ -284,7 +283,7 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
                                 at: $filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
                             });
                     if(angular.isDefined(dest['groupe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/ELV_ETB"), 
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/ELV_ETB"),
                             {
                                 msg: message,
                                 title:'Message aux eleves de '+dest['groupe_libelle']+'<br/><hr/>',
@@ -303,7 +302,7 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
                                 at: ''+ $filter('date')(new Date(), 'yyyy-MM-dd  à HH:mm:ss')
                             });
                     if(angular.isDefined(dest['groupe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/PROF_ETB"), 
+                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/PROF_ETB"),
                             {
                                 msg: message,
                                 title:'Message aux enseignants de '+dest['groupe_libelle']+'<br/><hr/>',
@@ -395,6 +394,14 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
                 $scope.changeClassColor(index);
             }
         });
+        $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
+            if (!element['checked'] || element['checked'].isUndefined){
+                element['checked'] = true;
+                $scope.destinations.push(element);
+                $scope.changeGroupColor(index);
+            }
+        })
+
     };
 
     $scope.deselectAll = function(){
@@ -404,6 +411,12 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
             if(element['checked'] || element['checked'].isUndefined){
                 element['checked'] = false;
                 $scope.changeClassColor(index);
+            }
+        });
+        $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
+            if(element['checked'] || element['checked'].isUndefined){
+                element['checked'] = false;
+                $scope.changeGroupColor(index);
             }
         });
     };
