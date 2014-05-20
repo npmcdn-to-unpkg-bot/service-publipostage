@@ -52,16 +52,21 @@ class ApplicationAPI < Grape::API
         end
       end  
       publi.save
-        if publi.difusion_email
-          mail = Mail.new do
-            from    'support@laclasse.com'
-            to      'bashar.ah.saleh@gmail.com'
-            subject 'This is a test email'
-            body   publi.message
-          end
-          mail.delivery_method :sendmail
-          mail.deliver
+      # send emails
+      if publi.difusion_email
+        begin
+        #mail = Mail.new do
+          #from    'support@laclasse.com'
+          #to      'bashar.ah.saleh@gmail.com'
+          #subject 'This is a test email'
+          #body   publi.message
+        #end
+        #mail.delivery_method :smtp, address: "localhost", port: 25, :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE
+        #mail.deliver
+        EmailGenerator.send_emails(publi.message, publi.destinataires, 'eleves')
+        rescue
         end
+      end
       publi
     else
       error!('Mauvaise requête', 400)
@@ -76,7 +81,6 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "retourner le fichier pdf d\'un publipostage"
   get '/publipostage/:id/pdf'do
-    nodes = ['.civilite', '.date', '.nom', '.prenom', '.nom_eleve', '.prenom_eleve', '.adresse', '.signature']
     publi = Publipostage[:id => params[:id]]
     destinataires = publi.destinataires 
     if !publi.nil?&&publi[:difusion_pdf]&&!destinataires.empty?

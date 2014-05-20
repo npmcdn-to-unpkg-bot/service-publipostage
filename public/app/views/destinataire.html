@@ -6,8 +6,6 @@
                 <h2 class="menu-text-transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</h2>
                 <h2> <strong>étape 2: les destinataires</strong></h2>
                 <p class="menu-text"> Sélectionner les classes  et les groupes destinataire des messages</p>
-                <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat= "classe in regroupements['classes']"><span ng-show="classe.checked">{{classe.classe_libelle}} </span></span><span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></p>
-                <br/>
                 <form role="form" class="form-inline">
                     <div ng-show="$state.params['type']=='ecrire_profs'">
                         <label>Choisir une matiere: </label><select class="form-control">
@@ -19,6 +17,7 @@
                     <!-- 
                     <label><p class="menu-text-black">filtrer les classes et groupes: <i class="fa fa-search"></i></label> <input type="text" ng-model="searchText" class="form-control" placeholder="chercher"/> -->
                     <div  ng-show="$state.params['type']=='ecrire_tous'">
+                        <label>Choisir des profils: </label><br/>
                         <div style="text-align: center" class="checkbox">
                             <label>
                               <input type="checkbox"> Elèves
@@ -41,6 +40,8 @@
                         </div><br/>
                     </div>
                 </form>
+                <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat= "classe in regroupements['classes']"><span ng-show="classe.checked">{{classe.classe_libelle}} </span></span><span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></p>
+
                 </br>
                 </br>
                 <p style="text-align:center;"><a class='btn btn-sm'  style="color:#1aa1cc;border-color:#1aa1cc;background-color:white;" ng-disabled="destinations.length==0" ng-click="addDestinations();Redirect.goToMessage($state.params['type'])">suivant</a></p>

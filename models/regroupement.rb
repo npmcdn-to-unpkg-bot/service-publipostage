@@ -69,18 +69,6 @@ class Regroupement < Sequel::Model(:regroupement)
   def profs
     DB[:user].filter(:id => DB[:enseigne_dans_regroupement].filter(:regroupement_id => self.id).select(:user_id))
     .join(:profil_user, :profil_user__user_id => :id).filter(:profil_id => 'ENS').naked.all
-=begin
-      User.filter(:enseigne_dans_regroupement => EnseigneDansRegroupement.filter(:regroupement => self),
-      :profil_user => ProfilUser.filter(:etablissement_id => etablissement_id, :profil_id => 'ENS'))
-      .map{|u| {
-        :user_id => u.id, 
-        :id_ent => u.id_ent, 
-        :id_jointure_aaf => u.id_jointure_aaf,
-        :nom => u.nom, 
-        :prenom => u.prenom, 
-        :prof_principal => u.prof_principal(self.id),
-        :matieres => u.matiere_enseigne(self.id)}} 
-=end
   end
 
   # Liste des membres du regroupement dont le profil est élève
