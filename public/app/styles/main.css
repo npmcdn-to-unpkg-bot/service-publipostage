@@ -518,6 +518,22 @@ h2{
     font-weight: 200;
     color:#64BDF5;
 }
+
 p {
     font-family: 'Lato', sans-serif;
+}
+
+.transparent{
+  font-weight: 200;
+  color:#64BDF5;
+  font-family: Futura Bold;
+  opacity:0.5;
+}
+
+.menu-text-transparent {
+  font-size: 150%;
+  width: 100%;
+  color:#64BDF5;
+  font-family: Futura Bold;
+  opacity:0.5;
 }

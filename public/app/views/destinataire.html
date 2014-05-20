@@ -2,11 +2,10 @@
     <div class="col-md-4 col-lg-4">
         <div class="row-fluid">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <h2 class="visible-md visible-lg">étape 1: type de message</h2>
-                <h2> &ensp; {{menus[$state.params["type"]]['right_menu_text']}} {{}}</h2>
+                <h2 class="transparent visible-md visible-lg">étape 1: type de message</h2>
+                <h2 class="menu-text-transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</h2>
                 <h2> <strong>étape 2: les destinataires</strong></h2>
                 <p class="menu-text"> Sélectionner les classes  et les groupes destinataire des messages</p>
-                <!-- <p class="menu-text-black">Vous avez selectionné <span class="label label-default">{{destinations.length}}</span> classes et groupes</p> -->
                 <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat= "classe in regroupements['classes']"><span ng-show="classe.checked">{{classe.classe_libelle}} </span></span><span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></p>
                 <br/>
                 <form role="form" class="form-inline">
