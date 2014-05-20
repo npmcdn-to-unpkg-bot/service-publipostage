@@ -4,6 +4,7 @@
 module EmailGenerator
 	Nodes = ['civilite', 'date', 'nom', 'prenom', 'nomEleve', 'prenomEleve', 'adresse', 'signature']
 	def EmailGenerator.send_emails(message, destinataires, profil)
+		puts "profil is #{profil}"
 		Mail.defaults do
   		#delivery_method :smtp, address: "localhost", port: 25, openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE
   		delivery_method :test

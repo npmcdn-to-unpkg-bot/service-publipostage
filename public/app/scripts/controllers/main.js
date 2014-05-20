@@ -178,12 +178,12 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             if (message.title != "" && message.message!=""){
                 Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations,
                     'message_type':message.messageType, 'send_type':message.sendType}, function(data){
-                    $rootScope.created_publi = data;
-                    // reinitialize message service
-                    MessageService.init();
-                    $location.path('/envoi/'+location);
-                }
-                    , function(error){
+                        $rootScope.created_publi = data;
+                        // reinitialize message service
+                        MessageService.init();
+                        $location.path('/envoi/'+location);
+                    }, 
+                    function(error){
                         console.log(error);
                         $location.path('/error/'+error);
                         // show a message interface ..

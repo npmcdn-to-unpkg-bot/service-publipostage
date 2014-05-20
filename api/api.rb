@@ -26,7 +26,7 @@ class ApplicationAPI < Grape::API
   post '/publipostages' do
     if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type') and params.has_key?('send_type')
       # new Publi
-      puts params['send_type'].inspect
+      puts params['message_type'].inspect
       publi = Publipostage.create(:descriptif => params['descriptif'], :message => params['message'], 
                                   :date => DateTime.now, :message_type => params['message_type'])
       destinations = params['destinataires']
@@ -55,15 +55,10 @@ class ApplicationAPI < Grape::API
       # send emails
       if publi.difusion_email
         begin
-        #mail = Mail.new do
-          #from    'support@laclasse.com'
-          #to      'bashar.ah.saleh@gmail.com'
-          #subject 'This is a test email'
-          #body   publi.message
-        #end
-        #mail.delivery_method :smtp, address: "localhost", port: 25, :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE
-        #mail.deliver
-        EmailGenerator.send_emails(publi.message, publi.destinataires, 'eleves')
+        h = {'ecrire_eleves' => 'eleves', 'ecrire_profs' => 'profs', 'info_famille' => 'parents'}
+          if !params['message_type'].nil?
+            EmailGenerator.send_emails(publi.message, publi.destinataires, h[params['message_type']])
+          end
         rescue
         end
       end
