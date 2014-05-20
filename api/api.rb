@@ -1,5 +1,6 @@
 # coding: utf-8
 require 'grape'
+require 'mail'
 
 class ApplicationAPI < Grape::API
   # response format = pdf 
@@ -51,6 +52,16 @@ class ApplicationAPI < Grape::API
         end
       end  
       publi.save
+        if publi.difusion_email
+          mail = Mail.new do
+            from    'support@laclasse.com'
+            to      'bashar.ah.saleh@gmail.com'
+            subject 'This is a test email'
+            body   publi.message
+          end
+          mail.delivery_method :sendmail
+          mail.deliver
+        end
       publi
     else
       error!('Mauvaise requête', 400)

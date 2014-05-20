@@ -24,6 +24,7 @@ gem 'rest-client'
 gem 'grape-entity'
 gem 'ent_notifs'
 gem 'htmlentities'
+gem 'mail'
 
 group :development do
   gem 'sinatra-contrib'

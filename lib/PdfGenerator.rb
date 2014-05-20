@@ -3,7 +3,7 @@
 
 # ensemble de services pour communiquer avec l'annuaire
 module PdfGenerator
-	Nodes = ['.civilite', '.date', '.nom', '.prenom', '.nom_eleve', '.prenom_eleve', '.adresse', '.signature']
+	Nodes = ['civilite', 'date', 'nom', 'prenom', 'nomEleve', 'prenomEleve', 'adresse', 'signature']
 	
 	def PdfGenerator.generate_info_famille_pdf(message, destinataires)
 		final_document = ""
@@ -14,23 +14,100 @@ module PdfGenerator
         document = Nokogiri::HTML(html)
         #loop over nodes 
         Nodes.each do |node_name|
-          node = document.at_css(node_name)
-          # mockup data
-          if !node.nil?
-            case node_name
-            when '.civilite'
-              parent[:sexe] == 'M'? node.content = "MR" : node.content = "MME"
-            when '.prenom'
-              node.content= parent[:prenom]
-            when ".date"
-              node.content = DateTime.now
-            when ".nom"
-              node.content = parent[:nom]
-            when ".adresse"
-              node.content = parent[:adresse]
+          nodes = document.css(node_name)
+          nodes.each do |node|
+            #node = document.at_css(node_name)
+            # mockup data
+            if !node.nil?
+              case node_name
+              when 'civilite'
+                # match spaces
+                match = node.content.match(/\[civilite\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  parent[:sexe] == 'M'? node.content = "MR"+spaces : node.content = "MME"+spaces
+                else
+                  parent[:sexe] == 'M'? node.content = "MR" : node.content = "MME"
+                end
+              when 'prenom'
+                # match spaces
+                match = node.content.match(/\[prenom\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content= parent[:prenom]+space
+                else
+                  node.content= parent[:prenom]
+                end
+              when "date"
+                # match spaces
+                match = node.content.match(/\[date\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2 
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content = DateTime.now +spaces
+                else
+                  node.content = DateTime.now
+                end
+              when "adresse"
+                # match spaces
+                match = node.content.match(/\[adresse\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content = parent[:adresse]+ spaces
+                else
+                  node.content = parent[:adresse]
+                end
+              when "nom"
+                # match spaces
+                match = node.content.match(/\[nom\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content = parent[:nom]+spaces
+                else
+                  node.content = parent[:nom]
+                end
+              when "signature"
+                match = node.content.match(/\["#{node_name}"\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length >2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content = 'signature' +spaces
+                else
+                  node.content = 'signature'
+                end
+              end
             end
           end
         end #nodes
+        #puts document.css('nom')
         # fill final document
         final_document = final_document+ document.to_html+'<hr></hr>'
       end #regroupement
@@ -47,20 +124,96 @@ module PdfGenerator
         document = Nokogiri::HTML(html)
         #loop over nodes 
         Nodes.each do |node_name|
-          node = document.at_css(node_name)
-          # mockup data
-          if !node.nil?
-            case node_name
-            when '.civilite'
-              prof[:sexe] == 'M'? node.content = "MR" : node.content = "MME"
-            when '.prenom'
-              node.content= prof[:prenom]
-            when ".date"
-              node.content = DateTime.now
-            when ".nom"
-              node.content = prof[:nom]
-            when ".adresse"
-              node.content = prof[:adresse]
+          nodes = document.css(node_name)
+          nodes.each do |node|
+            #node = document.at_css(node_name)
+            # mockup data
+            if !node.nil?
+              case node_name
+              when 'civilite'
+                # match spaces
+                match = node.content.match(/\[civilite\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  prof[:sexe] == 'M'? node.content = "MR"+spaces : node.content = "MME"+spaces
+                else
+                  prof[:sexe] == 'M'? node.content = "MR" : node.content = "MME"
+                end
+              when 'prenom'
+                # match spaces
+                match = node.content.match(/\[prenom\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content= prof[:prenom]+spaces
+                else
+                  node.content= prof[:prenom]
+                end
+              when "date"
+                # match spaces
+                match = node.content.match(/\[date\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2 
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content = DateTime.now +spaces
+                else
+                  node.content = DateTime.now
+                end
+              when "adresse"
+                # match spaces
+                match = node.content.match(/\[adresse\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content = prof[:adresse]+ spaces
+                else
+                  node.content = prof[:adresse]
+                end
+              when "nom"
+                # match spaces
+                match = node.content.match(/\[nom\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content = prof[:nom]+spaces
+                else
+                  node.content = prof[:nom]
+                end
+              when "signature"
+                match = node.content.match(/\["#{node_name}"\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length >2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content = 'signature' +spaces
+                else
+                  node.content = 'signature'
+                end
+              end
             end
           end
         end #nodes
@@ -78,22 +231,98 @@ module PdfGenerator
       regroupement.eleves.each do |eleve|
         html = HTMLEntities.new.decode message
         document = Nokogiri::HTML(html)
-        #loop over nodes
+        #loop over nodes 
         Nodes.each do |node_name|
-          node = document.at_css(node_name)
-          # mockup data
-          if !node.nil?
-            case node_name
-            when '.civilite'
-              eleve[:sexe] == 'M'? node.content = "MR" : node.content = "MME"
-            when '.prenom'
-              node.content= eleve[:prenom]
-            when ".date"
-              node.content = DateTime.now
-            when ".nom"
-              node.content = eleve[:nom]
-            when ".adresse"
-              node.content = eleve[:adresse]
+          nodes = document.css(node_name)
+          nodes.each do |node|
+            #node = document.at_css(node_name)
+            # mockup data
+            if !node.nil?
+              case node_name
+              when 'civilite'
+                # match spaces
+                match = node.content.match(/\[civilite\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  eleve[:sexe] == 'M'? node.content = "MR"+spaces : node.content = "MME"+spaces
+                else
+                  eleve[:sexe] == 'M'? node.content = "MR" : node.content = "MME"
+                end
+              when 'prenom'
+                # match spaces
+                match = node.content.match(/\[prenom\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content= eleve[:prenom]+spaces
+                else
+                  node.content= eleve[:prenom]
+                end
+              when "date"
+                # match spaces
+                match = node.content.match(/\[date\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2 
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content = DateTime.now +spaces
+                else
+                  node.content = DateTime.now
+                end
+              when "adresse"
+                # match spaces
+                match = node.content.match(/\[adresse\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content = eleve[:adresse]+ spaces
+                else
+                  node.content = eleve[:adresse]
+                end
+              when "nom"
+                # match spaces
+                match = node.content.match(/\[nom\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length > 2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content = eleve[:nom]+spaces
+                else
+                  node.content = eleve[:nom]
+                end
+              when "signature"
+                match = node.content.match(/\["#{node_name}"\](&nbsp;)*.(&nbsp;)*/)
+                if !match.nil? && match.length >2
+                  i = 0
+                  spaces = ''
+                  while i < (match.length-1) do
+                    spaces = ' '+ spaces
+                    i = i+1
+                  end
+                  node.content = 'signature' +spaces
+                else
+                  node.content = 'signature'
+                end
+              end
             end
           end
         end #nodes

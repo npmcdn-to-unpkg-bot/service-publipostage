@@ -24,18 +24,18 @@
                         <a class="btn btn-default btn-sm" ng-click="showtoolbar=!showtoolbar">inserer des données</a><br/>
                         <div ng-show="showtoolbar">
                             <div class="btn-group">
-                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'civilite\'>[civilite]</h4>')">Civilité</a>
-                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'nom\'>[nom]</h4>')">Nom</a> 
-                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'prenom\'>[prenom]</h4>')">Prenom</a> 
-                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'adresse\'>[adresse]</h4>')">Adresse</a>  
-                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'date\'>[date]</h4>')">Date du Jours</a>  
-                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'signature\'>[singature]</h4>')">Singature</a>   
-                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'nomEleve\'>[nomEleve]</h4>')">Nom de l'élève</a>  
-                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'prenomEleve\'>[prenomEleve]</h4>')">Prénom de l'élève</a>   
-                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'classe\'>[classe]</h4>')">Classe</a>  
-                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'blogEtab\'>[blogEtab]</h4>')">Lien blog de l'etablissement</a>    
-                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'blogGroupe\'>[blogGroupe]</h4>')">Lien blog de groupe</a>
-                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<h4 class=\'blogClasse\'>[blogGroupe]</h4>')">Lien blog de classe</a> 
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<civilite>[civilite]</civilite>')">Civilité</a>
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<nom>[nom]</nom>')">Nom</a>
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<prenom>[prenom]</prenom>')">Prenom</a>
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<adresse>[adresse]</adresse>')">Adresse</a>  
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<date>[date]</date>')">Date du Jours</a>  
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<signature>[signature]</signature>')">Singature</a>   
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<nomEleve>[nomEleve]</nomEleve>')">Nom de l'élève</a>  
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<prenomEleve>[prenomEleve]</prenomEleve>')">Prénom de l'élève</a>   
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<classe>[classe]</classe>')">Classe</a>  
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<blogEtab>[blogEtab]</blogEtab>')">Lien blog de l'etablissement</a>    
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<blogGroupe>[blogGroupe]</blogGroupe>')">Lien blog de groupe</a>
+                            <a  class="btn btn-default btn-sm" ng-click="addToMessage('<blogClasse>[blogGroupe]</blogClasse>')">Lien blog de classe</a> 
                             <a  class="btn btn-default btn-sm" ng-click="addToMessage('<a href=\'http://www.laclasse.com\'>Laclasse</a>')">Lien Laclasse.com</a>
                             </div>
                         </div>
@@ -54,6 +54,8 @@
                     <form role="form">
                         <div class="form-group">
                           <textarea  ui-tinymce="tinymceOptions" ng-model="tinyMessage" id="corps"></textarea>
+                          <!-- <div text-angular ng-model="tinyMessage"></div> -->
+                          <!-- <div ta-bind ng-model="tinyMessage"></div> -->
                           {{tinyMessage}}
                         </div>
                     </form>
