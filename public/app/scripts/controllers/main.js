@@ -8,6 +8,7 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
     $scope.tinymceOptions = {
         language:"fr"
     };
+    $scope.pageLimits = [5, 10, 20]; 
     $scope.limit = 5;
     $scope.currentPage = 1;
     $scope.maxSize = 5;
@@ -58,9 +59,11 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
         scope.getPublipostages(newValue, $scope.limit);
     };
 
-    $scope.$watch('limit', function(){
-        console.log('limit changed to:' + $scope.limit);
-    });
+    $scope.limitChanged = function(newValue){
+        $scope.limit = newValue;
+        $scope.currentPage = 1;
+        scope.getPublipostages($scope.currentPage, newValue);
+    };
 }]);
 /********************************* Home page controller  *****************************************/
 Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", "$rootScope", "$stateParams", "MessageService", 'Redirect','Squares',
