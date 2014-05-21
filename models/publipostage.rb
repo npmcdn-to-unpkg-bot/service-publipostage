@@ -10,10 +10,10 @@
 # message                       | MEDIUMTEXT          | true     |          |            | 
 # ------------------------------+---------------------+----------+----------+------------+--------------------
 class Publipostage < Sequel::Model(:publipostage)
-
   # Plugins
   plugin :validation_helpers
   plugin :json_serializer
+
 
   unrestrict_primary_key()
 

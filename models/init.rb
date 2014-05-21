@@ -3,7 +3,6 @@
 # include file to access all models
 # generated 2012-05-21 18:00:26 +0200 by model_generator.rb
 #
-Sequel.extension(:pagination)
 
 # MODELS
 require_relative 'publipostage'

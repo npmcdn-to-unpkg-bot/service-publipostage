@@ -9,10 +9,38 @@ class ApplicationAPI < Grape::API
   format :json
   ############################################################################
   desc "Retourner la listes des publipostage"
+  params do
+      optional :limit, type: Integer, desc: "Nombre maximum de résultat renvoyés"
+      optional :page, type: Integer, desc: "Dans le cas d'une requète paginée"
+      optional :sort_col, type: String, desc: "Nom de la colonne sur laquelle faire le tri"
+      optional :sort_dir, type: String, regexp: /^(asc|desc)$/i, desc: "Direction de tri : ASC ou DESC"
+  end
   get "/publipostages" do
     content_type 'application/json'
-    publis = Publipostage.all
-    present publis, with: API::Entities::PublipostageEntity
+    dataset = Publipostage.dataset
+    dataset.extend(Sequel::DatasetPagination)
+      # return all publipostages
+      if params[:all] == true
+        dataset.select(:id, :code_uai, :nom).naked
+      else
+        # todo : Limit arbitraire de 500, gérer la limit max en fonction du profil ?
+        page_size = params[:limit] ? params[:limit] : 20
+        page_no = params[:page] ? params[:page] : 1
+
+        dataset = dataset.paginate(page_no, page_size)
+        data = dataset.collect{ |x| {
+          :id => x.id,
+          :message => x.message,
+          :descriptif => x.descriptif,
+          :date => x.date,
+          :message_type => x.message_type,
+          :destinataires => x.destinataires
+          }
+        }
+        {total: dataset.pagination_record_count, page: page_no, data: data}
+      end
+    #publis = Publipostage.all
+    #present publis, with: API::Entities::PublipostageEntity
   end
 
   ############################################################################

@@ -8,5 +8,5 @@ DB = Sequel.mysql2(
   :password=>'root',
   :charset=>'utf8')
 
-Sequel.extension(:pagination)
+DB.extension(:pagination)
 Sequel.extension(:migration)
