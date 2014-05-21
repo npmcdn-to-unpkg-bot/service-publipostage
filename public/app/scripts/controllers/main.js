@@ -8,12 +8,18 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
     $scope.tinymceOptions = {
         language:"fr"
     };
-    $scope.getPublipostages = function(){
-        Publipostages.all({}, function(publis){
-        $scope.publis = publis
+    $scope.limit = 5;
+    $scope.currentPage = 1;
+    $scope.maxSize = 5;
+
+    $scope.getPublipostages = function(page, limit){
+        Publipostages.get({limit:limit, page:page}, function(publis){
+        $scope.publis = publis.data;
+        $scope.totalItems=publis.total;
+        $scope.currentPage = publis.page;
         });
     }
-    $scope.getPublipostages();
+    $scope.getPublipostages($scope.currentPage, $scope.limit);
     
     $scope.toTrustedHtml = function(html_code) {
         return $sce.trustAsHtml(html_code);
@@ -42,12 +48,19 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
     $scope.removePubli = function(id){
         if(confirm("Voulez-vous supprimer le publipostage?")){
             Publipostages.remove({id:id}, function(success){
-                $scope.getPublipostages();
+                $scope.getPublipostages($scope.currentPage, $scope.limit);
             }, function(error){
                 console.log(error);
             });
         }
     }
+    $scope.pageChanged = function(newValue) {
+        scope.getPublipostages(newValue, $scope.limit);
+    };
+
+    $scope.$watch('limit', function(){
+        console.log('limit changed to:' + $scope.limit);
+    });
 }]);
 /********************************* Home page controller  *****************************************/
 Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", "$rootScope", "$stateParams", "MessageService", 'Redirect','Squares',
@@ -60,8 +73,8 @@ Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'curre
 
         $scope.security = security;
 
-        Publipostages.all({}, function(publis){
-            $scope.publis = publis
+        Publipostages.get({}, function(publis){
+            $scope.publis = publis.data
         });
         
         $scope.addMessageType = function(type){
