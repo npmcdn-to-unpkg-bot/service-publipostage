@@ -16,7 +16,7 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
     $scope.getPublipostages = function(page, limit){
         Publipostages.get({limit:limit, page:page}, function(publis){
         $scope.publis = publis.data;
-        $scope.totalItems=publis.total;
+        $scope.totalItems = publis.total;
         $scope.currentPage = publis.page;
         });
     }
@@ -56,13 +56,13 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
         }
     }
     $scope.pageChanged = function(newValue) {
-        scope.getPublipostages(newValue, $scope.limit);
+        $scope.getPublipostages(newValue, $scope.limit);
     };
 
     $scope.limitChanged = function(newValue){
         $scope.limit = newValue;
         $scope.currentPage = 1;
-        scope.getPublipostages($scope.currentPage, newValue);
+        $scope.getPublipostages($scope.currentPage, newValue);
     };
 }]);
 /********************************* Home page controller  *****************************************/
