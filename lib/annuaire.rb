@@ -34,6 +34,7 @@ module Annuaire
 
   #envoie une requête 
   def send_request_signed(url, service, args)
+    puts 'sent Url: ' + sign(url, service, args, ANNUAIRE[:secret], ANNUAIRE[:app_id] )
     RestClient.get( sign(url, service, args, ANNUAIRE[:secret], ANNUAIRE[:app_id] ),  ) do
       |response, request, result|
       if response.code == 200
@@ -87,6 +88,10 @@ module Annuaire
     end
   end
 
+  # retrouner la liste des personnels dans un etablissemnt
+  def get_personnel(uai)
+    response = send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_personnel]+ uai +'/personnel',{})
+  end
   #retourne un hash d'un regroupements avec son id et son nom
   def hash_regroupement(id, nom, etab_id, etab_nom)
     {

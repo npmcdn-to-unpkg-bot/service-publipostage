@@ -9,7 +9,8 @@
     <div class="col-md-8 col-lg-8">
         <div class="row">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <pagination total-items="totalItems" items-per-page="limit" max-size="maxSize" ng-model="currentPage"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="pageChanged(currentPage)"></pagination><div><label>record par page:</label><select ng-model="limit" ng-options="limit for limit in pageLimits" ng-change="limitChanged(limit)"></select></div>
+                <pagination total-items="totalItems" items-per-page="limit" max-size="maxSize" ng-model="currentPage"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="pageChanged(currentPage)"></pagination><div><label>record par page:</label><select ng-model="limit" ng-options="limit for limit in pageLimits"
+                 ng-change="limitChanged(limit)"></select></div> <label>total= {{totalItems}} </label>
                 <table class="table table-striped table-bordered">
                 <thead>
                     <th>ID</th>

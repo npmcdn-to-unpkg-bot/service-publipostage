@@ -161,6 +161,11 @@ class ApplicationAPI < Grape::API
     Annuaire.get_regroupements(params[:id])
   end
 
+  desc "retourner la liste des personnels dans letablissement"
+  get "/etablissements/:uai/personnels" do
+    content_type 'application/json'
+    Annuaire.get_personnel(params[:uai])
+  end
   ############################################################################
   desc "send a notification"
   post "/notification/:uai/:profil/:uid/:type" do
