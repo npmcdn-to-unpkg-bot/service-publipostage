@@ -537,3 +537,9 @@ p {
   font-family: Futura Bold;
   opacity:0.5;
 }
+
+.text-scroll {
+    height: 200px;
+    overflow:scroll;
+    overflow-x:hidden;
+}
