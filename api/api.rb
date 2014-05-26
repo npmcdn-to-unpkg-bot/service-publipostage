@@ -54,7 +54,7 @@ class ApplicationAPI < Grape::API
   post '/publipostages' do
     if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type') and params.has_key?('send_type')
       # new Publi
-      #puts params['message_type'].inspect
+      puts params.inspect
       publi = Publipostage.create(:descriptif => params['descriptif'], :message => params['message'], 
                                   :date => DateTime.now, :message_type => params['message_type'])
       destinations = params['destinataires']
