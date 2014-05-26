@@ -13,7 +13,8 @@ class Publipostage < Sequel::Model(:publipostage)
   # Plugins
   plugin :validation_helpers
   plugin :json_serializer
-
+  #serializer l'attribute
+  plugin :serialization, :json, :profils
 
   unrestrict_primary_key()
 
