@@ -53,43 +53,63 @@
     </div>
     <div class="col-md-8 col-lg-8">
         <div class="row-fluid">
-            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris3" >
-                <a ng-click="selectAll()" ng-show="selectAllMode">
-                    <div class="square-icon">
-                      <div class="famille-icon"><!--<data-ng-include class="svg" src="menus[$state.params['type']].icon"></data-ng-include>--></div>
-                      <span class="square-text">tous sélectionner</span>
-                    </div>
-                </a>
-                <a ng-click="deselectAll()" ng-hide="selectAllMode">
-                    <div class="square-icon">
-                      <div class="famille-icon"><!--<data-ng-include class="svg" src="menus[$state.params['type']].icon"></data-ng-include>--></div>
-                      <span class="square-text">annuler</span>
-                    </div>
-                </a>
+            <div  ng-show="$state.params['type']!='ecrire_personnels'">
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris3" >
+                    <a ng-click="selectAll()" ng-show="selectAllMode">
+                        <div class="square-icon">
+                          <div class="famille-icon"><!--<data-ng-include class="svg" src="menus[$state.params['type']].icon"></data-ng-include>--></div>
+                          <span class="square-text">tous sélectionner</span>
+                        </div>
+                    </a>
+                    <a ng-click="deselectAll()" ng-hide="selectAllMode">
+                        <div class="square-icon">
+                          <div class="famille-icon"><!--<data-ng-include class="svg" src="menus[$state.params['type']].icon"></data-ng-include>--></div>
+                          <span class="square-text">annuler</span>
+                        </div>
+                    </a>
+                </div>
+            </div>    
+
+            <!--show classes only when message type is not  ecrire personnels ou ecrire tous -->
+            <div  ng-show="$state.params['type']!='ecrire_personnels'">
+                <div ng-repeat="classe in regroupements['classes'] | filter:searchText" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="classe.color">
+                    <a ng-click="changeClassColor($index);classe.checked=!classe.checked;addRemoveDestination(classe);">
+                      <div class="square-icon">
+                        <div class="empty-icon"><!--<data-ng-include class="svg" src="square.icone"></data-ng-include>-->
+                            <span class="classe-text">{{classe.classe_libelle}}</span>
+                        </div>
+                        <span class="square-text">{{classe.etablissement_nom}}</span>
+                      </div>
+                    </a>
+                </div>
             </div>
 
-            <!--show classes-->
-            <div ng-repeat="classe in regroupements['classes'] | filter:searchText" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="classe.color">
-                <a ng-click="changeClassColor($index);classe.checked=!classe.checked;addRemoveDestination(classe);">
-                  <div class="square-icon">
-                    <div class="empty-icon"><!--<data-ng-include class="svg" src="square.icone"></data-ng-include>-->
-                        <span class="classe-text">{{classe.classe_libelle}}</span>
-                    </div>
-                    <span class="square-text">{{classe.etablissement_nom}}</span>
-                  </div>
+            <!--show personnels only when message type is ecrire personnels -->
+            <div  ng-show="$state.params['type']=='ecrire_personnels'">
+                <div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="rouge-clear">
+                <a>
+                    <div class="square-icon">
+                        <div class="empty-icon">
+                            {{person.pronom}} {{person.nom}}
+                        </div>
+                        <span class="squaire-text">{{person.description}}</span>
+                    </div>       
                 </a>
+                </div>
             </div>
-            
-            <!--show groupes -->
-            <div ng-repeat="groupe in regroupements['groupes_eleves']" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="groupe.color">
-                <a ng-click="changeGroupColor($index);groupe.checked=!groupe.checked;addRemoveDestination(groupe)">
-                  <div class="square-icon">
-                    <div class="empty-icon"> <!--<data-ng-include class="svg" src="square.icone"></data-ng-include>-->
-                        <span class="groupe-text">{{groupe.groupe_libelle}}</span>
-                    </div>
-                    <span class="square-text">{{groupe.etablissement_nom}}</span>
-                  </div>
-                </a>
+
+            <!--show groupes only when message type in not ecrire personnels ou ecrire tous -->
+            <div  ng-show="$state.params['type']!='ecrire_personnels'">
+                <div ng-repeat="groupe in regroupements['groupes_eleves']" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="groupe.color">
+                    <a ng-click="changeGroupColor($index);groupe.checked=!groupe.checked;addRemoveDestination(groupe)">
+                      <div class="square-icon">
+                        <div class="empty-icon"> <!--<data-ng-include class="svg" src="square.icone"></data-ng-include>-->
+                            <span class="groupe-text">{{groupe.groupe_libelle}}</span>
+                        </div>
+                        <span class="square-text">{{groupe.etablissement_nom}}</span>
+                      </div>
+                    </a>
+                </div>
             </div>
             
             <!-- empty squares -->

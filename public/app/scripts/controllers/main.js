@@ -356,8 +356,8 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
 
 /******************************************* Destinataire Controller ****************************************/
 Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus', '$state', function($scope,security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, 
-    colors, transparentColors, Menus, $state){
+    'colors', 'transparentColors', 'Menus', '$state', 'Personnels', function($scope,security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, 
+    colors, transparentColors, Menus, $state, Personnels){
     // making Redirect utils accesible in the scope
     $scope.Redirect = Redirect;
     $scope.security = security;
@@ -368,9 +368,20 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     //initialize destinations
     $scope.destinations = [];
 
+    var getPersonnel = function(uai){
+        Personnels.all({uai:uai}, function(personnels){
+            $scope.personnels = personnels;
+            console.log(personnels);
+        }, function(error){
+            console.log(error);
+        });
+    };
+
     // get the list of user regroupements 
     security.requestCurrentUser().then(function(user) {
         $scope.currentUser = user;
+        if ($state.params['type']=='ecrire_personnels')
+            getPersonnel($scope.currentUser.info['ENTPersonStructRattachRNE']);
         Regroupements.get({id:user.info['uid']}, function(regroupements){
             console.log(regroupements);
             $scope.regroupements = regroupements;
@@ -486,10 +497,13 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         }
         $scope.regroupements['groupes_eleves'][$index]['color']=color;
     };
+    
     // watch destinations (array)
     $scope.$watch('destinations', function(newVal){
         console.log(newVal);
     }, true);
+
+    //
 
 }]);
 
