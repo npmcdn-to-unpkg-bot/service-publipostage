@@ -14,7 +14,7 @@
                         </select>
                     </div>
                     <br/>
-                    <!-- 
+                    <!--
                     <label><p class="menu-text-black">filtrer les classes et groupes: <i class="fa fa-search"></i></label> <input type="text" ng-model="searchText" class="form-control" placeholder="chercher"/> -->
                     <div  ng-show="$state.params['type']=='ecrire_tous'">
                         <label>Choisir des profils: </label><br/>
@@ -22,30 +22,6 @@
                             <input type="checkbox" checklist-model="selectedProfils" checklist-value="profil"> {{profil}} </input>
                             <br/>
                         </label>
-                        <!--
-                        <div style="text-align: center" class="checkbox">
-                            <label>
-                              <input type="checkbox" value="eleves" ng-model="byEleves" ng-click="log(value)"> Elèves
-                            </label>
-                        </div><br/>
-                        <div style="text-align: center" class="checkbox">
-                            <label>
-                              <input type="checkbox" value="profs" ng-model='byProfs' ng-click="log(value)"> Professeurs
-                            </label>
-                        </div><br/>
-                        <div style="text-align: center" class="checkbox">
-                            <label>
-                              <input type="checkbox" value="parents" ng-model="byParents"> Parents
-                            </label>
-                        </div><br/>
-                        <div class="checkbox">
-                            <label>
-                              <input type="checkbox" value="personnels" ng-model="byPersonnels"> Personnels
-                            </label>
-                        </div><br/>
-                        -->
-                        <!-- <a class="btn btn-default btn-mini" ng-click="checkAll()">tous selectionner</a>
-                        <a class="btn btn-default btn-mini" ng-click="uncheckAll()">annuler la selection</a> -->
                     </div>
                 </form>
                 <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat= "classe in regroupements['classes']"><span ng-show="classe.checked">{{classe.classe_libelle}} </span></span><span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></p>
