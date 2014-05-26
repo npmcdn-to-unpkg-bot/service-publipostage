@@ -12,7 +12,7 @@ require_relative '../config/annuaire.rb'
 module Annuaire
   module_function
 
-  #signe une requête 
+  #signe une requête
   def sign( uri, service, args, secret_key, app_id )
     timestamp = Time.now.getutc.strftime('%FT%T')
     canonical_string = "#{uri}/#{service}?"
@@ -34,7 +34,6 @@ module Annuaire
 
   #envoie une requête 
   def send_request_signed(url, service, args)
-    puts 'sent Url: ' + sign(url, service, args, ANNUAIRE[:secret], ANNUAIRE[:app_id] )
     RestClient.get( sign(url, service, args, ANNUAIRE[:secret], ANNUAIRE[:app_id] ),  ) do
       |response, request, result|
       if response.code == 200

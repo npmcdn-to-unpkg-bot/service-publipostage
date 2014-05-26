@@ -54,7 +54,7 @@ class ApplicationAPI < Grape::API
   post '/publipostages' do
     if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type') and params.has_key?('send_type')
       # new Publi
-      puts params['message_type'].inspect
+      #puts params['message_type'].inspect
       publi = Publipostage.create(:descriptif => params['descriptif'], :message => params['message'], 
                                   :date => DateTime.now, :message_type => params['message_type'])
       destinations = params['destinataires']
@@ -63,6 +63,8 @@ class ApplicationAPI < Grape::API
           Destinataire.create(:regroupement_id => dest.classe_id, :publipostage_id => publi.id)
         elsif dest.respond_to?('groupe_id')
           Destinataire.create(:regroupement_id => dest.groupe_id, :publipostage_id => publi.id)
+        elsif dest.respond_to?('profil_id')
+          #puts "case of ecrire personnels"
         else
           "error"
         end
@@ -169,7 +171,7 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "send a notification"
   post "/notification/:uai/:profil/:uid/:type" do
-    puts request.inspect
+    #puts request.inspect
   end
 
 end

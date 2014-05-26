@@ -4,7 +4,7 @@
 angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.constants', 'ui.bootstrap',
                          'ui.tinymce', 'services.messages', 'services.authentication', 'angular-underscore',
                          'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize', 'faye', 'services.utils', 
-                         'pdf', 'chieffancypants.loadingBar', 'services.directives']).
+                         'pdf', 'chieffancypants.loadingBar', 'services.directives', 'checklist-model']).
 config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function($urlRouterProvider, $stateProvider, APPLICATION_PREFIX){
             
     /* defining states for routing */

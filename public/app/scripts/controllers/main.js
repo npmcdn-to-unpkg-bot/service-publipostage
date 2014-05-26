@@ -486,6 +486,7 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         $scope.regroupements['classes'][$index]['color']=color;
     };
 
+
     $scope.changeGroupColor = function($index){
         var color = $scope.regroupements['groupes_eleves'][$index]['color'];
         var match = color.search("-clear");
@@ -503,7 +504,30 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         console.log(newVal);
     }, true);
 
-    //
+    // page ecrire tous
+    // list of available profils 
+    $scope.profils = ['eleves', 'profs', 'parents','personnels'];
+
+    // les profils sélectionner
+    $scope.selectedProfils = [];
+    $scope.log = function(){
+        console.log($scope.selectedProfils);
+    }
+
+    // selectionner tous les profils
+    $scope.checkAll = function(){
+        $scope.selectedProfils = [];
+        $scope.selectedProfils = angular.copy($scope.profils);
+    }
+
+    // déselectionner les profils
+    $scope.uncheckAll = function(){
+        $scope.selectedProfils = [];
+    };
+
+    $scope.$watch("selectedProfils", function(arr){
+        console.log(arr);
+    }, true);
 
 }]);
 
