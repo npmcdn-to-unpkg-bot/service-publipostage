@@ -29,7 +29,7 @@
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
                 <div style="margin-left:10%; margin-right:10%;">
                     <p style="text-align: ustify; background-color:white; padding-left:5%%; padding-right:5%; padding-top:1%;">
-                        <strong>Destinataires:</strong> <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}</span>
+                        <strong>Destinataires:</strong> <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}{{destination['groupe_libelle']}}{{destination['description']}}</span>
                         </br>
                         <strong>Titre de message:</strong>  {{messageObject['title']}}
                         </br> 

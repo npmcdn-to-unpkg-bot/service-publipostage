@@ -68,7 +68,7 @@
                         </div>
                     </a>
                 </div>
-            </div>    
+            </div>
 
             <!--show classes only when message type is not  ecrire personnels ou ecrire tous -->
             <div  ng-show="$state.params['type']!='ecrire_personnels'">
@@ -86,15 +86,17 @@
 
             <!--show personnels only when message type is ecrire personnels -->
             <div  ng-show="$state.params['type']=='ecrire_personnels'">
-                <div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="rouge-clear">
-                <a>
-                    <div class="square-icon">
-                        <div class="empty-icon">
-                            {{person.pronom}} {{person.nom}}
-                        </div>
-                        <span class="squaire-text">{{person.description}}</span>
-                    </div>       
-                </a>
+                <div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                    <a ng-click="changePersonColor($index);person.checked=!person.checked;addRemoveDestination(person)">
+                        <div class="square-icon">
+                            <div>
+                                {{person.prenom}} {{person.nom}}
+                            </div>
+                            <span class="squaire-text">{{person.description}}</span>
+                            <br/>
+                            <span class="glyphicon-class" ng-show="person.checked"><i class="fa fa-check-square-o fa-lg"></i></span>
+                        </div>       
+                    </a>
                 </div>
             </div>
 

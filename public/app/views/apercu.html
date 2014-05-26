@@ -5,7 +5,7 @@
                 <h2 class="transparent visible-md visible-lg">Etape 1: type de message</h2>
                 <h2 class="menu-text-transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</h2>
                 <h2 class="transparent visible-md visible-lg">Etape 2: les destinataire</strong></h2>
-                <p class="menu-text-hidden visible-md visible-lg"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}{{destination['groupe_libelle']}}</span></p>
+                <p class="menu-text-hidden visible-md visible-lg"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}{{destination['groupe_libelle']}}{{destination['description']}}</span></p>
                 <h2 class="transparent visible-md visible-lg">Etape 3: message</h2>
                 <h2><strong>Etape 4: aperçu</strong></h2>
                 <p class="menu-text visible-md visible-lg">Vérifier le message</p>
@@ -25,7 +25,7 @@
                 <div style="margin-left:10%; margin-right:10%;">
                     <p style="text-align: ustify; background-color:white; padding-left:5%%; padding-right:5%; padding-top:1%;">
                     <strong>Titre de message:</strong>{{messageObject['title']}} <br/>
-                    <strong>Destinataires:</strong><span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}</span>
+                    <strong>Destinataires:</strong><span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}{{destination['groupe_libelle']}}{{destination['description']}}</span>
                     </p>
                     <div  class="text-scroll" style="background-color:white; padding-left:5%%; padding-right:5%; padding-top:1%;" ng-bind-html="toTrustedHtml(messageObject['message'])"></div>
                 </div>
