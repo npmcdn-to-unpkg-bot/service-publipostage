@@ -463,6 +463,12 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         }
     };
 
+    $scope.addProfils = function(){
+        console.log('add profils');
+        MessageService.addProfils($scope.selectedProfils);
+        console.log(MessageService.getMessage());
+    };
+
     $scope.randomColor = function() {
         var index = Math.floor(Math.random()*(colors.length));
         console.log(index);

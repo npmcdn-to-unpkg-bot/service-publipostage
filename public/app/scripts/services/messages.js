@@ -65,7 +65,8 @@ angular.module('services.messages').service('MessageService', function () {
                         title:'',
                         destinations:[],
                         messageType:'',
-                        sendType:[]
+                        sendType:[], 
+                        profils:[]
     };
     // add Message  
     this.addMessage = function(message, title) {
@@ -88,6 +89,14 @@ angular.module('services.messages').service('MessageService', function () {
     
     this.clearDestinations = function(){
         messageObject['destinations'] = [];
+    }
+
+    this.addProfils = function(arry){
+        messageObject['profils'] = arry;
+    }
+
+    this.clearProfils = function(){
+        messageObject['profils'] = [];
     }
     
     this.addSendType = function(sendType){
