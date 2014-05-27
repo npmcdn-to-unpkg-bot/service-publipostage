@@ -108,7 +108,7 @@ class ApplicationAPI < Grape::API
               if !params['message_type'].nil?
                 if params['message_type'] == "ecrire_personnels"
                   # email personnels
-                  EmailGenerator.send_emails(publi.message, publi.personnels, personnels)
+                  EmailGenerator.send_emails_personnels(publi.message, publi.personnels)
                 elsif params['message_type'] == "ecrire_tous"
                   # email to profils
                   publi.profils.each do |profil|
@@ -214,5 +214,11 @@ class ApplicationAPI < Grape::API
   post "/notification/:uai/:profil/:uid/:type" do
     #puts request.inspect
   end
+  ############################################################################
+  desc "retourner les details d'un envoi"
+  get "/envoi/:destinataires" do
+    {emails:50, pdfs:100}
+  end
+  ############################################################################
 
 end
