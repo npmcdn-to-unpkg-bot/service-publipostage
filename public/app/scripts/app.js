@@ -174,7 +174,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     var error = {
       name:'error',
       url:'/error/:message',
-      template: '<p> une erreur sest produite </p>',
+      templateUrl: APPLICATION_PREFIX +'/views/error.html',
       authorizedRoles: "all"
     }
 
