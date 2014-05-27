@@ -26,7 +26,10 @@
                         <td>{{publi.id}}</td>
                         <td><p ng-bind-html="toTrustedHtml(publi.message)"></p></td>
                         <td>{{publi.descriptif}}</td>
-                        <td>{{publi.destinataires}}</td>
+                        <td><span ng-switch on="publi.message_type"> 
+                            <span ng-switch-when="ecrire_personnels">{{publi.personnels}}</span>
+                            <span ng-switch-default>{{publi.destinataires}}</span>
+                        </td>
                         <td>{{publi.date}}</td>
                         <td><span ng-switch on="publi.message_type">
                                 <span ng-switch-when="info_famille" class="label label-success">{{publi.message_type}}</span>

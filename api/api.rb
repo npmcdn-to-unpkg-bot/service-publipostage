@@ -23,7 +23,7 @@ class ApplicationAPI < Grape::API
       if params[:all] == true
         dataset.select(:id, :code_uai, :nom).naked
       else
-        # todo : Limit arbitraire de 500, gérer la limit max en fonction du profil ?
+        # todo  trier la base 
         page_size = params[:limit] ? params[:limit] : 20
         page_no = params[:page] ? params[:page] : 1
 
@@ -34,13 +34,12 @@ class ApplicationAPI < Grape::API
           :descriptif => x.descriptif,
           :date => x.date,
           :message_type => x.message_type,
-          :destinataires => x.destinataires
+          :destinataires => x.destinataires,
+          :personnels => x.personnels
           }
         }
         {total: dataset.pagination_record_count, page: page_no, data: data}
       end
-    #publis = Publipostage.all
-    #present publis, with: API::Entities::PublipostageEntity
   end
 
   ############################################################################
@@ -53,46 +52,61 @@ class ApplicationAPI < Grape::API
   desc "creer un nouveau publipostage" 
   post '/publipostages' do
     if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type') and params.has_key?('send_type')
-      # new Publi
       puts params.inspect
-      publi = Publipostage.create(:descriptif => params['descriptif'], :message => params['message'], 
-                                  :date => DateTime.now, :message_type => params['message_type'])
-      destinations = params['destinataires']
-      destinations.each do |dest|
-        if dest.respond_to?('classe_id')
-          Destinataire.create(:regroupement_id => dest.classe_id, :publipostage_id => publi.id)
-        elsif dest.respond_to?('groupe_id')
-          Destinataire.create(:regroupement_id => dest.groupe_id, :publipostage_id => publi.id)
-        elsif dest.respond_to?('profil_id')
-          #puts "case of ecrire personnels"
-        else
-          "error"
-        end
-      end
-      diffusion_types = params['send_type']
-      diffusion_types.each do |type|
-        case type
-        when "byMail"
-          publi.difusion_email = true
-        when "byPdf"
-          publi.difusion_pdf = true
-        when "byNotif"
-          publi.difusion_notif = true
-        else
-        end
-      end  
-      publi.save
-      # send emails
-      if publi.difusion_email
-        begin
-        h = {'ecrire_eleves' => 'eleves', 'ecrire_profs' => 'profs', 'info_famille' => 'parents'}
-          if !params['message_type'].nil?
-            EmailGenerator.send_emails(publi.message, publi.destinataires, h[params['message_type']])
+      DB.transaction do
+        # create a new Publipostage
+        publi = Publipostage.create(:descriptif => params['descriptif'], :message => params['message'], 
+                                    :date => DateTime.now, :message_type => params['message_type'])
+        if params['message_type']=="ecrire_personnels"
+          if params['destinataires'].kind_of?(Array)
+            publi.personnels = params['destinataires']
+          else
+            raise Sequel::Rollback
           end
-        rescue
+        else
+          destinations = params['destinataires']
+          destinations.each do |dest|
+            if dest.respond_to?('classe_id')
+              Destinataire.create(:regroupement_id => dest.classe_id, :publipostage_id => publi.id)
+            elsif dest.respond_to?('groupe_id')
+              Destinataire.create(:regroupement_id => dest.groupe_id, :publipostage_id => publi.id)
+            else
+              raise Sequel::Rollback
+            end
+          end
         end
-      end
-      publi
+        # add profils in case of ecrire à tous
+        if params['message_type']=="ecrire_tous"
+          profils =  params['profils']
+        end
+
+        diffusion_types = params['send_type']
+        diffusion_types.each do |type|
+          case type
+          when "byMail"
+            publi.difusion_email = true
+          when "byPdf"
+            publi.difusion_pdf = true
+          when "byNotif"
+            publi.difusion_notif = true
+          else
+          end
+        end  
+        publi.save
+
+        # send emails
+        if publi.difusion_email
+          begin
+          h = {'ecrire_eleves' => 'eleves', 'ecrire_profs' => 'profs', 'info_famille' => 'parents', 'ecrire_personnels' => 'personnels'}
+            if !params['message_type'].nil?
+              #EmailGenerator.send_emails(publi.message, publi.destinataires, h[params['message_type']])
+            end
+          rescue
+            raise Sequel::Rollback
+          end
+        end
+        publi
+      end # end transaction 
     else
       error!('Mauvaise requête', 400)
     end
