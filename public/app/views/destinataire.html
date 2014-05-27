@@ -17,11 +17,11 @@
                     <!--
                     <label><p class="menu-text-black">filtrer les classes et groupes: <i class="fa fa-search"></i></label> <input type="text" ng-model="searchText" class="form-control" placeholder="chercher"/> -->
                     <div  ng-show="$state.params['type']=='ecrire_tous'">
-                        <label>Choisir des profils: </label><br/>
-                        <label ng-repeat="profil in profils">
-                            <input type="checkbox" checklist-model="selectedProfils" checklist-value="profil"> {{profil}} </input>
-                            <br/>
-                        </label>
+                        <label><p class="menu-text">Choisir des profils: </p></label>
+                        <p ng-repeat="profil in profils">
+                            <input class="css-checkbox" id="{{profil}}" type="checkbox" checklist-model="selectedProfils" checklist-value="profil"/>
+                            <label for="{{profil}}" class="css-label">{{profil}} </label>
+                        </p>
                     </div>
                 </form>
                 <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat= "classe in regroupements['classes']"><span ng-show="classe.checked">{{classe.classe_libelle}} </span></span><span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></p>
