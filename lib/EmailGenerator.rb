@@ -4,7 +4,7 @@
 module EmailGenerator
 	Nodes = ['civilite', 'date', 'nom', 'prenom', 'nomEleve', 'prenomEleve', 'adresse', 'signature']
 	def EmailGenerator.send_emails(message, destinataires, profil)
-		puts "profil is #{profil}"
+		puts "send email to #{profil}"
 		Mail.defaults do
   		#delivery_method :smtp, address: "localhost", port: 25, openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE
   		delivery_method :test
@@ -20,6 +20,8 @@ module EmailGenerator
 	      		membres = regroupement.eleves
 	      	when 'profs'
 	      		membres = regroupement.profs
+	      	when 'personnels'
+	      		membres = destinataires
 	      	end
 	      	membres.each do |membre|
 	      		#puts membre.email

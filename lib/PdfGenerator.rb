@@ -333,4 +333,9 @@ module PdfGenerator
     return final_document
 	end
 
+  def PdfGenerator.generate_personnels_pdf(message, destinataires)
+    puts destinataires
+    final_document = message
+  end
+
 end
