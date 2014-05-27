@@ -201,7 +201,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
                     }, 
                     function(error){
                         console.log(error);
-                        $location.path('/error/'+error);
+                        $location.path('/error/'+error['data'].error);
                         // show a message interface ..
                 });
             }
