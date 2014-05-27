@@ -8,6 +8,7 @@
 require_relative 'publipostage'
 require_relative 'destinataires'
 require_relative 'regroupement'
+require_relative 'user'
 
 #On fait manuellement l'association table=>model car elle est impossible a faire automatiquement
 #(pas de lien 1<=>1 entre dataset et model stackoverflow 9408785)

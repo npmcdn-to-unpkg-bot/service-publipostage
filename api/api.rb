@@ -52,12 +52,12 @@ class ApplicationAPI < Grape::API
   desc "creer un nouveau publipostage" 
   post '/publipostages' do
     if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type') and params.has_key?('send_type')
-      puts params.inspect
       begin
+        # create a new Publipostage
         DB.transaction do
-          # create a new Publipostage
           publi = Publipostage.create(:descriptif => params['descriptif'], :message => params['message'], 
                                       :date => DateTime.now, :message_type => params['message_type'])
+          #ajouter les destinataires
           if params['message_type']=="ecrire_personnels"
             if params['destinataires'].kind_of?(Array)
               publi.personnels = params['destinataires']
@@ -76,15 +76,17 @@ class ApplicationAPI < Grape::API
               end
             end
           end
+
           # add profils in case of ecrire à tous
           if params['message_type']=="ecrire_tous"
             if  !params['profils'].empty?
-              profils =  params['profils']
+              publi.profils =  params['profils']
             else
               raise 'pas de profils'
             end
           end
 
+          # add les type de diffusion
           diffusion_types = params['send_type']
           diffusion_types.each do |type|
             case type
@@ -104,12 +106,23 @@ class ApplicationAPI < Grape::API
             begin
               h = {'ecrire_eleves' => 'eleves', 'ecrire_profs' => 'profs', 'info_famille' => 'parents', 'ecrire_personnels' => 'personnels'}
               if !params['message_type'].nil?
-                EmailGenerator.send_emails(publi.message, publi.destinataires, h[params['message_type']])
+                if params['message_type'] == "ecrire_personnels"
+                  # email personnels
+                  EmailGenerator.send_emails(publi.message, publi.personnels, personnels)
+                elsif params['message_type'] == "ecrire_tous"
+                  # email to profils
+                  publi.profils.each do |profil|
+                    EmailGenerator.send_emails(publi.message, publi.destinataires, profil)
+                  end
+                else 
+                  EmailGenerator.send_emails(publi.message, publi.destinataires, h[params['message_type']])
+                end
               end
             rescue
               raise 'une erreur s\'est produite'
             end
           end
+          # retourn le publipostage crée
           publi
         end # end transaction
       rescue => e
