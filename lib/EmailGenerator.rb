@@ -157,120 +157,122 @@ module EmailGenerator
 		final_document = ""
 		destinataires.each do |dest|
 			membre = User[:id_ent => dest.id_ent]
-			#puts "email #{membre.email_principal}"
-      		#puts membre.email
-	        html = HTMLEntities.new.decode message
-	        document = Nokogiri::HTML(html)
-	        #loop over nodes 
-	        Nodes.each do |node_name|
-	          nodes = document.css(node_name)
-	          nodes.each do |node|
-	            #node = document.at_css(node_name)
-	            # mockup data
-	            if !node.nil?
-	              case node_name
-	              when 'civilite'
-	                # match spaces
-	                match = node.content.match(/\[civilite\](&nbsp;)*.(&nbsp;)*/)
-	                if !match.nil? && match.length > 2
-	                  i = 0
-	                  spaces = ''
-	                  while i < (match.length-1) do
-	                    spaces = ' '+ spaces
-	                    i = i+1
-	                  end
-	                  membre[:sexe] == 'M'? node.content = "MR"+spaces : node.content = "MME"+spaces
-	                else
-	                  membre[:sexe] == 'M'? node.content = "MR" : node.content = "MME"
-	                end
-	              when 'prenom'
-	                # match spaces
-	                match = node.content.match(/\[prenom\](&nbsp;)*.(&nbsp;)*/)
-	                if !match.nil? && match.length > 2
-	                  i = 0
-	                  spaces = ''
-	                  while i < (match.length-1) do
-	                    spaces = ' '+ spaces
-	                    i = i+1
-	                  end
-	                  node.content= membre[:prenom]+space
-	                else
-	                  node.content= membre[:prenom]
-	                end
-	              when "date"
-	                # match spaces
-	                match = node.content.match(/\[date\](&nbsp;)*.(&nbsp;)*/)
-	                if !match.nil? && match.length > 2 
-	                  i = 0
-	                  spaces = ''
-	                  while i < (match.length-1) do
-	                    spaces = ' '+ spaces
-	                    i = i+1
-	                  end
-	                  node.content = DateTime.now +spaces
-	                else
-	                  node.content = DateTime.now
-	                end
-	              when "adresse"
-	                # match spaces
-	                match = node.content.match(/\[adresse\](&nbsp;)*.(&nbsp;)*/)
-	                if !match.nil? && match.length > 2
-	                  i = 0
-	                  spaces = ''
-	                  while i < (match.length-1) do
-	                    spaces = ' '+ spaces
-	                    i = i+1
-	                  end
-	                  node.content = membre[:adresse]+ spaces
-	                else
-	                  node.content = membre[:adresse]
-	                end
-	              when "nom"
-	                # match spaces
-	                match = node.content.match(/\[nom\](&nbsp;)*.(&nbsp;)*/)
-	                if !match.nil? && match.length > 2
-	                  i = 0
-	                  spaces = ''
-	                  while i < (match.length-1) do
-	                    spaces = ' '+ spaces
-	                    i = i+1
-	                  end
-	                  node.content = membre[:nom]+spaces
-	                else
-	                  node.content = membre[:nom]
-	                end
-	              when "signature"
-	                match = node.content.match(/\["#{node_name}"\](&nbsp;)*.(&nbsp;)*/)
-	                if !match.nil? && match.length >2
-	                  i = 0
-	                  spaces = ''
-	                  while i < (match.length-1) do
-	                    spaces = ' '+ spaces
-	                    i = i+1
-	                  end
-	                  node.content = 'signature' +spaces
-	                else
-	                  node.content = 'signature'
-	                end
-	              end
-	            end
-	          end
-	        end #nodes
-        	#puts document.to_html
-	        begin
-	        	# send test emails
-	        	if membre.has_email?
-		        	Mail.deliver do
-				      from    'support@laclasse.com'
-				      to       "mail@mail.com"
-				      subject 'publipostage'
-				      body   Nokogiri::HTML(document.to_html).text
-				    end
-				end
-		    rescue
+  		#puts membre.email
+      html = HTMLEntities.new.decode message
+      document = Nokogiri::HTML(html)
+      #loop over nodes 
+      Nodes.each do |node_name|
+        nodes = document.css(node_name)
+        nodes.each do |node|
+          # mockup data
+          if !node.nil?
+            case node_name
+            when 'civilite'
+              # match spaces
+              match = node.content.match(/\[civilite\](&nbsp;)*.(&nbsp;)*/)
+              if !match.nil? && match.length > 2
+                i = 0
+                spaces = ''
+                while i < (match.length-1) do
+                  spaces = ' '+ spaces
+                  i = i+1
+                end
+                membre[:sexe] == 'M'? node.content = "MR"+spaces : node.content = "MME"+spaces
+              else
+                membre[:sexe] == 'M'? node.content = "MR" : node.content = "MME"
+              end
+            when 'prenom'
+              # match spaces
+              match = node.content.match(/\[prenom\](&nbsp;)*.(&nbsp;)*/)
+              if !match.nil? && match.length > 2
+                i = 0
+                spaces = ''
+                while i < (match.length-1) do
+                  spaces = ' '+ spaces
+                  i = i+1
+                end
+                node.content= membre[:prenom]+space
+              else
+                node.content= membre[:prenom]
+              end
+            when "date"
+              # match spaces
+              match = node.content.match(/\[date\](&nbsp;)*.(&nbsp;)*/)
+              if !match.nil? && match.length > 2 
+                i = 0
+                spaces = ''
+                while i < (match.length-1) do
+                  spaces = ' '+ spaces
+                  i = i+1
+                end
+                node.content = DateTime.now +spaces
+              else
+                node.content = DateTime.now
+              end
+            when "adresse"
+              # match spaces
+              match = node.content.match(/\[adresse\](&nbsp;)*.(&nbsp;)*/)
+              if !match.nil? && match.length > 2
+                i = 0
+                spaces = ''
+                while i < (match.length-1) do
+                  spaces = ' '+ spaces
+                  i = i+1
+                end
+                node.content = membre[:adresse]+ spaces
+              else
+                node.content = membre[:adresse]
+              end
+            when "nom"
+              # match spaces
+              match = node.content.match(/\[nom\](&nbsp;)*.(&nbsp;)*/)
+              if !match.nil? && match.length > 2
+                i = 0
+                spaces = ''
+                while i < (match.length-1) do
+                  spaces = ' '+ spaces
+                  i = i+1
+                end
+                node.content = membre[:nom]+spaces
+              else
+                node.content = membre[:nom]
+              end
+            when "signature"
+              match = node.content.match(/\["#{node_name}"\](&nbsp;)*.(&nbsp;)*/)
+              if !match.nil? && match.length >2
+                i = 0
+                spaces = ''
+                while i < (match.length-1) do
+                  spaces = ' '+ spaces
+                  i = i+1
+                end
+                node.content = 'signature' +spaces
+              else
+                node.content = 'signature'
+              end
+            end
+          end
+        end
+      end #nodes
+    	puts document.to_html
+      begin
+      	# send test emails
+      	if membre.has_email?
+		      mail = Mail.new do
+		      	subject 'publipostage'
+		      	body Nokogiri::HTML(document.to_html).text
+		      end
+		      mail['from'] = 'support@laclasse.com'
+		      mail[:to] = membre.email_principal
+		      mail.deliver
+		    else
+		    	raise "l\'utilisateur n\'a pas un email"
 		    end
-	    end #destinataire
-	  # test .
+	    rescue => e
+	    	puts e.message
+	    end
+    end #destinataire
+	  # test
 		puts Mail::TestMailer.deliveries.first
 		puts Mail::TestMailer.deliveries.length
 	end
