@@ -512,7 +512,7 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
 
     // page ecrire tous
     // list of available profils 
-    $scope.profils = ['eleves', 'profs', 'parents','personnels'];
+    $scope.profils = ['eleves', 'profs', 'parents'];
 
     // les profils sélectionner
     $scope.selectedProfils = [];

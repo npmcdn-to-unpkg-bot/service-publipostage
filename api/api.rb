@@ -160,7 +160,7 @@ class ApplicationAPI < Grape::API
         final_document = PdfGenerator::generate_personnels_pdf(publi[:message], publi.personnels)
       when 'ecrire_tous'
         publi.profils.each do |profil|
-          final_document += publi[:message]
+          final_document  += "<hr></hr><p color='red'><h2>#{profil}</h2></p><hr></hr>" + PdfGenerator::generate_pdf(publi[:message], destinataires, profil)
         end
       end
       # generate pdf
