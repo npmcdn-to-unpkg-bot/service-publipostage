@@ -190,7 +190,6 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $stateProvider.state(home)
     .state(gestion)
     .state(createPublipostage)
-    .state(profil)
     .state(type_message)
     .state(historique)
     .state(destinataire)
