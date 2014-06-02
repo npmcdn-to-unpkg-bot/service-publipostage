@@ -18,7 +18,7 @@
     <div class="col-sm-8 col-md-8 col-md-8">
         <div class="row-fluid">
             <div ng-repeat="square in squares" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 {{ square.color }}" >
-              <a ng-click="addMessageType('message type');Redirect.goTo(square.url)" ng-disabled="!security.isSuperAdmin()">
+              <a ng-click="addMessageType('message type');Redirect.goTo(square.url)" ng-disabled ="!security.isSuperAdmin()">
                 <div class="square-icon">
                   <div><data-ng-include class="svg" src="square.icon"></data-ng-include></div>
                   <!--<span class="square-text"></span>-->

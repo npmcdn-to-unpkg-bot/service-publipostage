@@ -47,7 +47,6 @@ class ApplicationAPI < Grape::API
   get '/publipostages/:id' do
     Publipostage[:id => params['id']]
   end
-
   ############################################################################ 
   desc "creer un nouveau publipostage" 
   post '/publipostages' do
@@ -157,7 +156,8 @@ class ApplicationAPI < Grape::API
       when 'ecrire_eleves'
         final_document = PdfGenerator::generate_eleves_pdf(publi[:message], destinataires)
       when 'ecrire_personnels'
-        final_document = PdfGenerator::generate_personnels_pdf(publi[:message], publi[:personnels])
+        puts publi[:personnels][0]
+        final_document = PdfGenerator::generate_personnels_pdf(publi[:message], publi.personnels)
       when 'ecrire_tous'
         publi.profils.each do |profil|
           final_document += publi[:message]
