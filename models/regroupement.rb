@@ -68,7 +68,7 @@ class Regroupement < Sequel::Model(:regroupement)
   # Liste des membres du regroupement dont le profil est Prof
   def profs
     DB[:user].filter(:id => DB[:enseigne_dans_regroupement].filter(:regroupement_id => self.id).select(:user_id))
-    .join(:profil_user, :profil_user__user_id => :id).filter(:profil_id => 'ENS').naked.all
+    .join(:profil_user, :profil_user__user_id => :id).filter(:profil_id => 'ENS').all
   end
 
   # Liste des membres du regroupement dont le profil est élève

@@ -25,6 +25,7 @@ module EmailGenerator
 	      	end
 	      	membres.each do |membre|
 	      		#puts membre.email
+	      		user = User[:id_ent => membre[:id_ent]]
 		        html = HTMLEntities.new.decode message
 		        document = Nokogiri::HTML(html)
 		        #loop over nodes 
@@ -124,14 +125,20 @@ module EmailGenerator
 		        end #nodes
 	        	#puts document.to_html
 		        begin
-		        	# send test emails
-			        Mail.deliver do
-					      from    'support@laclasse.com'
-					      to      'user@laclasse.com'
-					      subject 'publipostage'
-					      body   Nokogiri::HTML(document.to_html).text
-					    end
-			    	rescue
+		        		# send email if user has email
+		        		if user.has_email?
+		        			mail = Mail.new do
+		        				subject 'publipostage'
+		        				body Nokogiri::HTML(document.to_html).text
+		        			end
+		        			mail['from'] = 'support@laclasse.com'
+		        			mail[:to] = user.email_principal
+		        			mail.deliver
+								else
+									raise "l\'utilisateur n\'a pas un email"
+								end
+			    	rescue => e
+			    		puts e.message
 			    	end
 	      	end #membre
 	    end #destinataire
