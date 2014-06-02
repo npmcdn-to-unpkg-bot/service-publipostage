@@ -150,11 +150,11 @@ class ApplicationAPI < Grape::API
       final_document = ""
       case publi.message_type
       when 'info_famille'
-        final_document = PdfGenerator::generate_info_famille_pdf(publi[:message], destinataires)
+        final_document = PdfGenerator::generate_pdf(publi[:message], destinataires, 'parents')
       when 'ecrire_profs'
-        final_document = PdfGenerator::generate_profs_pdf(publi[:message], destinataires)
+        final_document = PdfGenerator::generate_pdf(publi[:message], destinataires, 'profs')
       when 'ecrire_eleves'
-        final_document = PdfGenerator::generate_eleves_pdf(publi[:message], destinataires)
+        final_document = PdfGenerator::generate_pdf(publi[:message], destinataires, 'eleves')
       when 'ecrire_personnels'
         puts publi[:personnels][0]
         final_document = PdfGenerator::generate_personnels_pdf(publi[:message], publi.personnels)
