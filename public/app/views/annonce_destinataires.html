@@ -16,34 +16,19 @@
                 <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat= "classe in regroupements['classes']"><span ng-show="classe.checked">{{classe.classe_libelle}} </span></span><span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></p>
                 <br/>
                 <form role="form" class="form-inline">
-                    <div ng-show="$state.params['type']=='ecrire_profs'">
+                    <div ng-show="$state.params['annonce_type']=='ecrire_profs'">
                         <label>Choisir une matiere: </label><select class="form-control">
                             <option>Matimatique</option>
                             <option>Autre chose</option>
                         </select>
                     </div>
                     <br/>
-                    <div  ng-show="$state.params['type']=='ecrire_tous'">
-                        <div style="text-align: center" class="checkbox">
-                            <label>
-                              <input type="checkbox"> Elèves
-                            </label>
-                        </div><br/>
-                        <div style="text-align: center" class="checkbox">
-                            <label>
-                              <input type="checkbox"> Professeurs
-                            </label>
-                        </div><br/>
-                        <div style="text-align: center" class="checkbox">
-                            <label>
-                              <input type="checkbox"> Parents
-                            </label>
-                        </div><br/>
-                        <div class="checkbox">
-                            <label>
-                              <input type="checkbox"> Personnels
-                            </label>
-                        </div><br/>
+                    <div ng-show="$state.params['annonce_type']=='ecrire_tous'">
+                        <label><p class="menu-text">Choisir des profils: </p></label>
+                        <p ng-repeat="profil in profils">
+                            <input class="css-checkbox" id="{{profil}}" type="checkbox" checklist-model="selectedProfils" checklist-value="profil"/>
+                            <label for="{{profil}}" class="css-label">{{profil}} </label>
+                        </p>
                     </div>
                 </form>
                 </br>

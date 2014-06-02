@@ -259,6 +259,8 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
     $scope.notification = 'Ecrire une annonce de 300 caractères maximum.';
     var destinataires = MessageService.getMessage()['destinations'];
     console.log(destinataires);
+    // list of available profils 
+    $scope.profils = ['eleves', 'profs', 'parents'];
     $scope.tinymceOptions = {
             language:"fr",
             theme: "modern",
