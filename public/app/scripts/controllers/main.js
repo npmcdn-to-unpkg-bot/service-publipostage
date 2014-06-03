@@ -568,9 +568,11 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     };
     
     // watch destinations (array)
+    /*
     $scope.$watch('destinations', function(newVal){
         console.log(newVal);
-    }, true);
+    }, true); 
+    */
 
     // page ecrire tous
     // list of available profils 
@@ -596,6 +598,13 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     $scope.$watch("selectedProfils", function(arr){
         console.log(arr);
     }, true);
+
+    $scope.noSelection = function(){
+        if ($state.params['type']=='ecrire_tous')
+            return $scope.destinations.length == 0 || $scope.selectedProfils.length == 0;
+        else
+            return $scope.destinations.length == 0; 
+    }
 
 }]);
 
