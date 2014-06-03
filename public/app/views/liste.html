@@ -10,10 +10,11 @@
         <div class="row">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
                 <pagination total-items="totalItems" items-per-page="limit" max-size="maxSize" ng-model="currentPage"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="pageChanged(currentPage)"></pagination><div><label>record par page:</label><select ng-model="limit" ng-options="limit for limit in pageLimits"
-                 ng-change="limitChanged(limit)"></select></div> <label>total= {{totalItems}} </label>
+                 ng-change="limitChanged(limit)"></select></div> <label>total= {{totalItems}} </label> <a class='btn btn-danger btn-sm' ng-show="check_all" ng-click="removeSelectedPubli()"> supprimer la selection<i class="fa fa-trash-o"></i></a>
                 <table class="table table-striped table-bordered">
                 <thead>
-                    <th>ID</th>
+                    <th style="text-align:center;vertical-align:middle;"><input type="checkbox"  ng-change="selectAll()" ng-model="check_all" rel="tooltip" title="tous"></th>
+                    <!--<th>ID</th>-->
                     <th>Message</th>
                     <th>Descriptif</th>
                     <th>Destinataire</th>
@@ -23,7 +24,10 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="publi in publis">
-                        <td>{{publi.id}}</td>
+                        <td style="text-align:center;vertical-align:middle;">
+                            <input type="checkbox"  ng-model="checked[publi.id]" ng-change="selectPubli(publi.id)">
+                        </td>
+                        <!--<td>{{publi.id}}</td>-->
                         <td><p ng-bind-html="toTrustedHtml(publi.message)"></p></td>
                         <td>{{publi.descriptif}}</td>
                         <td><span ng-switch on="publi.message_type"> 

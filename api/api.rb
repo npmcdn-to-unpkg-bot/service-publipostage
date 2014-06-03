@@ -180,7 +180,24 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "supprimer un publipostage"
   delete '/publipostages/:id' do
-    Publipostage.where(:id => params['id']).destroy
+    puts params[:id].inspect
+    puts params[:id].class
+    query = params[:id]
+    begin
+      if query.class == String && query.size==1
+        Publipostage.where(:id => params['id']).destroy
+      elsif (query = JSON.parse(params[:id])).class == Hash
+        query.each do |key, value|
+          if value
+            Publipostage.where(:id => key).destroy
+          end
+        end
+      else
+       error!('les parametres ne sont pas valides', 400)
+      end
+    rescue
+      error!("une erreur s\'est produite", 400)
+    end
   end
 
   ############################################################################
