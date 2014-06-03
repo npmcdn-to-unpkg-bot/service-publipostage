@@ -289,7 +289,7 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
     var destinataires = MessageService.getMessage()['destinations'];
     console.log(destinataires);
     // list of available profils 
-    $scope.profils = ['eleves', 'profs', 'parents'];
+    //$scope.profils = ['eleves', 'profs', 'parents'];
     $scope.tinymceOptions = {
             language:"fr",
             theme: "modern",
@@ -300,6 +300,7 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
             handle_event_callback: function (e) {
             }
     };
+    var profils = MessageService.getMessage()['profils'];
     var personel_channel = "";
     security.requestCurrentUser().then(function(user){
         currentUser = user;
@@ -320,69 +321,99 @@ Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope',
                     });
                 break;
             case 'ecrire_eleves':
-                destinataires.forEach(function(dest, index, array){
-                    if(angular.isDefined(dest['classe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/ELV_ETB"),
-                            {
-                                msg: message,
-                                title:'Message aux eleves de '+dest['classe_libelle']+'<br/><hr/>',
-                                from:currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                                at: $filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
-                            });
-                    if(angular.isDefined(dest['groupe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/ELV_ETB"),
-                            {
-                                msg: message,
-                                title:'Message aux eleves de '+dest['groupe_libelle']+'<br/><hr/>',
-                                from:currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                                at: $filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
-                            });
-                });
+               ecrireEleves(message);
                 break;
             case 'ecrire_profs':
-                destinataires.forEach(function(dest, index, array){
-                    if(angular.isDefined(dest['classe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/PROF_ETB"),
-                            {   msg: message,
-                                title:'Message aux enseignants de '+dest['classe_libelle']+'<br/><hr/>',
-                                from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                                at: ''+ $filter('date')(new Date(), 'yyyy-MM-dd  à HH:mm:ss')
-                            });
-                    if(angular.isDefined(dest['groupe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/PROF_ETB"),
-                            {
-                                msg: message,
-                                title:'Message aux enseignants de '+dest['groupe_libelle']+'<br/><hr/>',
-                                from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                                at: ''+$filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
-                            });
-                });
+                ecrireProfs(message);
                 break;
             case 'ecrire_parents':
-                destinataires.forEach(function(dest, index, array){
-                    if(angular.isDefined(dest['classe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/PAR_ETB"), 
-                            {
-                                msg: message,
-                                title:'Message aux enseignants de '+dest['classe_libelle']+'<br/><hr/>',
-                                from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                                at: ''+$filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
-
-                            });
-                    if(angular.isDefined(dest['groupe_id']))
-                        Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/PAR_ETB"), 
-                            {
-                                msg: message,
-                                title:'Message aux enseignants de '+dest['groupe_libelle']+'<br/><hr/>',
-                                from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                                at: ''+$filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
-                            });
+                ecrireParents(message);
+                break;
+            case 'ecrire_tous':
+                console.log($scope.selectedProfils);
+                angular.forEach(profils, function(profil){
+                    switch(profil){
+                        case 'eleves':
+                            ecrireEleves(message);
+                            break;
+                        case 'profs':
+                            ecrireProfs(message);
+                            break;
+                        case 'parents':
+                            ecrireParents(message);
+                            break;
+                        default:
+                            console.log("default");
+                    }
                 });
                 break;
             default:
                 console.log("default");
         }
     };
+
+    var ecrireEleves = function(message){
+        destinataires.forEach(function(dest, index, array){
+            if(angular.isDefined(dest['classe_id']))
+                Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/ELV_ETB"),
+                    {
+                        msg: message,
+                        title:'Message aux eleves de '+dest['classe_libelle']+'<br/><hr/>',
+                        from:currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                        at: $filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
+                    });
+            if(angular.isDefined(dest['groupe_id']))
+                Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/ELV_ETB"),
+                    {
+                        msg: message,
+                        title:'Message aux eleves de '+dest['groupe_libelle']+'<br/><hr/>',
+                        from:currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                        at: $filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
+                    });
+        });
+    };
+
+    var ecrireProfs = function(message){
+        destinataires.forEach(function(dest, index, array){
+            if(angular.isDefined(dest['classe_id']))
+                Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/PROF_ETB"),
+                    {   msg: message,
+                        title:'Message aux enseignants de '+dest['classe_libelle']+'<br/><hr/>',
+                        from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                        at: ''+ $filter('date')(new Date(), 'yyyy-MM-dd  à HH:mm:ss')
+                    });
+            if(angular.isDefined(dest['groupe_id']))
+                Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/PROF_ETB"),
+                    {
+                        msg: message,
+                        title:'Message aux enseignants de '+dest['groupe_libelle']+'<br/><hr/>',
+                        from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                        at: ''+$filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
+                    });
+        });
+    };
+
+    var ecrireParents = function(message){
+        destinataires.forEach(function(dest, index, array){
+            if(angular.isDefined(dest['classe_id']))
+                Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/PAR_ETB"),
+                    {
+                        msg: message,
+                        title:'Message aux parents de '+dest['classe_libelle']+'<br/><hr/>',
+                        from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                        at: ''+$filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
+                    });
+            if(angular.isDefined(dest['groupe_id']))
+                Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/PAR_ETB"),
+                    {
+                        msg: message,
+                        title:'Message aux parents de '+dest['groupe_libelle']+'<br/><hr/>',
+                        from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
+                        at: ''+$filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
+                    });
+        });
+    };
+
 }]);
 
 /******************************************* Destinataire Controller ****************************************/
@@ -628,7 +659,7 @@ Controllers.controller('DocCtrl', ['$scope', '$state', function($scope, $state){
     $scope.pdfUrl = 'http://localhost:9292/app/api/publipostage/'+$state.params['id']+'/pdf';
 }]);
 /***************************************************************************************************/
-
+/* listen to notification Controller */
 Controllers.controller('NotificationCtrl', ['$scope', '$http', 'Faye', '$rootScope', 'security','currentUser', 'Regroupements',
     function($scope, $http, Faye, $rootScope, security, currentUser, Regroupements) {
     // subscribe users to channels..
@@ -640,6 +671,7 @@ Controllers.controller('NotificationCtrl', ['$scope', '$http', 'Faye', '$rootSco
             $scope.regroupements = regroupements;
             console.log(regroupements);
             console.log(currentUser);
+            //construct listen channels
             for(var i=0; i<currentUser.roles.length; i++){
                 //moi channel
                 channels.push("/etablissement/"+currentUser.roles[i][1]+"/"+currentUser.roles[i][0]+"/"+currentUser.info['uid']);
