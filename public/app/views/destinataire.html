@@ -70,15 +70,15 @@
 
             <!--show personnels only when message type is ecrire personnels -->
             <div  ng-show="$state.params['type']=='ecrire_personnels'">
-                <div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                <div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris4-clear">
                     <a ng-click="changePersonColor($index);person.checked=!person.checked;addRemoveDestination(person)">
                         <div class="square-icon">
-                            <div>
+                            <div class="text-icon">
                                 {{person.prenom}} {{person.nom}}
+                                <span>{{person.description}}</span>
+                                <br/>
+                                <span class="glyphicon-class" ng-show="person.checked" id="checked"><i class="fa fa-check-square-o fa-lg"></i></span>
                             </div>
-                            <span class="squaire-text">{{person.description}}</span>
-                            <br/>
-                            <span class="glyphicon-class" ng-show="person.checked"><i class="fa fa-check-square-o fa-lg"></i></span>
                         </div>       
                     </a>
                 </div>

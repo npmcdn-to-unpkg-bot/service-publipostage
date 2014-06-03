@@ -294,6 +294,18 @@ row {
   z-index:1!important
 }
 
+.text-icon {
+  background-image: url("public/images/00_vide.svg");
+  width:213.333px;
+  height:200px;
+  color: white;
+  font-family: Futura Bold;
+  font-size: 100%;
+  z-index:1!important 
+}
+
+
+
 .famille-icon {
   background-image: url("../images/famille.svg");
   width:213.333px;
@@ -333,7 +345,11 @@ row {
 
 /*.squares li:hover{opacity:0.1;}@media (min-width:768px){.bs-glyphicons{margin-left:0;margin-right:0}.bs-glyphicon*/
 
-.square-icon{display:block;text-align:center;word-wrap:break-word;padding:5%; font-size:100%;}
+.square-icon{display:block;
+  text-align:center;
+  word-wrap:break-word;
+  padding:5%; 
+  font-size:100%;}
 
 
 /*input[type=checkbox].css-checkbox {
@@ -567,4 +583,9 @@ p {
 scrollbars, thumb {
   -moz-appearance: none !important;
   background-color: #C0C0C0;
+}
+
+#checked {
+    color: #eb5454;
+    font-size: 1.5em;
 }
