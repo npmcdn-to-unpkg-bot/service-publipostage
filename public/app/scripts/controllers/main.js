@@ -606,7 +606,6 @@ Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 /********************************* Massage controller*****************************************/
 Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state',
     function($scope, $sce, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state){
-
         //$scope.tinymceOptions =  tinymceOptions;
         $scope.tinymceOptions = {
             language:"fr",
