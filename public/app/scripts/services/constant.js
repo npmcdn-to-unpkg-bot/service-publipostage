@@ -132,28 +132,28 @@ angular.module('services.constants').service('Squares', function($rootScope){
 angular.module('services.constants').service('AnnonceSquares', function($rootScope){
 	var squares = [
                     { id: 'annonce_personnels',
-                      icon: $rootScope.racine_images + '00_vide.svg',
+                      icon: $rootScope.racine_images + 'personnel.svg',
                       color: 'rouge',
                       text: 'annonce aux personnels',
                       url: '/annonce_destinataires/ecrire_personnels',
                       active: false
                     },
                     { id: 'annonce_eleves',
-                      icon: $rootScope.racine_images + '00_vide.svg',
+                      icon: $rootScope.racine_images + 'eleves.svg',
                       color: 'jaune',
                       text: 'annonce aux élèves',
                       url: '/annonce_destinataires/ecrire_eleves',
                       active: false
                     },
                     { id: 'annonce_profs',
-                      icon: $rootScope.racine_images + '00_vide.svg',
+                      icon: $rootScope.racine_images + 'profs.svg',
                       color: 'bleu',
                       text: 'annonce aux profs',
                       url: '/annonce_destinataires/ecrire_profs',
                       active: false
                     },
                     { id: 'annonce_tous',
-                      icon: $rootScope.racine_images + '00_vide.svg',
+                      icon: $rootScope.racine_images + 'tous.svg',
                       color: 'violet',
                       text: 'annonce à tous',
                       url: '/annonce_destinataires/ecrire_tous',
