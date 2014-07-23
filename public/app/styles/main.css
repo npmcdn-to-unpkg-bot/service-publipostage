@@ -1,3 +1,58 @@
+@font-face {
+    font-family: 'Open Sans Extrabold';
+    src: url('../fonts/OpenSans-Extrabold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans Extrabold italic';
+    src: url('../fonts/OpenSans-ExtraboldItalic.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans Bold';
+    src: url('../fonts/OpenSans-Bold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans Bold italic';
+    src: url('../fonts/OpenSans-BoldItalic.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans Light';
+    src: url('../fonts/OpenSans-Light.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans Light italic';
+    src: url('../fonts/OpenSans-LightItalic.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans Regular';
+    src: url('../fonts/OpenSans-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans Regular italic';
+    src: url('../fonts/OpenSans-RegularItalic.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
 /* Space out content a bit */
 /*body {
   padding-top: 20px;
@@ -236,7 +291,7 @@ row {
   font-size: 150%;
   width: 100%;
   color: white;
-  font-family: Futura Bold;
+  font-family: Open Sans Light;
   z-index:1!important
 }
 
@@ -244,7 +299,7 @@ row {
   font-size: 150%;
   width: 100%;
   color:#64BDF5;
-  font-family: Futura Bold;
+  font-family: Open Sans Bold;
 }
 
 .menu-text-hidden {
@@ -522,17 +577,16 @@ a {
     padding: 40px 30px 30px 40px;
 }
 
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
 h1{
-    font-family: Futura Bold;
+    font-family: Open Sans Bold;
     font-weight: 300;
     color:#64BDF5;
 }
 
 h2{
-    font-family: Futura Bold;
-    font-weight: 200;
-    color:#64BDF5;
+    font-family: Open Sans Bold;
+    font-size: 150%;
+    color:#1AA1CC ;
 }
 
 p {
@@ -542,7 +596,7 @@ p {
 .transparent{
   font-weight: 200;
   color:#64BDF5;
-  font-family: Futura Bold;
+  font-family: Open Sans Bold;
   opacity:0.5;
 }
 
@@ -550,7 +604,7 @@ p {
   font-size: 150%;
   width: 100%;
   color:#64BDF5;
-  font-family: Futura Bold;
+  font-family: Open Sans Bold;
   opacity:0.5;
 }
 
