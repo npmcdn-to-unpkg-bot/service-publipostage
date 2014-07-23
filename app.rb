@@ -54,7 +54,6 @@ class SinatraApp < Sinatra::Base
     init_session( request.env )
     redirect params[:url] if params[:url] !=  env['rack.url_scheme'] + "://" + env['HTTP_HOST'] + APP_PATH + '/'
     redirect APP_PATH + '/'
-    #erb "<h1>Connected !</h1><pre>#{request.env['omniauth.auth'].to_html}</pre><hr>"
   end
 
   get APP_PATH + '/auth/failure' do

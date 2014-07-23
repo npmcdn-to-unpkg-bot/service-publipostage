@@ -7,6 +7,20 @@ class ApplicationAPI < Grape::API
   content_type :json, 'application/json'
   content_type :pdf, 'application/pdf'
   format :json
+  helpers do
+    def current_user
+      @current_user ||= env['rack.session'][:current_user]
+    end
+
+    def authenticate!
+      error!('401 non authentifié', 401) unless current_user
+    end
+  end
+
+  #
+  before do
+    authenticate!
+  end
   ############################################################################
   desc "Retourner la listes des publipostage"
   params do
@@ -19,29 +33,28 @@ class ApplicationAPI < Grape::API
     content_type 'application/json'
     dataset = Publipostage.dataset
     dataset.extend(Sequel::DatasetPagination)
-      # return all publipostages
-      if params[:all] == true
-        dataset.select(:id, :code_uai, :nom).naked
-      else
-        # todo  trier la base 
-        page_size = params[:limit] ? params[:limit] : 20
-        page_no = params[:page] ? params[:page] : 1
+    # return all publipostages
+    if params[:all] == true
+      dataset.select(:id, :code_uai, :nom).naked
+    else
+      # todo  trier la base
+      page_size = params[:limit] ? params[:limit] : 20
+      page_no = params[:page] ? params[:page] : 1
 
-        dataset = dataset.paginate(page_no, page_size)
-        data = dataset.collect{ |x| {
-          :id => x.id,
-          :message => x.message,
-          :descriptif => x.descriptif,
-          :date => x.date,
-          :message_type => x.message_type,
-          :destinataires => x.destinataires,
-          :personnels => x.personnels
-          }
+      dataset = dataset.paginate(page_no, page_size)
+      data = dataset.collect{ |x| {
+        :id => x.id,
+        :message => x.message,
+        :descriptif => x.descriptif,
+        :date => x.date,
+        :message_type => x.message_type,
+        :destinataires => x.destinataires,
+        :personnels => x.personnels
         }
-        {total: dataset.pagination_record_count, page: page_no, data: data}
-      end
+      }
+      {total: dataset.pagination_record_count, page: page_no, data: data}
+    end
   end
-
   ############################################################################
   desc "Retourner un  publipostage par id"
   get '/publipostages/:id' do
