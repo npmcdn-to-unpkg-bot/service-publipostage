@@ -61,7 +61,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       url:'/destinataire/:type',
       templateUrl: APPLICATION_PREFIX+'/views/destinataire.html',
       controller:'destinatairesCtrl',
-      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
+      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB", "ELV_ETB"],
       resolve :{
         checkMessage: function($q, $timeout, MessageService){
           var deferred = $q.defer();

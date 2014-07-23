@@ -43,11 +43,11 @@ class SinatraApp < Sinatra::Base
   helpers AuthenticationHelpers
 
   get APP_PATH + '/' do
-  if is_logged?
-    erb :app
-  else
-    erb :public_page
-  end  
+    if is_logged?
+      erb :app
+    else
+      erb :public_page
+    end  
   end
 
   get APP_PATH + '/auth/:provider/callback' do

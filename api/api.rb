@@ -185,6 +185,7 @@ class ApplicationAPI < Grape::API
     query = params[:id]
     begin
       if query.class == String && query.size==1
+        puts Publipostage.where(:id => params['id']);
         Publipostage.where(:id => params['id']).destroy
       elsif (query = JSON.parse(params[:id])).class == Hash
         query.each do |key, value|

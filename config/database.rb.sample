@@ -4,8 +4,8 @@ require 'mysql2'
 
 DB = Sequel.mysql2(
   'annuairev3',
-  :user=>'root',
-  :password=>'root',
+  :user=>'user',
+  :password=>'password',
   :charset=>'utf8')
 
 Sequel.extension(:pagination)

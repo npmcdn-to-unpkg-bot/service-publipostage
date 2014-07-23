@@ -18,6 +18,7 @@ angular.module('services.constants').service('Squares', function($rootScope){
                       color: 'vert',
                       text: 'écrire aux familles',
                       url: '/destinataire/info_famille',
+                      authorizedRoles:["TECH", "ADM_ETB","PROF_ETB", "ELV_ETB"],
                       active: false
                     },
                     { id: 'write_profs',
@@ -32,6 +33,7 @@ angular.module('services.constants').service('Squares', function($rootScope){
                       color: 'jaune',
                       text: 'écrire aux élèves',
                       url: '/destinataire/ecrire_eleves',
+                      authorizedRoles:["TECH", "ADM_ETB","PROF_ETB", "ELV_ETB"],
                       active: false
                     },
                     { id: 'write_personnels',
