@@ -60,6 +60,7 @@
 }*/
 
 /* Responsive: Portrait tablets and up */
+
 @media screen and (min-width: 768px) {
   .header,
   .marketing,
@@ -415,6 +416,7 @@ background-position: 0 -15px;
 
 
 /* overriding  angular loading bar css */
+/*
 #loading-bar-spinner {
   display: block;
   position: fixed;
@@ -436,7 +438,7 @@ background-position: 0 -15px;
   left: 0;
   width: 100%;
   height: 10px;
-}
+} */
 
 /* transparent colors */
 .bleu-clear {
