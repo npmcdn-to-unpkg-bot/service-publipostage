@@ -298,15 +298,15 @@ row {
 .menu-text {
   font-size: 150%;
   width: 100%;
-  color:#64BDF5;
-  font-family: Open Sans Bold;
+  color:#1AA1CC;
+  font-family: Open Sans Regular;
 }
 
 .menu-text-hidden {
   font-size: 150%;
   width: 100%;
-  color:#D3D8DB;
-  font-family: Futura Bold;
+  color:#B2B2B2;
+  font-family: Open Sans Regular;
 }
 .menu-text-black {
   font-size: 150%;
@@ -604,7 +604,7 @@ p {
   font-size: 150%;
   width: 100%;
   color:#64BDF5;
-  font-family: Open Sans Bold;
+  font-family: Open Sans Regular;
   opacity:0.5;
 }
 
