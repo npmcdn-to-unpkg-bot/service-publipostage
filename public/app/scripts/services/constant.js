@@ -58,7 +58,7 @@ angular.module('services.constants').service('Squares', function($rootScope){
                       active: false
                     },
                     { id: '',
-                      icon: $rootScope.racine_images + 'etablissement.svg',
+                      icon: $rootScope.racine_images + 'modele.svg',
                       color: 'vert',
                       text: 'utiliser un modèle',
                       url: '/publi',
