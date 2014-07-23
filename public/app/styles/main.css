@@ -1,58 +1,3 @@
-@font-face {
-    font-family: 'Open Sans Extrabold';
-    src: url('../fonts/OpenSans-Extrabold.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: 'Open Sans Extrabold italic';
-    src: url('../fonts/OpenSans-ExtraboldItalic.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: 'Open Sans Bold';
-    src: url('../fonts/OpenSans-Bold.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: 'Open Sans Bold italic';
-    src: url('../fonts/OpenSans-BoldItalic.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: 'Open Sans Light';
-    src: url('../fonts/OpenSans-Light.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: 'Open Sans Light italic';
-    src: url('../fonts/OpenSans-LightItalic.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: 'Open Sans Regular';
-    src: url('../fonts/OpenSans-Regular.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: 'Open Sans Regular italic';
-    src: url('../fonts/OpenSans-RegularItalic.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
-}
 /* Space out content a bit */
 /*body {
   padding-top: 20px;
@@ -579,8 +524,8 @@ a {
 
 h1{
     font-family: Open Sans Bold;
-    font-weight: 300;
-    color:#64BDF5;
+    font-size: 200%;
+    color:#1AA1CC;
 }
 
 h2{
