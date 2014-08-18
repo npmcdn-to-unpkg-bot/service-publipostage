@@ -23,8 +23,9 @@ module AuthenticationHelpers
   # Délogue l'utilisateur du serveur CAS et de l'application
   #
   def logout!( url )
+    url += "?" + env['QUERY_STRING'] if !env['QUERY_STRING'].empty?
     env['rack.session'][:authenticated] = false
-    env['rack.session'][:current_user] = nil  
+    env['rack.session'][:current_user] = nil
     CASLaclasseCom::OPTIONS[:ssl] ? protocol = 'https://' : protocol = 'http://'
     redirect protocol + CASLaclasseCom::OPTIONS[:host] + CASLaclasseCom::OPTIONS[:logout_url] +'?destination='+URI.encode(url)
   end

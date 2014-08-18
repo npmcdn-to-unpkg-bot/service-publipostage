@@ -43,6 +43,12 @@ class SinatraApp < Sinatra::Base
   helpers AuthenticationHelpers
 
   get APP_PATH + '/' do
+    # show/hide toolbar
+    if params['navbar'] == 'true' || params['navbar'].nil?
+      env["show_navbar"] = true
+    else
+      env["show_navbar"] = false
+    end
     if is_logged?
       erb :app
     else
