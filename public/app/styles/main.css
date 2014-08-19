@@ -125,90 +125,6 @@
   background-color: #1a1a1a;
 }
 
-
-.carnets{
-	display: inline-block;
-	float: left;
-	font-size:0;
-	width: 67%;
-	height: 96%;
-	border-left: 1px solid #8E8E8E;
-}
-.carnet{
-	display: inline-block;
-	font-size: initial;
-	width: 25%;
-	height: 25%;
-	opacity: 0.9;
-}
-.carnet-vide{
-	opacity: 0.2;
-}
-/*.carnet:hover{
-	opacity: 1;
-}*/
-
-.carnet:hover {
-  opacity: 1;
-  cursor: pointer;
-}
-
-.carnet-classe{
-	font-size: 200%;
-	width: 170px;
-	height: 60%;
-	padding-top: 16%;
-	padding-left: 30%;
-	margin: 0;
-	text-align: center;
-	color: white;
-	font-family: Futura Bold;
-	white-space: nowrap;
-	overflow: hidden;
-}
-strong.carnet-classe{
-	height: 100%;
-	max-width: 100px;
-	padding-left: 0;
-}
-
-.carnet-college{
-	font-size: 100%;
-	width: 100%;
-	height: 40%;
-	padding-bottom: 24%;
-	text-align: center;
-	color: white;
-	font-family: Futura Book;
-}
-
-.carnet-eleve{
-	position: relative;
-	font-size: 100%;
-	width: 100%;
-	text-align: left;
-	color: white;
-	font-family: Futura Bold;
-}
-svg.carnet-eleve{
-	width: 100%;
-	height: 100%;
-	display: block;
-}
-
-span.carnet-eleve-nom{
-	font-size: 100%;
-	position: absolute;
-	top: 84%;
-	left: 5%;
-}
-span.carnet-eleve-prenom{
-	font-size: 100%;
-	position: absolute;
-	top: 73%;
-	left: 5%;
-}
-
 /* The CSS */
 .styled-select select {
    background: transparent;
@@ -418,32 +334,6 @@ background-position: 0 -15px;
 }
 
 .css-label{ background-image:url(http://csscheckbox.com/checkboxes/lite-plus.png); }
-
-
-/* overriding  angular loading bar css */
-/*
-#loading-bar-spinner {
-  display: block;
-  position: fixed;
-  z-index: 2000;
-  top: 50%;
-  left: 50%;
-}
-
-#loading-bar .bar {
-  -webkit-transition: width 350ms;
-  -moz-transition: width 350ms;
-  -o-transition: width 350ms;
-  transition: width 350ms;
-
-  background: #FA5858;
-  position: fixed;
-  z-index: 2000;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 10px;
-} */
 
 /* transparent colors */
 .bleu-clear {
