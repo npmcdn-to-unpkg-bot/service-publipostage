@@ -40,6 +40,11 @@ class SinatraApp < Sinatra::Base
   #dont_reload '/path/to/other/file'
   end
 
+  Annuaire.configure do |config|
+    config.app_id = ANNUAIRE[:app_id]
+    config.secret = ANNUAIRE[:secret]
+  end
+
   helpers AuthenticationHelpers
 
   get APP_PATH + '/' do

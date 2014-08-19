@@ -228,15 +228,14 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
           responseError: function (rejection) {
             if (rejection.status == 0 ) {
                   $location.path('/');
-                  //FlashServiceStyled.show("vous n\'êtes pas authorizé à faire cette action", "alert alert-error");
             }
             if (rejection.status== 403 || rejection.status == 401) {
-                  // go to public page
+                  // not authorized go to public page
                   $location.path('/');
             }
             if (rejection.status == 400 || rejection.status == 404 || rejection.status == 500) {
-                //FlashServiceStyled.show("une erreur s\'est produite: " + rejection.data["error"], "alert alert-error");
-                $location.path('/');
+                //server or response error
+                $location.path('/error/'+rejection.status);
             }
             // Return the promise rejection.
             return $q.reject(rejection);
@@ -251,8 +250,6 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     
     $rootScope.$location = $location;
     $rootScope.racine_images ='/app/images/';
-    //$rootScope.racine_images ='/app/bower_components/charte-graphique-laclasse-com/images/';
-
     // check authorization before changing states .
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
       console.log('state changed');

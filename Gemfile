@@ -25,6 +25,7 @@ gem 'grape-entity'
 gem 'ent_notifs'
 gem 'htmlentities'
 gem 'mail'
+gem 'annuaire', :git => 'git@github.com:laclasse-com/gem_annuaire.git'
 
 group :development do
   gem 'sinatra-contrib'

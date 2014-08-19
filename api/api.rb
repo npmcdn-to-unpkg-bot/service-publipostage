@@ -1,6 +1,7 @@
 # coding: utf-8
 require 'grape'
 require 'mail'
+require 'annuaire'
 
 class ApplicationAPI < Grape::API
   # response format = pdf 
@@ -30,7 +31,7 @@ class ApplicationAPI < Grape::API
       optional :sort_dir, type: String, regexp: /^(asc|desc)$/i, desc: "Direction de tri : ASC ou DESC"
   end
   get "/publipostages" do
-    content_type 'application/json'
+    content_type 'application/json;charset=UTF-8'
     dataset = Publipostage.dataset
     dataset.extend(Sequel::DatasetPagination)
     # return all publipostages
@@ -217,28 +218,41 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "retourner la liste des profil"
   get '/profils' do
-    content_type 'application/json'
-    Annuaire.get_profils()
+    content_type 'application/json;charset=UTF-8'
+    response = Annuaire.send_request_signed(ANNUAIRE[:url],ANNUAIRE[:service_profils], {})
+    response
   end
 
   ############################################################################
   desc "retourner les info de l'utilisateur"
   get '/user/:id' do
-    content_type 'application/json'
-    Annuaire.get_user(params[:id])
+    content_type 'application/json;charset=UTF-8'
+    response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_user] + params[:id], {"expand" => "true"})
+    response
   end
 
   ############################################################################
   desc "retourner les regroupements d'un utilisateur"
   get "/regroupements/:id" do
-    content_type 'application/json'
-    Annuaire.get_regroupements(params[:id])
+    content_type 'application/json;charset=UTF-8'
+    response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_user] + params[:id], {"expand" => "true"})
+    if !response.nil?
+      etablissements = []
+      classes =[]
+      groupes = []
+      response["etablissements"].each do |etab|
+      etablissements.push({:id => etab["id"], :nom => etab["nom"]}) if !etablissements.include?({:id => etab["id"], :nom => etab["nom"]})
+      end
+      { :etablissements => etablissements, :classes => response["classes"], :groupes_eleves => response["groupes_eleves"]}
+    else
+      return []
+    end
   end
-
+  #############################################################################
   desc "retourner la liste des personnels dans letablissement"
   get "/etablissements/:uai/personnels" do
-    content_type 'application/json'
-    Annuaire.get_personnel(params[:uai])
+    content_type 'application/json;charset=UTF-8'
+    response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_personnel]+ params[:uai] +'/personnel',{})
   end
   ############################################################################
   desc "send a notification"
