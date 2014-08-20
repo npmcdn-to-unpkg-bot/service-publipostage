@@ -1,66 +1,27 @@
-/* Space out content a bit */
-/*body {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}*/
-
-/* Everything but the jumbotron gets side spacing for mobile first views */
-./*header,
-.marketing,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
-}*/
-
-/* Custom page header */
-/*.header {
-  border-bottom: 1px solid #e5e5e5;
-}*/
-/* Make the masthead heading the same height as the navigation */
-/*.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
-}*/
-
-/* Custom page footer */
-/*.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
-}*/
-
-/* Customize container */
-/*@media (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
-}*/
-./*container-narrow > hr {
-  margin: 30px 0;
-}*/
-
-/* Main marketing message and sign up button */
-/*.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
+h1{
+  font-family: Open Sans Bold;
+  color:#1AA1CC;
 }
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
+
+h2{
+  font-family: Open Sans Bold;
+  color:#1AA1CC;
 }
-*/
-/* Supporting marketing content */
-/*.marketing {
-  margin: 40px 0;
+
+.square-text{
+  display:block;
+  text-align:center;
+  word-wrap:break-word;
+  position: relative;
+  width:90%;
+  height:2.5em;
+  overflow:hidden;
+  color: white;
+  font-family: Open Sans Light;
+  z-index:1!important
 }
-.marketing p + h4 {
-  margin-top: 28px;
-}*/
 
 /* Responsive: Portrait tablets and up */
-
 @media screen and (min-width: 768px) {
   .header,
   .marketing,
@@ -75,6 +36,66 @@
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  h1{
+    font-size: 150%;
+  }
+
+  h2{
+    font-size: 120%;
+  }
+
+  .square-text{
+    font-size: 120%;
+  }
+}
+
+/* Responsive Text */
+/* Small devices (tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+  h1{
+    font-size: 150%;
+  }
+
+  h2{
+    font-size: 120%;
+  }
+
+  .square-text{
+    font-size: 120%;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+  h1{
+    font-size: 150%;
+  }
+
+  h2{
+    font-size: 120%;
+  }
+
+  .square-text{
+    font-size: 120%;
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+  h1{
+    font-size: 200%;
+  }
+
+  h2{
+    font-size: 150%;
+  }
+
+  .square-text{
+    font-size: 150%;
   }
 }
 
@@ -145,19 +166,7 @@ row {
 .squares .squares-list{padding-left:0;list-style:none}
 .squares-list li{float:left;width:25%;height:127.56px;font-size:100%;text-align:center;}
 .square {margin-top:5px;margin-bottom:10px;font-size:24px}
-.square-text{
-  display:block;
-  text-align:center;
-  word-wrap:break-word;
-  position: relative;
-  font-size: 150%;
-  width:90%;
-  height:2.5em;
-  overflow:hidden;
-  color: white;
-  font-family: Open Sans Light;
-  z-index:1!important
-}
+
 
 .square-image {
   width:100%;
@@ -166,7 +175,6 @@ row {
 
 .menu-text {
   font-size: 150%;
-  font-size: 3.5vw;
   width: 100%;
   color:#1AA1CC;
   font-family: Open Sans Regular;
@@ -273,39 +281,6 @@ row {
   word-wrap:break-word;
   padding:5%; 
   font-size:100%;}
-
-
-/*input[type=checkbox].css-checkbox {
-        display:none;
-}
-
-input[type=checkbox].css-checkbox + label.css-label {
-        padding-left:37px;
-        height:32px; 
-        display:inline-block;
-        line-height:32px;
-        background-repeat:no-repeat;
-        background-position: 0 0;
-        font-size:32px;
-        vertical-align:middle;
-        cursor:pointer;
-
-}
-
-input[type=checkbox].css-checkbox:checked + label.css-label {
-        background-position: 0 -32px;
-}
-
-label.css-label {
-  background-image:url(http://csscheckbox.com/checkboxes/u/csscheckbox_c277ab9d9ec677eb91e7b8c18d9285d8.png);
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}*/
-
 
 input[type=checkbox].css-checkbox {
 position: absolute; 
@@ -420,6 +395,7 @@ a {
     padding: 40px 30px 30px 40px;
 }
 
+/*
 h1{
     font-family: Open Sans Bold;
     font-size: 200%;
@@ -428,11 +404,10 @@ h1{
 
 h2{
     font-family: Open Sans Bold;
-    /*font-size: 150%;*/
+    font-size: 150%;
     color:#1AA1CC ;
-    font-size: 1.5vw;
 }
-
+*/
 p {
     font-family: 'Lato', sans-serif;
 }
