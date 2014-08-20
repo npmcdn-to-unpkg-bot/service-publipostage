@@ -166,6 +166,7 @@ row {
 
 .menu-text {
   font-size: 150%;
+  font-size: 3.5vw;
   width: 100%;
   color:#1AA1CC;
   font-family: Open Sans Regular;
@@ -427,8 +428,9 @@ h1{
 
 h2{
     font-family: Open Sans Bold;
-    font-size: 150%;
+    /*font-size: 150%;*/
     color:#1AA1CC ;
+    font-size: 1.5vw;
 }
 
 p {
@@ -484,8 +486,4 @@ scrollbars, thumb {
 #checked {
     color: #eb5454;
     font-size: 1.5em;
-}
-.centered{
-  margin-left:auto;
-  margin-right: auto;
 }
