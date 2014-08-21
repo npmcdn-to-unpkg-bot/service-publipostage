@@ -56,9 +56,10 @@ h1, h2{font-family: Open Sans Bold;
   margin:auto;
   text-align:center;
   word-wrap:break-word;
+  overflow:hidden;
   position: absolute;
   top: 33%;
-  left: 15%;
+  left: 25%;
   color: white;
   font-family: Futura Bold; 
   z-index:1!important

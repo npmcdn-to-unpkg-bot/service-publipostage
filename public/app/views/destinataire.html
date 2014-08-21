@@ -96,7 +96,7 @@
                       <div class="square-icon">
                         <div class="center-block">
                             <img class="img-responsive center-block" src="images/00_vide.svg">
-                            <span class="groupe-text">{{groupe.groupe_libelle}}</span>
+                            <span class="groupe-text center-block">{{groupe.groupe_libelle}}</span>
                         </div>
                         <div class="square-text center-block">{{groupe.etablissement_nom}}</div>
                       </div>
@@ -108,8 +108,8 @@
             <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}">
                 <a>
                   <div class="square-icon">
-                    <div class="empty-icon">
-                        <span class="classe-text">&nbsp;</span>
+                    <div class="center-block">
+                        <img class="img-responsive center-block" src="images/00_vide.svg">
                     </div>
                     <div class="square-text"></div>
                   </div>
