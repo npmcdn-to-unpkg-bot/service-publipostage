@@ -40,13 +40,27 @@ h1, h2{font-family: Open Sans Bold;
 }
 
 .classe-text  {
-  margin-top:5px;
-  margin-bottom:10px;
+  margin-left: auto;
+  margin-right: auto;
   text-align:center;
   word-wrap:break-word;
   position: absolute;
+  top:25%;
+  left:35%;
   color: white;
   font-family: Futura Bold;
+  z-index:1!important
+}
+
+.groupe-text {
+  margin:auto;
+  text-align:center;
+  word-wrap:break-word;
+  position: absolute;
+  top: 33%;
+  left: 15%;
+  color: white;
+  font-family: Futura Bold; 
   z-index:1!important
 }
 
@@ -89,7 +103,10 @@ h1, h2{font-family: Open Sans Bold;
     font-size: 120%;
   }
   .classe-text{
-    font-size: 100%;
+    font-size: 3em;
+  }
+  .groupe-text{
+    font-size: 1.5em;
   }
 }
 
@@ -116,7 +133,10 @@ h1, h2{font-family: Open Sans Bold;
   }
 
   .classe-text{
-    font-size: 100%;
+    font-size: 3em;
+  }
+  .groupe-text{
+    font-size: 1.5em;
   } 
 }
 
@@ -143,7 +163,10 @@ h1, h2{font-family: Open Sans Bold;
   }
 
   .classe-text{
-    font-size: 200%;
+    font-size: 3em;
+  }
+  .groupe-text{
+    font-size: 1.5em;
   }
 }
 
@@ -170,7 +193,10 @@ h1, h2{font-family: Open Sans Bold;
   }
 
   .classe-text{
-    font-size: 200%;
+    font-size: 5em;
+  }
+  .groupe-text{
+    font-size: 3em;
   }
 }
 
@@ -248,18 +274,6 @@ h1, h2{font-family: Open Sans Bold;
   font-size: 150%;
   width: 100%;
   font-family: Futura Bold;
-}
-
-
-.groupe-text {
-  margin-top:5px;margin-bottom:10px;
-  text-align:center;
-  word-wrap:break-word;
-  position: absulute;
-  font-size: 150%;
-  color: white;
-  font-family: Futura Bold; 
-  z-index:1!important
 }
 
 .empty-icon {

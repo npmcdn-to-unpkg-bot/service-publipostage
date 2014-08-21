@@ -3,7 +3,7 @@
         <div class="row-fluid">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
                 <h2 class="transparent visible-md visible-lg">étape 1: type de message</h2>
-                <p class="menu-text-transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</p>
+                <p class="menu-text transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</p>
                 <h2>étape 2: les destinataires</h2>
                 <p class="menu-text"> Sélectionner les classes  et les groupes destinataire des messages</p>
                 <form role="form" class="form-inline">
@@ -41,28 +41,33 @@
                 <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris3" >
                     <a ng-click="selectAll()" ng-show="selectAllMode">
                         <div class="square-icon">
-                          <div class="famille-icon center-block"></div>
-                          <div class="square-text">sélectionner toutes les classes</div>
+                          <div class="center-block">
+                              <img class="img-responsive center-block" ng-src="{{menus[$state.params['type']].icon}}">
+                          </div>
+                          <div class="square-text center-block">sélectionner toutes les classes</div>
                         </div>
                     </a>
                     <a ng-click="deselectAll()" ng-hide="selectAllMode">
                         <div class="square-icon">
-                          <div class="famille-icon"><!--<data-ng-include class="svg" src="menus[$state.params['type']].icon"></data-ng-include>--></div>
-                          <span class="square-text">annuler</span>
+                          <div class="center-block">
+                            <img class="img-responsive center-block" ng-src="{{menus[$state.params['type']].icon}}">
+                          </div>
+                          <div class="square-text center-block">annuler</div>
                         </div>
                     </a>
                 </div>
             </div>
 
-            <!--show classes only when message type is not  ecrire personnels ou ecrire tous -->
+            <!--show classes only when message type is not  ecrire personnels or ecrire tous -->
             <div  ng-show="$state.params['type']!='ecrire_personnels'">
                 <div ng-repeat="classe in regroupements['classes'] | filter:searchText" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="classe.color">
                     <a ng-click="changeClassColor($index);classe.checked=!classe.checked;addRemoveDestination(classe);">
                       <div class="square-icon">
-                        <div class="empty-icon"><!--<data-ng-include class="svg" src="square.icone"></data-ng-include>-->
+                        <div class="center-block">
+                            <img class="img-responsive center-block" src="images/00_vide.svg">
                             <span class="classe-text">{{classe.classe_libelle}}</span>
                         </div>
-                        <span class="square-text">{{classe.etablissement_nom}}</span>
+                        <div class="square-text center-block">{{classe.etablissement_nom}}</div>
                       </div>
                     </a>
                 </div>
@@ -84,15 +89,16 @@
                 </div>
             </div>
 
-            <!--show groupes only when message type in not ecrire personnels ou ecrire tous -->
+            <!--show groupes only when message type in not ecrire personnels or ecrire tous -->
             <div  ng-show="$state.params['type']!='ecrire_personnels'">
                 <div ng-repeat="groupe in regroupements['groupes_eleves']" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="groupe.color">
                     <a ng-click="changeGroupColor($index);groupe.checked=!groupe.checked;addRemoveDestination(groupe)">
                       <div class="square-icon">
-                        <div class="empty-icon"> <!--<data-ng-include class="svg" src="square.icone"></data-ng-include>-->
+                        <div class="center-block">
+                            <img class="img-responsive center-block" src="images/00_vide.svg">
                             <span class="groupe-text">{{groupe.groupe_libelle}}</span>
                         </div>
-                        <span class="square-text">{{groupe.etablissement_nom}}</span>
+                        <div class="square-text center-block">{{groupe.etablissement_nom}}</div>
                       </div>
                     </a>
                 </div>
@@ -105,7 +111,7 @@
                     <div class="empty-icon">
                         <span class="classe-text">&nbsp;</span>
                     </div>
-                    <span class="square-text">&nbsp;</span>
+                    <div class="square-text"></div>
                   </div>
                 </a>
             </div> 
