@@ -18,8 +18,8 @@
     </div>
     <div class="col-md-8 col-lg-8">
         <div class="row" ng-class="menus[$state.params['param']].color">
-            <div class="col-xs-10">
-                <div style="padding:4%">
+            <div class="col-xs-12 center-block">
+                <div style="padding:10%">
                     <form role="form">
                         <div class="form-group">
                           <textarea  ui-tinymce="tinymceOptions" ng-model="notification" ng-init="notification='Ecrire une annonce de 300 caractères maximum.'"></textarea>
@@ -27,7 +27,7 @@
                         </div>
                     </form>
                     <div style="text-align: center">
-                        <a class="btn" ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  ng-click="sendNotification(notification);Redirect.goToEnvoi($state.params['param'])">envoyer
+                        <a class="btn btn-sm btn-custom" ng-class="menus[$state.params['type']].color"  ng-click="sendNotification(notification);Redirect.goToEnvoi($state.params['param'])">envoyer
                         </a>
                     </div>
                 </div>    
