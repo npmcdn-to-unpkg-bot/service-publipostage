@@ -72,6 +72,7 @@ angular.module('ui.tinymce', [])
             tinyInstance = tinymce.get(attrs.id);
           }
           if (tinyInstance) {
+            //tinyInstance.execCommand('mceInsertContent', true, ngModel.$viewValue || '')
             tinyInstance.setContent(ngModel.$viewValue || '');
           }
         };

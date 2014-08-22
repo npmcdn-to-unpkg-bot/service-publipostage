@@ -6,7 +6,7 @@
                 <h2 class="menu-text-transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</h2>
                 <h2 class="transparent visible-md visible-lg">étape 2: les destinataires</strong></h2>
                 <p class="menu-text-hidden visible-md visible-lg"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat="profil in messageObject['profils']">{{profil}}, </span>  <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}{{destination['groupe_libelle']}}{{destination['description']}}</span></p>
-                <h2><strong>étape 3: message</strong></h2>
+                <h2>étape 3: message</h2>
                 <p class="menu-text visible-md visible-lg">Ecrire le message</p>
             </div>
         </div>
