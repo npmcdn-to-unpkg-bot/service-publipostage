@@ -64,6 +64,11 @@ h1, h2{font-family: Open Sans Bold;
   font-family: Futura Bold; 
   z-index:1!important
 }
+.btn-white  {
+  color:#1aa1cc;
+  border-color:#1aa1cc;
+  background-color:white;
+}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

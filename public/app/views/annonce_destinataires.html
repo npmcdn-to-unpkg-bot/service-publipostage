@@ -2,16 +2,16 @@
     <div class="col-md-4 col-lg-4">
         <div class="row-fluid">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <h2 class="visible-md visible-lg"><strong>Faire une annonce</strong></h2>
+                <h2 class="visible-md visible-lg">Faire une annonce</h2>
                 <p class="menu-text visible-md visible-lg">
                     Un court message sera envoyé
                     aux destinataires. L’annonce
                     s’affichera en direct en haut à
                     droite de l’écran.
                 </p>
-                <p class="menu-text visible-md visible-lg"> Etape 1: type de message</p>
-                <p class="menu-text visible-md visible-lg">faire une annonce </p>
-                <h2> <strong>Etape 2: les destinataires</strong></h2>
+                <p class="menu-text transparent visible-md visible-lg"> Etape 1: type de message</p>
+                <p class="menu-text transparent visible-md visible-lg">faire une annonce </p>
+                <h2>Etape 2: les destinataires</h2>
                 <p class="menu-text"> Selectionner les classes  et les groupes destinataires de l'annonce</p>
                 <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat= "classe in regroupements['classes']"><span ng-show="classe.checked">{{classe.classe_libelle}} </span></span><span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></p>
                 <br/>
@@ -33,7 +33,7 @@
                 </form>
                 </br>
                 </br>
-                <p style="text-align:center;"><a class='btn btn-sm'  style="color:#1aa1cc;border-color:#1aa1cc;background-color:white;" ng-disabled="destinations.length==0" ng-click="addProfils();addDestinations();Redirect.goToAnnonce($state.params['annonce_type'])">suivant</a></p>
+                <p class="text-center"><a class='btn btn-sm btn-white' ng-disabled="destinations.length==0" ng-click="addProfils();addDestinations();Redirect.goToAnnonce($state.params['annonce_type'])">suivant</a></p>
             </div>
         </div>
     </div>
