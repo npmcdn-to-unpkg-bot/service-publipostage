@@ -210,8 +210,8 @@ class ApplicationAPI < Grape::API
       else
        error!('les parametres ne sont pas valides', 400)
       end
-    rescue
-      error!("une erreur s\'est produite", 400)
+    rescue => e
+      error!("une erreur s\'est produite: #{e.message}", 400)
     end
   end
 

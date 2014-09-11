@@ -25,4 +25,8 @@ class Publipostage < Sequel::Model(:publipostage)
   def validate
     super
   end
+
+  def before_destroy
+    destinataires_dataset.destroy
+  end
 end
