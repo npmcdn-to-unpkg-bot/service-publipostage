@@ -8,9 +8,6 @@ def __DIR__(*args)
 end
 
 puts "loading configuration"
-require __DIR__('env')
-require __DIR__('CASLaclasseCom')
-require __DIR__('database.rb')
-require __DIR__('annuaire')
-
+require __DIR__('options')
+require __DIR__('database')
 
