@@ -1,4 +1,4 @@
-# coding: utf-8
+  # coding: utf-8
 require 'grape'
 require 'mail'
 require 'annuaire'
@@ -170,7 +170,6 @@ class ApplicationAPI < Grape::API
       when 'ecrire_eleves'
         final_document = PdfGenerator::generate_pdf(publi[:message], destinataires, 'eleves')
       when 'ecrire_personnels'
-        puts publi[:personnels][0]
         final_document = PdfGenerator::generate_personnels_pdf(publi[:message], publi.personnels)
       when 'ecrire_tous'
         publi.profils.each do |profil|
@@ -186,7 +185,6 @@ class ApplicationAPI < Grape::API
     end
   end
   ############################################################################
-
   desc "modifier un publipostage"
   put '/publipostages/:id' do
   end
@@ -194,8 +192,6 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "supprimer un publipostage"
   delete '/publipostages/:id' do
-    puts params[:id].inspect
-    puts params[:id].class
     query = params[:id]
     begin
       if query.class == String && query.size==1
@@ -208,10 +204,10 @@ class ApplicationAPI < Grape::API
           end
         end
       else
-       error!('les parametres ne sont pas valides', 400)
+       error!('Requête incorrecte: les parametres ne sont pas valides', 400)
       end
     rescue => e
-      error!("une erreur s\'est produite: #{e.message}", 400)
+      error!("Requête incorrecte: une erreur s\'est produite: #{e.message}", 400)
     end
   end
 
