@@ -617,7 +617,8 @@ Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScop
     function($scope, $sce, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state){
         //$scope.tinymceOptions =  tinymceOptions;
         $scope.tinymceOptions = {
-            language:"fr",
+            // Test to place lang elsewhere and have it bower compliant
+            language:"../../../scripts/externals/tinymce/lang/fr",
             menubar: false,
             theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
             font_size_style_values: "12px,13px,14px,16px,18px,20px",
@@ -664,6 +665,7 @@ Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScop
 
 /******************************************* Doc Controller ****************************************/
 Controllers.controller('DocCtrl', ['$scope', '$state', function($scope, $state){
+    
     $scope.pdfUrl = 'http://localhost:9292/app/api/publipostage/'+$state.params['id']+'/pdf';
 }]);
 /***************************************************************************************************/

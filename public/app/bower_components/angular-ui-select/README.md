@@ -1,8 +1,8 @@
-# AngularJS ui-select [![Build Status](https://travis-ci.org/angular-ui/ui-select.png)](https://travis-ci.org/angular-ui/ui-select)
+# AngularJS ui-select [![Build Status](https://travis-ci.org/angular-ui/ui-select.svg?branch=master)](https://travis-ci.org/angular-ui/ui-select)
 
 AngularJS-native version of [Select2](http://ivaynberg.github.io/select2/) and [Selectize](http://brianreavis.github.io/selectize.js/).
 
-- [Demo](http://plnkr.co/edit/GtOOWE?p=preview)
+- [Demo](http://plnkr.co/edit/bgXrCxZYlt99fquw7mce?p=preview)
 - [Bootstrap theme](http://plnkr.co/edit/7Fpbtg?p=preview)
 
 ## Features
@@ -25,8 +25,8 @@ Check the [examples](https://github.com/angular-ui/ui-select/blob/master/example
 
 - `bower install angular-ui-select`
 - Inside your HTML add
-  - select.js: `<script src="bower_components/ui-select/dist/select.js"></script>`
-  - select.css: `<link rel="stylesheet" href="bower_components/ui-select/dist/select.css">`
+  - select.js: `<script src="bower_components/angular-ui-select/dist/select.js"></script>`
+  - select.css: `<link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css">`
 
 ### Bootstrap theme
 
