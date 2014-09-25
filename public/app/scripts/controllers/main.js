@@ -281,23 +281,31 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         // Specifique à la page mode de diffusion
         if($location.$$path.indexOf('/mode_diffusion/') == 0) {
 
-            $scope.nb_email = '?';
-            $scope.nb_pdf = '?';
+          $scope.nb_email = '?';
+          $scope.nb_pdf = '?';
 
-            var regroupements = '';
-            _.each($rootScope.messageObject['destinations'], function(el) {
-                if(!_.isUndefined(el.classe_id)) {
-                    regroupements += el.classe_id + ";";
-                }
-                else {
-                 regroupements += el.groupe_id + ";";   
-                }
-            });
-            if(regroupements != '') {
-                Emails.list({regroupements : regroupements},function(data) {
-                    $scope.nb_email = data.length;
-                });
+          var regroupements = '';
+          _.each($rootScope.messageObject['destinations'], function(el) {
+              if(!_.isUndefined(el.classe_id)) {
+                regroupements += el.classe_id + ";";
+              }
+              else {
+               regroupements += el.groupe_id + ";";   
+              }
+          });
+          if(regroupements != '') {
+            //Cas des élèves
+            if($location.$$path.indexOf('/mode_diffusion/ecrire_eleves') == 0) {
+              Emails.listStudents({regroupements : regroupements},function(data) {
+                $scope.nb_email = data.length;
+              });
             }
+            if($location.$$path.indexOf('/mode_diffusion/ecrire_profs') == 0) {
+              Emails.listProfessors({regroupements : regroupements},function(data) {
+                $scope.nb_email = data.length;
+              });
+            }
+          }
         }
 }]);
 

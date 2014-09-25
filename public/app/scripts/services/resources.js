@@ -50,8 +50,8 @@ angular.module('services.resources').factory('Personnels', ['$resource', 'BASE_S
 }]);
 
 angular.module('services.resources').factory('Emails', ['$resource', 'BASE_SERVICE_URL', function($resource, BASE_SERVICE_URL){
-    var baseUrl = BASE_SERVICE_URL +'/email/list/:regroupements';
-    return $resource(baseUrl, {regroupements:'@regroupements'}, {
-        'list': {method:'GET', isArray:true}
+        return $resource(undefined, {regroupements:'@regroupements'}, {
+        'listStudents': {method:'GET', isArray:true,   url:BASE_SERVICE_URL +'/email/listStudents/:regroupements'},
+        'listProfessors': {method:'GET', isArray:true, url:BASE_SERVICE_URL +'/email/listProfessors/:regroupements'} 
     });
 }]);

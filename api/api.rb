@@ -255,10 +255,16 @@ class ApplicationAPI < Grape::API
   post "/notification/:uai/:profil/:uid/:type" do
     #puts request.inspect
   end
+  
   ############################################################################
-  desc "retourner les details d'un envoi"
-  get "/email/list/:regroupements" do
-    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_email_list]+ params[:regroupements],{})
+  desc "retourner les emails des élèves d'un envoi"
+  get "/email/listStudents/:regroupements" do
+    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_email_listStudents]+ params[:regroupements],{})
+  end
+  ############################################################################
+  desc "retourner les emails des professeur d'un envoi"
+  get "/email/listProfessors/:regroupements" do
+    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_email_listProfessors]+ params[:regroupements],{})
   end
   ############################################################################
 end
