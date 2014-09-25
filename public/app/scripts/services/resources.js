@@ -48,3 +48,10 @@ angular.module('services.resources').factory('Personnels', ['$resource', 'BASE_S
         'all': {method:'GET', isArray:true}
     });
 }]);
+
+angular.module('services.resources').factory('Emails', ['$resource', 'BASE_SERVICE_URL', function($resource, BASE_SERVICE_URL){
+    var baseUrl = BASE_SERVICE_URL +'/email/list/:regroupements';
+    return $resource(baseUrl, {regroupements:'@regroupements'}, {
+        'list': {method:'GET', isArray:true}
+    });
+}]);

@@ -257,9 +257,8 @@ class ApplicationAPI < Grape::API
   end
   ############################################################################
   desc "retourner les details d'un envoi"
-  get "/envoi/:destinataires" do
-    {emails:50, pdfs:100}
+  get "/email/list/:regroupements" do
+    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_email_list]+ params[:regroupements],{})
   end
   ############################################################################
-
 end

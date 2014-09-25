@@ -145,8 +145,9 @@ Controllers.controller('wizardController', ['$scope', function($scope){
 
 /********************************* Main controller of the application *****************************************/
 Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages',
-    function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, colors, transparentColors, Menus, tinymceOptions, $state, Publipostages){
+    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'Emails',
+    function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect,
+     colors, transparentColors, Menus, tinymceOptions, $state, Publipostages, Emails){
         // making Redirect utils accesible in the scope
         $scope.Redirect = Redirect;
         $scope.security = security;
@@ -276,7 +277,28 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
                 console.log(MessageService.getMessage());
             }
         });
-    
+
+        // Specifique à la page mode de diffusion
+        if($location.$$path.indexOf('/mode_diffusion/') == 0) {
+
+            $scope.nb_email = '?';
+            $scope.nb_pdf = '?';
+
+            var regroupements = '';
+            _.each($rootScope.messageObject['destinations'], function(el) {
+                if(!_.isUndefined(el.classe_id)) {
+                    regroupements += el.classe_id + ";";
+                }
+                else {
+                 regroupements += el.groupe_id + ";";   
+                }
+            });
+            if(regroupements != '') {
+                Emails.list({regroupements : regroupements},function(data) {
+                    $scope.nb_email = data.length;
+                });
+            }
+        }
 }]);
 
 /******************************************* Annonce Controller ****************************************/
