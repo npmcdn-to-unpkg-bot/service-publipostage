@@ -267,4 +267,9 @@ class ApplicationAPI < Grape::API
     Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_email_listProfessors]+ params[:regroupements],{})
   end
   ############################################################################
+  desc "retourner les emails des membre de la famille d'un envoi"
+  get "/email/listFamilly/:regroupements" do
+    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_email_listFamilly]+ params[:regroupements],{})
+  end
+  ############################################################################
 end
