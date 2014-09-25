@@ -300,8 +300,13 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
                 $scope.nb_email = data.length;
               });
             }
-            if($location.$$path.indexOf('/mode_diffusion/ecrire_profs') == 0) {
+            else if($location.$$path.indexOf('/mode_diffusion/ecrire_profs') == 0) {
               Emails.listProfessors({regroupements : regroupements},function(data) {
+                $scope.nb_email = data.length;
+              });
+            }
+            else if($location.$$path.indexOf('/mode_diffusion/info_famille') == 0) {
+              Emails.listFamilly({regroupements : regroupements},function(data) {
                 $scope.nb_email = data.length;
               });
             }

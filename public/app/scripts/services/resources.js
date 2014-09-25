@@ -52,6 +52,7 @@ angular.module('services.resources').factory('Personnels', ['$resource', 'BASE_S
 angular.module('services.resources').factory('Emails', ['$resource', 'BASE_SERVICE_URL', function($resource, BASE_SERVICE_URL){
         return $resource(undefined, {regroupements:'@regroupements'}, {
         'listStudents': {method:'GET', isArray:true,   url:BASE_SERVICE_URL +'/email/listStudents/:regroupements'},
-        'listProfessors': {method:'GET', isArray:true, url:BASE_SERVICE_URL +'/email/listProfessors/:regroupements'} 
+        'listProfessors': {method:'GET', isArray:true, url:BASE_SERVICE_URL +'/email/listProfessors/:regroupements'},
+        'listFamilly': {method:'GET', isArray:true, url:BASE_SERVICE_URL +'/email/listFamilly/:regroupements'} 
     });
 }]);
