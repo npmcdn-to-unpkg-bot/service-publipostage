@@ -49,10 +49,11 @@ angular.module('services.resources').factory('Personnels', ['$resource', 'BASE_S
     });
 }]);
 
-angular.module('services.resources').factory('Emails', ['$resource', 'BASE_SERVICE_URL', function($resource, BASE_SERVICE_URL){
-        return $resource(undefined, {regroupements:'@regroupements'}, {
-        'listStudents': {method:'GET', isArray:true,   url:BASE_SERVICE_URL +'/email/listStudents/:regroupements'},
-        'listProfessors': {method:'GET', isArray:true, url:BASE_SERVICE_URL +'/email/listProfessors/:regroupements'},
-        'listFamilly': {method:'GET', isArray:true, url:BASE_SERVICE_URL +'/email/listFamilly/:regroupements'} 
+angular.module('services.resources').factory('DiffusionInfo', ['$resource', 'BASE_SERVICE_URL', function($resource, BASE_SERVICE_URL){
+    var baseUrl = BASE_SERVICE_URL +'/diffusionInfo/:population/:regroupements'
+    return $resource(baseUrl, {}, {
+      'listStudents':   {method:'GET', url:BASE_SERVICE_URL + '/diffusionInfo/students/:regroupements'},
+      'listProfessors': {method:'GET', url:BASE_SERVICE_URL + '/diffusionInfo/professors/:regroupements'},
+      'listFamilly':    {method:'GET', url:BASE_SERVICE_URL + '/diffusionInfo/familly/:regroupements'} 
     });
 }]);

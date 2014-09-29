@@ -257,19 +257,8 @@ class ApplicationAPI < Grape::API
   end
   
   ############################################################################
-  desc "retourner les emails des élèves d'un envoi"
-  get "/email/listStudents/:regroupements" do
-    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_email_listStudents]+ params[:regroupements],{})
+  desc "retourner les informations de diffusion pour la pupulation et les regroupements passés en paramètre" 
+  get "/diffusionInfo/:population/:regroupements" do
+    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_diffusionInfo] + params[:population] + '/' + params[:regroupements],{})
   end
-  ############################################################################
-  desc "retourner les emails des professeur d'un envoi"
-  get "/email/listProfessors/:regroupements" do
-    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_email_listProfessors]+ params[:regroupements],{})
-  end
-  ############################################################################
-  desc "retourner les emails des membre de la famille d'un envoi"
-  get "/email/listFamilly/:regroupements" do
-    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_email_listFamilly]+ params[:regroupements],{})
-  end
-  ############################################################################
 end

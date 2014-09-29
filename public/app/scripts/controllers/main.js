@@ -145,9 +145,9 @@ Controllers.controller('wizardController', ['$scope', function($scope){
 
 /********************************* Main controller of the application *****************************************/
 Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'Emails',
+    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'DiffusionInfo',
     function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect,
-     colors, transparentColors, Menus, tinymceOptions, $state, Publipostages, Emails){
+     colors, transparentColors, Menus, tinymceOptions, $state, Publipostages, DiffusionInfo){
         // making Redirect utils accesible in the scope
         $scope.Redirect = Redirect;
         $scope.security = security;
@@ -304,19 +304,39 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             if(regroupements != '') {
               //Cas des élèves
               if($location.$$path.indexOf('/mode_diffusion/ecrire_eleves') == 0) {
-                Emails.listStudents({regroupements : regroupements},function(data) {
-                  $scope.nb_email = data.length;
+                DiffusionInfo.listStudents({regroupements : regroupements},function(data) {
+                  $scope.nb_email = data.emails.length;
+                  $scope.nb_pdf = data.user_with_no_valid_mail.length;
                 });
               }
               else if($location.$$path.indexOf('/mode_diffusion/ecrire_profs') == 0) {
-                Emails.listProfessors({regroupements : regroupements},function(data) {
-                  $scope.nb_email = data.length;
+                DiffusionInfo.listProfessors({regroupements : regroupements},function(data) {
+                  $scope.nb_email = data.emails.length;
                 });
               }
               else if($location.$$path.indexOf('/mode_diffusion/info_famille') == 0) {
-                Emails.listFamilly({regroupements : regroupements},function(data) {
-                  $scope.nb_email = data.length;
+                DiffusionInfo.listFamilly({regroupements : regroupements},function(data) {
+                  $scope.nb_email = data.emails.length;
                 });
+              }
+              else if($location.$$path.indexOf('/mode_diffusion/ecrire_tous') == 0) {
+                $scope.nb_email = 0;
+                var profiles = $rootScope.messageObject['profils'];
+                if(_.contains(profiles, "parents")) {
+                  DiffusionInfo.listFamilly({regroupements : regroupements},function(data) {
+                    $scope.nb_email += data.emails.length;
+                  });
+                }
+                if(_.contains(profiles, "profs")) {
+                  DiffusionInfo.listProfessors({regroupements : regroupements},function(data) {
+                    $scope.nb_email += data.emails.length;
+                  });
+                }
+                if(_.contains(profiles, "eleves")) {
+                  DiffusionInfo.listStudents({regroupements : regroupements},function(data) {
+                    $scope.nb_email += data.emails.length;
+                  });
+                }
               }
             }
           }
