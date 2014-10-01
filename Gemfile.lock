@@ -1,8 +1,8 @@
 GIT
   remote: git@github.com:laclasse-com/gem_annuaire.git
-  revision: 1ed105e05ec4a2f5d774c0da3f8333f624377a40
+  revision: 927a7b2c581d03d264edb7dd8b560308a75460c6
   specs:
-    annuaire (0.0.1)
+    annuaire (0.0.2)
 
 GEM
   remote: https://rubygems.org/
@@ -71,7 +71,6 @@ GEM
     gyoku (1.0.0)
       builder (>= 2.1.2)
     hashie (2.1.1)
-    htmlentities (4.3.1)
     http_parser.rb (0.6.0)
     httpi (2.0.2)
       rack
@@ -99,7 +98,6 @@ GEM
       addressable (~> 2.3)
       nokogiri (~> 1.6)
       omniauth (~> 1.1.0)
-    pdfkit (0.6.2)
     polyglot (0.3.3)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -174,7 +172,6 @@ GEM
       httpi (~> 2.0)
       nokogiri (>= 1.4.0)
     websocket-driver (0.3.2)
-    wkhtmltopdf-binary (0.9.9.1)
 
 PLATFORMS
   ruby
@@ -184,14 +181,12 @@ DEPENDENCIES
   ent_notifs
   grape
   grape-entity
-  htmlentities
   json
   mail
   mysql2
   nokogiri
   omniauth
   omniauth-cas
-  pdfkit
   pry
   rack-rewrite
   rack-test
@@ -206,4 +201,3 @@ DEPENDENCIES
   sinatra-contrib
   sinatra-sequel
   thin
-  wkhtmltopdf-binary
