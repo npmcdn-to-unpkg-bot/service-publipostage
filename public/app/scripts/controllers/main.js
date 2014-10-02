@@ -278,15 +278,42 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             }
         });
 
+        $scope.resetDiffusionCounter = function() {
+          $scope.nb_email = '?';
+          $scope.nb_pdf = '?';
+          $scope.nb_total = '?';
+
+          $rootScope.messageObject['diffusionInfo'] = {
+            nb_email : '?',
+            nb_pdf : '?',
+            nb_total : '?'
+          }
+
+        }
+
+        $scope.addDiffusionData = function(data) {
+          var diffusionInfo = $rootScope.messageObject['diffusionInfo'];
+
+          if(diffusionInfo.nb_email == '?') diffusionInfo.nb_email = 0;
+          if(diffusionInfo.nb_pdf == '?') diffusionInfo.nb_pdf = 0;
+          if(diffusionInfo.nb_total == '?') diffusionInfo.nb_total = 0;
+          
+          diffusionInfo.nb_email += data.with_email;
+          diffusionInfo.nb_pdf += data.without_email;
+          diffusionInfo.nb_total += data.with_email + data.without_email;
+
+          $rootScope.messageObject['diffusionInfo'] = diffusionInfo;
+        }
+
         // Specifique à la page mode de diffusion
         if($location.$$path.indexOf('/mode_diffusion/') == 0) {
 
-          $scope.nb_email = '?';
-          $scope.nb_pdf = '?';
+          $scope.resetDiffusionCounter();
 
           if($location.$$path.indexOf('/mode_diffusion/ecrire_personnels') == 0) {
             var count = 0;
             _.each($rootScope.messageObject['destinations'], function(el) {
+              //TODO Reprendre ce code qui n'est pas juste fonctionnelement
               count += el.emails.length;
             });
             $scope.nb_email = count;
@@ -302,39 +329,38 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
                 }
             });
             if(regroupements != '') {
+
               //Cas des élèves
               if($location.$$path.indexOf('/mode_diffusion/ecrire_eleves') == 0) {
                 DiffusionInfo.listStudents({regroupements : regroupements},function(data) {
-                  $scope.nb_email = data.emails.length;
-                  $scope.nb_pdf = data.user_with_no_valid_mail.length;
+                  $scope.addDiffusionData(data);
                 });
               }
               else if($location.$$path.indexOf('/mode_diffusion/ecrire_profs') == 0) {
                 DiffusionInfo.listProfessors({regroupements : regroupements},function(data) {
-                  $scope.nb_email = data.emails.length;
+                  $scope.addDiffusionData(data);
                 });
               }
               else if($location.$$path.indexOf('/mode_diffusion/info_famille') == 0) {
                 DiffusionInfo.listFamilly({regroupements : regroupements},function(data) {
-                  $scope.nb_email = data.emails.length;
+                  $scope.addDiffusionData(data);
                 });
               }
               else if($location.$$path.indexOf('/mode_diffusion/ecrire_tous') == 0) {
-                $scope.nb_email = 0;
                 var profiles = $rootScope.messageObject['profils'];
                 if(_.contains(profiles, "parents")) {
                   DiffusionInfo.listFamilly({regroupements : regroupements},function(data) {
-                    $scope.nb_email += data.emails.length;
+                    $scope.addDiffusionData(data);
                   });
                 }
                 if(_.contains(profiles, "profs")) {
                   DiffusionInfo.listProfessors({regroupements : regroupements},function(data) {
-                    $scope.nb_email += data.emails.length;
+                    $scope.addDiffusionData(data);
                   });
                 }
                 if(_.contains(profiles, "eleves")) {
                   DiffusionInfo.listStudents({regroupements : regroupements},function(data) {
-                    $scope.nb_email += data.emails.length;
+                    $scope.addDiffusionData(data);
                   });
                 }
               }

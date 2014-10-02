@@ -1,6 +1,5 @@
   # coding: utf-8
 require 'grape'
-require 'mail'
 require 'annuaire'
 
 class ApplicationAPI < Grape::API

@@ -77,10 +77,6 @@ GEM
     i18n (0.6.9)
     ice_nine (0.11.0)
     json (1.8.1)
-    mail (2.2.7)
-      activesupport (>= 2.3.6)
-      mime-types
-      treetop (>= 1.4.5)
     method_source (0.8.2)
     mime-types (2.2)
     mini_portile (0.5.3)
@@ -182,7 +178,6 @@ DEPENDENCIES
   grape
   grape-entity
   json
-  mail
   mysql2
   nokogiri
   omniauth

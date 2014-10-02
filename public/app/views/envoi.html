@@ -26,8 +26,10 @@
                 <div class="center-block">
                     <p class="square-text center-block">Le message est creé! </p>
                     <p class="square-text center-block" ng-show="$state.params['type']=='info_famille'">Le message a été diffusé en ligne  sur la page info famille.</p>
-                    <p class="square-text center-block">() messages ont été envoyés par mails.
-                    <p class="square-text center-block">() messages sont à télécharger en fichier pdf :</p>
+                    <div>
+                        <p class="square-text center-block">{{messageObject['diffusionInfo'].nb_email}} messages ont été envoyés par mails.</p>
+                        <p class="square-text center-block">{{messageObject['diffusionInfo'].nb_pdf}} messages sont à télécharger dans un fichier pdf </p>
+                    </div>
                     <p class="square-text center-block"><a ng-show="created_publi.difusion_pdf" href="http://localhost:9292/app/api/publipostage/{{created_publi.id}}/pdf" target="_blank"><i class="fa fa-file fa-2x" style="color:#fff; text-shadow:1px 1px 1px #ccc;"></i></p>
                     <p></p>
                     <p style="text-align:center">
