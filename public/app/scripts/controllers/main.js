@@ -223,7 +223,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             // check if message is valid ..
             if (message.title != "" && message.message!=""){
                 Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations,
-                    'message_type':message.messageType, 'send_type':message.sendType, 'profils':message.profils}, function(data){
+                    'message_type':message.messageType, 'diffusion_type':message.diffusion_type, 'profils':message.profils}, function(data){
                         $rootScope.created_publi = data;
                         // reinitialize message service
                         MessageService.init();
@@ -239,84 +239,48 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 
         $scope.square = {icone: $rootScope.racine_images + '00_vide.svg'};
         
-        /*              watch variables                             */
-        $scope.$watch("byMail", function(newVal) {
+        $scope.$watch("diffusion_type", function(newVal) {
             if (angular.isUndefined(newVal) || newVal == null) return;
-            console.log(newVal);
-            if (newVal) {
-                MessageService.addSendType('byMail');
-                console.log(MessageService.getMessage());
-            }else{
-                
-                MessageService.removeSendType('byMail');
-                console.log(MessageService.getMessage());
-            }
+            MessageService.setDiffusionType(newVal);
         });
         
-        $scope.$watch("byPdf", function(newVal) {
-            if (angular.isUndefined(newVal) || newVal == null) return;
-            console.log(newVal);
-            if (newVal) {
-                MessageService.addSendType('byPdf');
-                console.log(MessageService.getMessage());
-            }else{
-                MessageService.removeSendType('byPdf');
-                console.log(MessageService.getMessage());
-            }
-        });
-        
-        $scope.$watch("byNotif", function(newVal) {
-            if (angular.isUndefined(newVal) || newVal == null) return;
-            console.log(newVal);
-            if (newVal) {
-                MessageService.addSendType('byNotif');
-                console.log(MessageService.getMessage());
-            }else{
-                
-                MessageService.removeSendType('byNotif');
-                console.log(MessageService.getMessage());
-            }
-        });
-
         $scope.resetDiffusionCounter = function() {
-          $scope.nb_email = '?';
-          $scope.nb_pdf = '?';
-          $scope.nb_total = '?';
-
-          $rootScope.messageObject['diffusionInfo'] = {
+          $rootScope.diffusionInfo = {
             nb_email : '?',
             nb_pdf : '?',
             nb_total : '?'
           }
-
         }
 
         $scope.addDiffusionData = function(data) {
-          var diffusionInfo = $rootScope.messageObject['diffusionInfo'];
+          var diffusionInfo = $rootScope.diffusionInfo;
 
           if(diffusionInfo.nb_email == '?') diffusionInfo.nb_email = 0;
           if(diffusionInfo.nb_pdf == '?') diffusionInfo.nb_pdf = 0;
           if(diffusionInfo.nb_total == '?') diffusionInfo.nb_total = 0;
-          
+
           diffusionInfo.nb_email += data.with_email;
           diffusionInfo.nb_pdf += data.without_email;
           diffusionInfo.nb_total += data.with_email + data.without_email;
 
-          $rootScope.messageObject['diffusionInfo'] = diffusionInfo;
+          $rootScope.diffusionInfo = diffusionInfo;
         }
 
         // Specifique à la page mode de diffusion
         if($location.$$path.indexOf('/mode_diffusion/') == 0) {
 
           $scope.resetDiffusionCounter();
-
+          
           if($location.$$path.indexOf('/mode_diffusion/ecrire_personnels') == 0) {
-            var count = 0;
+            var data  = {with_email:0, without_email:0};
             _.each($rootScope.messageObject['destinations'], function(el) {
-              //TODO Reprendre ce code qui n'est pas juste fonctionnelement
-              count += el.emails.length;
+              if(_.isEmpty(el.email_principal)) {
+                data.without_email += 1;
+              } else {
+                data.with_email += 1;
+              }
             });
-            $scope.nb_email = count;
+            $scope.addDiffusionData(data);
           }
           else {
             var regroupements = '';
@@ -800,4 +764,36 @@ Controllers.controller('NotificationCtrl', ['$scope', '$http', 'Faye', '$rootSco
         });
     });
 }]);
+
+/********************************* Controller for envoi page  *****************************************/
+Controllers.controller('EnvoiCtrl', ['$scope', '$sce', 'security', '$location', '$rootScope', 'Message', 'MessageService', '$state', 'Menus',
+  function($scope, $sce, security, $location, $rootScope, Message, MessageService, $state, Menus){
+
+    // get the list of menus
+    $scope.menus = Menus;
+    console.debug($scope.menus);
+
+    // Set counter and displayRules 
+    var diffusionInfo = $rootScope.diffusionInfo;
+
+    switch($rootScope.created_publi.diffusion_type) {
+      case 'email' : 
+        $scope.showEmail = true;
+        $scope.nb_email = diffusionInfo.nb_email;
+        
+        if(diffusionInfo.nb_pdf > 0){
+          $scope.showPdf = true;
+        } else {
+          $scope.showPdf = false;
+        }
+        $scope.nb_pdf = diffusionInfo.nb_pdf;
+        break;
+      case 'pdf' : 
+        $scope.showEmail = false;
+        $scope.showPdf = true;
+        $scope.nb_pdf = diffusionInfo.nb_total;
+        break;
+    }
+  }
+]);
 

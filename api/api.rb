@@ -43,7 +43,7 @@ class ApplicationAPI < Grape::API
     requires :descriptif, type: String, desc: "descriptif du publipostage"
     requires :message, type: String, desc: "message du publipostage"
     requires :message_type, type: String, desc: "type de message du publipostage"
-    requires :send_type, type: Array, desc: "type d'envoi du publipostage"
+    requires :diffusion_type, type: String, desc: "type d'envoi du publipostage"
     requires :destinataires, type: Array, desc: "destinataires du publipostage"
   end
   post '/publipostages' do

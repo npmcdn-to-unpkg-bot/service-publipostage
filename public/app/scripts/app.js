@@ -135,7 +135,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name:'envoi',
       url:'/envoi/:type',
       templateUrl: APPLICATION_PREFIX+'/views/envoi.html',
-      controller:'MainCtrl',
+      controller:'EnvoiCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
 

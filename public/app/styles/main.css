@@ -384,7 +384,21 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 background-position: 0 -15px;
 }
 
-.css-label{ background-image:url(http://csscheckbox.com/checkboxes/lite-plus.png); }
+input[type=radio] + label.css-label {
+  height:15px; 
+  display:inline-block;
+  line-height:15px;
+  background-repeat:no-repeat;
+  background-position: 0 0;
+  font-size:15px;
+  vertical-align:middle;
+  cursor:pointer;
+  background-image: none;
+}
+
+
+.css-label{ 
+  background-image:url(http://csscheckbox.com/checkboxes/lite-plus.png); }
 
 /* transparent colors */
 .bleu-clear {
