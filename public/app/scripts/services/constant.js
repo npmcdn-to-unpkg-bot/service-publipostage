@@ -50,11 +50,11 @@ angular.module('services.constants').service('Squares', function($rootScope){
                       url: '/destinataire/ecrire_tous',
                       active: false
                     },
-                    { id: 'faire_annonce',
-                      icon: $rootScope.racine_images + 'annonce.svg',
-                      color: 'rouge',
-                      text: 'faire une annonce',
-                      url: '/annonce',
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'rouge-clear',
+                      text: '',
+                      url: '',
                       active: false
                     },
                     { id: '',
@@ -123,124 +123,6 @@ angular.module('services.constants').service('Squares', function($rootScope){
                     { id: '',
                       icon: $rootScope.racine_images + '00_vide.svg',
                       color: 'vert-clear',
-                      text: '',
-                      url: '',
-                      active: true
-                    }
-                  ];
-    return squares;        
-});
-
-angular.module('services.constants').service('AnnonceSquares', function($rootScope){
-	var squares = [
-                    { id: 'annonce_personnels',
-                      icon: $rootScope.racine_images + 'personnel.svg',
-                      color: 'rouge',
-                      text: 'annonce aux personnels',
-                      url: '/annonce_destinataires/ecrire_personnels',
-                      active: false
-                    },
-                    { id: 'annonce_eleves',
-                      icon: $rootScope.racine_images + 'eleves.svg',
-                      color: 'jaune',
-                      text: 'annonce aux élèves',
-                      url: '/annonce_destinataires/ecrire_eleves',
-                      active: false
-                    },
-                    { id: 'annonce_profs',
-                      icon: $rootScope.racine_images + 'profs.svg',
-                      color: 'bleu',
-                      text: 'annonce aux profs',
-                      url: '/annonce_destinataires/ecrire_profs',
-                      active: false
-                    },
-                    { id: 'annonce_tous',
-                      icon: $rootScope.racine_images + 'tous.svg',
-                      color: 'violet',
-                      text: 'annonce à tous',
-                      url: '/annonce_destinataires/ecrire_tous',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'bleu-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'vert-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'violet-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'jaune-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'jaune-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'rouge-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'vert-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'bleu-clear',
-                      text: '',
-                      url:'' ,
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'violet-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'bleu-clear',
-                      text: '',
-                      url: '',
-                      active: true
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'jaune-clear',
-                      text: '',
-                      url: '',
-                      active: true
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'rouge-clear',
                       text: '',
                       url: '',
                       active: true
