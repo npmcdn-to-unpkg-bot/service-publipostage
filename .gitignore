@@ -26,3 +26,5 @@ npm-debug.log
 _yardoc
 doc/
 *.ruby-version
+/publipostage.sublime-project
+/publipostage.sublime-workspace

@@ -65,7 +65,7 @@ angular.module('services.messages').service('MessageService', function () {
                         title:'',
                         destinations:[],
                         messageType:'',
-                        sendType:[], 
+                        diffusion_type:'', 
                         profils:[]
     };
     // add Message  
@@ -99,18 +99,12 @@ angular.module('services.messages').service('MessageService', function () {
         messageObject['profils'] = [];
     }
     
-    this.addSendType = function(sendType){
-        var index = messageObject['sendType'].indexOf(sendType);
-        if (index ==-1){
-            messageObject['sendType'].push(sendType);
-        }
+    this.setDiffusionType = function(diffusion_type){
+        messageObject['diffusion_type'] = diffusion_type;
     }
     
-    this.removeSendType = function(sendType){
-        var index = messageObject['sendType'].indexOf(sendType);
-        if (index > -1) {
-            messageObject['sendType'].splice(index,1);
-        }
+    this.clearDiffusionType = function(){
+        messageObject['diffusion_type'] = '';
     }
     
     this.addMessageType = function(type){

@@ -48,3 +48,12 @@ angular.module('services.resources').factory('Personnels', ['$resource', 'BASE_S
         'all': {method:'GET', isArray:true}
     });
 }]);
+
+angular.module('services.resources').factory('DiffusionInfo', ['$resource', 'BASE_SERVICE_URL', function($resource, BASE_SERVICE_URL){
+    var baseUrl = BASE_SERVICE_URL +'/diffusionInfo/:population/:regroupements'
+    return $resource(baseUrl, {}, {
+      'listStudents':   {method:'GET', url:BASE_SERVICE_URL + '/diffusionInfo/students/:regroupements'},
+      'listProfessors': {method:'GET', url:BASE_SERVICE_URL + '/diffusionInfo/professors/:regroupements'},
+      'listFamilly':    {method:'GET', url:BASE_SERVICE_URL + '/diffusionInfo/familly/:regroupements'} 
+    });
+}]);

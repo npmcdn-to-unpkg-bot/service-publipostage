@@ -135,7 +135,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name:'envoi',
       url:'/envoi/:type',
       templateUrl: APPLICATION_PREFIX+'/views/envoi.html',
-      controller:'MainCtrl',
+      controller:'EnvoiCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
 
@@ -252,8 +252,8 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $rootScope.racine_images ='/app/images/';
     // check authorization before changing states .
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-      console.log('state changed');
-      console.log(MessageService.getMessage());
+      //console.log('state changed');
+      //console.log(MessageService.getMessage());
       // before loading the new state => check rights
       security.requestCurrentUser().then(function(user) {
         currentUser = user;
