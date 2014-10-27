@@ -305,12 +305,21 @@ angular.module('services.constants').service('Menus', function($rootScope){
 });
 
 angular.module('services.constants').value('tinymceOptions', {
-            language:"fr",
-            menubar: false,
-            theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-            font_size_style_values: "12px,13px,14px,16px,18px,20px",
-            toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist"
-        });
+  // Test to place lang elsewhere and have it bower compliant
+  language:"../../../scripts/externals/tinymce/lang/fr",
+  menubar: false,
+  theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
+  font_size_style_values: "12px,13px,14px,16px,18px,20px",
+  toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist",
+  extended_valid_elements : "nom,civilite",
+  //custom_elements: "nom,civilite",
+  verify_html : false,
+  height : 200,
+  handle_event_callback: function (e) {
+      // put logic here for keypress
+      console.log("callback called");
+  }
+});
 
 
 

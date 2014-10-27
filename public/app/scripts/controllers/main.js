@@ -4,10 +4,10 @@
 
 var Controllers  =  angular.module('myApp.controllers', []);
 
-Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", function($scope, $sce, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location) {
-    $scope.tinymceOptions = {
-        language:"fr"
-    };
+Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", 'tinymceOptions',
+     function($scope, $sce, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location , tinymceOptions) {
+    $scope.tinymceOptions = tinymceOptions;
+    
     $scope.pageLimits = [5, 10, 20]; 
     $scope.limit = 5;
     $scope.currentPage = 1;
@@ -98,10 +98,6 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
 Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", "$rootScope", "$stateParams", "MessageService", 'Redirect','Squares',
     function($scope, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location, $rootScope,  $stateParams, MessageService, Redirect, Squares) {
         $scope.Redirect = Redirect;   
-        
-        $scope.tinymceOptions = {
-            language:"fr"
-        };
 
         $scope.security = security;
 
@@ -153,23 +149,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         $scope.security = security;
 
         // editor tinyMce  options;
-        //$scope.tinymceOptions =  tinymceOptions;
-        $scope.tinymceOptions = {
-            language:"fr",
-            menubar: false,
-            theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-            font_size_style_values: "12px,13px,14px,16px,18px,20px",
-            toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist",
-            extended_valid_elements : "nom,civilite",
-            custom_elements: "nom,civilite",
-            verify_html : false,
-            height : 200,
-            handle_event_callback: function (e) {
-                // put logic here for keypress
-                console.log("callback called");
-            }
-        };
-        //$scope.tinyMessage = "";
+        $scope.tinymceOptions =  tinymceOptions;
 
         //initialize destinations
         //$scope.destinations = [];
@@ -334,26 +314,17 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 }]);
 
 /******************************************* Annonce Controller ****************************************/
-Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope', 'Redirect', 'Menus','Faye','security', 'currentUser', '$state', 'MessageService', '$filter',
-    function($scope, AnnonceSquares,$rootScope, Redirect, Menus, Faye, security, currentUser, $state, MessageService, $filter){
+Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope', 'Redirect', 'Menus','Faye','security', 'currentUser', '$state', 'MessageService', '$filter', 'tinymceOptions',
+    function($scope, AnnonceSquares,$rootScope, Redirect, Menus, Faye, security, currentUser, $state, MessageService, $filter , tinymceOptions){
     $scope.annonceSquares = AnnonceSquares;
     $scope.Redirect = Redirect;
     $scope.menus = Menus;
     $scope.notification = 'Ecrire une annonce de 300 caractères maximum.';
     var destinataires = MessageService.getMessage()['destinations'];
     console.log(destinataires);
-    // list of available profils 
-    //$scope.profils = ['eleves', 'profs', 'parents'];
-    $scope.tinymceOptions = {
-            language:"fr",
-            theme: "modern",
-            menubar:false,
-            toolbar: false,
-            verify_html : false,
-            height : 200,
-            handle_event_callback: function (e) {
-            }
-    };
+    
+    $scope.tinymceOptions = tinymceOptions;
+
     var profils = MessageService.getMessage()['profils'];
     var personel_channel = "";
     security.requestCurrentUser().then(function(user){
@@ -669,23 +640,7 @@ Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 /********************************* Massage controller*****************************************/
 Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state',
     function($scope, $sce, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state){
-        //$scope.tinymceOptions =  tinymceOptions;
-        $scope.tinymceOptions = {
-            // Test to place lang elsewhere and have it bower compliant
-            language:"../../../scripts/externals/tinymce/lang/fr",
-            menubar: false,
-            theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-            font_size_style_values: "12px,13px,14px,16px,18px,20px",
-            toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist",
-            extended_valid_elements : "nom,civilite",
-            //custom_elements: "nom,civilite",
-            verify_html : false,
-            height : 200,
-            handle_event_callback: function (e) {
-                // put logic here for keypress
-                console.log("callback called");
-            }
-        };
+        $scope.tinymceOptions =  tinymceOptions;
 
         // load message from the root ..
         $scope.tinyMessage = MessageService.getMessage()['message'];
