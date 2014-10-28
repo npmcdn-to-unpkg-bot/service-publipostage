@@ -19,7 +19,6 @@ gem 'rake'
 gem 'grape'
 gem 'rest-client'
 gem 'grape-entity'
-gem 'ent_notifs'
 gem 'annuaire', :git => 'git@github.com:laclasse-com/gem_annuaire.git'
 
 group :development do
