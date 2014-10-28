@@ -141,7 +141,7 @@ Controllers.controller('wizardController', ['$scope', function($scope){
 
 /********************************* Main controller of the application *****************************************/
 Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'DiffusionInfo',
+    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'DiffusionInfo', 
     function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect,
      colors, transparentColors, Menus, tinymceOptions, $state, Publipostages, DiffusionInfo){
         // making Redirect utils accesible in the scope
@@ -150,7 +150,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 
         // editor tinyMce  options;
         $scope.tinymceOptions =  tinymceOptions;
-
+        
         //initialize destinations
         //$scope.destinations = [];
         $scope.tinyMessage = MessageService.getMessage()['message'];
@@ -638,9 +638,12 @@ Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 }]);
 
 /********************************* Massage controller*****************************************/
-Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state',
-    function($scope, $sce, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state){
+Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems',
+    function($scope, $sce, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems){
         $scope.tinymceOptions =  tinymceOptions;
+
+        //Template items
+        $scope.templateItems =  templateItems;
 
         // load message from the root ..
         $scope.tinyMessage = MessageService.getMessage()['message'];
@@ -655,9 +658,9 @@ Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScop
         $scope.menus = Menus;
         
         $scope.addToMessage = function(text){
-            console.log('add to message');
+            console.log('add to message + ###' + text + '###');
             console.log($scope.tinyMessage);
-            $scope.tinyMessage = $scope.tinyMessage + text; 
+            $scope.tinyMessage += text; 
         }
         
         $scope.goToPreview = function(location){

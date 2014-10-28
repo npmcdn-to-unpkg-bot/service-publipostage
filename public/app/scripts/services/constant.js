@@ -315,11 +315,26 @@ angular.module('services.constants').value('tinymceOptions', {
   //custom_elements: "nom,civilite",
   verify_html : false,
   height : 200,
+  forced_root_block: false,
   handle_event_callback: function (e) {
       // put logic here for keypress
       console.log("callback called");
   }
 });
 
-
-
+angular.module('services.constants').value('templateItems', 
+ [
+  { value : '[civilite]', message :  'Civilité' },
+  { value : '[nom]', message :  'Nom' },
+  { value : '[prenom]', message :  'Prenom' },
+  { value : '[adresse]', message :  'Adresse' },
+  { value : '[date]', message :  'Date du Jours' },
+  { value : '[signature]', message :  'Signature' },
+  { value : '[nomEleve]', message :  'Nom de l\'élève' },
+  { value : '[prenomEleve]', message :  'Prénom de l\'élève' },
+  { value : '[classe]', message :  'Classe' },
+  { value : '[blogEtab]', message :  'Lien blog de l\'etablissement' },
+  { value : '[blogRegroupement]', message :  'Lien blog du groupe ou de la classe' },
+  { value : '<a href=\'http://www.laclasse.com\'>Laclasse</a>', message :  'Lien Laclasse.com' }
+  ]
+);
