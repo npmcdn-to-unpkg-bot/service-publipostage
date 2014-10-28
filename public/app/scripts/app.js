@@ -3,7 +3,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.constants', 'ui.bootstrap',
                          'ui.tinymce', 'services.messages', 'services.authentication', 'angular-underscore',
-                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize', 'faye', 'services.utils', 
+                         'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize', 'services.utils', 
                          'pdf', 'chieffancypants.loadingBar', 'services.directives', 'checklist-model']).
 config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function($urlRouterProvider, $stateProvider, APPLICATION_PREFIX){
             
@@ -139,30 +139,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
 
-    var annonce = {
-      name:'annonce',
-      url:'/annonce',
-      templateUrl:APPLICATION_PREFIX+'/views/annonce.html',
-      controller:'AnnonceCtrl',
-      authorizedRoles: ["TECH", "PROF_ETB", "ADM_ETB"]
-    }
-
-    var annonce_destinataires = {
-      name:'annonce_destinataires',
-      url:'/annonce_destinataires/:annonce_type',
-      templateUrl: APPLICATION_PREFIX+'/views/annonce_destinataires.html',
-      controller:'destinatairesCtrl',
-      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
-    }
-
-    var annonce_for = {
-      name:'annonce_for',
-      url:'/annonce/:param',
-      controller:'AnnonceCtrl',
-      templateUrl:APPLICATION_PREFIX+'/views/annonce_pour.html',
-      authorizedRoles: ["TECH","ADM_ETB","PROF_ETB"]
-    }
-
+    
     var fichier = {
       name:'fichier',
       url:'/fichier/:id',
@@ -177,15 +154,6 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       templateUrl: APPLICATION_PREFIX +'/views/error.html',
       authorizedRoles: "all"
     }
-
-    var envoi_annonce = {
-      name:'envoi_annonce',
-      url:'/envoi_annonce/:type',
-      templateUrl: APPLICATION_PREFIX+'/views/envoi_annonce.html',
-      controller:'AnnonceCtrl',
-      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
-    }
-
     
     $stateProvider.state(home)
     .state(gestion)
@@ -197,12 +165,9 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     .state(apercu)
     .state(mode_diffusion)
     .state(envoi)
-    .state(annonce_for)
-    .state(annonce)
-    .state(annonce_destinataires)
     .state(error)
-    .state(fichier)
-    .state(envoi_annonce);
+    .state(fichier);
+    
     $urlRouterProvider.otherwise('/');
     
 }]).config(function ($provide, $httpProvider) {
@@ -246,7 +211,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $httpProvider.interceptors.push('HttpInterceptor');
 }).config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
-}).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService', 'Faye', function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService, Faye) {
+}).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService',function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService) {
     
     $rootScope.$location = $location;
     $rootScope.racine_images ='/app/images/';

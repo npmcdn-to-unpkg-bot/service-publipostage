@@ -27,34 +27,12 @@ GEM
     coderay (1.1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    cookiejar (0.3.2)
     daemons (1.1.9)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
-    em-http-request (1.1.2)
-      addressable (>= 2.3.4)
-      cookiejar
-      em-socksify (>= 0.3)
-      eventmachine (>= 1.0.3)
-      http_parser.rb (>= 0.6.0)
-    em-socksify (0.3.0)
-      eventmachine (>= 1.0.0.beta.4)
-    ent_notifs (0.1.2)
-      faye (>= 1.0.1)
     equalizer (0.0.9)
     eventmachine (1.0.3)
-    faye (1.0.1)
-      cookiejar (>= 0.3.0)
-      em-http-request (>= 0.3.0)
-      eventmachine (>= 0.12.0)
-      faye-websocket (>= 0.7.0)
-      multi_json (>= 1.0.0)
-      rack (>= 1.0.0)
-      websocket-driver (>= 0.3.0)
-    faye-websocket (0.7.2)
-      eventmachine (>= 0.12.0)
-      websocket-driver (>= 0.3.1)
     grape (0.7.0)
       activesupport
       builder
@@ -71,7 +49,6 @@ GEM
     gyoku (1.0.0)
       builder (>= 2.1.2)
     hashie (2.1.1)
-    http_parser.rb (0.6.0)
     httpi (2.0.2)
       rack
     i18n (0.6.9)
@@ -94,7 +71,6 @@ GEM
       addressable (~> 2.3)
       nokogiri (~> 1.6)
       omniauth (~> 1.1.0)
-    polyglot (0.3.3)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -154,9 +130,6 @@ GEM
       rack (>= 1.0.0)
     thread_safe (0.3.3)
     tilt (1.4.1)
-    treetop (1.4.15)
-      polyglot
-      polyglot (>= 0.3.1)
     tzinfo (1.1.0)
       thread_safe (~> 0.1)
     virtus (1.0.2)
@@ -167,14 +140,12 @@ GEM
     wasabi (3.1.0)
       httpi (~> 2.0)
       nokogiri (>= 1.4.0)
-    websocket-driver (0.3.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   annuaire!
-  ent_notifs
   grape
   grape-entity
   json
