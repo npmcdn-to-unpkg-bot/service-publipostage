@@ -4,10 +4,10 @@
 
 var Controllers  =  angular.module('myApp.controllers', []);
 
-Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", function($scope, $sce, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location) {
-    $scope.tinymceOptions = {
-        language:"fr"
-    };
+Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", 'tinymceOptions',
+     function($scope, $sce, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location , tinymceOptions) {
+    $scope.tinymceOptions = tinymceOptions;
+    
     $scope.pageLimits = [5, 10, 20]; 
     $scope.limit = 5;
     $scope.currentPage = 1;
@@ -98,10 +98,6 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
 Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", "$rootScope", "$stateParams", "MessageService", 'Redirect','Squares',
     function($scope, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location, $rootScope,  $stateParams, MessageService, Redirect, Squares) {
         $scope.Redirect = Redirect;   
-        
-        $scope.tinymceOptions = {
-            language:"fr"
-        };
 
         $scope.security = security;
 
@@ -145,7 +141,7 @@ Controllers.controller('wizardController', ['$scope', function($scope){
 
 /********************************* Main controller of the application *****************************************/
 Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'DiffusionInfo',
+    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'DiffusionInfo', 
     function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect,
      colors, transparentColors, Menus, tinymceOptions, $state, Publipostages, DiffusionInfo){
         // making Redirect utils accesible in the scope
@@ -153,24 +149,8 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         $scope.security = security;
 
         // editor tinyMce  options;
-        //$scope.tinymceOptions =  tinymceOptions;
-        $scope.tinymceOptions = {
-            language:"fr",
-            menubar: false,
-            theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-            font_size_style_values: "12px,13px,14px,16px,18px,20px",
-            toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist",
-            extended_valid_elements : "nom,civilite",
-            custom_elements: "nom,civilite",
-            verify_html : false,
-            height : 200,
-            handle_event_callback: function (e) {
-                // put logic here for keypress
-                console.log("callback called");
-            }
-        };
-        //$scope.tinyMessage = "";
-
+        $scope.tinymceOptions =  tinymceOptions;
+        
         //initialize destinations
         //$scope.destinations = [];
         $scope.tinyMessage = MessageService.getMessage()['message'];
@@ -530,25 +510,12 @@ Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 }]);
 
 /********************************* Massage controller*****************************************/
-Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state',
-    function($scope, $sce, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state){
-        //$scope.tinymceOptions =  tinymceOptions;
-        $scope.tinymceOptions = {
-            // Test to place lang elsewhere and have it bower compliant
-            language:"../../../scripts/externals/tinymce/lang/fr",
-            menubar: false,
-            theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-            font_size_style_values: "12px,13px,14px,16px,18px,20px",
-            toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist",
-            extended_valid_elements : "nom,civilite",
-            //custom_elements: "nom,civilite",
-            verify_html : false,
-            height : 200,
-            handle_event_callback: function (e) {
-                // put logic here for keypress
-                console.log("callback called");
-            }
-        };
+Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems',
+    function($scope, $sce, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems){
+        $scope.tinymceOptions =  tinymceOptions;
+
+        //Template items
+        $scope.templateItems =  templateItems;
 
         // load message from the root ..
         $scope.tinyMessage = MessageService.getMessage()['message'];
@@ -563,9 +530,9 @@ Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScop
         $scope.menus = Menus;
         
         $scope.addToMessage = function(text){
-            console.log('add to message');
+            console.log('add to message + ###' + text + '###');
             console.log($scope.tinyMessage);
-            $scope.tinyMessage = $scope.tinyMessage + text; 
+            $scope.tinyMessage += text; 
         }
         
         $scope.goToPreview = function(location){
