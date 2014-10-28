@@ -47,6 +47,11 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
     
     $scope.colors = [ 'bleu', 'vert', 'rouge', 'violet', 'orange',
                         'jaune', 'gris1','gris2', 'gris3', 'gris4' ];
+
+    $scope.duplicPubli = function (id) {
+      
+      alert('Duplication pas encore active');
+    }
     
     $scope.removePubli = function(id){
         if(confirm("Voulez-vous supprimer le publipostage?")){
