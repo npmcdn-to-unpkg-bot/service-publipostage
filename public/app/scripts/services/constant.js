@@ -58,16 +58,16 @@ angular.module('services.constants').service('Squares', function($rootScope){
                       active: false
                     },
                     { id: '',
-                      icon: $rootScope.racine_images + 'modele.svg',
-                      color: 'vert',
-                      text: 'utiliser un modèle',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'vert-clear',
+                      text: '',
                       url: '/publi',
                       active: false
                     },
                     { id: '',
-                      icon: $rootScope.racine_images + 'messagerie.svg',
-                      color: 'bleu',
-                      text: 'ma messagerie',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'bleu-clear',
+                      text: '',
                       url: '',
                       active: false
                     },
