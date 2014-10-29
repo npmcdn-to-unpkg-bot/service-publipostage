@@ -49,7 +49,6 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
                         'jaune', 'gris1','gris2', 'gris3', 'gris4' ];
 
     $scope.duplicPubli = function (id) {
-      
       alert('Duplication pas encore active');
     }
     
@@ -145,9 +144,9 @@ Controllers.controller('wizardController', ['$scope', function($scope){
 }]);
 
 /********************************* Main controller of the application *****************************************/
-Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
+Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'MessageService','Redirect', 
     'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'DiffusionInfo', 
-    function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect,
+    function($scope, $sce, security, Regroupements, $location, $rootScope, MessageService, Redirect,
      colors, transparentColors, Menus, tinymceOptions, $state, Publipostages, DiffusionInfo){
         // making Redirect utils accesible in the scope
         $scope.Redirect = Redirect;
@@ -319,8 +318,8 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 }]);
 
 /******************************************* Destinataire Controller ****************************************/
-Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus', '$state', 'Personnels', function($scope,security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, 
+Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements', '$location', '$rootScope', 'MessageService','Redirect', 
+    'colors', 'transparentColors', 'Menus', '$state', 'Personnels', function($scope,security, Regroupements, $location, $rootScope, MessageService, Redirect, 
     colors, transparentColors, Menus, $state, Personnels){
     // making Redirect utils accesible in the scope
     $scope.Redirect = Redirect;
@@ -559,8 +558,8 @@ Controllers.controller('DocCtrl', ['$scope', '$state', function($scope, $state){
 }]);
 
 /********************************* Controller for envoi page  *****************************************/
-Controllers.controller('EnvoiCtrl', ['$scope', '$sce', 'security', '$location', '$rootScope', 'Message', 'MessageService', '$state', 'Menus',
-  function($scope, $sce, security, $location, $rootScope, Message, MessageService, $state, Menus){
+Controllers.controller('EnvoiCtrl', ['$scope', '$sce', 'security', '$location', '$rootScope', 'MessageService', '$state', 'Menus',
+  function($scope, $sce, security, $location, $rootScope, MessageService, $state, Menus){
 
     // get the list of menus
     $scope.menus = Menus;

@@ -4,16 +4,7 @@
 /*                   service to show flash messages and responses                  */
 /************************************************************************************/
 angular.module('services.messages', []); 
-angular.module('services.messages').factory("FlashService", ['$rootScope', function($rootScope) {
-  return {
-    show: function(message) {
-      $rootScope.flash = message;
-    },
-    clear: function() {
-      $rootScope.flash = "";
-    }
-  }
-}]);
+
 angular.module('services.messages').factory("FlashServiceStyled", ['$rootScope', function($rootScope) {
   return {
     show: function(message, classe) {
@@ -26,38 +17,6 @@ angular.module('services.messages').factory("FlashServiceStyled", ['$rootScope',
     }
   }
 }]);
-
-angular.module('services.messages').factory("Message", ['$rootScope', function($rootScope) {  
-  return {
-    add: function(message) {
-      $rootScope.message = message;
-    },
-    clear: function() {
-      $rootScope.message = "";
-    },
-    get: function(){
-        return $rootScope.message;
-    }
-  }
-}]);
-
-
-angular.module('services.messages').factory("MessageObject", ['$rootScope', function($rootScope){
-    var messageObject = {};
-    return {
-    
-        clearMessage: function() {
-          messagObject['message'] = '';
-        },
-        addDestinations:function(a){
-            messageObject['destination'] = a;
-        },
-        get: function(){
-            return $rootScope.message;
-        }
-    }
-}]);
-
 
 /* MessageService is the service that represents the sent message */
 angular.module('services.messages').service('MessageService', function () {

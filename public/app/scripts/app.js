@@ -211,7 +211,8 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $httpProvider.interceptors.push('HttpInterceptor');
 }).config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
-}).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService',function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService) {
+}).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','MessageService',
+  function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, MessageService) {
     
     $rootScope.$location = $location;
     $rootScope.racine_images ='/app/images/';
@@ -237,7 +238,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
       if (error == "invalid message") {
         event.preventDefault();
-        alert('le message est pas valide');
+        alert('le message n\'est pas valide');
         $state.transitionTo('home');
       }
     });   
