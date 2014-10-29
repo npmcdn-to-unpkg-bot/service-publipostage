@@ -145,9 +145,9 @@ Controllers.controller('wizardController', ['$scope', function($scope){
 
 /********************************* Main controller of the application *****************************************/
 Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'DiffusionInfo', 
+    'colors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'DiffusionInfo', 
     function($scope, $sce, security, Regroupements, $location, $rootScope, MessageService, Redirect,
-     colors, transparentColors, Menus, tinymceOptions, $state, Publipostages, DiffusionInfo){
+     colors, Menus, tinymceOptions, $state, Publipostages, DiffusionInfo){
         // making Redirect utils accesible in the scope
         $scope.Redirect = Redirect;
         $scope.security = security;
@@ -210,7 +210,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
                     'message_type':message.messageType, 'diffusion_type':message.diffusion_type, 'profils':message.profils}, function(data){
                         $rootScope.created_publi = data;
                         // reinitialize message service
-                        MessageService.init();
+                        MessageService.reset();
                         $location.path('/envoi/'+location);
                     }, 
                     function(error){
@@ -319,8 +319,8 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 
 /******************************************* Destinataire Controller ****************************************/
 Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements', '$location', '$rootScope', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus', '$state', 'Personnels', function($scope,security, Regroupements, $location, $rootScope, MessageService, Redirect, 
-    colors, transparentColors, Menus, $state, Personnels){
+    'colors', 'Menus', '$state', 'Personnels', function($scope,security, Regroupements, $location, $rootScope, MessageService, Redirect, 
+    colors, Menus, $state, Personnels){
     // making Redirect utils accesible in the scope
     $scope.Redirect = Redirect;
     $scope.security = security;
@@ -329,12 +329,11 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         MessageService.addMessageType($state.params['type']);
     }
     //initialize destinations
-    $scope.destinations = [];
+    $scope.destinations = new Array();
 
     var getPersonnel = function(uai){
         Personnels.all({uai:uai}, function(personnels){
             $scope.personnels = personnels;
-            console.log(personnels);
         }, function(error){
             console.log(error);
         });
@@ -343,31 +342,52 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     // get the list of user regroupements 
     security.requestCurrentUser().then(function(user) {
         $scope.currentUser = user;
-        if ($state.params['type']=='ecrire_personnels')
-            getPersonnel($scope.currentUser.info['ENTPersonStructRattachRNE']);
-        Regroupements.get({id:user.info['uid']}, function(regroupements){
+        if ($state.params['type']=='ecrire_personnels') {
+          getPersonnel($scope.currentUser.info['ENTPersonStructRattachRNE']);
+        } else {
+          Regroupements.get({id:user.info['uid']}, function(regroupements){
             console.log(regroupements);
+            var selectdestinationsIds = new Array();
+            _.each(MessageService.getMessage().destinations, function(dest) {
+              if(dest.classe_id  != undefined) {
+                selectdestinationsIds.push(dest.classe_id);
+              }
+              else if(dest.groupe_id  != undefined) {
+                selectdestinationsIds.push(dest.groupe_id);
+              }
+            });
+
             $scope.regroupements = regroupements;
             // add colors to classes
+            var colorIndex = 0;
             $scope.regroupements['classes'].forEach(function(element, index, array){
-                element['color'] = $scope.randomTransparentColor();
+                element['color'] = colors[colorIndex++%colors.length];
+                if(_.contains(selectdestinationsIds, element.classe_id)) {
+                    element['checked'] = true;
+                    $scope.destinations.push(element);
+                }
             });
             // add colors to groupes
             $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
-                element['color'] = $scope.randomTransparentColor();
+                element['color'] = colors[colorIndex++%colors.length];
+                if(_.contains(selectdestinationsIds, element.groupe_id)) {
+                    element['checked'] = true;
+                    $scope.destinations.push(element);
+                }
             });
             // Add colors to empty squres
             if (($scope.regroupements['classes'].length + $scope.regroupements['groupes_eleves'].length) < 15) {
                 $scope.empty_squares = new Array(15 - ($scope.regroupements['classes'].length + $scope.regroupements['groupes_eleves'].length));
                 console.log($scope.empty_squares);
                 for (var i=0;i<$scope.empty_squares.length;i++){
-                  $scope.empty_squares[i]={ color:$scope.randomTransparentColor()};
+                  $scope.empty_squares[i]={ color:colors[colorIndex++%colors.length]};
                 }
             } else
             {
                 $scope.empty_squares = []
             }
-        });
+          });
+        }
     });
     // get the list of menus
     $scope.menus = Menus;
@@ -432,16 +452,9 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         console.log(MessageService.getMessage());
     };
 
-    $scope.randomColor = function() {
-        var index = Math.floor(Math.random()*(colors.length));
-        console.log(index);
-        return colors[index];
-    };
-
-    $scope.randomTransparentColor = function() {
-        var index = Math.floor(Math.random()*(transparentColors.length));
-        return transparentColors[index];
-    };
+    $scope.squareClass = function(clazz) {
+        return clazz.color + (clazz.checked ? '' : '-clear');
+    }
 
     $scope.changeClassColor = function($index){
         var color = $scope.regroupements['classes'][$index]['color'];
