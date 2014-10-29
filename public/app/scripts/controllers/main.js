@@ -49,7 +49,6 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
                         'jaune', 'gris1','gris2', 'gris3', 'gris4' ];
 
     $scope.duplicPubli = function (id) {
-      
       alert('Duplication pas encore active');
     }
     
