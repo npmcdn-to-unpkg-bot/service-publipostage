@@ -25,7 +25,12 @@
                         </p>
                     </div>
                 </form>
-                <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat= "classe in regroupements['classes']"><span ng-show="classe.checked">{{classe.classe_libelle}} </span></span><span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></p>
+                <p class="menu-text-hidden">
+                    <strong> {{menus[$state.params["type"]]['recpitualif']}} 
+                        <span ng-repeat= "classe in regroupements['regroupements']"><span ng-show="classe.checked">{{classe.libelle}} </span></span>
+                        <span ng-repeat= "personnel in personnels"> <span ng-show="personnel.checked">{{personnel.prenom}} {{personnel.nom}}</span></span>
+                    </strong>
+                </p>
 
                 </br>
                 </br>
@@ -61,28 +66,14 @@
 
             <!--show classes only when message type is not  ecrire personnels or ecrire tous -->
             <div  ng-show="$state.params['type']!='ecrire_personnels'">
-                <div ng-repeat="classe in regroupements['classes'] | filter:searchText" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="squareClass(classe)">
+                <div ng-repeat="classe in regroupements['regroupements'] | filter:searchText" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="squareClass(classe)">
                     <a ng-click="classe.checked=!classe.checked;addRemoveDestination(classe);">
                       <div class="square-icon">
                         <div class="center-block">
                             <img class="img-responsive center-block" src="images/00_vide.svg">
-                            <span class="classe-text">{{classe.classe_libelle}}</span>
+                            <span class="classe-text">{{classe.libelle}}</span>
                         </div>
                         <div class="square-text center-block">{{classe.etablissement_nom}}</div>
-                      </div>
-                    </a>
-                </div>
-            </div>
-             <!--show groupes only when message type in not ecrire personnels or ecrire tous -->
-            <div  ng-show="$state.params['type']!='ecrire_personnels'">
-                <div ng-repeat="groupe in regroupements['groupes_eleves']" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="squareClass(groupe)">
-                    <a ng-click="groupe.checked=!groupe.checked;addRemoveDestination(groupe)">
-                      <div class="square-icon">
-                        <div class="center-block">
-                            <img class="img-responsive center-block" src="images/00_vide.svg">
-                            <span class="groupe-text center-block">{{groupe.groupe_libelle}}</span>
-                        </div>
-                        <div class="square-text center-block">{{groupe.etablissement_nom}}</div>
                       </div>
                     </a>
                 </div>
@@ -91,7 +82,7 @@
             <!--show personnels only when message type is ecrire personnels -->
             <div  ng-show="$state.params['type']=='ecrire_personnels'">
                 <div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris4-clear">
-                    <a ng-click="changePersonColor($index);person.checked=!person.checked;addRemoveDestination(person)">
+                    <a ng-click="person.checked=!person.checked;addRemoveDestination(person)">
                         <div class="square-icon">
                             <div class="text-icon">
                                 {{person.prenom}} {{person.nom}}
@@ -105,7 +96,7 @@
             </div>
             
             <!-- empty squares -->
-            <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}">
+            <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}-clear">
                 <a>
                   <div class="square-icon">
                     <div class="center-block">

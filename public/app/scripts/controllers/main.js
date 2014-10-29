@@ -349,35 +349,22 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
             console.log(regroupements);
             var selectdestinationsIds = new Array();
             _.each(MessageService.getMessage().destinations, function(dest) {
-              if(dest.classe_id  != undefined) {
-                selectdestinationsIds.push(dest.classe_id);
-              }
-              else if(dest.groupe_id  != undefined) {
-                selectdestinationsIds.push(dest.groupe_id);
-              }
+                selectdestinationsIds.push(dest.id);
             });
 
             $scope.regroupements = regroupements;
             // add colors to classes
             var colorIndex = 0;
-            $scope.regroupements['classes'].forEach(function(element, index, array){
+            $scope.regroupements['regroupements'].forEach(function(element, index, array){
                 element['color'] = colors[colorIndex++%colors.length];
-                if(_.contains(selectdestinationsIds, element.classe_id)) {
-                    element['checked'] = true;
-                    $scope.destinations.push(element);
-                }
-            });
-            // add colors to groupes
-            $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
-                element['color'] = colors[colorIndex++%colors.length];
-                if(_.contains(selectdestinationsIds, element.groupe_id)) {
+                if(_.contains(selectdestinationsIds, element.id)) {
                     element['checked'] = true;
                     $scope.destinations.push(element);
                 }
             });
             // Add colors to empty squres
-            if (($scope.regroupements['classes'].length + $scope.regroupements['groupes_eleves'].length) < 15) {
-                $scope.empty_squares = new Array(15 - ($scope.regroupements['classes'].length + $scope.regroupements['groupes_eleves'].length));
+            if ($scope.regroupements['regroupements'].length < 15) {
+                $scope.empty_squares = new Array(15 - $scope.regroupements['regroupements'].length );
                 console.log($scope.empty_squares);
                 for (var i=0;i<$scope.empty_squares.length;i++){
                   $scope.empty_squares[i]={ color:colors[colorIndex++%colors.length]};
@@ -397,36 +384,20 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     
     $scope.selectAll = function(){
         $scope.selectAllMode = false;
-        $scope.regroupements['classes'].forEach(function(element, index, array){
+        $scope.regroupements['regroupements'].forEach(function(element, index, array){
             if (!element['checked'] || element['checked'].isUndefined){
                 element['checked'] = true;
                 $scope.destinations.push(element);
-                $scope.changeClassColor(index);
             }
         });
-        $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
-            if (!element['checked'] || element['checked'].isUndefined){
-                element['checked'] = true;
-                $scope.destinations.push(element);
-                $scope.changeGroupColor(index);
-            }
-        })
-
     };
 
     $scope.deselectAll = function(){
         $scope.selectAllMode = true;
         $scope.destinations = [];
-        $scope.regroupements['classes'].forEach(function(element, index, array){
+        $scope.regroupements['regroupements'].forEach(function(element, index, array){
             if(element['checked'] || element['checked'].isUndefined){
                 element['checked'] = false;
-                $scope.changeClassColor(index);
-            }
-        });
-        $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
-            if(element['checked'] || element['checked'].isUndefined){
-                element['checked'] = false;
-                $scope.changeGroupColor(index);
             }
         });
     };
@@ -455,38 +426,6 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     $scope.squareClass = function(clazz) {
         return clazz.color + (clazz.checked ? '' : '-clear');
     }
-
-    $scope.changeClassColor = function($index){
-        var color = $scope.regroupements['classes'][$index]['color'];
-        var match = color.search("-clear");
-        if (match==-1) {
-            color = color+"-clear";
-        }else
-        {
-            color = color.substr(0,match);
-        }
-        $scope.regroupements['classes'][$index]['color']=color;
-    };
-
-
-    $scope.changeGroupColor = function($index){
-        var color = $scope.regroupements['groupes_eleves'][$index]['color'];
-        var match = color.search("-clear");
-        if (match==-1) {
-            color = color+"-clear";
-        }else
-        {
-            color = color.substr(0,match)
-        }
-        $scope.regroupements['groupes_eleves'][$index]['color']=color;
-    };
-    
-    // watch destinations (array)
-    /*
-    $scope.$watch('destinations', function(newVal){
-        console.log(newVal);
-    }, true); 
-    */
 
     // page ecrire tous
     // list of available profils 
