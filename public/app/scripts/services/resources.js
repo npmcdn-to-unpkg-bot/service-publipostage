@@ -49,6 +49,13 @@ angular.module('services.resources').factory('Personnels', ['$resource', 'BASE_S
     });
 }]);
 
+angular.module('services.resources').factory('Matieres', ['$resource', 'BASE_SERVICE_URL', function($resource, BASE_SERVICE_URL){
+    var baseUrl = BASE_SERVICE_URL +'/etablissements/:uai/matieres';
+    return $resource(baseUrl, {uai:'@uai'}, {
+        'all': {method:'GET', isArray:true}
+    });
+}]);
+
 angular.module('services.resources').factory('DiffusionInfo', ['$resource', 'BASE_SERVICE_URL', function($resource, BASE_SERVICE_URL){
     var baseUrl = BASE_SERVICE_URL +'/diffusionInfo/:population/:regroupements'
     return $resource(baseUrl, {}, {

@@ -319,8 +319,8 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 
 /******************************************* Destinataire Controller ****************************************/
 Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements', '$location', '$rootScope', 'MessageService','Redirect', 
-    'colors', 'Menus', '$state', 'Personnels', function($scope,security, Regroupements, $location, $rootScope, MessageService, Redirect, 
-    colors, Menus, $state, Personnels){
+    'colors', 'Menus', '$state', 'Personnels', 'Matieres', function($scope,security, Regroupements, $location, $rootScope, MessageService, Redirect, 
+    colors, Menus, $state, Personnels, Matieres){
     // making Redirect utils accesible in the scope
     $scope.Redirect = Redirect;
     $scope.security = security;
@@ -355,6 +355,13 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         if ($state.params['type']=='ecrire_personnels') {
           getPersonnel($scope.currentUser.info['ENTPersonStructRattachRNE']);
         } else {
+
+          if($state.params['type']=='ecrire_profs') {
+            Matieres.all({uai:$scope.currentUser.info['ENTPersonStructRattachRNE']}, function(matieres){
+              $scope.matieres = matieres;
+            });
+          }
+
           Regroupements.get({id:user.info['uid']}, function(regroupements){
             var selectdestinationsIds = new Array();
             _.each(MessageService.getMessage().destinations, function(dest) {
@@ -416,7 +423,8 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     };
 
     $scope.addDestinations = function(){
-        console.log('add destinations');
+        console.log('add destinations ');
+        console.debug($scope.matiere);
         MessageService.addDestinations($scope.destinations);
         console.log(MessageService.getMessage());
     };

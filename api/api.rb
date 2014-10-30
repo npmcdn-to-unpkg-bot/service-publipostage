@@ -141,6 +141,12 @@ class ApplicationAPI < Grape::API
     content_type 'application/json;charset=UTF-8'
     return personnels
   end
+  #############################################################################
+  desc "retourner la liste des matieres dans letablissement"
+  get "/etablissements/:uai/matieres" do
+    personnels = []
+    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_personnel]+ params[:uai] +'/matieres',{})
+  end
   ############################################################################
   desc "send a notification"
   post "/notification/:uai/:profil/:uid/:type" do
