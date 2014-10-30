@@ -429,7 +429,6 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     $scope.addProfils = function(){
         console.log('add profils');
         MessageService.addProfils($scope.selectedProfils);
-        console.log(MessageService.getMessage());
     };
 
     $scope.squareClass = function(clazz) {
@@ -477,15 +476,13 @@ Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 /********************************* Massage controller*****************************************/
 Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems',
     function($scope, $sce, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems){
-        $scope.tinymceOptions =  tinymceOptions;
 
         //Template items
         $scope.templateItems =  templateItems;
 
         // load message from the root ..
         $scope.tinyMessage = MessageService.getMessage()['message'];
-        console.log('tinyMessage');
-        console.log($scope.tinyMessage);
+        $scope.tinymceOptions =  tinymceOptions;
 
         $scope.toTrustedHtml = function(html_code) {
             return $sce.trustAsHtml(html_code);
@@ -497,7 +494,7 @@ Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScop
         $scope.addToMessage = function(text){
             console.log('add to message + ###' + text + '###');
             console.log($scope.tinyMessage);
-            $scope.tinyMessage += text; 
+            $scope.tinyMessage += text;
         }
         
         $scope.goToPreview = function(location){
