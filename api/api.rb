@@ -114,12 +114,14 @@ class ApplicationAPI < Grape::API
         classe["id"]= classe["classe_id"]
         classe["libelle"]= classe["classe_libelle"]
         classe["type"] = "classe"
+        classe["destinataire_libelle"] = classe["classe_libelle"]
         regroupements.push(classe)
       end
       response["groupes_eleves"].each do |groupe|
         groupe["id"]= groupe["groupe_id"]
         groupe["libelle"]= groupe["groupe_libelle"]
         groupe["type"] = "groupe"
+        groupe["destinataire_libelle"] = groupe["groupe_libelle"]
         regroupements.push(groupe)
       end
       { :etablissements => etablissements, :regroupements => regroupements}
@@ -130,8 +132,14 @@ class ApplicationAPI < Grape::API
   #############################################################################
   desc "retourner la liste des personnels dans letablissement"
   get "/etablissements/:uai/personnels" do
-    content_type 'application/json;charset=UTF-8'
+    personnels = []
     response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_personnel]+ params[:uai] +'/personnel',{})
+    response.each do |personnel|
+      personnel["destinataire_libelle"] = personnel["nom"] + " " + personnel["prenom"]
+      personnels << personnel
+    end
+    content_type 'application/json;charset=UTF-8'
+    return personnels
   end
   ############################################################################
   desc "send a notification"

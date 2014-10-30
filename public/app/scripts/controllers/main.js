@@ -334,6 +334,16 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     var getPersonnel = function(uai){
         Personnels.all({uai:uai}, function(personnels){
             $scope.personnels = personnels;
+            var selectdestinationsIds = new Array();
+            _.each(MessageService.getMessage().destinations, function(dest) {
+              selectdestinationsIds.push(dest.id);
+            });
+            _.each($scope.personnels, function(element) {
+              if(_.contains(selectdestinationsIds, element.id)) {
+                element['checked'] = true;
+                $scope.destinations.push(element);
+              }
+            });
         }, function(error){
             console.log(error);
         });
@@ -346,10 +356,9 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
           getPersonnel($scope.currentUser.info['ENTPersonStructRattachRNE']);
         } else {
           Regroupements.get({id:user.info['uid']}, function(regroupements){
-            console.log(regroupements);
             var selectdestinationsIds = new Array();
             _.each(MessageService.getMessage().destinations, function(dest) {
-                selectdestinationsIds.push(dest.id);
+              selectdestinationsIds.push(dest.id);
             });
 
             $scope.regroupements = regroupements;
@@ -367,7 +376,7 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
                 $scope.empty_squares = new Array(15 - $scope.regroupements['regroupements'].length );
                 console.log($scope.empty_squares);
                 for (var i=0;i<$scope.empty_squares.length;i++){
-                  $scope.empty_squares[i]={ color:colors[colorIndex++%colors.length]};
+                  $scope.empty_squares[i]={ color:colors[colorIndex++%colors.length] , };
                 }
             } else
             {
@@ -495,6 +504,10 @@ Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScop
             console.log('add message to preview');
             MessageService.addMessage($scope.tinyMessage, $scope.title)
             $location.path('/apercu/'+location);
+        }
+
+        $scope.goToDestinataire = function(location){
+            $location.path('/destinataire/'+location);
         }
         
         $scope.addType = function(){

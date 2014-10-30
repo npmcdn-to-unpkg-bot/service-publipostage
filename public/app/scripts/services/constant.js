@@ -175,7 +175,7 @@ angular.module('services.constants').service('Menus', function($rootScope){
             left_menu_text:'écrire aux personnels',
             left_menu_button_text: 'écrire aux personnels',
             right_menu_text: 'écrire aux personnels',
-            recpitualif:'profils de: ',
+            recpitualif:'',
             icon :$rootScope.racine_images + 'personnel.svg',
             color: "rouge",
             icon_div:"personnel-icon"

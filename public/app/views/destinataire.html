@@ -27,8 +27,7 @@
                 </form>
                 <p class="menu-text-hidden">
                     <strong> {{menus[$state.params["type"]]['recpitualif']}} 
-                        <span ng-repeat= "classe in regroupements['regroupements']"><span ng-show="classe.checked">{{classe.libelle}} </span></span>
-                        <span ng-repeat= "personnel in personnels"> <span ng-show="personnel.checked">{{personnel.prenom}} {{personnel.nom}}</span></span>
+                        <span ng-repeat="destination in destinations"> {{destination['destinataire_libelle']}}</span>
                     </strong>
                 </p>
 
