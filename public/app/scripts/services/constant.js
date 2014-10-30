@@ -24,7 +24,7 @@ angular.module('services.constants').service('Squares', function($rootScope){
                     { id: 'write_profs',
                       icon: $rootScope.racine_images + 'profs.svg',
                       color: 'bleu',
-                      text: 'écrire aux profs',
+                      text: 'écrire aux professeurs',
                       url: '/destinataire/ecrire_profs',
                       active: false
                     },
@@ -147,8 +147,8 @@ angular.module('services.constants').service('Menus', function($rootScope){
 				ecrire_profs:{
 				    left_menu_text:'écrire aux prof : pour diffuser un message aux enseignants',
 				    left_menu_button_text: 'écrire aux enseignant',
-				    right_menu_text: 'écrire aux prof',
-				    recpitualif:'enseignant de:',
+				    right_menu_text: 'écrire aux professeurs ',
+				    recpitualif:'enseignant des classes:',
             icon :$rootScope.racine_images + 'profs.svg',
             color: "bleu",
             icon_div:"profs-icon"
@@ -212,6 +212,7 @@ angular.module('services.constants').value('templateItems',
   { value : '[nomEleve]', message :  'Nom de l\'élève'        , showOnly : ['info_famille']},
   { value : '[prenomEleve]', message :  'Prénom de l\'élève'  , showOnly : ['info_famille']},
   { value : '[classe]', message :  'Classe' },
+  { value : '[matiere]', message :  'Matière'                 , showOnly : ['ecrire_profs']},
   { value : '[blogEtab]', message :  'Lien blog de l\'etablissement' },
   { value : '[blogRegroupement]', message :  'Lien blog du groupe ou de la classe' },
   { value : '<a href=\'http://www.laclasse.com\'>Laclasse</a>', message :  'Lien Laclasse.com' }
