@@ -27,7 +27,7 @@
                         <a class="btn btn-default btn-sm" ng-click="showtoolbar=!showtoolbar">Inserer des données</a><br/>
                         <div ng-show="showtoolbar">
                             <div class="btn-group">
-                                <a class="btn btn-default btn-sm" ng-repeat="item in templateItems" ng-click="addToMessage(item.value)">{{item.message}}</a>
+                                <a class="btn btn-default btn-sm" ng-repeat="item in templateItems | templateItemsTypeFilter" ng-click="addToMessage(item.value)">{{item.message}}</a>
                             </div>
                         </div>
                     </div>
