@@ -55,6 +55,15 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       controller:'publiCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
+
+    var checkMessage = function($q, $timeout, MessageService, forPage){
+      var deferred = $q.defer();
+      if (!MessageService.isValid(forPage))
+        deferred.reject("invalid message");
+      else
+        deferred.resolve("valid message");
+      return deferred.promise;
+    };
     
     var destinataire = {
       name:'destinataire',
@@ -63,13 +72,8 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       controller:'destinatairesCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB", "ELV_ETB"],
       resolve :{
-        checkMessage: function($q, $timeout, MessageService){
-          var deferred = $q.defer();
-          if (!MessageService.isValid('destinataire'))
-            deferred.reject("invalid message");
-          else
-            deferred.resolve("valid message");
-          return deferred.promise;
+        checkMessage: function($q, $timeout, MessageService) {
+          checkMessage($q, $timeout, MessageService,this.name);
         }
       }
     }
@@ -81,13 +85,8 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       controller:'MassageCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
       resolve :{
-        checkMessage: function($q, $timeout, MessageService){
-          var deferred = $q.defer();
-          if (!MessageService.isValid('message'))
-            deferred.reject("invalid message");
-          else
-          deferred.resolve("valid message");
-          return deferred.promise;
+        checkMessage: function($q, $timeout, MessageService) {
+          checkMessage($q, $timeout, MessageService,this.name);
         }
       }
     }
@@ -98,16 +97,10 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       templateUrl: APPLICATION_PREFIX+'/views/apercu.html',
       controller:'MainCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
-      resolve:{ /*
-        checkMessage: function($q, $timeout, MessageService){
-          var message = MessageService.getMessage();
-          var d = $q.defer();
-          if (!MessageService.isValid('message'))
-            deferred.reject("invalid message");
-          else
-          deferred.resolve("valid message");
-          return deferred.promise;
-        } */
+      resolve :{
+        checkMessage: function($q, $timeout, MessageService) {
+          checkMessage($q, $timeout, MessageService,this.name);
+        }
       }
     }
     
@@ -117,17 +110,10 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       templateUrl: APPLICATION_PREFIX+'/views/mode_diffusion.html',
       controller:'MainCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
-      resolve :{ /*
-        checkMessage: function($q, $timeout, MessageService){
-          var message = MessageService.getMessage();
-          var deferred = $q.defer();
-          if (message['messageType']==""|| message['destinations'].length==0 || message['message'] =="")
-            deferred.reject("invalid message");
-          else
-            deferred.resolve("valid message");
-          return deferred.promise;
-
-        } */ 
+      resolve :{
+        checkMessage: function($q, $timeout, MessageService) {
+          checkMessage($q, $timeout, MessageService,this.name);
+        }
       }
     }
     
@@ -211,14 +197,13 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $httpProvider.interceptors.push('HttpInterceptor');
 }).config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
-}).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','Message', 'MessageService',function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, Message, MessageService) {
+}).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','MessageService',
+  function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, MessageService) {
     
     $rootScope.$location = $location;
     $rootScope.racine_images ='/app/images/';
     // check authorization before changing states .
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-      //console.log('state changed');
-      //console.log(MessageService.getMessage());
       // before loading the new state => check rights
       security.requestCurrentUser().then(function(user) {
         currentUser = user;
@@ -237,14 +222,13 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
       if (error == "invalid message") {
         event.preventDefault();
-        alert('le message est pas valide');
+        alert('le message n\'est pas valide');
         $state.transitionTo('home');
       }
     });   
 
     $rootScope.$state = $state;
     $rootScope.title = "title";
-    $rootScope.messageObject = MessageService.getMessage();
     $rootScope.tinymceModel = "template";
     window.scope = $rootScope;
     FlashServiceStyled.show('bienvenu au publispostage', 'alert alert-success');

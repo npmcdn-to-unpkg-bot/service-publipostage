@@ -133,9 +133,6 @@ angular.module('services.constants').service('Squares', function($rootScope){
 
 angular.module('services.constants').constant('colors' , [ 'bleu', 'vert', 'rouge', 'violet', 'orange','jaune', 'gris1','gris2', 'gris3', 'gris4' ]);
 
-angular.module('services.constants').constant('transparentColors', [ 'bleu-clear', 'vert-clear', 'rouge-clear', 'violet-clear', 'orange-clear',
-                            'jaune-clear', 'gris1-clear','gris2-clear', 'gris3-clear', 'gris4-clear' ]);
-
 angular.module('services.constants').service('Menus', function($rootScope){
   return {
 				info_famille: {
@@ -178,7 +175,7 @@ angular.module('services.constants').service('Menus', function($rootScope){
             left_menu_text:'écrire aux personnels',
             left_menu_button_text: 'écrire aux personnels',
             right_menu_text: 'écrire aux personnels',
-            recpitualif:'profils de: ',
+            recpitualif:'',
             icon :$rootScope.racine_images + 'personnel.svg',
             color: "rouge",
             icon_div:"personnel-icon"
