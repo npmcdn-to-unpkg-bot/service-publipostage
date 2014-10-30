@@ -393,22 +393,26 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     
     $scope.selectAll = function(){
         $scope.selectAllMode = false;
-        $scope.regroupements['regroupements'].forEach(function(element, index, array){
-            if (!element['checked'] || element['checked'].isUndefined){
-                element['checked'] = true;
-                $scope.destinations.push(element);
+        if($scope.regroupements != undefined && $scope.regroupements['regroupements'] != undefined) {
+          $scope.regroupements['regroupements'].forEach(function(element, index, array){
+            if (!element['checked'] || _.isUndefined(element['checked'])){
+              element['checked'] = true;
+              $scope.destinations.push(element);
             }
-        });
+          });
+        }
     };
 
     $scope.deselectAll = function(){
         $scope.selectAllMode = true;
         $scope.destinations = [];
-        $scope.regroupements['regroupements'].forEach(function(element, index, array){
-            if(element['checked'] || element['checked'].isUndefined){
-                element['checked'] = false;
+        if($scope.regroupements != undefined && $scope.regroupements['regroupements'] != undefined) {
+          $scope.regroupements['regroupements'].forEach(function(element, index, array){
+            if(element['checked'] || _.isUndefined(element['checked'])){
+              element['checked'] = false;
             }
-        });
+          });
+        }
     };
 
     $scope.addDestinations = function(){
