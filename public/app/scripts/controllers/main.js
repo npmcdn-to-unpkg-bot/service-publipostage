@@ -144,10 +144,10 @@ Controllers.controller('wizardController', ['$scope', function($scope){
 }]);
 
 /********************************* Main controller of the application *****************************************/
-Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'DiffusionInfo', 
-    function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect,
-     colors, transparentColors, Menus, tinymceOptions, $state, Publipostages, DiffusionInfo){
+Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'MessageService','Redirect', 
+    'colors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'DiffusionInfo', 
+    function($scope, $sce, security, Regroupements, $location, $rootScope, MessageService, Redirect,
+     colors, Menus, tinymceOptions, $state, Publipostages, DiffusionInfo){
         // making Redirect utils accesible in the scope
         $scope.Redirect = Redirect;
         $scope.security = security;
@@ -210,7 +210,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
                     'message_type':message.messageType, 'diffusion_type':message.diffusion_type, 'profils':message.profils}, function(data){
                         $rootScope.created_publi = data;
                         // reinitialize message service
-                        MessageService.init();
+                        MessageService.reset();
                         $location.path('/envoi/'+location);
                     }, 
                     function(error){
@@ -318,9 +318,9 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
 }]);
 
 /******************************************* Destinataire Controller ****************************************/
-Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus', '$state', 'Personnels', function($scope,security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, 
-    colors, transparentColors, Menus, $state, Personnels){
+Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements', '$location', '$rootScope', 'MessageService','Redirect', 
+    'colors', 'Menus', '$state', 'Personnels', function($scope,security, Regroupements, $location, $rootScope, MessageService, Redirect, 
+    colors, Menus, $state, Personnels){
     // making Redirect utils accesible in the scope
     $scope.Redirect = Redirect;
     $scope.security = security;
@@ -329,12 +329,21 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         MessageService.addMessageType($state.params['type']);
     }
     //initialize destinations
-    $scope.destinations = [];
+    $scope.destinations = new Array();
 
     var getPersonnel = function(uai){
         Personnels.all({uai:uai}, function(personnels){
             $scope.personnels = personnels;
-            console.log(personnels);
+            var selectdestinationsIds = new Array();
+            _.each(MessageService.getMessage().destinations, function(dest) {
+              selectdestinationsIds.push(dest.id);
+            });
+            _.each($scope.personnels, function(element) {
+              if(_.contains(selectdestinationsIds, element.id)) {
+                element['checked'] = true;
+                $scope.destinations.push(element);
+              }
+            });
         }, function(error){
             console.log(error);
         });
@@ -343,31 +352,38 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     // get the list of user regroupements 
     security.requestCurrentUser().then(function(user) {
         $scope.currentUser = user;
-        if ($state.params['type']=='ecrire_personnels')
-            getPersonnel($scope.currentUser.info['ENTPersonStructRattachRNE']);
-        Regroupements.get({id:user.info['uid']}, function(regroupements){
-            console.log(regroupements);
+        if ($state.params['type']=='ecrire_personnels') {
+          getPersonnel($scope.currentUser.info['ENTPersonStructRattachRNE']);
+        } else {
+          Regroupements.get({id:user.info['uid']}, function(regroupements){
+            var selectdestinationsIds = new Array();
+            _.each(MessageService.getMessage().destinations, function(dest) {
+              selectdestinationsIds.push(dest.id);
+            });
+
             $scope.regroupements = regroupements;
             // add colors to classes
-            $scope.regroupements['classes'].forEach(function(element, index, array){
-                element['color'] = $scope.randomTransparentColor();
-            });
-            // add colors to groupes
-            $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
-                element['color'] = $scope.randomTransparentColor();
+            var colorIndex = 0;
+            $scope.regroupements['regroupements'].forEach(function(element, index, array){
+                element['color'] = colors[colorIndex++%colors.length];
+                if(_.contains(selectdestinationsIds, element.id)) {
+                    element['checked'] = true;
+                    $scope.destinations.push(element);
+                }
             });
             // Add colors to empty squres
-            if (($scope.regroupements['classes'].length + $scope.regroupements['groupes_eleves'].length) < 15) {
-                $scope.empty_squares = new Array(15 - ($scope.regroupements['classes'].length + $scope.regroupements['groupes_eleves'].length));
+            if ($scope.regroupements['regroupements'].length < 15) {
+                $scope.empty_squares = new Array(15 - $scope.regroupements['regroupements'].length );
                 console.log($scope.empty_squares);
                 for (var i=0;i<$scope.empty_squares.length;i++){
-                  $scope.empty_squares[i]={ color:$scope.randomTransparentColor()};
+                  $scope.empty_squares[i]={ color:colors[colorIndex++%colors.length] , };
                 }
             } else
             {
                 $scope.empty_squares = []
             }
-        });
+          });
+        }
     });
     // get the list of menus
     $scope.menus = Menus;
@@ -377,36 +393,20 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     
     $scope.selectAll = function(){
         $scope.selectAllMode = false;
-        $scope.regroupements['classes'].forEach(function(element, index, array){
+        $scope.regroupements['regroupements'].forEach(function(element, index, array){
             if (!element['checked'] || element['checked'].isUndefined){
                 element['checked'] = true;
                 $scope.destinations.push(element);
-                $scope.changeClassColor(index);
             }
         });
-        $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
-            if (!element['checked'] || element['checked'].isUndefined){
-                element['checked'] = true;
-                $scope.destinations.push(element);
-                $scope.changeGroupColor(index);
-            }
-        })
-
     };
 
     $scope.deselectAll = function(){
         $scope.selectAllMode = true;
         $scope.destinations = [];
-        $scope.regroupements['classes'].forEach(function(element, index, array){
+        $scope.regroupements['regroupements'].forEach(function(element, index, array){
             if(element['checked'] || element['checked'].isUndefined){
                 element['checked'] = false;
-                $scope.changeClassColor(index);
-            }
-        });
-        $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
-            if(element['checked'] || element['checked'].isUndefined){
-                element['checked'] = false;
-                $scope.changeGroupColor(index);
             }
         });
     };
@@ -429,51 +429,11 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     $scope.addProfils = function(){
         console.log('add profils');
         MessageService.addProfils($scope.selectedProfils);
-        console.log(MessageService.getMessage());
     };
 
-    $scope.randomColor = function() {
-        var index = Math.floor(Math.random()*(colors.length));
-        console.log(index);
-        return colors[index];
-    };
-
-    $scope.randomTransparentColor = function() {
-        var index = Math.floor(Math.random()*(transparentColors.length));
-        return transparentColors[index];
-    };
-
-    $scope.changeClassColor = function($index){
-        var color = $scope.regroupements['classes'][$index]['color'];
-        var match = color.search("-clear");
-        if (match==-1) {
-            color = color+"-clear";
-        }else
-        {
-            color = color.substr(0,match);
-        }
-        $scope.regroupements['classes'][$index]['color']=color;
-    };
-
-
-    $scope.changeGroupColor = function($index){
-        var color = $scope.regroupements['groupes_eleves'][$index]['color'];
-        var match = color.search("-clear");
-        if (match==-1) {
-            color = color+"-clear";
-        }else
-        {
-            color = color.substr(0,match)
-        }
-        $scope.regroupements['groupes_eleves'][$index]['color']=color;
-    };
-    
-    // watch destinations (array)
-    /*
-    $scope.$watch('destinations', function(newVal){
-        console.log(newVal);
-    }, true); 
-    */
+    $scope.squareClass = function(clazz) {
+        return clazz.color + (clazz.checked ? '' : '-clear');
+    }
 
     // page ecrire tous
     // list of available profils 
@@ -516,15 +476,13 @@ Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 /********************************* Massage controller*****************************************/
 Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems',
     function($scope, $sce, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems){
-        $scope.tinymceOptions =  tinymceOptions;
 
         //Template items
         $scope.templateItems =  templateItems;
 
         // load message from the root ..
         $scope.tinyMessage = MessageService.getMessage()['message'];
-        console.log('tinyMessage');
-        console.log($scope.tinyMessage);
+        $scope.tinymceOptions =  tinymceOptions;
 
         $scope.toTrustedHtml = function(html_code) {
             return $sce.trustAsHtml(html_code);
@@ -536,13 +494,17 @@ Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScop
         $scope.addToMessage = function(text){
             console.log('add to message + ###' + text + '###');
             console.log($scope.tinyMessage);
-            $scope.tinyMessage += text; 
+            $scope.tinyMessage += text;
         }
         
         $scope.goToPreview = function(location){
             console.log('add message to preview');
             MessageService.addMessage($scope.tinyMessage, $scope.title)
             $location.path('/apercu/'+location);
+        }
+
+        $scope.goToDestinataire = function(location){
+            $location.path('/destinataire/'+location);
         }
         
         $scope.addType = function(){
@@ -558,8 +520,8 @@ Controllers.controller('DocCtrl', ['$scope', '$state', function($scope, $state){
 }]);
 
 /********************************* Controller for envoi page  *****************************************/
-Controllers.controller('EnvoiCtrl', ['$scope', '$sce', 'security', '$location', '$rootScope', 'Message', 'MessageService', '$state', 'Menus',
-  function($scope, $sce, security, $location, $rootScope, Message, MessageService, $state, Menus){
+Controllers.controller('EnvoiCtrl', ['$scope', '$sce', 'security', '$location', '$rootScope', 'MessageService', '$state', 'Menus',
+  function($scope, $sce, security, $location, $rootScope, MessageService, $state, Menus){
 
     // get the list of menus
     $scope.menus = Menus;

@@ -106,12 +106,25 @@ class ApplicationAPI < Grape::API
     response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_user] + params[:id], {"expand" => "true"})
     if !response.nil?
       etablissements = []
-      classes =[]
-      groupes = []
+      regroupements =[]
       response["etablissements"].each do |etab|
-      etablissements.push({:id => etab["id"], :nom => etab["nom"]}) if !etablissements.include?({:id => etab["id"], :nom => etab["nom"]})
+        etablissements.push({:id => etab["id"], :nom => etab["nom"]}) if !etablissements.include?({:id => etab["id"], :nom => etab["nom"]})
       end
-      { :etablissements => etablissements, :classes => response["classes"], :groupes_eleves => response["groupes_eleves"]}
+      response["classes"].each do |classe|
+        classe["id"]= classe["classe_id"]
+        classe["libelle"]= classe["classe_libelle"]
+        classe["type"] = "classe"
+        classe["destinataire_libelle"] = classe["classe_libelle"]
+        regroupements.push(classe)
+      end
+      response["groupes_eleves"].each do |groupe|
+        groupe["id"]= groupe["groupe_id"]
+        groupe["libelle"]= groupe["groupe_libelle"]
+        groupe["type"] = "groupe"
+        groupe["destinataire_libelle"] = groupe["groupe_libelle"]
+        regroupements.push(groupe)
+      end
+      { :etablissements => etablissements, :regroupements => regroupements}
     else
       return []
     end
@@ -119,8 +132,14 @@ class ApplicationAPI < Grape::API
   #############################################################################
   desc "retourner la liste des personnels dans letablissement"
   get "/etablissements/:uai/personnels" do
-    content_type 'application/json;charset=UTF-8'
+    personnels = []
     response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_personnel]+ params[:uai] +'/personnel',{})
+    response.each do |personnel|
+      personnel["destinataire_libelle"] = personnel["nom"] + " " + personnel["prenom"]
+      personnels << personnel
+    end
+    content_type 'application/json;charset=UTF-8'
+    return personnels
   end
   ############################################################################
   desc "send a notification"
