@@ -114,6 +114,10 @@ angular.module('services.messages').service('MessageService', ['$rootScope' ,fun
           break
       }
     }
+
+    this.setMatiere = function (matiere) {
+      $rootScope.messageObject['matiere'] = matiere;
+    };
 }]);
 
 /************************************************************************************/

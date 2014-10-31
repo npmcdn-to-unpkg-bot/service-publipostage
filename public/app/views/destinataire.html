@@ -9,7 +9,7 @@
                 <form role="form" class="form-inline">
                     <div ng-show="$state.params['type']=='ecrire_profs'">
                         <label>Choisir une matiere: </label>
-                            <select class="form-control" ng-model="matiere" ng-options="matiere as matiere.libelle_long for matiere in matieres"></select>
+                            <select class="form-control" ng-model="matiere" ng-options="matiere.id as matiere.libelle_long for matiere in matieres"></select>
                     </div>
                     <br/>
                     <!--

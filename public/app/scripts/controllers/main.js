@@ -285,7 +285,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
                 });
               }
               else if($location.$$path.indexOf('/mode_diffusion/ecrire_profs') == 0) {
-                DiffusionInfo.listProfessors({regroupements : regroupements},function(data) {
+                DiffusionInfo.listProfessors({regroupements : regroupements , matiere : MessageService.getMessage().matiere},function(data) {
                   $scope.addDiffusionData(data);
                 });
               }
@@ -357,8 +357,10 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         } else {
 
           if($state.params['type']=='ecrire_profs') {
+            $scope.matieres = [{ id: -1 , libelle_long : 'Toutes'}];
+            $scope.matiere = _.isUndefined(MessageService.getMessage().matiere) ? $scope.matieres[0].id : MessageService.getMessage().matiere;
             Matieres.all({uai:$scope.currentUser.info['ENTPersonStructRattachRNE']}, function(matieres){
-              $scope.matieres = matieres;
+              $scope.matieres = $scope.matieres.concat(matieres);
             });
           }
 
@@ -424,7 +426,7 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
 
     $scope.addDestinations = function(){
         console.log('add destinations ');
-        console.debug($scope.matiere);
+        MessageService.setMatiere($scope.matiere);
         MessageService.addDestinations($scope.destinations);
         console.log(MessageService.getMessage());
     };
