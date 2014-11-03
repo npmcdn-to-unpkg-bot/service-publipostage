@@ -48,7 +48,7 @@
                     </p>
                 </div>
                 <p style="text-align: center">
-                    <a class="btn btn-sm" ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  ng-click="sendMessage($state.params['type'])">envoyer</a>
+                    <a class="btn btn-sm" ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  ng-click="sendMessage($state.params['type'])" ng-disabled="diffusion_type == undefined">envoyer</a>
                 </p>
             </div>
         </div>

@@ -73,11 +73,11 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB", "ELV_ETB"],
       resolve :{
         checkMessage: function($q, $timeout, MessageService) {
-          checkMessage($q, $timeout, MessageService,this.name);
+          return checkMessage($q, $timeout, MessageService,this.name);
         }
       }
     }
-    
+
     var message = {
       name:'message',
       url:'/message/:type',
@@ -86,7 +86,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
       resolve :{
         checkMessage: function($q, $timeout, MessageService) {
-          checkMessage($q, $timeout, MessageService,this.name);
+          return checkMessage($q, $timeout, MessageService,this.name);
         }
       }
     }
@@ -99,7 +99,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
       resolve :{
         checkMessage: function($q, $timeout, MessageService) {
-          checkMessage($q, $timeout, MessageService,this.name);
+          return checkMessage($q, $timeout, MessageService,this.name);
         }
       }
     }
@@ -112,7 +112,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
       resolve :{
         checkMessage: function($q, $timeout, MessageService) {
-          checkMessage($q, $timeout, MessageService,this.name);
+          return checkMessage($q, $timeout, MessageService,this.name);
         }
       }
     }
