@@ -27,8 +27,9 @@ angular.module('services.messages').service('MessageService', ['$rootScope' ,fun
         title:'',
         destinations:[],
         messageType:'',
-         diffusion_type:'', 
-        profils:[]
+        diffusion_type:'', 
+        profils:[],
+        matiere: ''
       };
     };
 

@@ -207,7 +207,8 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             // check if message is valid ..
             if (message.title != "" && message.message!=""){
                 Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations,
-                    'message_type':message.messageType, 'diffusion_type':message.diffusion_type, 'profils':message.profils}, function(data){
+                  'message_type':message.messageType, 'diffusion_type':message.diffusion_type, 'profils':message.profils, 'matiere_id' : message.matiere }, 
+                    function(data){
                         $rootScope.created_publi = data;
                         // reinitialize message service
                         MessageService.reset();
