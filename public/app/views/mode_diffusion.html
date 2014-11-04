@@ -41,10 +41,6 @@
                         <strong>Mode de diffusion</strong><br/>
                         <input id="byMail" type="radio" ng-model="diffusion_type" value="email"> <label for="byMail" class="css-label">{{diffusionInfo.nb_email}} mails à envoyer et un fichier pdf à imprimer pour les {{diffusionInfo.nb_pdf}} destinataires sans adresse de courrier électronique valide </label></br>
                         <input id="byPdf" type="radio" ng-model="diffusion_type" value="pdf"> <label for="byPdf" class="css-label">un fichier pdf à imprimer pour les {{diffusionInfo.nb_total}} destinataires</label><br/>
-                        <span ng-show="messageObject['messageType']=='info_famille'">
-                            <input id="byNotification" type="radio" ng-model="diffusion_type" value="notif">
-                            <label for="byNotification" class="css-label">diffuser en ligne sur la page info famille </label>
-                        </span><br/>
                     </p>
                 </div>
                 <p style="text-align: center">
