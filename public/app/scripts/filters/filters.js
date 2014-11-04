@@ -8,7 +8,7 @@ angular.module('publipostageFilters', []).filter('templateItemsTypeFilter' , ['$
           validEntry = false;
         }
       }
-      if(templateItem.rolePriorityMin != undefined) {
+      if(validEntry && templateItem.rolePriorityMin != undefined) {
         validEntry = security.getRoleMaxPriority() >= templateItem.rolePriorityMin ;
       }
       if(validEntry) {
