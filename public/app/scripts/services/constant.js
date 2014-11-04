@@ -213,6 +213,8 @@ angular.module('services.constants').value('templateItems',
   { value : '[prenomEleve]', message :  'Prénom de l\'élève'  , showOnly : ['info_famille']},
   { value : '[classe]', message :  'Classe' },
   { value : '[matiere]', message :  'Matière'                 , showOnly : ['ecrire_profs']},
+  { value : '[loginLaClasse]', message :  'Login LaClasse.com'       , showOnly : ['info_famille', 'ecrire_eleves'] , rolePriorityMin :2},
+  { value : '[pwdLaClasse]', message :  'Mot de passe LaClasse.com'  , showOnly : ['info_famille', 'ecrire_eleves'] , rolePriorityMin :2},
   { value : '[blogEtab]', message :  'Lien blog de l\'etablissement' },
   { value : '[blogRegroupement]', message :  'Lien blog du groupe ou de la classe' },
   { value : '<a href=\'http://www.laclasse.com\'>Laclasse</a>', message :  'Lien Laclasse.com' }

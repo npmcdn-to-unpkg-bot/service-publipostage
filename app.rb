@@ -91,9 +91,11 @@ class SinatraApp < Sinatra::Base
   get APP_PATH + '/current-user' do
     if is_logged?
        data = env['rack.session'][:current_user]
+       user_detail = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_user] + data[:info]['uid'], {})
        {:login => data[:user],
          :info => data[:info],
-         :roles => data[:info]['ENTPersonRoles'].split(',').map{|role| role.split(':')}
+         :roles => data[:info]['ENTPersonRoles'].split(',').map{|role| role.split(':')},
+         :roles_max_priority_etab_actif => user_detail['roles_max_priority_etab_actif']
        }.to_json
     else
        nil
