@@ -66,9 +66,13 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "retourner le fichier pdf d\'un publipostage"
   get '/publipostage/:id/pdf'do
-    content_type 'application/pdf'
-    signed_url = Annuaire.sign(ANNUAIRE[:url], ANNUAIRE[:service_publipostage] + params[:id] + '/pdf', {})
-    RestClient.get signed_url
+    publipostage = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_publipostage] + params[:id], {})
+    if publipostage["user_uid"] == current_user[:info]['uid']
+      content_type 'application/pdf'
+      signed_url = Annuaire.sign(ANNUAIRE[:url], ANNUAIRE[:service_publipostage] + params[:id] + '/pdf', {})
+      return RestClient.get signed_url
+    end
+    error!('Vous n\'êtes pas le créateur de ce publipostage',401)
   end
 
   ############################################################################
@@ -79,7 +83,6 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "supprimer un publipostage"
   delete '/publipostages/:id' do
-    puts "????"
     begin
       Annuaire.delete_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_publipostage] + params[:id], {})
     rescue => e
