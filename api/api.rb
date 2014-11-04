@@ -48,8 +48,12 @@ class ApplicationAPI < Grape::API
   end
   post '/publipostages' do
     begin
+      params[:user_uid] = current_user[:info].uid
+      puts params.inspect
       Annuaire.post_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_publipostage],{}, params)
     rescue => e
+      puts e.message
+      puts e.backtrace[0...10]
       error!(e.message, 400)
     end
   end
