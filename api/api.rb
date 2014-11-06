@@ -67,7 +67,7 @@ class ApplicationAPI < Grape::API
   desc "retourner le fichier pdf d\'un publipostage"
   get '/publipostage/:id/pdf'do
     publipostage = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_publipostage] + params[:id], {})
-    if publipostage["user_uid"] == current_user[:info]['uid']
+    if publipostage["user_uid"] == current_user[:info]['uid'] || Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_user] + current_user[:info]['uid'], {})['roles_max_priority_etab_actif'] >= 3
       content_type 'application/pdf'
       signed_url = Annuaire.sign(ANNUAIRE[:url], ANNUAIRE[:service_publipostage] + params[:id] + '/pdf', {})
       return RestClient.get signed_url
