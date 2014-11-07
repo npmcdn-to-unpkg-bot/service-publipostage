@@ -32,22 +32,6 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
     
-    var profil = {
-      name:'profil',
-      url:'/profil',
-      templateUrl: APPLICATION_PREFIX+'/views/profil.html',
-      controller:'publiCtrl',
-      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
-    }
-    
-    var type_message = {  
-      name:'type_message',
-      url:'/type_message/:type',
-      templateUrl: APPLICATION_PREFIX+'/views/type_message.html',
-      controller:'MainCtrl',
-      authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
-    }
-    
     var historique = {
       name:'histroique',
       url:'/historique/:id',
@@ -95,7 +79,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name:'apercu',
       url:'/apercu/:type',
       templateUrl: APPLICATION_PREFIX+'/views/apercu.html',
-      controller:'MainCtrl',
+      controller:'ApercuCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
       resolve :{
         checkMessage: function($q, $timeout, MessageService) {
@@ -108,7 +92,7 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
       name: 'mode_diffusion',
       url:'/mode_diffusion/:type',
       templateUrl: APPLICATION_PREFIX+'/views/mode_diffusion.html',
-      controller:'MainCtrl',
+      controller:'ModeDiffusionCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"],
       resolve :{
         checkMessage: function($q, $timeout, MessageService) {
@@ -144,7 +128,6 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $stateProvider.state(home)
     .state(gestion)
     .state(createPublipostage)
-    .state(type_message)
     .state(historique)
     .state(destinataire)
     .state(message)
