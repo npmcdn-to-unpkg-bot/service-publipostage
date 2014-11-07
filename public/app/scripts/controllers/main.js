@@ -380,10 +380,20 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', 'Mes
 
         // get the list of menus
         $scope.menus = Menus;
+
+        String.prototype.endsWith = function(suffix) {
+            return this.indexOf(suffix, this.length - suffix.length) !== -1;
+        };
         
         $scope.addToMessage = function(text){
-            console.log('add to message + ###' + text + '###');
-            console.log($scope.tinyMessage);
+            
+            /*
+             * Append space if message is not empty and doesn't ends with sparce nor Carriage return
+             */
+            if(_.isString($scope.tinyMessage) && $scope.tinyMessage.length > 0 && !($scope.tinyMessage.endsWith("&nbsp;") || $scope.tinyMessage.endsWith("<br />"))) {
+              text  = " "  + text;
+            }
+            
             $scope.tinyMessage += text;
         }
         
