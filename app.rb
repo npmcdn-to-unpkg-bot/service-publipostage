@@ -41,7 +41,7 @@ class SinatraApp < Sinatra::Base
 
   Annuaire.configure do |config|
     config.app_id = ANNUAIRE[:app_id]
-    config.secret = ANNUAIRE[:secret]
+    config.api_key = ANNUAIRE[:api_key]
   end
 
   helpers AuthenticationHelpers

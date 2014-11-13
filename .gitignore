@@ -13,10 +13,7 @@ test/tmp
 test/version_tmp
 config/annuaire.rb
 config/database.rb
-config/CASLaclasseCom.rb
 config/options.rb
-config/CASLaclasseCom.rb.sample
-config/env.rb
 config/annuaire.rb.sample
 tmp
 npm-debug.log

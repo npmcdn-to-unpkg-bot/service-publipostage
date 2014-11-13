@@ -8,8 +8,8 @@ APP_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 APP_PATH = '/app'
 
 # CAS Configuration.
-module CASLaclasseCom
-  OPTIONS = { 
+module CASAUTH
+  CONFIG = {
   	host: 'www.cas.com',
     ssl: true,
     port: 443,
@@ -17,18 +17,20 @@ module CASLaclasseCom
     login_url: '/cas/login',
     service_validate_url: '/cas/serviceValidate',
     logout_url: '/cas/logout',
-    logout_saml:'/saml/saml2/idp/SingleLogoutService.php'
+    logout_saml_url:'/saml/saml2/idp/SingleLogoutService.php',
+    restmod_url: '/sso/api/v1/tickets',
   }
 end
 
 # Connexion avec l'annuaire ENT
 ANNUAIRE = {
-  :url => "http://localhost:9292/api",
-  :service_user => "app/users/",
-  :service_users => "app/users/liste/",
-  :service_regroupement => "app/regroupements/",
-  :service_profils => "app/profils",
-  :service_personnel => "app/etablissements/",
-  :app_id => "Publi",
-  :secret => "secret"
+  url: "http://localhost:9292/api",
+  service_user: "app/users/",
+  service_regroupement: "app/regroupements/",
+  service_profils: "app/profils",
+  service_personnel: "app/etablissements/",
+  service_diffusionInfo: "/publipostages/diffusionInfo/",
+  service_publipostage: "publipostages/",
+  app_id: "Publi",
+  api_key: "secret"
 }
