@@ -145,9 +145,9 @@ Controllers.controller('wizardController', ['$scope', function($scope){
 
 /********************************* Main controller of the application *****************************************/
 Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'MessageService','Redirect', 
-    'colors', 'Menus','tinymceOptions', '$state', 'Publipostages', 'DiffusionInfo', 
+    'colors', 'Menus','tinymceOptions', '$state', 
     function($scope, $sce, security, Regroupements, $location, $rootScope, MessageService, Redirect,
-     colors, Menus, tinymceOptions, $state, Publipostages, DiffusionInfo){
+     colors, Menus, tinymceOptions, $state){
         // making Redirect utils accesible in the scope
         $scope.Redirect = Redirect;
         $scope.security = security;
@@ -171,10 +171,6 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             });
         });
 
-        $scope.toTrustedHtml = function(html_code) {
-            return $sce.trustAsHtml(html_code);
-        };
-        
         // get the list of menus
         $scope.menus = Menus;
         
@@ -190,11 +186,6 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             $location.path('/apercu/'+location);
         }
         
-        $scope.goBackToMessage = function(location){
-            //$scope.tinyMessage = MessageService.getMessage()['message'];
-            $location.path('/message/'+location);
-        }
-        
         $scope.addType = function(){
             MessageService.addType('test');
         }
@@ -202,125 +193,14 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         // load message from the root ..
         $scope.tinyMessage = MessageService.getMessage()['message'];
 
-        $scope.sendMessage = function(location){
-            var message = MessageService.getMessage();
-            // check if message is valid ..
-            if (message.title != "" && message.message!=""){
-                Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations,
-                    'message_type':message.messageType, 'diffusion_type':message.diffusion_type, 'profils':message.profils}, function(data){
-                        $rootScope.created_publi = data;
-                        // reinitialize message service
-                        MessageService.reset();
-                        $location.path('/envoi/'+location);
-                    }, 
-                    function(error){
-                        console.log(error);
-                        $location.path('/error/'+error['data'].error);
-                        // show a message interface ..
-                });
-            }
-        }
-
         $scope.square = {icone: $rootScope.racine_images + '00_vide.svg'};
         
-        $scope.$watch("diffusion_type", function(newVal) {
-            if (angular.isUndefined(newVal) || newVal == null) return;
-            MessageService.setDiffusionType(newVal);
-        });
-        
-        $scope.resetDiffusionCounter = function() {
-          $rootScope.diffusionInfo = {
-            nb_email : '?',
-            nb_pdf : '?',
-            nb_total : '?'
-          }
-        }
-
-        $scope.addDiffusionData = function(data) {
-          var diffusionInfo = $rootScope.diffusionInfo;
-
-          if(diffusionInfo.nb_email == '?') diffusionInfo.nb_email = 0;
-          if(diffusionInfo.nb_pdf == '?') diffusionInfo.nb_pdf = 0;
-          if(diffusionInfo.nb_total == '?') diffusionInfo.nb_total = 0;
-
-          diffusionInfo.nb_email += data.with_email;
-          diffusionInfo.nb_pdf += data.without_email;
-          diffusionInfo.nb_total += data.with_email + data.without_email;
-
-          $rootScope.diffusionInfo = diffusionInfo;
-        }
-
-        // Specifique à la page mode de diffusion
-        if($location.$$path.indexOf('/mode_diffusion/') == 0) {
-
-          $scope.resetDiffusionCounter();
-          
-          if($location.$$path.indexOf('/mode_diffusion/ecrire_personnels') == 0) {
-            var data  = {with_email:0, without_email:0};
-            _.each($rootScope.messageObject['destinations'], function(el) {
-              if(_.isEmpty(el.email_principal)) {
-                data.without_email += 1;
-              } else {
-                data.with_email += 1;
-              }
-            });
-            $scope.addDiffusionData(data);
-          }
-          else {
-            var regroupements = '';
-            _.each($rootScope.messageObject['destinations'], function(el) {
-                if(!_.isUndefined(el.classe_id)) {
-                  regroupements += el.classe_id + ";";
-                }
-                else if(!_.isUndefined(el.groupe_id)) {
-                 regroupements += el.groupe_id + ";";   
-                }
-            });
-            if(regroupements != '') {
-
-              //Cas des élèves
-              if($location.$$path.indexOf('/mode_diffusion/ecrire_eleves') == 0) {
-                DiffusionInfo.listStudents({regroupements : regroupements},function(data) {
-                  $scope.addDiffusionData(data);
-                });
-              }
-              else if($location.$$path.indexOf('/mode_diffusion/ecrire_profs') == 0) {
-                DiffusionInfo.listProfessors({regroupements : regroupements},function(data) {
-                  $scope.addDiffusionData(data);
-                });
-              }
-              else if($location.$$path.indexOf('/mode_diffusion/info_famille') == 0) {
-                DiffusionInfo.listFamilly({regroupements : regroupements},function(data) {
-                  $scope.addDiffusionData(data);
-                });
-              }
-              else if($location.$$path.indexOf('/mode_diffusion/ecrire_tous') == 0) {
-                var profiles = $rootScope.messageObject['profils'];
-                if(_.contains(profiles, "parents")) {
-                  DiffusionInfo.listFamilly({regroupements : regroupements},function(data) {
-                    $scope.addDiffusionData(data);
-                  });
-                }
-                if(_.contains(profiles, "profs")) {
-                  DiffusionInfo.listProfessors({regroupements : regroupements},function(data) {
-                    $scope.addDiffusionData(data);
-                  });
-                }
-                if(_.contains(profiles, "eleves")) {
-                  DiffusionInfo.listStudents({regroupements : regroupements},function(data) {
-                    $scope.addDiffusionData(data);
-                  });
-                }
-              }
-            }
-          }
-        }
 }]);
 
 /******************************************* Destinataire Controller ****************************************/
 Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements', '$location', '$rootScope', 'MessageService','Redirect', 
-    'colors', 'Menus', '$state', 'Personnels', function($scope,security, Regroupements, $location, $rootScope, MessageService, Redirect, 
-    colors, Menus, $state, Personnels){
+    'colors', 'Menus', '$state', 'Personnels', 'Matieres', function($scope,security, Regroupements, $location, $rootScope, MessageService, Redirect, 
+    colors, Menus, $state, Personnels, Matieres){
     // making Redirect utils accesible in the scope
     $scope.Redirect = Redirect;
     $scope.security = security;
@@ -355,6 +235,15 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         if ($state.params['type']=='ecrire_personnels') {
           getPersonnel($scope.currentUser.info['ENTPersonStructRattachRNE']);
         } else {
+
+          if($state.params['type']=='ecrire_profs') {
+            $scope.matieres = [{ id: -1 , libelle_long : 'Toutes'}];
+            $scope.matiere = _.isUndefined(MessageService.getMessage().matiere) ? $scope.matieres[0].id : MessageService.getMessage().matiere;
+            Matieres.all({uai:$scope.currentUser.info['ENTPersonStructRattachRNE']}, function(matieres){
+              $scope.matieres = $scope.matieres.concat(matieres);
+            });
+          }
+
           Regroupements.get({id:user.info['uid']}, function(regroupements){
             var selectdestinationsIds = new Array();
             _.each(MessageService.getMessage().destinations, function(dest) {
@@ -416,7 +305,8 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     };
 
     $scope.addDestinations = function(){
-        console.log('add destinations');
+        console.log('add destinations ');
+        MessageService.setMatiere($scope.matiere);
         MessageService.addDestinations($scope.destinations);
         console.log(MessageService.getMessage());
     };
@@ -478,8 +368,8 @@ Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 }]);
 
 /********************************* Massage controller*****************************************/
-Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems',
-    function($scope, $sce, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems){
+Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems',
+    function($scope, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems){
 
         //Template items
         $scope.templateItems =  templateItems;
@@ -488,16 +378,22 @@ Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScop
         $scope.tinyMessage = MessageService.getMessage()['message'];
         $scope.tinymceOptions =  tinymceOptions;
 
-        $scope.toTrustedHtml = function(html_code) {
-            return $sce.trustAsHtml(html_code);
-        };
-        
         // get the list of menus
         $scope.menus = Menus;
+
+        String.prototype.endsWith = function(suffix) {
+            return this.indexOf(suffix, this.length - suffix.length) !== -1;
+        };
         
         $scope.addToMessage = function(text){
-            console.log('add to message + ###' + text + '###');
-            console.log($scope.tinyMessage);
+            
+            /*
+             * Append space if message is not empty and doesn't ends with sparce nor Carriage return
+             */
+            if(_.isString($scope.tinyMessage) && $scope.tinyMessage.length > 0 && !($scope.tinyMessage.endsWith("&nbsp;") || $scope.tinyMessage.endsWith("<br />"))) {
+              text  = " "  + text;
+            }
+            
             $scope.tinyMessage += text;
         }
         
@@ -524,8 +420,8 @@ Controllers.controller('DocCtrl', ['$scope', '$state', function($scope, $state){
 }]);
 
 /********************************* Controller for envoi page  *****************************************/
-Controllers.controller('EnvoiCtrl', ['$scope', '$sce', 'security', '$location', '$rootScope', 'MessageService', '$state', 'Menus',
-  function($scope, $sce, security, $location, $rootScope, MessageService, $state, Menus){
+Controllers.controller('EnvoiCtrl', ['$scope', 'security', '$location', '$rootScope', 'MessageService', '$state', 'Menus',
+  function($scope, security, $location, $rootScope, MessageService, $state, Menus){
 
     // get the list of menus
     $scope.menus = Menus;
@@ -551,6 +447,142 @@ Controllers.controller('EnvoiCtrl', ['$scope', '$sce', 'security', '$location', 
         $scope.showPdf = true;
         $scope.nb_pdf = diffusionInfo.nb_total;
         break;
+    }
+  }
+]);
+
+/********************************* Apercu controller of the application *****************************************/
+Controllers.controller('ApercuCtrl', ['$scope', '$location', '$rootScope', '$state', 'Menus', 'MessageService', '$sce',
+  function($scope,$location, $rootScope, $state, Menus, MessageService, $sce){
+
+    // get the list of menus
+    $scope.menus = Menus;
+
+    $scope.toTrustedHtml = function(html_code) {
+      return $sce.trustAsHtml(html_code);
+    };
+
+    $scope.goBackToMessage = function(location){
+      //$scope.tinyMessage = MessageService.getMessage()['message'];
+      $location.path('/message/'+location);
+    };
+  }
+]);
+
+/********************************* Mode Diffusion controller of the application *****************************************/
+Controllers.controller('ModeDiffusionCtrl', ['$scope', '$location', '$rootScope', '$state', 'Menus', 'MessageService', 'Publipostages', 'DiffusionInfo',
+  function($scope,$location, $rootScope, $state, Menus, MessageService, Publipostages, DiffusionInfo){
+
+    // get the list of menus
+    $scope.menus = Menus;
+
+    $scope.sendMessage = function(location){
+
+      //Set selected diffusion type
+      MessageService.setDiffusionType($scope.diffusion_type);
+      
+      var message = MessageService.getMessage();
+      // check if message is valid ..
+      if (message.title != "" && message.message!=""){
+        Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations,
+        'message_type':message.messageType, 'diffusion_type':message.diffusion_type, 'profils':message.profils, 'matiere_id' : message.matiere }, 
+          function(data){
+            $rootScope.created_publi = data;
+            // reinitialize message service
+            MessageService.reset();
+            $location.path('/envoi/'+location);
+          }, 
+          function(error){
+            console.log(error);
+            $location.path('/error/'+error['data'].error);
+            // show a message interface ..
+          }
+        );
+      }
+    };
+
+    $scope.resetDiffusionCounter = function() {
+      $rootScope.diffusionInfo = {
+        nb_email : '?',
+        nb_pdf : '?',
+        nb_total : '?'
+      }
+    };
+
+    $scope.addDiffusionData = function(data) {
+      var diffusionInfo = $rootScope.diffusionInfo;
+
+      if(diffusionInfo.nb_email == '?') diffusionInfo.nb_email = 0;
+      if(diffusionInfo.nb_pdf == '?') diffusionInfo.nb_pdf = 0;
+      if(diffusionInfo.nb_total == '?') diffusionInfo.nb_total = 0;
+
+      diffusionInfo.nb_email += data.with_email;
+      diffusionInfo.nb_pdf += data.without_email;
+      diffusionInfo.nb_total += data.with_email + data.without_email;
+
+      $rootScope.diffusionInfo = diffusionInfo;
+    };
+
+    $scope.resetDiffusionCounter();
+          
+    if($location.$$path.indexOf('/mode_diffusion/ecrire_personnels') == 0) {
+      var data  = {with_email:0, without_email:0};
+      _.each($rootScope.messageObject['destinations'], function(el) {
+        if(_.isEmpty(el.email_principal)) {
+          data.without_email += 1;
+        } else {
+          data.with_email += 1;
+        }
+      });
+      $scope.addDiffusionData(data);
+    }
+    else {
+      var regroupements = '';
+      _.each($rootScope.messageObject['destinations'], function(el) {
+          if(!_.isUndefined(el.classe_id)) {
+            regroupements += el.classe_id + ";";
+          }
+          else if(!_.isUndefined(el.groupe_id)) {
+           regroupements += el.groupe_id + ";";   
+          }
+      });
+      if(regroupements != '') {
+
+        //Cas des élèves
+        if($location.$$path.indexOf('/mode_diffusion/ecrire_eleves') == 0) {
+          DiffusionInfo.listStudents({regroupements : regroupements},function(data) {
+            $scope.addDiffusionData(data);
+          });
+        }
+        else if($location.$$path.indexOf('/mode_diffusion/ecrire_profs') == 0) {
+          DiffusionInfo.listProfessors({regroupements : regroupements , matiere : MessageService.getMessage().matiere},function(data) {
+            $scope.addDiffusionData(data);
+          });
+        }
+        else if($location.$$path.indexOf('/mode_diffusion/info_famille') == 0) {
+          DiffusionInfo.listFamilly({regroupements : regroupements},function(data) {
+            $scope.addDiffusionData(data);
+          });
+        }
+        else if($location.$$path.indexOf('/mode_diffusion/ecrire_tous') == 0) {
+          var profiles = $rootScope.messageObject['profils'];
+          if(_.contains(profiles, "parents")) {
+            DiffusionInfo.listFamilly({regroupements : regroupements},function(data) {
+              $scope.addDiffusionData(data);
+            });
+          }
+          if(_.contains(profiles, "profs")) {
+            DiffusionInfo.listProfessors({regroupements : regroupements},function(data) {
+              $scope.addDiffusionData(data);
+            });
+          }
+          if(_.contains(profiles, "eleves")) {
+            DiffusionInfo.listStudents({regroupements : regroupements},function(data) {
+              $scope.addDiffusionData(data);
+            });
+          }
+        }
+      }
     }
   }
 ]);

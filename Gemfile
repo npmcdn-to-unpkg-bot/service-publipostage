@@ -19,7 +19,7 @@ gem 'rake'
 gem 'grape'
 gem 'rest-client'
 gem 'grape-entity'
-gem 'annuaire', :git => 'git@github.com:laclasse-com/gem_annuaire.git'
+gem 'annuaire', :git => 'https://github.com/laclasse-com/gem_annuaire'
 
 group :development do
   gem 'sinatra-contrib'

@@ -1,12 +1,17 @@
-angular.module('publipostageFilters', []).filter('templateItemsTypeFilter', ['$state',function($state) {
+angular.module('publipostageFilters', []).filter('templateItemsTypeFilter' , ['$state', 'security', function($state , security) {
   return function(templateItems) {
     ret = new Array();
     _.each(templateItems , function (templateItem) {
+      var validEntry = true
       if(templateItem.showOnly != undefined) {
-        if( _.contains(templateItem.showOnly, $state.params['type']) ) {
-          ret.push(templateItem);
+        if( !_.contains(templateItem.showOnly, $state.params['type']) ) {
+          validEntry = false;
         }
-      } else {
+      }
+      if(validEntry && templateItem.rolePriorityMin != undefined) {
+        validEntry = security.getRoleMaxPriority() >= templateItem.rolePriorityMin ;
+      }
+      if(validEntry) {
         ret.push(templateItem);
       }
     });

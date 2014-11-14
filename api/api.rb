@@ -30,12 +30,12 @@ class ApplicationAPI < Grape::API
       optional :sort_dir, type: String, regexp: /^(asc|desc)$/i, desc: "Direction de tri : ASC ou DESC"
   end
   get "/publipostages" do
-    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_publipostage],{})
+    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_publipostage],{})
   end
   ############################################################################
   desc "Retourner un  publipostage par id"
   get 'publipostages/:id' do
-    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_publipostage] + params[:id], {})
+    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_publipostage] + params[:id], {})
   end
   ############################################################################ 
   desc "creer un nouveau publipostage" 
@@ -48,8 +48,12 @@ class ApplicationAPI < Grape::API
   end
   post '/publipostages' do
     begin
-      Annuaire.post_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_publipostage],{}, params)
+      params[:user_uid] = current_user[:info].uid
+      puts params.inspect
+      Annuaire.post_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_publipostage],{}, params)
     rescue => e
+      puts e.message
+      puts e.backtrace[0...10]
       error!(e.message, 400)
     end
   end
@@ -62,9 +66,13 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "retourner le fichier pdf d\'un publipostage"
   get '/publipostage/:id/pdf'do
-    content_type 'application/pdf'
-    signed_url = Annuaire.sign(ANNUAIRE[:url], ANNUAIRE[:service_publipostage] + params[:id] + '/pdf', {})
-    RestClient.get signed_url
+    publipostage = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_publipostage] + params[:id], {})
+    if publipostage["user_uid"] == current_user[:info]['uid'] || Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_user] + current_user[:info]['uid'], {})['roles_max_priority_etab_actif'] >= 3
+      content_type 'application/pdf'
+      signed_url = Annuaire.sign(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_publipostage] + params[:id] + '/pdf', {})
+      return RestClient.get signed_url
+    end
+    error!('Vous n\'êtes pas le créateur de ce publipostage',401)
   end
 
   ############################################################################
@@ -75,9 +83,8 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "supprimer un publipostage"
   delete '/publipostages/:id' do
-    puts "????"
     begin
-      Annuaire.delete_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_publipostage] + params[:id], {})
+      Annuaire.delete_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_publipostage] + params[:id], {})
     rescue => e
       error!("Requête incorrecte: une erreur s\'est produite: #{e.message}", 400)
     end
@@ -87,7 +94,7 @@ class ApplicationAPI < Grape::API
   desc "retourner la liste des profil"
   get '/profils' do
     content_type 'application/json;charset=UTF-8'
-    response = Annuaire.send_request_signed(ANNUAIRE[:url],ANNUAIRE[:service_profils], {})
+    response = Annuaire.send_request_signed(ANNUAIRE[:url],ANNUAIRE[:service_annuaire_profils], {})
     response
   end
 
@@ -95,7 +102,7 @@ class ApplicationAPI < Grape::API
   desc "retourner les info de l'utilisateur"
   get '/user/:id' do
     content_type 'application/json;charset=UTF-8'
-    response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_user] + params[:id], {"expand" => "true"})
+    response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_user] + params[:id], {"expand" => "true"})
     response
   end
 
@@ -103,7 +110,7 @@ class ApplicationAPI < Grape::API
   desc "retourner les regroupements d'un utilisateur"
   get "/regroupements/:id" do
     content_type 'application/json;charset=UTF-8'
-    response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_user] + params[:id], {"expand" => "true"})
+    response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_user] + params[:id], {"expand" => "true"})
     if !response.nil?
       etablissements = []
       regroupements =[]
@@ -133,13 +140,19 @@ class ApplicationAPI < Grape::API
   desc "retourner la liste des personnels dans letablissement"
   get "/etablissements/:uai/personnels" do
     personnels = []
-    response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_personnel]+ params[:uai] +'/personnel',{})
+    response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_personnel]+ params[:uai] +'/personnel',{})
     response.each do |personnel|
       personnel["destinataire_libelle"] = personnel["nom"] + " " + personnel["prenom"]
       personnels << personnel
     end
     content_type 'application/json;charset=UTF-8'
     return personnels
+  end
+  #############################################################################
+  desc "retourner la liste des matieres dans letablissement"
+  get "/etablissements/:uai/matieres" do
+    personnels = []
+    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_personnel]+ params[:uai] +'/matieres',{})
   end
   ############################################################################
   desc "send a notification"
@@ -150,6 +163,7 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "retourner les informations de diffusion pour la pupulation et les regroupements passés en paramètre" 
   get "/diffusionInfo/:population/:regroupements" do
-    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_diffusionInfo] + params[:population] + '/' + params[:regroupements],{})
+    mat_string = ("professors" == params[:population] && !params[:matiere].nil? && params[:matiere] != "-1" )  ? '/' + params[:matiere] : '' 
+    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_diffusionInfo] + params[:population] + '/' + params[:regroupements] + mat_string,{})
   end
 end

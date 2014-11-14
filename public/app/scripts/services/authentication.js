@@ -46,60 +46,16 @@ angular.module('services.authentication').factory('security', ['$http', '$q', '$
     // Is the current user a super adminstrator?
     isSuperAdmin: function() {
       if (service.isAuthenticated()) {
-        return !!(_.find(service.currentUser.roles, function (role) {
-          return  _.contains(role, "TECH");
-        }));
+        return service.currentUser.roles_max_priority_etab_actif >= 3;
       } else{
         return false;
       }
     },
-    
-    isAdminEtab:function(){
-      if(service.isAuthenticated()){
-        return !!(_.find(service.currentUser.roles, function (role) {
-          return  _.contains(role, "ADM_ETB");
-        }));
-      }else{
-        return false;
-      }
-    },
-    
-    isEnseignant:function(){
-      if(service.isAuthenticated()){
-        return !!(_.find(service.currentUser.roles, function (role) {
-          return  _.contains(role, "PROF_ETB");
-        }));
-      }else{
-        return false;
-      }
-    },
-    
-    isCPE: function(){
-      if(service.isAuthenticated()){
-        return !!(_.find(service.currentUser.roles, function (role) {
-          return  _.contains(role, "CPE_ETB");
-        }));
-      }else{
-        return false;
-      }
-    },
-    
-    isEleve: function(){
-      if(service.isAuthenticated()){
-        return !!(_.find(service.currentUser.roles, function (role) {
-          return  _.contains(role, "ELV_ETB");
-        }));
-      }else
-      {
-        return false;
-      }
-    },
-    
-    isParent:function(){
-      if(service.isAuthenticated()){
-        return !!(_.find(service.currentUser.roles, function (role) {
-          return  _.contains(role, "PAR_ETB");
-        }));
+
+    // Is the current user a super adminstrator?
+    getRoleMaxPriority: function() {
+      if (service.isAuthenticated()) {
+        return service.currentUser.roles_max_priority_etab_actif
       }else{
         return false;
       }

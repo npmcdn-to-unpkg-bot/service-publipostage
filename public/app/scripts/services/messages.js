@@ -27,8 +27,9 @@ angular.module('services.messages').service('MessageService', ['$rootScope' ,fun
         title:'',
         destinations:[],
         messageType:'',
-         diffusion_type:'', 
-        profils:[]
+        diffusion_type:'', 
+        profils:[],
+        matiere: ''
       };
     };
 
@@ -96,24 +97,23 @@ angular.module('services.messages').service('MessageService', ['$rootScope' ,fun
 
     this.isValid = function(forPage){
       switch(forPage) {
-        case "destinataire":
-          var valid = ($rootScope.messageObject['messageType']== '' || $rootScope.messageObject['messageType']== null) ? false : true;
-          return valid;
-          break;
-        case "message":
-          var valid = ($rootScope.messageObject['messageType']==""|| $rootScope.messageObject['destinations'].length==0) ? false : true;
-          return valid;
-          break;
-        case "apercu":
-          console.log('Yaaaaa');
-          return true;
-          break
         case "mode_diffusion":
-          console.log('mode_diffusion yuuu');
-          return true;
-          break
+        case "apercu" :
+          var valid = !_.isEmpty($rootScope.messageObject['message']);
+          if(!valid) return false;
+        case "message":
+          var valid = !_.isEmpty($rootScope.messageObject['destinations']);
+          if(!valid) return false;
+        case "destinataire":
+          var valid = !_.isEmpty($rootScope.messageObject['messageType']);
+          if(!valid) return false;
       }
+      return true;
     }
+
+    this.setMatiere = function (matiere) {
+      $rootScope.messageObject['matiere'] = matiere;
+    };
 }]);
 
 /************************************************************************************/
