@@ -25,12 +25,12 @@ end
 # Connexion avec l'annuaire ENT
 ANNUAIRE = {
   url: "http://localhost:9292/api",
-  service_user: "app/users/",
-  service_regroupement: "app/regroupements/",
-  service_profils: "app/profils",
-  service_personnel: "app/etablissements/",
-  service_diffusionInfo: "/publipostages/diffusionInfo/",
-  service_publipostage: "publipostages/",
+  service_annuaire_user: "app/users/",
+  service_annuaire_regroupement: "app/regroupements/",
+  service_annuaire_profils: "app/profils",
+  service_annuaire_personnel: "app/etablissements/",
+  service_annuaire_diffusionInfo: "/publipostages/diffusionInfo/",
+  service_annuaire_publipostage: "publipostages/",
   app_id: "Publi",
   api_key: "secret"
 }
