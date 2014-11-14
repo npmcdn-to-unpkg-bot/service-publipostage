@@ -9,5 +9,3 @@ end
 
 puts "loading configuration"
 require __DIR__('options')
-require __DIR__('database')
-

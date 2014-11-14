@@ -11,10 +11,7 @@ rdoc
 spec/reports
 test/tmp
 test/version_tmp
-config/annuaire.rb
-config/database.rb
 config/options.rb
-config/annuaire.rb.sample
 tmp
 npm-debug.log
 
