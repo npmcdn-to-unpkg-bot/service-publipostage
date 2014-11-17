@@ -180,11 +180,11 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     $httpProvider.interceptors.push('HttpInterceptor');
 }).config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
-}).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','MessageService',
-  function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, MessageService) {
+}).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','MessageService', 'APPLICATION_PREFIX',
+  function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, MessageService , APPLICATION_PREFIX ) {
     
     $rootScope.$location = $location;
-    $rootScope.racine_images ='/app/images/';
+    $rootScope.racine_images = APPLICATION_PREFIX + '/images/';
     // check authorization before changing states .
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
       // before loading the new state => check rights
