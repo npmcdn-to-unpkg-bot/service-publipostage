@@ -8,6 +8,7 @@ require './api/init.rb'
 use Rack::Rewrite do
   #rewrite %r{/app/.*(css|js)/(.*)}, '/$1/$2'
   #rewrite %{/app/app/.*/.*}, '/app/$1/$2'
+  rewrite %r{^#{APP_PATH}(/(bower_components|fonts|images|scripts|styles|views)/.*(map|css|js|ttf|woff|html|png|jpg|jpeg|gif|svg)[?v=0-9a-zA-Z\-.]*$)}, '/app$1'
 end
 
 use Rack::Session::Cookie,
@@ -23,6 +24,6 @@ use OmniAuth::Builder do
     provider :cas,  CASAUTH::CONFIG
 end
 run Rack::URLMap.new(
-                      "/app/api" => ApplicationAPI.new,
+                      "#{APP_PATH}/api" => ApplicationAPI.new,
                       "/" => SinatraApp.new)
 #run SinatraApp

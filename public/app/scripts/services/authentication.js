@@ -9,7 +9,7 @@ angular.module('services.authentication').factory('currentUser', function(){
     return currentUser; 
 });
 
-angular.module('services.authentication').factory('security', ['$http', '$q', '$location', function($http, $q, $location) {
+angular.module('services.authentication').factory('security', ['$http', '$q', '$location', 'APPLICATION_PREFIX', function($http, $q, $location , APPLICATION_PREFIX) {
 
   // Redirect to the given url (defaults to '/')
   function redirect(url) {
@@ -28,12 +28,9 @@ angular.module('services.authentication').factory('security', ['$http', '$q', '$
       if ( service.isAuthenticated() ) {
         return $q.when(service.currentUser);
       } else {
-        return $http.get('/app/current-user').then(function(response) {
-          service.currentUser = response.data;
-          return service.currentUser;return $http.get('/app/current-user').then(function(response) {
+        return $http.get(APPLICATION_PREFIX + "/current-user").then(function(response) {
           service.currentUser = response.data;
           return service.currentUser;
-        });
         });
       }
     },
