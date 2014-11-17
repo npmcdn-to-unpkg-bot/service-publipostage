@@ -416,7 +416,7 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', 'Mes
 /******************************************* Doc Controller ****************************************/
 Controllers.controller('DocCtrl', ['$scope', '$state', function($scope, $state){
     
-    $scope.pdfUrl = 'http://localhost:9292/app/api/publipostage/'+$state.params['id']+'/pdf';
+    $scope.pdfUrl = 'api/publipostage/'+$state.params['id']+'/pdf';
 }]);
 
 /********************************* Controller for envoi page  *****************************************/
