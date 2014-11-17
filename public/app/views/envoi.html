@@ -25,13 +25,13 @@
         <div class="row" ng-class="menus[$state.params['type']].color">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
                 <div class="center-block">
-                    <p class="square-text center-block">Le message est creé! {{showPdf}} {{showEmail}} AAAAAAaaaaaaaaaaa</p>
+                    <p class="square-text center-block">Le message est creé!a</p>
                     <p class="square-text center-block" ng-show="$state.params['type']=='info_famille'">Le message a été diffusé en ligne  sur la page info famille.
                     
                     <p class="square-text center-block" ng-show="showEmail">{{nb_email}} messages ont été envoyés par mails.</p>
                     <p class="square-text center-block" ng-show="showPdf">{{nb_pdf}} messages sont à télécharger dans un fichier pdf </p>
                     
-                    <p class="square-text center-block"><a ng-show="showPdf" href="http://localhost:9292/app/api/publipostage/{{created_publi.id}}/pdf" target="_blank"><i class="fa fa-file fa-2x" style="color:#fff; text-shadow:1px 1px 1px #ccc;"></i></p>
+                    <p class="square-text center-block"><a ng-show="showPdf" href="api/publipostage/{{created_publi.id}}/pdf" target="_blank"><i class="fa fa-file fa-2x" style="color:#fff; text-shadow:1px 1px 1px #ccc;"></i></p>
                     <p></p>
                     <p style="text-align:center">
                         <a class='btn btn-default btn-sm' ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  href="#/">écrire un autre message</a>
