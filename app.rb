@@ -39,11 +39,6 @@ class SinatraApp < Sinatra::Base
   #dont_reload '/path/to/other/file'
   end
 
-  Annuaire.configure do |config|
-    config.app_id = ANNUAIRE[:app_id]
-    config.api_key = ANNUAIRE[:api_key]
-  end
-
   helpers AuthenticationHelpers
 
   get APP_PATH + '/' do
@@ -85,7 +80,7 @@ class SinatraApp < Sinatra::Base
   get APP_PATH + '/current-user' do
     if is_logged?
        data = env['rack.session'][:current_user]
-       user_detail = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_user] + data[:info]['uid'], {})
+       user_detail = Annuaire.send_request_signed('service_annuaire_user', data[:info]['uid'], {})
        {:login => data[:user],
          :info => data[:info],
          :roles => data[:info]['ENTPersonRoles'].split(',').map{|role| role.split(':')},
