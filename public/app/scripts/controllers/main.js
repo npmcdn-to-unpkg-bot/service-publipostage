@@ -428,24 +428,24 @@ Controllers.controller('EnvoiCtrl', ['$scope', 'security', '$location', '$rootSc
     console.debug($scope.menus);
 
     // Set counter and displayRules 
-    var diffusionInfo = $rootScope.diffusionInfo;
+    var diffusion_info = $rootScope.diffusion_info;
 
     switch($rootScope.created_publi.diffusion_type) {
       case 'email' : 
         $scope.showEmail = true;
-        $scope.nb_email = diffusionInfo.nb_email;
+        $scope.nb_email = diffusion_info.nb_email;
         
-        if(diffusionInfo.nb_pdf > 0){
+        if(diffusion_info.nb_pdf > 0){
           $scope.showPdf = true;
         } else {
           $scope.showPdf = false;
         }
-        $scope.nb_pdf = diffusionInfo.nb_pdf;
+        $scope.nb_pdf = diffusion_info.nb_pdf;
         break;
       case 'pdf' : 
         $scope.showEmail = false;
         $scope.showPdf = true;
-        $scope.nb_pdf = diffusionInfo.nb_total;
+        $scope.nb_pdf = diffusion_info.nb_total;
         break;
     }
   }
@@ -502,7 +502,7 @@ Controllers.controller('ModeDiffusionCtrl', ['$scope', '$location', '$rootScope'
     };
 
     $scope.resetDiffusionCounter = function() {
-      $rootScope.diffusionInfo = {
+      $rootScope.diffusion_info = {
         nb_email : '?',
         nb_pdf : '?',
         nb_total : '?'
@@ -510,17 +510,17 @@ Controllers.controller('ModeDiffusionCtrl', ['$scope', '$location', '$rootScope'
     };
 
     $scope.addDiffusionData = function(data) {
-      var diffusionInfo = $rootScope.diffusionInfo;
+      var diffusion_info = $rootScope.diffusion_info;
 
-      if(diffusionInfo.nb_email == '?') diffusionInfo.nb_email = 0;
-      if(diffusionInfo.nb_pdf == '?') diffusionInfo.nb_pdf = 0;
-      if(diffusionInfo.nb_total == '?') diffusionInfo.nb_total = 0;
+      if(diffusion_info.nb_email == '?') diffusion_info.nb_email = 0;
+      if(diffusion_info.nb_pdf == '?') diffusion_info.nb_pdf = 0;
+      if(diffusion_info.nb_total == '?') diffusion_info.nb_total = 0;
 
-      diffusionInfo.nb_email += data.with_email;
-      diffusionInfo.nb_pdf += data.without_email;
-      diffusionInfo.nb_total += data.with_email + data.without_email;
+      diffusion_info.nb_email += data.with_email;
+      diffusion_info.nb_pdf += data.without_email;
+      diffusion_info.nb_total += data.with_email + data.without_email;
 
-      $rootScope.diffusionInfo = diffusionInfo;
+      $rootScope.diffusion_info = diffusion_info;
     };
 
     $scope.resetDiffusionCounter();

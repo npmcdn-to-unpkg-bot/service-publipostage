@@ -164,8 +164,8 @@ class ApplicationAPI < Grape::API
   
   ############################################################################
   desc "retourner les informations de diffusion pour la pupulation et les regroupements passés en paramètre" 
-  get "/diffusionInfo/:population/:regroupements" do
+  get "/diffusion_info/:population/:regroupements" do
     mat_string = ("professors" == params[:population] && !params[:matiere].nil? && params[:matiere] != "-1" )  ? '/' + params[:matiere] : '' 
-    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_diffusionInfo] + params[:population] + '/' + params[:regroupements] + mat_string,{})
+    Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_annuaire_diffusion_info] + params[:population] + '/' + params[:regroupements] + mat_string,{})
   end
 end

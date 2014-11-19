@@ -29,7 +29,7 @@ ANNUAIRE = {
   service_annuaire_regroupement: "app/regroupements/",
   service_annuaire_profils: "app/profils",
   service_annuaire_personnel: "app/etablissements/",
-  service_annuaire_diffusionInfo: "/publipostages/diffusionInfo/",
+  service_annuaire_diffusion_info: "/publipostages/diffusion_info/",
   service_annuaire_publipostage: "publipostages/",
   app_id: "Publi",
   api_key: "secret"
