@@ -50,7 +50,7 @@ class SinatraApp < Sinatra::Base
     if is_logged?
       erb :app
     else
-      erb :public_page
+      login! APP_PATH + '/'
     end  
   end
 
