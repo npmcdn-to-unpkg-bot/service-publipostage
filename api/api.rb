@@ -122,14 +122,16 @@ class ApplicationAPI < Grape::API
         classe["libelle"]= classe["classe_libelle"]
         classe["type"] = "classe"
         classe["destinataire_libelle"] = classe["classe_libelle"]
-        regroupements.push(classe)
+        #uniquement les regroupements du profil actif
+        regroupements.push(classe) if response["profil_actif"]["etablissement_id"] == classe["etablissement_id"]
       end
       response["groupes_eleves"].each do |groupe|
         groupe["id"]= groupe["groupe_id"]
         groupe["libelle"]= groupe["groupe_libelle"]
         groupe["type"] = "groupe"
         groupe["destinataire_libelle"] = groupe["groupe_libelle"]
-        regroupements.push(groupe)
+        #uniquement les regroupements du profil actif
+        regroupements.push(groupe) if response["profil_actif"]["etablissement_id"] == groupe["etablissement_id"]
       end
       { :etablissements => etablissements, :regroupements => regroupements}
     else
