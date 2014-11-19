@@ -182,6 +182,14 @@ config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function(
     cfpLoadingBarProvider.includeSpinner = false;
 }).run(['$rootScope', '$location', 'FlashServiceStyled', 'security','currentUser','$state','MessageService', 'APPLICATION_PREFIX',
   function($rootScope, $location, FlashServiceStyled, security, currentUser, $state, MessageService , APPLICATION_PREFIX ) {
+
+    $rootScope.showHeader = function (argument) {
+      try {
+          return window.self === window.top;
+      } catch (e) {
+          return true;
+      }
+    }
     
     $rootScope.$location = $location;
     $rootScope.racine_images = APPLICATION_PREFIX + '/images/';
