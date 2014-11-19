@@ -80,7 +80,7 @@ class SinatraApp < Sinatra::Base
   get APP_PATH + '/current-user' do
     if is_logged?
        data = env['rack.session'][:current_user]
-       user_detail = Annuaire.send_request_signed('service_annuaire_user', data[:info]['uid'], {})
+       user_detail = Annuaire.send_request_signed(:service_annuaire_user, data[:info]['uid'], {})
        {:login => data[:user],
          :info => data[:info],
          :roles => data[:info]['ENTPersonRoles'].split(',').map{|role| role.split(':')},
