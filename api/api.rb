@@ -15,6 +15,11 @@ class ApplicationAPI < Grape::API
     def authenticate!
       error!('401 non authentifié', 401) unless current_user
     end
+
+    def profil_actif_etab_uai
+      user = Annuaire.send_request_signed(:service_annuaire_user, current_user[:info].uid, {})
+      etablissement_code_uai = user['profil_actif']['etablissement_code_uai']
+    end
   end
 
   #
@@ -140,9 +145,9 @@ class ApplicationAPI < Grape::API
   end
   #############################################################################
   desc "retourner la liste des personnels dans letablissement"
-  get "/etablissements/:uai/personnels" do
+  get "/etablissements/personnels" do
     personnels = []
-    response = Annuaire.send_request_signed(:service_annuaire_personnel, params[:uai] +'/personnel',{})
+    response = Annuaire.send_request_signed(:service_annuaire_personnel, profil_actif_etab_uai + '/personnel',{})
     response.each do |personnel|
       personnel["destinataire_libelle"] = personnel["nom"] + " " + personnel["prenom"]
       personnels << personnel
@@ -152,9 +157,9 @@ class ApplicationAPI < Grape::API
   end
   #############################################################################
   desc "retourner la liste des matieres dans letablissement"
-  get "/etablissements/:uai/matieres" do
+  get "/etablissements/matieres" do
     personnels = []
-    Annuaire.send_request_signed(:service_annuaire_personnel, params[:uai] +'/matieres',{})
+    Annuaire.send_request_signed(:service_annuaire_personnel, profil_actif_etab_uai + '/matieres',{})
   end
   ############################################################################
   desc "send a notification"

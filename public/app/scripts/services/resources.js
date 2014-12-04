@@ -43,15 +43,15 @@ angular.module('services.resources').factory('Profils', ['$resource', 'BASE_SERV
 }]);
 
 angular.module('services.resources').factory('Personnels', ['$resource', 'BASE_SERVICE_URL', function($resource, BASE_SERVICE_URL){
-    var baseUrl = BASE_SERVICE_URL +'/etablissements/:uai/personnels';
-    return $resource(baseUrl, {uai:'@uai'}, {
+    var baseUrl = BASE_SERVICE_URL +'/etablissements/personnels';
+    return $resource(baseUrl, {}, {
         'all': {method:'GET', isArray:true}
     });
 }]);
 
 angular.module('services.resources').factory('Matieres', ['$resource', 'BASE_SERVICE_URL', function($resource, BASE_SERVICE_URL){
-    var baseUrl = BASE_SERVICE_URL +'/etablissements/:uai/matieres';
-    return $resource(baseUrl, {uai:'@uai'}, {
+    var baseUrl = BASE_SERVICE_URL +'/etablissements/matieres';
+    return $resource(baseUrl, {}, {
         'all': {method:'GET', isArray:true}
     });
 }]);

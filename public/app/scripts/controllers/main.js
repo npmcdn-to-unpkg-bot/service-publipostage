@@ -212,7 +212,7 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     $scope.destinations = new Array();
 
     var getPersonnel = function(uai){
-        Personnels.all({uai:uai}, function(personnels){
+        Personnels.all({},function(personnels){
             $scope.personnels = personnels;
             var selectdestinationsIds = new Array();
             _.each(MessageService.getMessage().destinations, function(dest) {
@@ -239,7 +239,7 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
           if($state.params['type']=='ecrire_profs') {
             $scope.matieres = [{ id: -1 , libelle_long : 'Toutes'}];
             $scope.matiere = _.isUndefined(MessageService.getMessage().matiere) ? $scope.matieres[0].id : MessageService.getMessage().matiere;
-            Matieres.all({uai:$scope.currentUser.info['ENTPersonStructRattachRNE']}, function(matieres){
+            Matieres.all({}, function(matieres){
               $scope.matieres = $scope.matieres.concat(matieres);
             });
           }
