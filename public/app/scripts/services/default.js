@@ -54,7 +54,7 @@ angular.module('services.constants').service('Squares', function($rootScope){
                       icon: $rootScope.racine_images + '00_vide.svg',
                       color: 'vert-clear',
                       text: '',
-                      url: '/publi',
+                      url: '',
                       active: false
                     },
                     { id: '',
