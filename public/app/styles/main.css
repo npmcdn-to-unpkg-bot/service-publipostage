@@ -6,6 +6,10 @@ h1, h2{font-family: Open Sans Bold;
   opacity:0.5;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 .square-text{
   display:block;
   text-align:center;
@@ -49,7 +53,7 @@ h1, h2{font-family: Open Sans Bold;
   left:35%;
   color: white;
   font-family: Futura Bold;
-  z-index:1!important
+  z-index: 1!important;
 }
 
 .groupe-text {
@@ -104,7 +108,7 @@ h1, h2{font-family: Open Sans Bold;
   }
 
   .square-text{
-    font-size: 120%;
+    font-size: 16px;
   }
 
   .menu-text {
@@ -134,7 +138,7 @@ h1, h2{font-family: Open Sans Bold;
   }
 
   .square-text{
-    font-size: 120%;
+    font-size: 16px;
   }
   .menu-text {
     font-size: 120%;
@@ -163,7 +167,7 @@ h1, h2{font-family: Open Sans Bold;
   }
 
   .square-text{
-    font-size: 120%;
+    font-size: 16px;
   }
 
   .menu-text {
@@ -193,7 +197,7 @@ h1, h2{font-family: Open Sans Bold;
   }
 
   .square-text{
-    font-size: 150%;
+    font-size: 16px;
   }
 
   .menu-text {
