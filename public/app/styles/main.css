@@ -525,3 +525,13 @@ scrollbars, thumb {
     color: #eb5454;
     font-size: 1.5em;
 }
+
+.btn-publi {
+  border-color:white;
+  color:white
+}
+
+.btn-publi:hover {
+  background-color: white;
+  color: #505050;
+}
