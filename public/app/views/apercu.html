@@ -12,9 +12,6 @@
                 <h2 class="transparent visible-md visible-lg">Etape 3: message</h2>
                 <h2><strong>Etape 4: aperçu</strong></h2>
                 <p class="menu-text visible-md visible-lg">Vérifier le message</p>
-                <p>
-                <a class='btn btn-info btn-sm'>voir l'historique</a>
-                </p>
                 </div>
             </div>
         </div>
@@ -32,10 +29,10 @@
                     </p>
                     <div  class="text-scroll" style="background-color:white; padding-left:5%%; padding-right:5%; padding-top:1%;" ng-bind-html="toTrustedHtml(messageObject['message'])"></div>
                 </div>
-                <p style="text-align: center">
+                <div style="text-align: center; margin:20px;">
                     <a class="btn btn-default btn-sm" ng-class="menus[$state.params['type']].color" style="border-color:white;color:white" ng-click="goBackToMessage($state.params['type'])">reéditer</a>
                     <a class='btn btn-default btn-sm' ng-class="menus[$state.params['type']].color" style="border-color:white;color:white" href="#/mode_diffusion/{{$state.params['type']}}">choisir le mode de diffusion</a>
-                </p>
+                </div>
             </div>
         </div>
     </div>
