@@ -4,8 +4,24 @@
 angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.constants', 'ui.bootstrap',
                          'ui.tinymce', 'services.messages', 'services.authentication', 'angular-underscore',
                          'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize', 'services.utils', 
-                         'pdf', 'chieffancypants.loadingBar', 'services.directives', 'checklist-model' , 'publipostageFilters']).
-config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function($urlRouterProvider, $stateProvider, APPLICATION_PREFIX){
+                         'pdf', 'chieffancypants.loadingBar', 'services.directives', 'checklist-model' , 'publipostageFilters'])
+.directive('myVisible', function () {
+  return {
+    link : function(scope, element, attrs) {
+      console.log(scope);
+
+      scope.$watch(attrs.myTest, function(value) {
+        console.log(element.text)
+        if(value) {
+          element[0].style.visibility = 'visible';
+        } else {
+          element[0].style.visibility = 'hidden';
+        }
+      });
+    }
+  };
+})
+.config(['$urlRouterProvider' , '$stateProvider', 'APPLICATION_PREFIX', function($urlRouterProvider, $stateProvider, APPLICATION_PREFIX){
             
     /* defining states for routing */
     var home = {
