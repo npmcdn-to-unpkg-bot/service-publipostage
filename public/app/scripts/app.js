@@ -8,10 +8,7 @@ angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.c
 .directive('myVisible', function () {
   return {
     link : function(scope, element, attrs) {
-      console.log(scope);
-
       scope.$watch(attrs.myTest, function(value) {
-        console.log(element.text)
         if(value) {
           element[0].style.visibility = 'visible';
         } else {
