@@ -26,12 +26,10 @@ GEM
     coderay (1.1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    daemons (1.1.9)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
     equalizer (0.0.9)
-    eventmachine (1.0.3)
     grape (0.7.0)
       activesupport
       builder
@@ -74,6 +72,8 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
+    puma (2.10.2)
+      rack (>= 1.1, < 2.0)
     rack (1.5.2)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -129,10 +129,6 @@ GEM
       sequel (>= 3.2.0)
       sinatra (>= 0.9.4)
     slop (3.5.0)
-    thin (1.6.2)
-      daemons (>= 1.0.9)
-      eventmachine (>= 1.0.0)
-      rack (>= 1.0.0)
     thread_safe (0.3.3)
     tilt (1.4.1)
     tzinfo (1.1.0)
@@ -159,6 +155,7 @@ DEPENDENCIES
   omniauth
   omniauth-cas
   pry
+  puma
   rack-rewrite
   rack-test
   rake
@@ -172,4 +169,3 @@ DEPENDENCIES
   sinatra
   sinatra-contrib
   sinatra-sequel
-  thin
