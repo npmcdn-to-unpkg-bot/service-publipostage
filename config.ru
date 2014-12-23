@@ -11,11 +11,12 @@ use Rack::Rewrite do
   rewrite %r{^#{APP_PATH}(/(bower_components|fonts|images|scripts|styles|views)/.*(map|css|js|ttf|woff|html|png|jpg|jpeg|gif|svg)[?v=0-9a-zA-Z\-.]*$)}, '/app$1'
 end
 
-use Rack::Session::Cookie,
+require 'rack/session/redis'
+use Rack::Session::Redis,
     key: 'rack.session',
-    path: APP_PATH,
+    path: '/',
     expire_after: 3600, # In seconds
-    secret: 'as6df874asd65fg4sd6fg54asd6gf54' # Digest::SHA1.hexdigest( SecureRandom.base64 ) # test only
+    redis_server: "redis://#{REDIS[:host]}:#{REDIS[:port]}/0/#{REDIS[:redis_root]}-rack:session"
 
 use OmniAuth::Builder do
     configure do |config|

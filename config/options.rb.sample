@@ -28,3 +28,9 @@ ANNUAIRE = {
   app_id: "Publi",
   api_key: "secret"
 }
+
+REDIS = {
+     host: 'redis.dev.laclasse.lan',
+     port: 6379 ,
+     redis_root: 'com.laclasse.v3localhost'
+}
