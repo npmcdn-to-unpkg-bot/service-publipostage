@@ -1,8 +1,15 @@
 GIT
-  remote: https://github.com/laclasse-com/gem_annuaire
-  revision: f3dcd70c2ffe7f55d0a03080fcbfc3f512c82743
+  remote: https://github.com/SamSuffit/laclasse-common
+  revision: 121993e9db8b95315b8bfbab62d8a0b1b44acad9
   specs:
-    annuaire (0.1.0)
+    laclasse-common (0.1)
+      redis-rack (~> 1.5.0)
+
+GIT
+  remote: https://github.com/laclasse-com/gem_annuaire
+  revision: 9a3ed1d357ced6a31e4bfd76f455c98e7c1ccd81
+  specs:
+    annuaire (0.1.3)
 
 GEM
   remote: https://rubygems.org/
@@ -150,6 +157,7 @@ DEPENDENCIES
   grape
   grape-entity
   json
+  laclasse-common!
   mysql2
   nokogiri
   omniauth
@@ -159,7 +167,6 @@ DEPENDENCIES
   rack-rewrite
   rack-test
   rake
-  redis-rack
   rest-client
   rspec
   savon
