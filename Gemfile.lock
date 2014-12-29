@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/SamSuffit/laclasse-common
-  revision: 121993e9db8b95315b8bfbab62d8a0b1b44acad9
+  revision: 24765414df2d0c1607163e1266ba93557473b7fb
   specs:
-    laclasse-common (0.1)
+    laclasse-common (0.2)
       redis-rack (~> 1.5.0)
 
 GIT

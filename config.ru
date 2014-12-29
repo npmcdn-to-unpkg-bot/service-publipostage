@@ -11,7 +11,7 @@ use Rack::Rewrite do
   rewrite %r{^#{APP_PATH}(/(bower_components|fonts|images|scripts|styles|views)/.*(map|css|js|ttf|woff|html|png|jpg|jpeg|gif|svg)[?v=0-9a-zA-Z\-.]*$)}, '/app$1'
 end
 
-require 'session_helpers'
+require 'SessionHelpers'
 SessionHelpers.configure_rake_session self
 
 use OmniAuth::Builder do
