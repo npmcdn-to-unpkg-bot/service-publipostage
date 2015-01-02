@@ -539,11 +539,12 @@ Controllers.controller('ModeDiffusionCtrl', ['$scope', '$location', '$rootScope'
     else {
       var regroupements = '';
       _.each($rootScope.messageObject['destinations'], function(el) {
+          var splitChar = "_"
           if(!_.isUndefined(el.classe_id)) {
-            regroupements += el.classe_id + ";";
+            regroupements += el.classe_id + splitChar;
           }
           else if(!_.isUndefined(el.groupe_id)) {
-           regroupements += el.groupe_id + ";";   
+           regroupements += el.groupe_id + splitChar;   
           }
       });
       if(regroupements != '') {
