@@ -3,10 +3,16 @@
 require 'rubygems'
 require 'bundler'
 require "sinatra/reloader"
-
 require './config/init'
-require './helpers/init.rb'
+require  'lib/laclasse_logger'
+LOGGER = Laclasse::LoggerFactory.getLogger
+LOGGER.info("Démarrage du publipostage avec #{LOGGER.loggers_count} logger#{LOGGER.loggers_count > 1 ? 's': ''}")
+
 Bundler.require( :default, ENV['RACK_ENV'].to_sym )     # require tout les gems définis dans Gemfile
+
+require './helpers/init.rb'
+require './api/init.rb'
+
 
 #require_relative './lib/AuthenticationHelpers'
 
