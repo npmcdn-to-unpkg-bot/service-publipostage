@@ -1,15 +1,12 @@
 GIT
-  remote: https://github.com/SamSuffit/laclasse-common
-  revision: 24765414df2d0c1607163e1266ba93557473b7fb
+  remote: https://github.com/laclasse-com/laclasse-common
+  revision: dfec785fad38afa7ca5eb08288ad1251dc2ae2f2
+  branch: develop
   specs:
-    laclasse-common (0.2)
+    laclasse-common (0.3)
+      logstash-logger
       redis-rack (~> 1.5.0)
-
-GIT
-  remote: https://github.com/laclasse-com/gem_annuaire
-  revision: 9a3ed1d357ced6a31e4bfd76f455c98e7c1ccd81
-  specs:
-    annuaire (0.1.3)
+      rest-client
 
 GEM
   remote: https://rubygems.org/
@@ -58,6 +55,10 @@ GEM
     i18n (0.6.9)
     ice_nine (0.11.0)
     json (1.8.1)
+    logstash-event (1.2.02)
+    logstash-logger (0.7.0)
+      logstash-event (~> 1.2)
+      stud
     method_source (0.8.2)
     mime-types (2.2)
     mini_portile (0.5.3)
@@ -136,6 +137,7 @@ GEM
       sequel (>= 3.2.0)
       sinatra (>= 0.9.4)
     slop (3.5.0)
+    stud (0.0.18)
     thread_safe (0.3.3)
     tilt (1.4.1)
     tzinfo (1.1.0)
@@ -153,7 +155,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  annuaire!
   grape
   grape-entity
   json

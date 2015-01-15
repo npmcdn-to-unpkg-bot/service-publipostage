@@ -15,11 +15,11 @@ gem 'sinatra-sequel'
 gem 'sequel_plus'
 gem 'mysql2'
 gem 'rake'
-gem 'laclasse-common', :git => 'https://github.com/SamSuffit/laclasse-common'
+gem 'laclasse-common', :git => 'https://github.com/laclasse-com/laclasse-common' , :branch => 'develop'
 gem 'grape'
 gem 'rest-client'
 gem 'grape-entity'
-gem 'annuaire', :git => 'https://github.com/laclasse-com/gem_annuaire'
+#gem 'annuaire', :git => 'https://github.com/laclasse-com/gem_annuaire'
 
 group :development do
   gem 'sinatra-contrib'

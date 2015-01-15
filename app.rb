@@ -5,7 +5,7 @@ require 'bundler'
 require "sinatra/reloader"
 
 require './config/init'
-require './lib/init.rb'
+require './helpers/init.rb'
 Bundler.require( :default, ENV['RACK_ENV'].to_sym )     # require tout les gems définis dans Gemfile
 
 #require_relative './lib/AuthenticationHelpers'
@@ -39,10 +39,10 @@ class SinatraApp < Sinatra::Base
   #dont_reload '/path/to/other/file'
   end
 
-  helpers AuthenticationHelpers
+  helpers Laclasse::Helpers::Authentication
 
   get APP_PATH + '/' do
-    if is_logged?
+    if logged?
       erb :app
     else
       login! APP_PATH + '/'
@@ -78,13 +78,12 @@ class SinatraApp < Sinatra::Base
   end
 
   get APP_PATH + '/current-user' do
-    if is_logged?
+    if logged?
        data = env['rack.session'][:current_user]
-       user_detail = Annuaire.send_request_signed(:service_annuaire_user, data[:info]['uid'], {})
        {:login => data[:user],
          :info => data[:info],
          :roles => data[:info]['ENTPersonRoles'].split(',').map{|role| role.split(':')},
-         :roles_max_priority_etab_actif => user_detail['roles_max_priority_etab_actif']
+         :roles_max_priority_etab_actif => data['roles_max_priority_etab_actif']
        }.to_json
     else
        nil

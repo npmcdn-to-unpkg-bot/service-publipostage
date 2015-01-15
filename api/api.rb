@@ -1,6 +1,6 @@
   # coding: utf-8
 require 'grape'
-require 'annuaire'
+require 'lib/cross_app_sender'
 
 class ApplicationAPI < Grape::API
   # response format = pdf 
@@ -17,7 +17,7 @@ class ApplicationAPI < Grape::API
     end
 
     def profil_actif_etab_uai
-      user = Annuaire.send_request_signed(:service_annuaire_user, current_user[:info].uid, {})
+      user =  @current_user[:user_detailed]
       etablissement_code_uai = user['profil_actif']['etablissement_code_uai']
     end
   end
@@ -35,12 +35,12 @@ class ApplicationAPI < Grape::API
       optional :sort_dir, type: String, regexp: /^(asc|desc)$/i, desc: "Direction de tri : ASC ou DESC"
   end
   get "/publipostages" do
-    Annuaire.send_request_signed(:service_annuaire_publipostage, nil, {})
+    Laclasse::CrossAppSender.send_request_signed(:service_annuaire_publipostage, nil, {})
   end
   ############################################################################
   desc "Retourner un  publipostage par id"
   get 'publipostages/:id' do
-    Annuaire.send_request_signed(:service_annuaire_publipostage, params[:id], {})
+    Laclasse::CrossAppSender.send_request_signed(:service_annuaire_publipostage, params[:id], {})
   end
   ############################################################################ 
   desc "creer un nouveau publipostage" 
@@ -55,7 +55,7 @@ class ApplicationAPI < Grape::API
     begin
       params[:user_uid] = current_user[:info].uid
       puts params.inspect
-      Annuaire.post_request_signed(:service_annuaire_publipostage,nil,{}, params)
+      Laclasse::CrossAppSender.post_request_signed(:service_annuaire_publipostage,nil,{}, params)
     rescue => e
       puts e.message
       puts e.backtrace[0...10]
@@ -71,10 +71,10 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "retourner le fichier pdf d\'un publipostage"
   get '/publipostage/:id/pdf'do
-    publipostage = Annuaire.send_request_signed(:service_annuaire_publipostage, params[:id], {})
-    if publipostage["user_uid"] == current_user[:info]['uid'] || Annuaire.send_request_signed(:service_annuaire_user , current_user[:info]['uid'], {})['roles_max_priority_etab_actif'] >= 3
+    publipostage = Laclasse::CrossAppSender.send_request_signed(:service_annuaire_publipostage, params[:id], {})
+    if publipostage["user_uid"] == current_user[:info]['uid'] || Laclasse::CrossAppSender.send_request_signed(:service_annuaire_user , current_user[:info]['uid'], {})['roles_max_priority_etab_actif'] >= 3
       content_type 'application/pdf'
-      signed_url = Annuaire.sign(:service_annuaire_publipostage, params[:id] + '/pdf', {})
+      signed_url = Laclasse::CrossAppSender.sign(:service_annuaire_publipostage, params[:id] + '/pdf', {})
       return RestClient.get signed_url
     end
     error!('Vous n\'êtes pas le créateur de ce publipostage',401)
@@ -89,7 +89,7 @@ class ApplicationAPI < Grape::API
   desc "supprimer un publipostage"
   delete '/publipostages/:id' do
     begin
-      Annuaire.delete_request_signed(:service_annuaire_publipostage, params[:id], {})
+      Laclasse::CrossAppSender.delete_request_signed(:service_annuaire_publipostage, params[:id], {})
     rescue => e
       error!("Requête incorrecte: une erreur s\'est produite: #{e.message}", 400)
     end
@@ -99,7 +99,7 @@ class ApplicationAPI < Grape::API
   desc "retourner la liste des profil"
   get '/profils' do
     content_type 'application/json;charset=UTF-8'
-    response = Annuaire.send_request_signed(:service_annuaire_profils, nil, {})
+    response = Laclasse::CrossAppSender.send_request_signed(:service_annuaire_profils, nil, {})
     response
   end
 
@@ -107,7 +107,7 @@ class ApplicationAPI < Grape::API
   desc "retourner les info de l'utilisateur"
   get '/user/:id' do
     content_type 'application/json;charset=UTF-8'
-    response = Annuaire.send_request_signed(:service_annuaire_user, params[:id], {"expand" => "true"})
+    response = Laclasse::CrossAppSender.send_request_signed(:service_annuaire_user, params[:id], {"expand" => "true"})
     response
   end
 
@@ -115,7 +115,7 @@ class ApplicationAPI < Grape::API
   desc "retourner les regroupements d'un utilisateur"
   get "/regroupements/:id" do
     content_type 'application/json;charset=UTF-8'
-    response = Annuaire.send_request_signed(:service_annuaire_user, params[:id], {"expand" => "true"})
+    response = Laclasse::CrossAppSender.send_request_signed(:service_annuaire_user, params[:id], {"expand" => "true"})
     if !response.nil?
       etablissements = []
       regroupements =[]
@@ -147,7 +147,7 @@ class ApplicationAPI < Grape::API
   desc "retourner la liste des personnels dans letablissement"
   get "/etablissements/personnels" do
     personnels = []
-    response = Annuaire.send_request_signed(:service_annuaire_personnel, profil_actif_etab_uai + '/personnel',{})
+    response = Laclasse::CrossAppSender.send_request_signed(:service_annuaire_personnel, profil_actif_etab_uai + '/personnel',{})
     response.each do |personnel|
       personnel["destinataire_libelle"] = personnel["nom"] + " " + personnel["prenom"]
       personnels << personnel
@@ -159,7 +159,7 @@ class ApplicationAPI < Grape::API
   desc "retourner la liste des matieres dans letablissement"
   get "/etablissements/matieres" do
     personnels = []
-    Annuaire.send_request_signed(:service_annuaire_personnel, profil_actif_etab_uai + '/matieres',{})
+    Laclasse::CrossAppSender.send_request_signed(:service_annuaire_personnel, profil_actif_etab_uai + '/matieres',{})
   end
   ############################################################################
   desc "send a notification"
@@ -171,6 +171,6 @@ class ApplicationAPI < Grape::API
   desc "retourner les informations de diffusion pour la pupulation et les regroupements passés en paramètre" 
   get "/diffusion_info/:population/:regroupements" do
     mat_string = ("professors" == params[:population] && !params[:matiere].nil? && params[:matiere] != "-1" )  ? '/' + params[:matiere] : '' 
-    Annuaire.send_request_signed(:service_annuaire_diffusion_info, params[:population] + '/' + params[:regroupements] + mat_string,{})
+    Laclasse::CrossAppSender.send_request_signed(:service_annuaire_diffusion_info, params[:population] + '/' + params[:regroupements] + mat_string,{})
   end
 end
