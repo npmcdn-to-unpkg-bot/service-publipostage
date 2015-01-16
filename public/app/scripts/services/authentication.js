@@ -9,7 +9,7 @@ angular.module('services.authentication').factory('currentUser', function(){
     return currentUser; 
 });
 
-angular.module('services.authentication').factory('security', ['$http', '$q', '$location', function($http, $q, $location) {
+angular.module('services.authentication').factory('security', ['$http', '$q', '$location', 'APPLICATION_PREFIX', function($http, $q, $location , APPLICATION_PREFIX) {
 
   // Redirect to the given url (defaults to '/')
   function redirect(url) {
@@ -28,12 +28,9 @@ angular.module('services.authentication').factory('security', ['$http', '$q', '$
       if ( service.isAuthenticated() ) {
         return $q.when(service.currentUser);
       } else {
-        return $http.get('/app/current-user').then(function(response) {
-          service.currentUser = response.data;
-          return service.currentUser;return $http.get('/app/current-user').then(function(response) {
+        return $http.get(APPLICATION_PREFIX + "/current-user").then(function(response) {
           service.currentUser = response.data;
           return service.currentUser;
-        });
         });
       }
     },
@@ -46,60 +43,16 @@ angular.module('services.authentication').factory('security', ['$http', '$q', '$
     // Is the current user a super adminstrator?
     isSuperAdmin: function() {
       if (service.isAuthenticated()) {
-        return !!(_.find(service.currentUser.roles, function (role) {
-          return  _.contains(role, "TECH");
-        }));
+        return service.currentUser.roles_max_priority_etab_actif >= 3;
       } else{
         return false;
       }
     },
-    
-    isAdminEtab:function(){
-      if(service.isAuthenticated()){
-        return !!(_.find(service.currentUser.roles, function (role) {
-          return  _.contains(role, "ADM_ETB");
-        }));
-      }else{
-        return false;
-      }
-    },
-    
-    isEnseignant:function(){
-      if(service.isAuthenticated()){
-        return !!(_.find(service.currentUser.roles, function (role) {
-          return  _.contains(role, "PROF_ETB");
-        }));
-      }else{
-        return false;
-      }
-    },
-    
-    isCPE: function(){
-      if(service.isAuthenticated()){
-        return !!(_.find(service.currentUser.roles, function (role) {
-          return  _.contains(role, "CPE_ETB");
-        }));
-      }else{
-        return false;
-      }
-    },
-    
-    isEleve: function(){
-      if(service.isAuthenticated()){
-        return !!(_.find(service.currentUser.roles, function (role) {
-          return  _.contains(role, "ELV_ETB");
-        }));
-      }else
-      {
-        return false;
-      }
-    },
-    
-    isParent:function(){
-      if(service.isAuthenticated()){
-        return !!(_.find(service.currentUser.roles, function (role) {
-          return  _.contains(role, "PAR_ETB");
-        }));
+
+    // Is the current user a super adminstrator?
+    getRoleMaxPriority: function() {
+      if (service.isAuthenticated()) {
+        return service.currentUser.roles_max_priority_etab_actif
       }else{
         return false;
       }

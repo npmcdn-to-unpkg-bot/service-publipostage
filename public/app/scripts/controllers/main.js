@@ -4,10 +4,10 @@
 
 var Controllers  =  angular.module('myApp.controllers', []);
 
-Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", function($scope, $sce, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location) {
-    $scope.tinymceOptions = {
-        language:"fr"
-    };
+Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", 'tinymceOptions',
+     function($scope, $sce, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location , tinymceOptions) {
+    $scope.tinymceOptions = tinymceOptions;
+    
     $scope.pageLimits = [5, 10, 20]; 
     $scope.limit = 5;
     $scope.currentPage = 1;
@@ -47,6 +47,10 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
     
     $scope.colors = [ 'bleu', 'vert', 'rouge', 'violet', 'orange',
                         'jaune', 'gris1','gris2', 'gris3', 'gris4' ];
+
+    $scope.duplicPubli = function (id) {
+      alert('Duplication pas encore active');
+    }
     
     $scope.removePubli = function(id){
         if(confirm("Voulez-vous supprimer le publipostage?")){
@@ -98,10 +102,6 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
 Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", "$rootScope", "$stateParams", "MessageService", 'Redirect','Squares',
     function($scope, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location, $rootScope,  $stateParams, MessageService, Redirect, Squares) {
         $scope.Redirect = Redirect;   
-        
-        $scope.tinymceOptions = {
-            language:"fr"
-        };
 
         $scope.security = security;
 
@@ -144,32 +144,17 @@ Controllers.controller('wizardController', ['$scope', function($scope){
 }]);
 
 /********************************* Main controller of the application *****************************************/
-Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus','tinymceOptions', '$state', 'Publipostages',
-    function($scope, $sce, security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, colors, transparentColors, Menus, tinymceOptions, $state, Publipostages){
+Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements', '$location', '$rootScope', 'MessageService','Redirect', 
+    'colors', 'Menus','tinymceOptions', '$state', 
+    function($scope, $sce, security, Regroupements, $location, $rootScope, MessageService, Redirect,
+     colors, Menus, tinymceOptions, $state){
         // making Redirect utils accesible in the scope
         $scope.Redirect = Redirect;
         $scope.security = security;
 
         // editor tinyMce  options;
-        //$scope.tinymceOptions =  tinymceOptions;
-        $scope.tinymceOptions = {
-            language:"fr",
-            menubar: false,
-            theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-            font_size_style_values: "12px,13px,14px,16px,18px,20px",
-            toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist",
-            extended_valid_elements : "nom,civilite",
-            custom_elements: "nom,civilite",
-            verify_html : false,
-            height : 200,
-            handle_event_callback: function (e) {
-                // put logic here for keypress
-                console.log("callback called");
-            }
-        };
-        //$scope.tinyMessage = "";
-
+        $scope.tinymceOptions =  tinymceOptions;
+        
         //initialize destinations
         //$scope.destinations = [];
         $scope.tinyMessage = MessageService.getMessage()['message'];
@@ -186,10 +171,6 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             });
         });
 
-        $scope.toTrustedHtml = function(html_code) {
-            return $sce.trustAsHtml(html_code);
-        };
-        
         // get the list of menus
         $scope.menus = Menus;
         
@@ -205,11 +186,6 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
             $location.path('/apercu/'+location);
         }
         
-        $scope.goBackToMessage = function(location){
-            //$scope.tinyMessage = MessageService.getMessage()['message'];
-            $location.path('/message/'+location);
-        }
-        
         $scope.addType = function(){
             MessageService.addType('test');
         }
@@ -217,209 +193,14 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         // load message from the root ..
         $scope.tinyMessage = MessageService.getMessage()['message'];
 
-        $scope.sendMessage = function(location){
-            var message = MessageService.getMessage();
-            // check if message is valid ..
-            if (message.title != "" && message.message!=""){
-                Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations,
-                    'message_type':message.messageType, 'send_type':message.sendType, 'profils':message.profils}, function(data){
-                        $rootScope.created_publi = data;
-                        // reinitialize message service
-                        MessageService.init();
-                        $location.path('/envoi/'+location);
-                    }, 
-                    function(error){
-                        console.log(error);
-                        $location.path('/error/'+error['data'].error);
-                        // show a message interface ..
-                });
-            }
-        }
-
         $scope.square = {icone: $rootScope.racine_images + '00_vide.svg'};
         
-        /*              watch variables                             */
-        $scope.$watch("byMail", function(newVal) {
-            if (angular.isUndefined(newVal) || newVal == null) return;
-            console.log(newVal);
-            if (newVal) {
-                MessageService.addSendType('byMail');
-                console.log(MessageService.getMessage());
-            }else{
-                
-                MessageService.removeSendType('byMail');
-                console.log(MessageService.getMessage());
-            }
-        });
-        
-        $scope.$watch("byPdf", function(newVal) {
-            if (angular.isUndefined(newVal) || newVal == null) return;
-            console.log(newVal);
-            if (newVal) {
-                MessageService.addSendType('byPdf');
-                console.log(MessageService.getMessage());
-            }else{
-                MessageService.removeSendType('byPdf');
-                console.log(MessageService.getMessage());
-            }
-        });
-        
-        $scope.$watch("byNotif", function(newVal) {
-            if (angular.isUndefined(newVal) || newVal == null) return;
-            console.log(newVal);
-            if (newVal) {
-                MessageService.addSendType('byNotif');
-                console.log(MessageService.getMessage());
-            }else{
-                
-                MessageService.removeSendType('byNotif');
-                console.log(MessageService.getMessage());
-            }
-        });
-    
-}]);
-
-/******************************************* Annonce Controller ****************************************/
-Controllers.controller('AnnonceCtrl', ['$scope', 'AnnonceSquares', '$rootScope', 'Redirect', 'Menus','Faye','security', 'currentUser', '$state', 'MessageService', '$filter',
-    function($scope, AnnonceSquares,$rootScope, Redirect, Menus, Faye, security, currentUser, $state, MessageService, $filter){
-    $scope.annonceSquares = AnnonceSquares;
-    $scope.Redirect = Redirect;
-    $scope.menus = Menus;
-    $scope.notification = 'Ecrire une annonce de 300 caractères maximum.';
-    var destinataires = MessageService.getMessage()['destinations'];
-    console.log(destinataires);
-    // list of available profils 
-    //$scope.profils = ['eleves', 'profs', 'parents'];
-    $scope.tinymceOptions = {
-            language:"fr",
-            theme: "modern",
-            menubar:false,
-            toolbar: false,
-            verify_html : false,
-            height : 200,
-            handle_event_callback: function (e) {
-            }
-    };
-    var profils = MessageService.getMessage()['profils'];
-    var personel_channel = "";
-    security.requestCurrentUser().then(function(user){
-        currentUser = user;
-        console.log(currentUser);
-        personel_channel = "/etablissement/"+(currentUser.info['uid'])+"/personnels";
-        console.log(personel_channel);
-    });
-
-    $scope.sendNotification = function(message){
-        switch($state.params['param']) {
-            case 'ecrire_personnels':
-                Faye.publish(personel_channel,
-                    {
-                        msg: message,
-                        title:'Personnels <br/><hr/>',
-                        from:currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                        at: $filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
-                    });
-                break;
-            case 'ecrire_eleves':
-               ecrireEleves(message);
-                break;
-            case 'ecrire_profs':
-                ecrireProfs(message);
-                break;
-            case 'ecrire_parents':
-                ecrireParents(message);
-                break;
-            case 'ecrire_tous':
-                console.log($scope.selectedProfils);
-                angular.forEach(profils, function(profil){
-                    switch(profil){
-                        case 'eleves':
-                            ecrireEleves(message);
-                            break;
-                        case 'profs':
-                            ecrireProfs(message);
-                            break;
-                        case 'parents':
-                            ecrireParents(message);
-                            break;
-                        default:
-                            console.log("default");
-                    }
-                });
-                break;
-            default:
-                console.log("default");
-        }
-    };
-
-    var ecrireEleves = function(message){
-        destinataires.forEach(function(dest, index, array){
-            if(angular.isDefined(dest['classe_id']))
-                Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/ELV_ETB"),
-                    {
-                        msg: message,
-                        title:'Message aux eleves de '+dest['classe_libelle']+'<br/><hr/>',
-                        from:currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                        at: $filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
-                    });
-            if(angular.isDefined(dest['groupe_id']))
-                Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/ELV_ETB"),
-                    {
-                        msg: message,
-                        title:'Message aux eleves de '+dest['groupe_libelle']+'<br/><hr/>',
-                        from:currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                        at: $filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
-                    });
-        });
-    };
-
-    var ecrireProfs = function(message){
-        destinataires.forEach(function(dest, index, array){
-            if(angular.isDefined(dest['classe_id']))
-                Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/PROF_ETB"),
-                    {   msg: message,
-                        title:'Message aux enseignants de '+dest['classe_libelle']+'<br/><hr/>',
-                        from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                        at: ''+ $filter('date')(new Date(), 'yyyy-MM-dd  à HH:mm:ss')
-                    });
-            if(angular.isDefined(dest['groupe_id']))
-                Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/PROF_ETB"),
-                    {
-                        msg: message,
-                        title:'Message aux enseignants de '+dest['groupe_libelle']+'<br/><hr/>',
-                        from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                        at: ''+$filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
-                    });
-        });
-    };
-
-    var ecrireParents = function(message){
-        destinataires.forEach(function(dest, index, array){
-            if(angular.isDefined(dest['classe_id']))
-                Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/classe/"+ dest['classe_id']+"/PAR_ETB"),
-                    {
-                        msg: message,
-                        title:'Message aux parents de '+dest['classe_libelle']+'<br/><hr/>',
-                        from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                        at: ''+$filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
-                    });
-            if(angular.isDefined(dest['groupe_id']))
-                Faye.publish(("/etablissement/"+ dest['etablissement_code']+"/groupe/"+ dest['groupe_id']+"/PAR_ETB"),
-                    {
-                        msg: message,
-                        title:'Message aux parents de '+dest['groupe_libelle']+'<br/><hr/>',
-                        from: currentUser.info['LaclasseCivilite'] +' '+ currentUser.info["LaclasseNom"],
-                        at: ''+$filter('date')(new Date(), 'yyyy-MM-dd à HH:mm:ss')
-                    });
-        });
-    };
-
 }]);
 
 /******************************************* Destinataire Controller ****************************************/
-Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements', '$location', '$rootScope', 'Message', 'MessageService','Redirect', 
-    'colors', 'transparentColors', 'Menus', '$state', 'Personnels', function($scope,security, Regroupements, $location, $rootScope, Message, MessageService, Redirect, 
-    colors, transparentColors, Menus, $state, Personnels){
+Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements', '$location', '$rootScope', 'MessageService','Redirect', 
+    'colors', 'Menus', '$state', 'Personnels', 'Matieres', function($scope,security, Regroupements, $location, $rootScope, MessageService, Redirect, 
+    colors, Menus, $state, Personnels, Matieres){
     // making Redirect utils accesible in the scope
     $scope.Redirect = Redirect;
     $scope.security = security;
@@ -428,12 +209,21 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         MessageService.addMessageType($state.params['type']);
     }
     //initialize destinations
-    $scope.destinations = [];
+    $scope.destinations = new Array();
 
     var getPersonnel = function(uai){
-        Personnels.all({uai:uai}, function(personnels){
+        Personnels.all({},function(personnels){
             $scope.personnels = personnels;
-            console.log(personnels);
+            var selectdestinationsIds = new Array();
+            _.each(MessageService.getMessage().destinations, function(dest) {
+              selectdestinationsIds.push(dest.id);
+            });
+            _.each($scope.personnels, function(element) {
+              if(_.contains(selectdestinationsIds, element.id)) {
+                element['checked'] = true;
+                $scope.destinations.push(element);
+              }
+            });
         }, function(error){
             console.log(error);
         });
@@ -442,31 +232,47 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     // get the list of user regroupements 
     security.requestCurrentUser().then(function(user) {
         $scope.currentUser = user;
-        if ($state.params['type']=='ecrire_personnels')
-            getPersonnel($scope.currentUser.info['ENTPersonStructRattachRNE']);
-        Regroupements.get({id:user.info['uid']}, function(regroupements){
-            console.log(regroupements);
+        if ($state.params['type']=='ecrire_personnels') {
+          getPersonnel($scope.currentUser.info['ENTPersonStructRattachRNE']);
+        } else {
+
+          if($state.params['type']=='ecrire_profs') {
+            $scope.matieres = [{ id: -1 , libelle_long : 'Toutes'}];
+            $scope.matiere = _.isUndefined(MessageService.getMessage().matiere) ? $scope.matieres[0].id : MessageService.getMessage().matiere;
+            Matieres.all({}, function(matieres){
+              $scope.matieres = $scope.matieres.concat(matieres);
+            });
+          }
+
+          Regroupements.get({id:user.info['uid']}, function(regroupements){
+            var selectdestinationsIds = new Array();
+            _.each(MessageService.getMessage().destinations, function(dest) {
+              selectdestinationsIds.push(dest.id);
+            });
+
             $scope.regroupements = regroupements;
             // add colors to classes
-            $scope.regroupements['classes'].forEach(function(element, index, array){
-                element['color'] = $scope.randomTransparentColor();
-            });
-            // add colors to groupes
-            $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
-                element['color'] = $scope.randomTransparentColor();
+            var colorIndex = 0;
+            $scope.regroupements['regroupements'].forEach(function(element, index, array){
+                element['color'] = colors[colorIndex++%colors.length];
+                if(_.contains(selectdestinationsIds, element.id)) {
+                    element['checked'] = true;
+                    $scope.destinations.push(element);
+                }
             });
             // Add colors to empty squres
-            if (($scope.regroupements['classes'].length + $scope.regroupements['groupes_eleves'].length) < 15) {
-                $scope.empty_squares = new Array(15 - ($scope.regroupements['classes'].length + $scope.regroupements['groupes_eleves'].length));
+            if ($scope.regroupements['regroupements'].length < 15) {
+                $scope.empty_squares = new Array(15 - $scope.regroupements['regroupements'].length );
                 console.log($scope.empty_squares);
                 for (var i=0;i<$scope.empty_squares.length;i++){
-                  $scope.empty_squares[i]={ color:$scope.randomTransparentColor()};
+                  $scope.empty_squares[i]={ color:colors[colorIndex++%colors.length] , };
                 }
             } else
             {
                 $scope.empty_squares = []
             }
-        });
+          });
+        }
     });
     // get the list of menus
     $scope.menus = Menus;
@@ -476,42 +282,31 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     
     $scope.selectAll = function(){
         $scope.selectAllMode = false;
-        $scope.regroupements['classes'].forEach(function(element, index, array){
-            if (!element['checked'] || element['checked'].isUndefined){
-                element['checked'] = true;
-                $scope.destinations.push(element);
-                $scope.changeClassColor(index);
+        if($scope.regroupements != undefined && $scope.regroupements['regroupements'] != undefined) {
+          $scope.regroupements['regroupements'].forEach(function(element, index, array){
+            if (!element['checked'] || _.isUndefined(element['checked'])){
+              element['checked'] = true;
+              $scope.destinations.push(element);
             }
-        });
-        $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
-            if (!element['checked'] || element['checked'].isUndefined){
-                element['checked'] = true;
-                $scope.destinations.push(element);
-                $scope.changeGroupColor(index);
-            }
-        })
-
+          });
+        }
     };
 
     $scope.deselectAll = function(){
         $scope.selectAllMode = true;
         $scope.destinations = [];
-        $scope.regroupements['classes'].forEach(function(element, index, array){
-            if(element['checked'] || element['checked'].isUndefined){
-                element['checked'] = false;
-                $scope.changeClassColor(index);
+        if($scope.regroupements != undefined && $scope.regroupements['regroupements'] != undefined) {
+          $scope.regroupements['regroupements'].forEach(function(element, index, array){
+            if(element['checked'] || _.isUndefined(element['checked'])){
+              element['checked'] = false;
             }
-        });
-        $scope.regroupements['groupes_eleves'].forEach(function(element, index, array){
-            if(element['checked'] || element['checked'].isUndefined){
-                element['checked'] = false;
-                $scope.changeGroupColor(index);
-            }
-        });
+          });
+        }
     };
 
     $scope.addDestinations = function(){
-        console.log('add destinations');
+        console.log('add destinations ');
+        MessageService.setMatiere($scope.matiere);
         MessageService.addDestinations($scope.destinations);
         console.log(MessageService.getMessage());
     };
@@ -528,51 +323,11 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     $scope.addProfils = function(){
         console.log('add profils');
         MessageService.addProfils($scope.selectedProfils);
-        console.log(MessageService.getMessage());
     };
 
-    $scope.randomColor = function() {
-        var index = Math.floor(Math.random()*(colors.length));
-        console.log(index);
-        return colors[index];
-    };
-
-    $scope.randomTransparentColor = function() {
-        var index = Math.floor(Math.random()*(transparentColors.length));
-        return transparentColors[index];
-    };
-
-    $scope.changeClassColor = function($index){
-        var color = $scope.regroupements['classes'][$index]['color'];
-        var match = color.search("-clear");
-        if (match==-1) {
-            color = color+"-clear";
-        }else
-        {
-            color = color.substr(0,match);
-        }
-        $scope.regroupements['classes'][$index]['color']=color;
-    };
-
-
-    $scope.changeGroupColor = function($index){
-        var color = $scope.regroupements['groupes_eleves'][$index]['color'];
-        var match = color.search("-clear");
-        if (match==-1) {
-            color = color+"-clear";
-        }else
-        {
-            color = color.substr(0,match)
-        }
-        $scope.regroupements['groupes_eleves'][$index]['color']=color;
-    };
-    
-    // watch destinations (array)
-    /*
-    $scope.$watch('destinations', function(newVal){
-        console.log(newVal);
-    }, true); 
-    */
+    $scope.squareClass = function(clazz) {
+        return clazz.color + (clazz.checked ? '' : '-clear');
+    }
 
     // page ecrire tous
     // list of available profils 
@@ -613,48 +368,43 @@ Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 }]);
 
 /********************************* Massage controller*****************************************/
-Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state',
-    function($scope, $sce, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state){
-        //$scope.tinymceOptions =  tinymceOptions;
-        $scope.tinymceOptions = {
-            // Test to place lang elsewhere and have it bower compliant
-            language:"../../../scripts/externals/tinymce/lang/fr",
-            menubar: false,
-            theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-            font_size_style_values: "12px,13px,14px,16px,18px,20px",
-            toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist",
-            extended_valid_elements : "nom,civilite",
-            //custom_elements: "nom,civilite",
-            verify_html : false,
-            height : 200,
-            handle_event_callback: function (e) {
-                // put logic here for keypress
-                console.log("callback called");
-            }
-        };
+Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems',
+    function($scope, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems){
+
+        //Template items
+        $scope.templateItems =  templateItems;
 
         // load message from the root ..
         $scope.tinyMessage = MessageService.getMessage()['message'];
-        console.log('tinyMessage');
-        console.log($scope.tinyMessage);
+        $scope.tinymceOptions =  tinymceOptions;
 
-        $scope.toTrustedHtml = function(html_code) {
-            return $sce.trustAsHtml(html_code);
-        };
-        
         // get the list of menus
         $scope.menus = Menus;
+
+        String.prototype.endsWith = function(suffix) {
+            return this.indexOf(suffix, this.length - suffix.length) !== -1;
+        };
         
         $scope.addToMessage = function(text){
-            console.log('add to message');
-            console.log($scope.tinyMessage);
-            $scope.tinyMessage = $scope.tinyMessage + text; 
+            
+            /*
+             * Append space if message is not empty and doesn't ends with sparce nor Carriage return
+             */
+            if(_.isString($scope.tinyMessage) && $scope.tinyMessage.length > 0 && !($scope.tinyMessage.endsWith("&nbsp;") || $scope.tinyMessage.endsWith("<br />"))) {
+              text  = " "  + text;
+            }
+            
+            $scope.tinyMessage += text;
         }
         
         $scope.goToPreview = function(location){
             console.log('add message to preview');
             MessageService.addMessage($scope.tinyMessage, $scope.title)
             $location.path('/apercu/'+location);
+        }
+
+        $scope.goToDestinataire = function(location){
+            $location.path('/destinataire/'+location);
         }
         
         $scope.addType = function(){
@@ -666,48 +416,175 @@ Controllers.controller('MassageCtrl', ['$scope', '$sce', '$location', '$rootScop
 /******************************************* Doc Controller ****************************************/
 Controllers.controller('DocCtrl', ['$scope', '$state', function($scope, $state){
     
-    $scope.pdfUrl = 'http://localhost:9292/app/api/publipostage/'+$state.params['id']+'/pdf';
+    $scope.pdfUrl = 'api/publipostage/'+$state.params['id']+'/pdf';
 }]);
-/***************************************************************************************************/
-/* listen to notification Controller */
-Controllers.controller('NotificationCtrl', ['$scope', '$http', 'Faye', '$rootScope', 'security','currentUser', 'Regroupements',
-    function($scope, $http, Faye, $rootScope, security, currentUser, Regroupements) {
-    // subscribe users to channels..
-    security.requestCurrentUser().then(function(user){
-        currentUser = user;
-        //console.log(currentUser);
-        var channels = [];
-        Regroupements.get({id:user.info['uid']},function(regroupements){
-            $scope.regroupements = regroupements;
-            console.log(regroupements);
-            console.log(currentUser);
-            //construct listen channels
-            for(var i=0; i<currentUser.roles.length; i++){
-                //moi channel
-                channels.push("/etablissement/"+currentUser.roles[i][1]+"/"+currentUser.roles[i][0]+"/"+currentUser.info['uid']);
-                //etablissement channels
-                channels.push("/etablissement/"+currentUser.roles[i][1]+"/"+currentUser.roles[i][0]);
-                $scope.regroupements['classes'].forEach(function(classe, index, array){
-                    channels.push("/etablissement/"+classe['etablissement_code']+"/classe/"+classe['classe_id']+"/"+currentUser.roles[i][0]);
-                });
-                $scope.regroupements['groupes_eleves'].forEach(function(groupe, index, array){
-                    channels.push("/etablissement/"+groupe['etablissement_code']+"/groupe/"+groupe['groupe_id']+"/"+currentUser.roles[i][0]);
-                });
-                var channel = "/etablissement/"+(currentUser.info['uid'])+"/personnels";
-                channels.push(channel);
 
-                // le problem et de generer plusieur subscribe automatiquement.
-                $rootScope.data = [];
-                var process_message = function(msg){
-                    $rootScope.data.push(msg);
-                    $scope.$emit('growlMessage', msg);
-                };
-                //subscribe to channels;
-                for(var ch in channels){
-                    Faye.subscribe(channels[ch], process_message);
-                }
-            }
-        });
-    });
-}]);
+/********************************* Controller for envoi page  *****************************************/
+Controllers.controller('EnvoiCtrl', ['$scope', 'security', '$location', '$rootScope', 'MessageService', '$state', 'Menus',
+  function($scope, security, $location, $rootScope, MessageService, $state, Menus){
+
+    // get the list of menus
+    $scope.menus = Menus;
+    console.debug($scope.menus);
+
+    // Set counter and displayRules 
+    var diffusion_info = $rootScope.diffusion_info;
+
+    switch($rootScope.created_publi.diffusion_type) {
+      case 'email' : 
+        $scope.showEmail = true;
+        $scope.nb_email = diffusion_info.nb_email;
+        
+        if(diffusion_info.nb_pdf > 0){
+          $scope.showPdf = true;
+        } else {
+          $scope.showPdf = false;
+        }
+        $scope.nb_pdf = diffusion_info.nb_pdf;
+        break;
+      case 'pdf' : 
+        $scope.showEmail = false;
+        $scope.showPdf = true;
+        $scope.nb_pdf = diffusion_info.nb_total;
+        break;
+    }
+  }
+]);
+
+/********************************* Apercu controller of the application *****************************************/
+Controllers.controller('ApercuCtrl', ['$scope', '$location', '$rootScope', '$state', 'Menus', 'MessageService', '$sce',
+  function($scope,$location, $rootScope, $state, Menus, MessageService, $sce){
+
+    // get the list of menus
+    $scope.menus = Menus;
+
+    $scope.toTrustedHtml = function(html_code) {
+      return $sce.trustAsHtml(html_code);
+    };
+
+    $scope.goBackToMessage = function(location){
+      //$scope.tinyMessage = MessageService.getMessage()['message'];
+      $location.path('/message/'+location);
+    };
+  }
+]);
+
+/********************************* Mode Diffusion controller of the application *****************************************/
+Controllers.controller('ModeDiffusionCtrl', ['$scope', '$location', '$rootScope', '$state', 'Menus', 'MessageService', 'Publipostages', 'DiffusionInfo',
+  function($scope,$location, $rootScope, $state, Menus, MessageService, Publipostages, DiffusionInfo){
+
+    // get the list of menus
+    $scope.menus = Menus;
+
+    $scope.sendMessage = function(location){
+
+      //Set selected diffusion type
+      MessageService.setDiffusionType($scope.diffusion_type);
+      
+      var message = MessageService.getMessage();
+      // check if message is valid ..
+      if (message.title != "" && message.message!=""){
+        Publipostages.save({'descriptif': message.title, 'message': message.message, 'destinataires':message.destinations,
+        'message_type':message.messageType, 'diffusion_type':message.diffusion_type, 'profils':message.profils, 'matiere_id' : message.matiere }, 
+          function(data){
+            $rootScope.created_publi = data;
+            // reinitialize message service
+            MessageService.reset();
+            $location.path('/envoi/'+location);
+          }, 
+          function(error){
+            console.log(error);
+            $location.path('/error/'+error['data'].error);
+            // show a message interface ..
+          }
+        );
+      }
+    };
+
+    $scope.resetDiffusionCounter = function() {
+      $rootScope.diffusion_info = {
+        nb_email : '?',
+        nb_pdf : '?',
+        nb_total : '?'
+      }
+    };
+
+    $scope.addDiffusionData = function(data) {
+      var diffusion_info = $rootScope.diffusion_info;
+
+      if(diffusion_info.nb_email == '?') diffusion_info.nb_email = 0;
+      if(diffusion_info.nb_pdf == '?') diffusion_info.nb_pdf = 0;
+      if(diffusion_info.nb_total == '?') diffusion_info.nb_total = 0;
+
+      diffusion_info.nb_email += data.with_email;
+      diffusion_info.nb_pdf += data.without_email;
+      diffusion_info.nb_total += data.with_email + data.without_email;
+
+      $rootScope.diffusion_info = diffusion_info;
+    };
+
+    $scope.resetDiffusionCounter();
+          
+    if($location.$$path.indexOf('/mode_diffusion/ecrire_personnels') == 0) {
+      var data  = {with_email:0, without_email:0};
+      _.each($rootScope.messageObject['destinations'], function(el) {
+        if(_.isEmpty(el.email_principal)) {
+          data.without_email += 1;
+        } else {
+          data.with_email += 1;
+        }
+      });
+      $scope.addDiffusionData(data);
+    }
+    else {
+      var regroupements = '';
+      _.each($rootScope.messageObject['destinations'], function(el) {
+          var splitChar = "_"
+          if(!_.isUndefined(el.classe_id)) {
+            regroupements += el.classe_id + splitChar;
+          }
+          else if(!_.isUndefined(el.groupe_id)) {
+           regroupements += el.groupe_id + splitChar;   
+          }
+      });
+      if(regroupements != '') {
+
+        //Cas des élèves
+        if($location.$$path.indexOf('/mode_diffusion/ecrire_eleves') == 0) {
+          DiffusionInfo.listStudents({regroupements : regroupements},function(data) {
+            $scope.addDiffusionData(data);
+          });
+        }
+        else if($location.$$path.indexOf('/mode_diffusion/ecrire_profs') == 0) {
+          DiffusionInfo.listProfessors({regroupements : regroupements , matiere : MessageService.getMessage().matiere},function(data) {
+            $scope.addDiffusionData(data);
+          });
+        }
+        else if($location.$$path.indexOf('/mode_diffusion/info_famille') == 0) {
+          DiffusionInfo.listFamilly({regroupements : regroupements},function(data) {
+            $scope.addDiffusionData(data);
+          });
+        }
+        else if($location.$$path.indexOf('/mode_diffusion/ecrire_tous') == 0) {
+          var profiles = $rootScope.messageObject['profils'];
+          if(_.contains(profiles, "parents")) {
+            DiffusionInfo.listFamilly({regroupements : regroupements},function(data) {
+              $scope.addDiffusionData(data);
+            });
+          }
+          if(_.contains(profiles, "profs")) {
+            DiffusionInfo.listProfessors({regroupements : regroupements},function(data) {
+              $scope.addDiffusionData(data);
+            });
+          }
+          if(_.contains(profiles, "eleves")) {
+            DiffusionInfo.listStudents({regroupements : regroupements},function(data) {
+              $scope.addDiffusionData(data);
+            });
+          }
+        }
+      }
+    }
+  }
+]);
 

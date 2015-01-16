@@ -2,6 +2,7 @@
     <div class="col-md-4 col-lg-4">
         <div class="row">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+                <p style="padding:5px 0px 10px 0px"><a class="navbar-brand" href="#"><i class="fa fa-home fa-2x"></i></a></p><br/>
                 <h2 class="transparent visible-md visible-lg">Etape 1: type de message</h2>
                 <h2 class="menu-text-transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</h2>
                 <h2 class="transparent visible-md visible-lg">Etape 2: les destinataire</h2>
@@ -10,6 +11,7 @@
                 <h2 class="transparent visible-md visible-lg">Etape 4: aperçu</h2>
                 <h2><strong>Etape 5: envoi </strong></h2>
                 <p class="menu-text">Le message a étè sauvegardé dans les modèles</p>
+
             </div>
         </div>
     </div>
@@ -24,14 +26,16 @@
         <div class="row" ng-class="menus[$state.params['type']].color">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
                 <div class="center-block">
-                    <p class="square-text center-block">Le message est creé! </p>
-                    <p class="square-text center-block" ng-show="$state.params['type']=='info_famille'">Le message a été diffusé en ligne  sur la page info famille.</p>
-                    <p class="square-text center-block">() messages ont été envoyés par mails.
-                    <p class="square-text center-block">() messages sont à télécharger en fichier pdf :</p>
-                    <p class="square-text center-block"><a ng-show="created_publi.difusion_pdf" href="http://localhost:9292/app/api/publipostage/{{created_publi.id}}/pdf" target="_blank"><i class="fa fa-file fa-2x" style="color:#fff; text-shadow:1px 1px 1px #ccc;"></i></p>
+                    <p class="square-text center-block">Le message est creé!a</p>
+                    <p class="square-text center-block" ng-show="$state.params['type']=='info_famille'">Le message a été diffusé en ligne  sur la page info famille.
+                    
+                    <p class="square-text center-block" ng-show="showEmail">{{nb_email}} messages ont été envoyés par mails.</p>
+                    <p class="square-text center-block" ng-show="showPdf">{{nb_pdf}} messages sont à télécharger dans un fichier pdf </p>
+                    
+                    <p class="square-text center-block"><a ng-show="showPdf" href="api/publipostage/{{created_publi.id}}/pdf" target="_blank"><i class="fa fa-file fa-2x" style="color:#fff; text-shadow:1px 1px 1px #ccc;"></i></p>
                     <p></p>
                     <p style="text-align:center">
-                        <a class='btn btn-default btn-sm' ng-class="menus[$state.params['type']].color" style="border-color:white;color:white"  href="#/">écrire un autre message</a>
+                        <a class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" href="#/">écrire un autre message</a>
                     </p>
                 </div>
             </div>

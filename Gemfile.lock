@@ -1,12 +1,15 @@
 GIT
-  remote: git@github.com:laclasse-com/gem_annuaire.git
-  revision: 1ed105e05ec4a2f5d774c0da3f8333f624377a40
+  remote: https://github.com/laclasse-com/laclasse-common
+  revision: dfec785fad38afa7ca5eb08288ad1251dc2ae2f2
+  branch: develop
   specs:
-    annuaire (0.0.1)
+    laclasse-common (0.3)
+      logstash-logger
+      redis-rack (~> 1.5.0)
+      rest-client
 
 GEM
   remote: https://rubygems.org/
-  remote: http://gems.erasme.org/
   specs:
     activesupport (4.1.0)
       i18n (~> 0.6, >= 0.6.9)
@@ -27,34 +30,10 @@ GEM
     coderay (1.1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    cookiejar (0.3.2)
-    daemons (1.1.9)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
-    em-http-request (1.1.2)
-      addressable (>= 2.3.4)
-      cookiejar
-      em-socksify (>= 0.3)
-      eventmachine (>= 1.0.3)
-      http_parser.rb (>= 0.6.0)
-    em-socksify (0.3.0)
-      eventmachine (>= 1.0.0.beta.4)
-    ent_notifs (0.1.2)
-      faye (>= 1.0.1)
     equalizer (0.0.9)
-    eventmachine (1.0.3)
-    faye (1.0.1)
-      cookiejar (>= 0.3.0)
-      em-http-request (>= 0.3.0)
-      eventmachine (>= 0.12.0)
-      faye-websocket (>= 0.7.0)
-      multi_json (>= 1.0.0)
-      rack (>= 1.0.0)
-      websocket-driver (>= 0.3.0)
-    faye-websocket (0.7.2)
-      eventmachine (>= 0.12.0)
-      websocket-driver (>= 0.3.1)
     grape (0.7.0)
       activesupport
       builder
@@ -71,17 +50,15 @@ GEM
     gyoku (1.0.0)
       builder (>= 2.1.2)
     hashie (2.1.1)
-    htmlentities (4.3.1)
-    http_parser.rb (0.6.0)
     httpi (2.0.2)
       rack
     i18n (0.6.9)
     ice_nine (0.11.0)
     json (1.8.1)
-    mail (2.2.7)
-      activesupport (>= 2.3.6)
-      mime-types
-      treetop (>= 1.4.5)
+    logstash-event (1.2.02)
+    logstash-logger (0.7.0)
+      logstash-event (~> 1.2)
+      stud
     method_source (0.8.2)
     mime-types (2.2)
     mini_portile (0.5.3)
@@ -99,12 +76,12 @@ GEM
       addressable (~> 2.3)
       nokogiri (~> 1.6)
       omniauth (~> 1.1.0)
-    pdfkit (0.6.2)
-    polyglot (0.3.3)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
+    puma (2.10.2)
+      rack (>= 1.1, < 2.0)
     rack (1.5.2)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -116,6 +93,12 @@ GEM
     rack-test (0.6.2)
       rack (>= 1.0)
     rake (10.3.1)
+    redis (3.2.0)
+    redis-rack (1.5.0)
+      rack (~> 1.5)
+      redis-store (~> 1.1.0)
+    redis-store (1.1.4)
+      redis (>= 2.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec (2.14.1)
@@ -154,15 +137,9 @@ GEM
       sequel (>= 3.2.0)
       sinatra (>= 0.9.4)
     slop (3.5.0)
-    thin (1.6.2)
-      daemons (>= 1.0.9)
-      eventmachine (>= 1.0.0)
-      rack (>= 1.0.0)
+    stud (0.0.18)
     thread_safe (0.3.3)
     tilt (1.4.1)
-    treetop (1.4.15)
-      polyglot
-      polyglot (>= 0.3.1)
     tzinfo (1.1.0)
       thread_safe (~> 0.1)
     virtus (1.0.2)
@@ -173,26 +150,21 @@ GEM
     wasabi (3.1.0)
       httpi (~> 2.0)
       nokogiri (>= 1.4.0)
-    websocket-driver (0.3.2)
-    wkhtmltopdf-binary (0.9.9.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  annuaire!
-  ent_notifs
   grape
   grape-entity
-  htmlentities
   json
-  mail
+  laclasse-common!
   mysql2
   nokogiri
   omniauth
   omniauth-cas
-  pdfkit
   pry
+  puma
   rack-rewrite
   rack-test
   rake
@@ -205,5 +177,3 @@ DEPENDENCIES
   sinatra
   sinatra-contrib
   sinatra-sequel
-  thin
-  wkhtmltopdf-binary

@@ -2,16 +2,16 @@
     <div class="col-md-4 col-lg-4">
         <div class="row">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+                <p style="padding:5px 0px 10px 0px"><a class="navbar-brand" href="#"><i class="fa fa-home fa-2x"></i></a></p><br/>
                 <h2 class="transparent visible-md visible-lg">Etape 1: type de message</h2>
                 <h2 class="menu-text-transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</h2>
                 <h2 class="transparent visible-md visible-lg">Etape 2: les destinataire</strong></h2>
-                <p class="menu-text-hidden visible-md visible-lg"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat="profil in messageObject['profils']">{{profil}}, </span>  <span ng-repeat="destination in messageObject['destinations']"> {{destination['classe_libelle']}}{{destination['groupe_libelle']}}{{destination['description']}}</span></p>
+                <p class="menu-text-hidden visible-md visible-lg">
+                  <ng-include src="'views/parts/recap_destinataires.html'" />
+                </p>
                 <h2 class="transparent visible-md visible-lg">Etape 3: message</h2>
                 <h2><strong>Etape 4: aperçu</strong></h2>
                 <p class="menu-text visible-md visible-lg">Vérifier le message</p>
-                <p>
-                <a class='btn btn-info btn-sm'>voir l'historique</a>
-                </p>
                 </div>
             </div>
         </div>
@@ -29,10 +29,10 @@
                     </p>
                     <div  class="text-scroll" style="background-color:white; padding-left:5%%; padding-right:5%; padding-top:1%;" ng-bind-html="toTrustedHtml(messageObject['message'])"></div>
                 </div>
-                <p style="text-align: center">
-                    <a class="btn btn-default btn-sm" ng-class="menus[$state.params['type']].color" style="border-color:white;color:white" ng-click="goBackToMessage($state.params['type'])">reéditer</a>
-                    <a class='btn btn-default btn-sm' ng-class="menus[$state.params['type']].color" style="border-color:white;color:white" href="#/mode_diffusion/{{$state.params['type']}}">choisir le mode de diffusion</a>
-                </p>
+                <div style="text-align: center; margin:20px;">
+                    <a class="btn btn-publi btn-sm" ng-class="menus[$state.params['type']].color" ng-click="goBackToMessage($state.params['type'])">reéditer</a>
+                    <a class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" href="#/mode_diffusion/{{$state.params['type']}}">choisir le mode de diffusion</a>
+                </div>
             </div>
         </div>
     </div>

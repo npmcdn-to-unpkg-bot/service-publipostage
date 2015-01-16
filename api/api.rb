@@ -1,7 +1,6 @@
   # coding: utf-8
 require 'grape'
-require 'mail'
-require 'annuaire'
+require 'lib/cross_app_sender'
 
 class ApplicationAPI < Grape::API
   # response format = pdf 
@@ -15,6 +14,11 @@ class ApplicationAPI < Grape::API
 
     def authenticate!
       error!('401 non authentifié', 401) unless current_user
+    end
+
+    def profil_actif_etab_uai
+      user =  @current_user[:user_detailed]
+      etablissement_code_uai = user['profil_actif']['etablissement_code_uai']
     end
   end
 
@@ -31,118 +35,31 @@ class ApplicationAPI < Grape::API
       optional :sort_dir, type: String, regexp: /^(asc|desc)$/i, desc: "Direction de tri : ASC ou DESC"
   end
   get "/publipostages" do
-    content_type 'application/json;charset=UTF-8'
-    dataset = Publipostage.dataset
-    dataset.extend(Sequel::DatasetPagination)
-    # return all publipostages
-    if params[:all] == true
-      dataset.select(:id, :code_uai, :nom).naked
-    else
-      # todo  trier la base
-      page_size = params[:limit] ? params[:limit] : 20
-      page_no = params[:page] ? params[:page] : 1
-
-      dataset = dataset.paginate(page_no, page_size)
-      data = dataset.collect{ |x| {
-        :id => x.id,
-        :message => x.message,
-        :descriptif => x.descriptif,
-        :date => x.date,
-        :message_type => x.message_type,
-        :destinataires => x.destinataires,
-        :personnels => x.personnels
-        }
-      }
-      {total: dataset.pagination_record_count, page: page_no, data: data}
-    end
+    Laclasse::CrossAppSender.send_request_signed(:service_annuaire_publipostage, nil, {})
   end
   ############################################################################
   desc "Retourner un  publipostage par id"
-  get '/publipostages/:id' do
-    Publipostage[:id => params['id']]
+  get 'publipostages/:id' do
+    Laclasse::CrossAppSender.send_request_signed(:service_annuaire_publipostage, params[:id], {})
   end
   ############################################################################ 
   desc "creer un nouveau publipostage" 
+  params do
+    requires :descriptif, type: String, desc: "descriptif du publipostage"
+    requires :message, type: String, desc: "message du publipostage"
+    requires :message_type, type: String, desc: "type de message du publipostage"
+    requires :diffusion_type, type: String, desc: "type d'envoi du publipostage"
+    requires :destinataires, type: Array, desc: "destinataires du publipostage"
+  end
   post '/publipostages' do
-    if params.has_key?('descriptif') and params.has_key?('message') and params.has_key?('destinataires') and params.has_key?('message_type') and params.has_key?('send_type')
-      begin
-        # create a new Publipostage
-        DB.transaction do
-          publi = Publipostage.create(:descriptif => params['descriptif'], :message => params['message'], 
-                                      :date => DateTime.now, :message_type => params['message_type'])
-          #ajouter les destinataires
-          if params['message_type']=="ecrire_personnels"
-            if params['destinataires'].kind_of?(Array)
-              publi.personnels = params['destinataires']
-            else
-              raise 'pas de destinataires'
-            end
-          else
-            destinations = params['destinataires']
-            destinations.each do |dest|
-              if dest.respond_to?('classe_id')
-                Destinataire.create(:regroupement_id => dest.classe_id, :publipostage_id => publi.id)
-              elsif dest.respond_to?('groupe_id')
-                Destinataire.create(:regroupement_id => dest.groupe_id, :publipostage_id => publi.id)
-              else
-                raise 'pas de destinataires'
-              end
-            end
-          end
-
-          # add profils in case of ecrire à tous
-          if params['message_type']=="ecrire_tous"
-            if  !params['profils'].empty?
-              publi.profils =  params['profils']
-            else
-              raise 'pas de profils'
-            end
-          end
-
-          # add les type de diffusion
-          diffusion_types = params['send_type']
-          diffusion_types.each do |type|
-            case type
-            when "byMail"
-              publi.difusion_email = true
-            when "byPdf"
-              publi.difusion_pdf = true
-            when "byNotif"
-              publi.difusion_notif = true
-            else
-            end
-          end  
-          publi.save
-
-          # send emails
-          if publi.difusion_email
-            begin
-              h = {'ecrire_eleves' => 'eleves', 'ecrire_profs' => 'profs', 'info_famille' => 'parents', 'ecrire_personnels' => 'personnels'}
-              if !params['message_type'].nil?
-                if params['message_type'] == "ecrire_personnels"
-                  # email personnels
-                  EmailGenerator.send_emails_personnels(publi.message, publi.personnels)
-                elsif params['message_type'] == "ecrire_tous"
-                  # email to profils
-                  publi.profils.each do |profil|
-                    EmailGenerator.send_emails(publi.message, publi.destinataires, profil)
-                  end
-                else 
-                  EmailGenerator.send_emails(publi.message, publi.destinataires, h[params['message_type']])
-                end
-              end
-            rescue
-              raise 'une erreur s\'est produite'
-            end
-          end
-          # retourn le publipostage crée
-          publi
-        end # end transaction
-      rescue => e
-        error!(e.message, 400)
-      end
-    else
-      error!('Mauvaise requête', 400)
+    begin
+      params[:user_uid] = current_user[:info].uid
+      puts params.inspect
+      Laclasse::CrossAppSender.post_request_signed(:service_annuaire_publipostage,nil,{}, params)
+    rescue => e
+      puts e.message
+      puts e.backtrace[0...10]
+      error!(e.message, 400)
     end
   end
   ############################################################################
@@ -154,36 +71,15 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "retourner le fichier pdf d\'un publipostage"
   get '/publipostage/:id/pdf'do
-    publi = Publipostage[:id => params[:id]]
-    if publi.message_type =="ecrire_personnels"
-      destinataires = publi.personnels 
-    else
-      destinataires = publi.destinataires
-    end
-    if !publi.nil?&&publi[:difusion_pdf]&&!destinataires.empty?
-      final_document = ""
-      case publi.message_type
-      when 'info_famille'
-        final_document = PdfGenerator::generate_pdf(publi[:message], destinataires, 'parents')
-      when 'ecrire_profs'
-        final_document = PdfGenerator::generate_pdf(publi[:message], destinataires, 'profs')
-      when 'ecrire_eleves'
-        final_document = PdfGenerator::generate_pdf(publi[:message], destinataires, 'eleves')
-      when 'ecrire_personnels'
-        final_document = PdfGenerator::generate_personnels_pdf(publi[:message], publi.personnels)
-      when 'ecrire_tous'
-        publi.profils.each do |profil|
-          final_document  += "<hr></hr><p color='red'><h2>#{profil}</h2></p><hr></hr>" + PdfGenerator::generate_pdf(publi[:message], destinataires, profil)
-        end
-      end
-      # generate pdf
-      kit = PDFKit.new(final_document, :page_size => 'Letter')
+    publipostage = Laclasse::CrossAppSender.send_request_signed(:service_annuaire_publipostage, params[:id], {})
+    if publipostage["user_uid"] == current_user[:info]['uid'] || Laclasse::CrossAppSender.send_request_signed(:service_annuaire_user , current_user[:info]['uid'], {})['roles_max_priority_etab_actif'] >= 3
       content_type 'application/pdf'
-      pdf = kit.to_pdf
-    else
-      error!('Ressource non trouvee', 404)
+      signed_url = Laclasse::CrossAppSender.sign(:service_annuaire_publipostage, params[:id] + '/pdf', {})
+      return RestClient.get signed_url
     end
+    error!('Vous n\'êtes pas le créateur de ce publipostage',401)
   end
+
   ############################################################################
   desc "modifier un publipostage"
   put '/publipostages/:id' do
@@ -192,20 +88,8 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc "supprimer un publipostage"
   delete '/publipostages/:id' do
-    query = params[:id]
     begin
-      if query.class == String && query.size==1
-        puts Publipostage.where(:id => params['id']);
-        Publipostage.where(:id => params['id']).destroy
-      elsif (query = JSON.parse(params[:id])).class == Hash
-        query.each do |key, value|
-          if value
-            Publipostage.where(:id => key).destroy
-          end
-        end
-      else
-       error!('Requête incorrecte: les parametres ne sont pas valides', 400)
-      end
+      Laclasse::CrossAppSender.delete_request_signed(:service_annuaire_publipostage, params[:id], {})
     rescue => e
       error!("Requête incorrecte: une erreur s\'est produite: #{e.message}", 400)
     end
@@ -215,7 +99,7 @@ class ApplicationAPI < Grape::API
   desc "retourner la liste des profil"
   get '/profils' do
     content_type 'application/json;charset=UTF-8'
-    response = Annuaire.send_request_signed(ANNUAIRE[:url],ANNUAIRE[:service_profils], {})
+    response = Laclasse::CrossAppSender.send_request_signed(:service_annuaire_profils, nil, {})
     response
   end
 
@@ -223,7 +107,7 @@ class ApplicationAPI < Grape::API
   desc "retourner les info de l'utilisateur"
   get '/user/:id' do
     content_type 'application/json;charset=UTF-8'
-    response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_user] + params[:id], {"expand" => "true"})
+    response = Laclasse::CrossAppSender.send_request_signed(:service_annuaire_user, params[:id], {"expand" => "true"})
     response
   end
 
@@ -231,35 +115,62 @@ class ApplicationAPI < Grape::API
   desc "retourner les regroupements d'un utilisateur"
   get "/regroupements/:id" do
     content_type 'application/json;charset=UTF-8'
-    response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_user] + params[:id], {"expand" => "true"})
+    response = Laclasse::CrossAppSender.send_request_signed(:service_annuaire_user, params[:id], {"expand" => "true"})
     if !response.nil?
       etablissements = []
-      classes =[]
-      groupes = []
+      regroupements =[]
       response["etablissements"].each do |etab|
-      etablissements.push({:id => etab["id"], :nom => etab["nom"]}) if !etablissements.include?({:id => etab["id"], :nom => etab["nom"]})
+        etablissements.push({:id => etab["id"], :nom => etab["nom"]}) if !etablissements.include?({:id => etab["id"], :nom => etab["nom"]})
       end
-      { :etablissements => etablissements, :classes => response["classes"], :groupes_eleves => response["groupes_eleves"]}
+      response["classes"].each do |classe|
+        classe["id"]= classe["classe_id"]
+        classe["libelle"]= classe["classe_libelle"]
+        classe["type"] = "classe"
+        classe["destinataire_libelle"] = classe["classe_libelle"]
+        #uniquement les regroupements du profil actif
+        regroupements.push(classe) if response["profil_actif"]["etablissement_id"] == classe["etablissement_id"]
+      end
+      response["groupes_eleves"].each do |groupe|
+        groupe["id"]= groupe["groupe_id"]
+        groupe["libelle"]= groupe["groupe_libelle"]
+        groupe["type"] = "groupe"
+        groupe["destinataire_libelle"] = groupe["groupe_libelle"]
+        #uniquement les regroupements du profil actif
+        regroupements.push(groupe) if response["profil_actif"]["etablissement_id"] == groupe["etablissement_id"]
+      end
+      { :etablissements => etablissements, :regroupements => regroupements}
     else
       return []
     end
   end
   #############################################################################
   desc "retourner la liste des personnels dans letablissement"
-  get "/etablissements/:uai/personnels" do
+  get "/etablissements/personnels" do
+    personnels = []
+    response = Laclasse::CrossAppSender.send_request_signed(:service_annuaire_personnel, profil_actif_etab_uai + '/personnel',{})
+    response.each do |personnel|
+      personnel["destinataire_libelle"] = personnel["nom"] + " " + personnel["prenom"]
+      personnels << personnel
+    end
     content_type 'application/json;charset=UTF-8'
-    response = Annuaire.send_request_signed(ANNUAIRE[:url], ANNUAIRE[:service_personnel]+ params[:uai] +'/personnel',{})
+    return personnels
+  end
+  #############################################################################
+  desc "retourner la liste des matieres dans letablissement"
+  get "/etablissements/matieres" do
+    personnels = []
+    Laclasse::CrossAppSender.send_request_signed(:service_annuaire_personnel, profil_actif_etab_uai + '/matieres',{})
   end
   ############################################################################
   desc "send a notification"
   post "/notification/:uai/:profil/:uid/:type" do
     #puts request.inspect
   end
+  
   ############################################################################
-  desc "retourner les details d'un envoi"
-  get "/envoi/:destinataires" do
-    {emails:50, pdfs:100}
+  desc "retourner les informations de diffusion pour la pupulation et les regroupements passés en paramètre" 
+  get "/diffusion_info/:population/:regroupements" do
+    mat_string = ("professors" == params[:population] && !params[:matiere].nil? && params[:matiere] != "-1" )  ? '/' + params[:matiere] : '' 
+    Laclasse::CrossAppSender.send_request_signed(:service_annuaire_diffusion_info, params[:population] + '/' + params[:regroupements] + mat_string,{})
   end
-  ############################################################################
-
 end

@@ -2,16 +2,15 @@
     <div class="col-md-4 col-lg-4">
         <div class="row-fluid">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+                <p style="padding:5px 0px 10px 0px"><a class="navbar-brand" href="#"><i class="fa fa-home fa-2x"></i></a></p><br/>
                 <h2 class="transparent visible-md visible-lg">étape 1: type de message</h2>
                 <p class="menu-text transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</p>
                 <h2>étape 2: les destinataires</h2>
                 <p class="menu-text"> Sélectionner les classes  et les groupes destinataire des messages</p>
                 <form role="form" class="form-inline">
                     <div ng-show="$state.params['type']=='ecrire_profs'">
-                        <label>Choisir une matiere: </label><select class="form-control">
-                            <option>Matimatique</option>
-                            <option>Autre chose</option>
-                        </select>
+                        <label>Choisir une matiere: </label>
+                            <select class="form-control" ng-model="matiere" ng-options="matiere.id as matiere.libelle_long for matiere in matieres"></select>
                     </div>
                     <br/>
                     <!--
@@ -24,7 +23,11 @@
                         </p>
                     </div>
                 </form>
-                <p class="menu-text-hidden"><strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat= "classe in regroupements['classes']"><span ng-show="classe.checked">{{classe.classe_libelle}} </span></span><span ng-repeat= "groupe in regroupements['groupes_eleves']"> <span ng-show="groupe.checked">{{groupe.groupe_libelle}}</span></span></p>
+                <p class="menu-text-hidden">
+                    <strong> {{menus[$state.params["type"]]['recpitualif']}} 
+                        <span ng-repeat="destination in destinations"> {{destination['destinataire_libelle']}}</span>
+                    </strong>
+                </p>
 
                 </br>
                 </br>
@@ -60,12 +63,12 @@
 
             <!--show classes only when message type is not  ecrire personnels or ecrire tous -->
             <div  ng-show="$state.params['type']!='ecrire_personnels'">
-                <div ng-repeat="classe in regroupements['classes'] | filter:searchText" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="classe.color">
-                    <a ng-click="changeClassColor($index);classe.checked=!classe.checked;addRemoveDestination(classe);">
+                <div ng-repeat="classe in regroupements['regroupements'] | filter:searchText" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="squareClass(classe)">
+                    <a ng-click="classe.checked=!classe.checked;addRemoveDestination(classe);">
                       <div class="square-icon">
                         <div class="center-block">
                             <img class="img-responsive center-block" src="images/00_vide.svg">
-                            <span class="classe-text">{{classe.classe_libelle}}</span>
+                            <span class="classe-text">{{classe.libelle}}</span>
                         </div>
                         <div class="square-text center-block">{{classe.etablissement_nom}}</div>
                       </div>
@@ -76,7 +79,7 @@
             <!--show personnels only when message type is ecrire personnels -->
             <div  ng-show="$state.params['type']=='ecrire_personnels'">
                 <div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris4-clear">
-                    <a ng-click="changePersonColor($index);person.checked=!person.checked;addRemoveDestination(person)">
+                    <a ng-click="person.checked=!person.checked;addRemoveDestination(person)">
                         <div class="square-icon">
                             <div class="text-icon">
                                 {{person.prenom}} {{person.nom}}
@@ -88,24 +91,9 @@
                     </a>
                 </div>
             </div>
-
-            <!--show groupes only when message type in not ecrire personnels or ecrire tous -->
-            <div  ng-show="$state.params['type']!='ecrire_personnels'">
-                <div ng-repeat="groupe in regroupements['groupes_eleves']" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="groupe.color">
-                    <a ng-click="changeGroupColor($index);groupe.checked=!groupe.checked;addRemoveDestination(groupe)">
-                      <div class="square-icon">
-                        <div class="center-block">
-                            <img class="img-responsive center-block" src="images/00_vide.svg">
-                            <span class="groupe-text center-block">{{groupe.groupe_libelle}}</span>
-                        </div>
-                        <div class="square-text center-block">{{groupe.etablissement_nom}}</div>
-                      </div>
-                    </a>
-                </div>
-            </div>
             
             <!-- empty squares -->
-            <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}">
+            <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}-clear">
                 <a>
                   <div class="square-icon">
                     <div class="center-block">

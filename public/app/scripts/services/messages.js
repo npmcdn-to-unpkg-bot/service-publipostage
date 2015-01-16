@@ -4,16 +4,7 @@
 /*                   service to show flash messages and responses                  */
 /************************************************************************************/
 angular.module('services.messages', []); 
-angular.module('services.messages').factory("FlashService", ['$rootScope', function($rootScope) {
-  return {
-    show: function(message) {
-      $rootScope.flash = message;
-    },
-    clear: function() {
-      $rootScope.flash = "";
-    }
-  }
-}]);
+
 angular.module('services.messages').factory("FlashServiceStyled", ['$rootScope', function($rootScope) {
   return {
     show: function(message, classe) {
@@ -27,118 +18,102 @@ angular.module('services.messages').factory("FlashServiceStyled", ['$rootScope',
   }
 }]);
 
-angular.module('services.messages').factory("Message", ['$rootScope', function($rootScope) {  
-  return {
-    add: function(message) {
-      $rootScope.message = message;
-    },
-    clear: function() {
-      $rootScope.message = "";
-    },
-    get: function(){
-        return $rootScope.message;
-    }
-  }
-}]);
-
-
-angular.module('services.messages').factory("MessageObject", ['$rootScope', function($rootScope){
-    var messageObject = {};
-    return {
-    
-        clearMessage: function() {
-          messagObject['message'] = '';
-        },
-        addDestinations:function(a){
-            messageObject['destination'] = a;
-        },
-        get: function(){
-            return $rootScope.message;
-        }
-    }
-}]);
-
-
 /* MessageService is the service that represents the sent message */
-angular.module('services.messages').service('MessageService', function () {
-    var messageObject = { message:'',
-                        title:'',
-                        destinations:[],
-                        messageType:'',
-                        sendType:[], 
-                        profils:[]
+angular.module('services.messages').service('MessageService', ['$rootScope' ,function ($rootScope) {
+
+  this.reset = function() {
+    $rootScope.messageObject = { 
+        message:'',
+        title:'',
+        destinations:[],
+        messageType:'',
+        diffusion_type:'', 
+        profils:[],
+        matiere: ''
+      };
     };
+
+    this.init = function() {
+      if(sessionStorage != undefined && sessionStorage.messageObject != undefined ) {
+        try {
+          $rootScope.messageObject = JSON.parse(sessionStorage.messageObject);
+        } catch (e) {}
+      }
+      if($rootScope.messageObject == undefined) {
+        this.reset() ;
+      }
+    };
+    
+    this.init();
+    
+    $rootScope.$watch('messageObject' , function () {
+      if(sessionStorage != undefined) {
+        sessionStorage.messageObject = JSON.stringify($rootScope.messageObject);
+      }
+    }, true);
+
     // add Message  
     this.addMessage = function(message, title) {
-        messageObject['message'] = message;
-        messageObject['title'] = title;
+        $rootScope.messageObject['message'] = message;
+        $rootScope.messageObject['title'] = title;
     }
     
     this.clearMessage = function(){
-        messageObject['message'] = '';
-        messageObject['title'] = '';
+        $rootScope.messageObject['message'] = '';
+        $rootScope.messageObject['title'] = '';
     }
     
     this.getMessage = function() {
-        return messageObject;
+        return $rootScope.messageObject;
     }
     
     this.addDestinations = function(arry){
-        messageObject['destinations'] = arry;
+        $rootScope.messageObject['destinations'] = arry;
     }
     
     this.clearDestinations = function(){
-        messageObject['destinations'] = [];
+        $rootScope.messageObject['destinations'] = [];
     }
 
     this.addProfils = function(arry){
-        messageObject['profils'] = arry;
+        $rootScope.messageObject['profils'] = arry;
     }
 
     this.clearProfils = function(){
-        messageObject['profils'] = [];
+        $rootScope.messageObject['profils'] = [];
     }
     
-    this.addSendType = function(sendType){
-        var index = messageObject['sendType'].indexOf(sendType);
-        if (index ==-1){
-            messageObject['sendType'].push(sendType);
-        }
+    this.setDiffusionType = function(diffusion_type){
+        $rootScope.messageObject['diffusion_type'] = diffusion_type;
     }
     
-    this.removeSendType = function(sendType){
-        var index = messageObject['sendType'].indexOf(sendType);
-        if (index > -1) {
-            messageObject['sendType'].splice(index,1);
-        }
+    this.clearDiffusionType = function(){
+        $rootScope.messageObject['diffusion_type'] = '';
     }
     
     this.addMessageType = function(type){
-        messageObject['messageType'] = type;
+      $rootScope.messageObject['messageType'] = type;
     }
 
     this.isValid = function(forPage){
-        switch(forPage) {
-            case "destinataire":
-                var valid = (messageObject['messageType']== '' || messageObject['messageType']== null) ? false : true;
-                return valid;
-                break;
-            case "message":
-                var valid = (messageObject['messageType']==""|| messageObject['destinations'].length==0) ? false : true;
-                return valid;
-                break;
-
-        }
+      switch(forPage) {
+        case "mode_diffusion":
+        case "apercu" :
+          var valid = !_.isEmpty($rootScope.messageObject['message']);
+          if(!valid) return false;
+        case "message":
+          var valid = !_.isEmpty($rootScope.messageObject['destinations']);
+          if(!valid) return false;
+        case "destinataire":
+          var valid = !_.isEmpty($rootScope.messageObject['messageType']);
+          if(!valid) return false;
+      }
+      return true;
     }
 
-    this.init = function(){
-        messageObject = { message:'',
-                        title:'',
-                        destinations:[],
-                        messageType:'',
-                        sendType:[] };
-    }
-
-});
+    this.setMatiere = function (matiere) {
+      $rootScope.messageObject['matiere'] = matiere;
+    };
+}]);
 
 /************************************************************************************/

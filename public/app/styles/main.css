@@ -6,6 +6,10 @@ h1, h2{font-family: Open Sans Bold;
   opacity:0.5;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 .square-text{
   display:block;
   text-align:center;
@@ -49,7 +53,7 @@ h1, h2{font-family: Open Sans Bold;
   left:35%;
   color: white;
   font-family: Futura Bold;
-  z-index:1!important
+  z-index: 1!important;
 }
 
 .groupe-text {
@@ -104,7 +108,7 @@ h1, h2{font-family: Open Sans Bold;
   }
 
   .square-text{
-    font-size: 120%;
+    font-size: 16px;
   }
 
   .menu-text {
@@ -134,7 +138,7 @@ h1, h2{font-family: Open Sans Bold;
   }
 
   .square-text{
-    font-size: 120%;
+    font-size: 16px;
   }
   .menu-text {
     font-size: 120%;
@@ -163,7 +167,7 @@ h1, h2{font-family: Open Sans Bold;
   }
 
   .square-text{
-    font-size: 120%;
+    font-size: 16px;
   }
 
   .menu-text {
@@ -193,7 +197,7 @@ h1, h2{font-family: Open Sans Bold;
   }
 
   .square-text{
-    font-size: 150%;
+    font-size: 16px;
   }
 
   .menu-text {
@@ -384,7 +388,21 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 background-position: 0 -15px;
 }
 
-.css-label{ background-image:url(http://csscheckbox.com/checkboxes/lite-plus.png); }
+input[type=radio] + label.css-label {
+  height:15px; 
+  display:inline-block;
+  line-height:15px;
+  background-repeat:no-repeat;
+  background-position: 0 0;
+  font-size:15px;
+  vertical-align:middle;
+  cursor:pointer;
+  background-image: none;
+}
+
+
+.css-label{ 
+  background-image:url(http://csscheckbox.com/checkboxes/lite-plus.png); }
 
 /* transparent colors */
 .bleu-clear {
@@ -506,4 +524,14 @@ scrollbars, thumb {
 #checked {
     color: #eb5454;
     font-size: 1.5em;
+}
+
+.btn-publi {
+  border-color:white;
+  color:white
+}
+
+.btn-publi:hover {
+  background-color: white;
+  color: #505050;
 }

@@ -1,11 +1,4 @@
 'use strict';
-
-/* constant for static pages routing */
-angular.module('services.constants', []); 
-angular.module('services.constants').constant('APPLICATION_PREFIX', '/app');
-angular.module('services.constants').constant('BASE_SERVICE_URL', '/app/api');
-
-
 /* constants for icons */
 angular.module('services.constants').constant('SVG_AVATAR_F' , "M118.05,127.561c0.044-0.232-1.54-12.343-1.555-12.588c0,0-2.954-7.807-7.623-8.603c-4.665-0.801-10.663-2.497-13.171-4.469c-1.467-1.163-6.242-3.175-8.454-4.013c-1.034-0.391-2.801-3.571-3.408-5.008 c-0.613-1.438-4.822-4.344-5.897-4.504l-0.167-5.983l12.188-3.95c0,0,3.14-1.518,3.443-1.518c0.31,0-1.452-2.407-1.685-3.055 c-0.228-0.64-1.377-5.005-1.377-5.005s4.115,5.243,6.2,6.224c0,0-4.1-8.017-5.317-12.483c-1.225-4.471-2.032-11.451-2.032-12.088 c0-0.642-2.524-19.39-3.901-22.499c-1.38-3.117-3.25-7.342-6.449-9.416c-3.202-2.075-7.947-5.029-14.762-5.424 c-0.103-0.004-0.204-0.004-0.306-0.015c-0.102,0.008-0.204,0.008-0.308,0.015c-6.81,0.396-11.556,3.351-14.755,5.424 c-3.198,2.072-5.068,6.3-6.449,9.416c-1.377,3.109-3.905,21.857-3.905,22.499c0,0.637-0.714,7.9-1.938,12.364 c-1.226,4.472-5.409,12.205-5.409,12.205c2.086-0.979,6.199-6.223,6.199-6.223s-1.481,4.79-1.714,5.432 c-0.233,0.644-1.653,2.629-1.347,2.629c0.305,0,3.447,1.518,3.447,1.518l12.19,3.95l-0.171,5.983 c-1.07,0.16-5.281,3.067-5.896,4.504c-0.615,1.437-2.377,4.617-3.408,5.008c-2.218,0.837-6.988,2.85-8.456,4.013 c-2.515,1.973-8.496,3.668-13.169,4.469c-4.669,0.794-7.619,8.057-7.619,8.057c-0.018,0.248-1.6,12.9-1.561,13.134H118.05z");
 
@@ -24,7 +17,7 @@ angular.module('services.constants').service('Squares', function($rootScope){
                     { id: 'write_profs',
                       icon: $rootScope.racine_images + 'profs.svg',
                       color: 'bleu',
-                      text: 'écrire aux profs',
+                      text: 'écrire aux professeurs',
                       url: '/destinataire/ecrire_profs',
                       active: false
                     },
@@ -50,24 +43,24 @@ angular.module('services.constants').service('Squares', function($rootScope){
                       url: '/destinataire/ecrire_tous',
                       active: false
                     },
-                    { id: 'faire_annonce',
-                      icon: $rootScope.racine_images + 'annonce.svg',
-                      color: 'rouge',
-                      text: 'faire une annonce',
-                      url: '/annonce',
+                    { id: '',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'rouge-clear',
+                      text: '',
+                      url: '',
                       active: false
                     },
                     { id: '',
-                      icon: $rootScope.racine_images + 'modele.svg',
-                      color: 'vert',
-                      text: 'utiliser un modèle',
-                      url: '/publi',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'vert-clear',
+                      text: '',
+                      url: '',
                       active: false
                     },
                     { id: '',
-                      icon: $rootScope.racine_images + 'messagerie.svg',
-                      color: 'bleu',
-                      text: 'ma messagerie',
+                      icon: $rootScope.racine_images + '00_vide.svg',
+                      color: 'bleu-clear',
+                      text: '',
                       url: '',
                       active: false
                     },
@@ -131,128 +124,7 @@ angular.module('services.constants').service('Squares', function($rootScope){
     return squares;        
 });
 
-angular.module('services.constants').service('AnnonceSquares', function($rootScope){
-	var squares = [
-                    { id: 'annonce_personnels',
-                      icon: $rootScope.racine_images + 'personnel.svg',
-                      color: 'rouge',
-                      text: 'annonce aux personnels',
-                      url: '/annonce_destinataires/ecrire_personnels',
-                      active: false
-                    },
-                    { id: 'annonce_eleves',
-                      icon: $rootScope.racine_images + 'eleves.svg',
-                      color: 'jaune',
-                      text: 'annonce aux élèves',
-                      url: '/annonce_destinataires/ecrire_eleves',
-                      active: false
-                    },
-                    { id: 'annonce_profs',
-                      icon: $rootScope.racine_images + 'profs.svg',
-                      color: 'bleu',
-                      text: 'annonce aux profs',
-                      url: '/annonce_destinataires/ecrire_profs',
-                      active: false
-                    },
-                    { id: 'annonce_tous',
-                      icon: $rootScope.racine_images + 'tous.svg',
-                      color: 'violet',
-                      text: 'annonce à tous',
-                      url: '/annonce_destinataires/ecrire_tous',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'bleu-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'vert-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'violet-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'jaune-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'jaune-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'rouge-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'vert-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'bleu-clear',
-                      text: '',
-                      url:'' ,
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'violet-clear',
-                      text: '',
-                      url: '',
-                      active: false
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'bleu-clear',
-                      text: '',
-                      url: '',
-                      active: true
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'jaune-clear',
-                      text: '',
-                      url: '',
-                      active: true
-                    },
-                    { id: '',
-                      icon: $rootScope.racine_images + '00_vide.svg',
-                      color: 'rouge-clear',
-                      text: '',
-                      url: '',
-                      active: true
-                    }
-                  ];
-    return squares;        
-});
-
 angular.module('services.constants').constant('colors' , [ 'bleu', 'vert', 'rouge', 'violet', 'orange','jaune', 'gris1','gris2', 'gris3', 'gris4' ]);
-
-angular.module('services.constants').constant('transparentColors', [ 'bleu-clear', 'vert-clear', 'rouge-clear', 'violet-clear', 'orange-clear',
-                            'jaune-clear', 'gris1-clear','gris2-clear', 'gris3-clear', 'gris4-clear' ]);
 
 angular.module('services.constants').service('Menus', function($rootScope){
   return {
@@ -268,8 +140,8 @@ angular.module('services.constants').service('Menus', function($rootScope){
 				ecrire_profs:{
 				    left_menu_text:'écrire aux prof : pour diffuser un message aux enseignants',
 				    left_menu_button_text: 'écrire aux enseignant',
-				    right_menu_text: 'écrire aux prof',
-				    recpitualif:'enseignant de:',
+				    right_menu_text: 'écrire aux professeurs ',
+				    recpitualif:'enseignant des classes:',
             icon :$rootScope.racine_images + 'profs.svg',
             color: "bleu",
             icon_div:"profs-icon"
@@ -296,7 +168,7 @@ angular.module('services.constants').service('Menus', function($rootScope){
             left_menu_text:'écrire aux personnels',
             left_menu_button_text: 'écrire aux personnels',
             right_menu_text: 'écrire aux personnels',
-            recpitualif:'profils de: ',
+            recpitualif:'',
             icon :$rootScope.racine_images + 'personnel.svg',
             color: "rouge",
             icon_div:"personnel-icon"
@@ -305,12 +177,39 @@ angular.module('services.constants').service('Menus', function($rootScope){
 });
 
 angular.module('services.constants').value('tinymceOptions', {
-            language:"fr",
-            menubar: false,
-            theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-            font_size_style_values: "12px,13px,14px,16px,18px,20px",
-            toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist"
-        });
+  // Test to place lang elsewhere and have it bower compliant
+  language:"../../../scripts/externals/tinymce/lang/fr",
+  menubar: false,
+  theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
+  font_size_style_values: "12px,13px,14px,16px,18px,20px",
+  toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist",
+  extended_valid_elements : "nom,civilite",
+  //custom_elements: "nom,civilite",
+  verify_html : false,
+  height : 200,
+  forced_root_block: false,
+  handle_event_callback: function (e) {
+      // put logic here for keypress
+      console.log("callback called");
+  }
+});
 
-
-
+angular.module('services.constants').value('templateItems', 
+ [
+  { value : '[civilite]', message :  'Civilité' },
+  { value : '[nom]', message :  'Nom' },
+  { value : '[prenom]', message :  'Prenom' },
+  { value : '[adresse]', message :  'Adresse' },
+  { value : '[date]', message :  'Date du Jours' },
+  { value : '[signature]', message :  'Signature' },
+  { value : '[nomEleve]', message :  'Nom de l\'élève'        , showOnly : ['info_famille']},
+  { value : '[prenomEleve]', message :  'Prénom de l\'élève'  , showOnly : ['info_famille']},
+  { value : '[classe]', message :  'Classe' },
+  { value : '[matiere]', message :  'Matière'                 , showOnly : ['ecrire_profs']},
+  { value : '[loginLaClasse]', message :  'Login LaClasse.com du destinataire'       , showOnly : ['info_famille', 'ecrire_eleves'] , rolePriorityMin :2},
+  { value : '[pwdLaClasse]', message :  'Mot de passe LaClasse.com du destinataire'  , showOnly : ['info_famille', 'ecrire_eleves'] , rolePriorityMin :2},
+  { value : '[blogEtab]', message :  'Lien blog de l\'etablissement' },
+  { value : '[blogRegroupement]', message :  'Lien blog du groupe ou de la classe' },
+  { value : '<a href=\'http://www.laclasse.com\'>Laclasse</a>', message :  'Lien Laclasse.com' }
+  ]
+);

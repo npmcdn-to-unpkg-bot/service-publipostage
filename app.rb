@@ -3,11 +3,16 @@
 require 'rubygems'
 require 'bundler'
 require "sinatra/reloader"
-
 require './config/init'
-require './models/init.rb'
-require './lib/init.rb'
+require  'lib/laclasse_logger'
+LOGGER = Laclasse::LoggerFactory.getLogger
+LOGGER.info("Démarrage du publipostage avec #{LOGGER.loggers_count} logger#{LOGGER.loggers_count > 1 ? 's': ''}")
+
 Bundler.require( :default, ENV['RACK_ENV'].to_sym )     # require tout les gems définis dans Gemfile
+
+require './helpers/init.rb'
+require './api/init.rb'
+
 
 #require_relative './lib/AuthenticationHelpers'
 
@@ -40,24 +45,13 @@ class SinatraApp < Sinatra::Base
   #dont_reload '/path/to/other/file'
   end
 
-  Annuaire.configure do |config|
-    config.app_id = ANNUAIRE[:app_id]
-    config.secret = ANNUAIRE[:secret]
-  end
-
-  helpers AuthenticationHelpers
+  helpers Laclasse::Helpers::Authentication
 
   get APP_PATH + '/' do
-    # show/hide toolbar
-    if params['navbar'] == 'true' || params['navbar'].nil?
-      env["show_navbar"] = true
-    else
-      env["show_navbar"] = false
-    end
-    if is_logged?
+    if logged?
       erb :app
     else
-      erb :public_page
+      login! APP_PATH + '/'
     end  
   end
 
@@ -90,11 +84,12 @@ class SinatraApp < Sinatra::Base
   end
 
   get APP_PATH + '/current-user' do
-    if is_logged?
+    if logged?
        data = env['rack.session'][:current_user]
        {:login => data[:user],
          :info => data[:info],
-         :roles => data[:info]['ENTPersonRoles'].split(',').map{|role| role.split(':')}
+         :roles => data[:info]['ENTPersonRoles'].split(',').map{|role| role.split(':')},
+         :roles_max_priority_etab_actif => data['roles_max_priority_etab_actif']
        }.to_json
     else
        nil

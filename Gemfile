@@ -1,13 +1,12 @@
 # -*- coding: utf-8; mode: ruby -*-
 
 source 'https://rubygems.org'
-source 'http://gems.erasme.org'
 
 gem 'sinatra'
 gem 'json'
 gem 'omniauth'
 gem 'omniauth-cas'
-gem 'thin'
+gem 'puma'
 gem 'savon'
 gem 'nokogiri'
 gem 'rack-rewrite'
@@ -16,15 +15,11 @@ gem 'sinatra-sequel'
 gem 'sequel_plus'
 gem 'mysql2'
 gem 'rake'
-gem 'pdfkit'
-gem 'wkhtmltopdf-binary'
+gem 'laclasse-common', :git => 'https://github.com/laclasse-com/laclasse-common' , :branch => 'develop'
 gem 'grape'
 gem 'rest-client'
 gem 'grape-entity'
-gem 'ent_notifs'
-gem 'htmlentities'
-gem 'mail'
-gem 'annuaire', :git => 'git@github.com:laclasse-com/gem_annuaire.git'
+#gem 'annuaire', :git => 'https://github.com/laclasse-com/gem_annuaire'
 
 group :development do
   gem 'sinatra-contrib'
