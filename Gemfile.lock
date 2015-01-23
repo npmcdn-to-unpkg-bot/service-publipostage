@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/laclasse-com/laclasse-common
-  revision: dfec785fad38afa7ca5eb08288ad1251dc2ae2f2
+  revision: 1bfa69d986183fe3a622b57ac4c1d8567b5ace57
   branch: develop
   specs:
     laclasse-common (0.3)
