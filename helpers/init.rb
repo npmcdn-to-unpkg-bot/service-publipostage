@@ -1,3 +1,3 @@
 # coding: utf-8
 LOGGER.info 'loading helpers'
-require 'lib/helpers/authentication'
+require 'laclasse/common/helpers/authentication'
