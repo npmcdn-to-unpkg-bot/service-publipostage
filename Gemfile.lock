@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/laclasse-com/laclasse-common
-  revision: 6317d4d31f6ae74418cc0a0dcc330f37ff01f1a4
-  branch: develop
+  revision: d159b7e0484bbd09721c3fd11232e0ea9740721e
+  tag: 0.1
   specs:
     laclasse-common (0.3)
       logstash-logger
@@ -56,7 +56,7 @@ GEM
     ice_nine (0.11.0)
     json (1.8.1)
     logstash-event (1.2.02)
-    logstash-logger (0.8.0)
+    logstash-logger (0.9.0)
       logstash-event (~> 1.2)
       stud
     method_source (0.8.2)

@@ -1,6 +1,6 @@
   # coding: utf-8
 require 'grape'
-require 'laclasse/common/cross_app/sender'
+require 'laclasse/cross_app/sender'
 
 class ApplicationAPI < Grape::API
   # response format = pdf 

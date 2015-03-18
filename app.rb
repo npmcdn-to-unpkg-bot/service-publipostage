@@ -4,7 +4,7 @@ require 'rubygems'
 require 'bundler'
 require "sinatra/reloader"
 require './config/init'
-require  'laclasse/common/laclasse_logger'
+require  'laclasse/laclasse_logger'
 LOGGER = Laclasse::LoggerFactory.getLogger
 LOGGER.info("Démarrage du publipostage avec #{LOGGER.loggers_count} logger#{LOGGER.loggers_count > 1 ? 's': ''}")
 
