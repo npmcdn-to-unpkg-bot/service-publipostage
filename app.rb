@@ -47,7 +47,12 @@ class SinatraApp < Sinatra::Base
   get "#{APP_PATH}/status" do
     content_type :json
 
-    app_infos.to_json
+    app_status = app_infos
+
+    app_status[:status] = 'OK'
+    app_status[:reason] = 'L\'application fonctionne.'
+
+    app_status.to_json
   end
 
   get "#{APP_PATH}/auth/:provider/callback" do
