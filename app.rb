@@ -4,10 +4,10 @@ require 'rubygems'
 require 'bundler'
 require 'sinatra/reloader'
 
+Bundler.require( :default, ENV['RACK_ENV'].to_sym )     # require tout les gems définis dans Gemfile
+
 require 'laclasse/helpers/authentication'
 require 'laclasse/helpers/app_infos'
-
-Bundler.require( :default, ENV['RACK_ENV'].to_sym )     # require tout les gems définis dans Gemfile
 
 # https://gist.github.com/chastell/1196800
 class Hash

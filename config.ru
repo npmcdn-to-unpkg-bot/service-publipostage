@@ -1,12 +1,14 @@
 # -*- encoding: utf-8 -*-
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
+
+require './config/init'
+
 require 'app'
 
 require 'laclasse/laclasse_logger'
 require 'laclasse/helpers/rack'
 
-require './config/init'
 require './api/init.rb'
 
 use Rack::Rewrite do
