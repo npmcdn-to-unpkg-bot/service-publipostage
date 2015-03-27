@@ -4,7 +4,10 @@ require 'rubygems'
 require 'bundler'
 require "sinatra/reloader"
 require './config/init'
+
 require  'laclasse/laclasse_logger'
+require 'laclasse/helpers/authentication'
+require 'laclasse/helpers/status'
 
 Bundler.require( :default, ENV['RACK_ENV'].to_sym )     # require tout les gems définis dans Gemfile
 
@@ -48,6 +51,12 @@ class SinatraApp < Sinatra::Base
     else
       login! APP_PATH + '/'
     end
+  end
+
+  get APP_PATH + '/status' do
+    content_type :json
+
+    app_infos.to_json
   end
 
   get APP_PATH + '/auth/:provider/callback' do
