@@ -7,7 +7,7 @@ require './config/init'
 
 require  'laclasse/laclasse_logger'
 require 'laclasse/helpers/authentication'
-require 'laclasse/helpers/status'
+require 'laclasse/helpers/app_infos'
 
 Bundler.require( :default, ENV['RACK_ENV'].to_sym )     # require tout les gems définis dans Gemfile
 
