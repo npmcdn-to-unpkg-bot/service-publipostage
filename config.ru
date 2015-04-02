@@ -9,8 +9,12 @@ require 'app'
 require 'laclasse/laclasse_logger'
 require 'laclasse/helpers/rack'
 
+require 'laclasse/utils/health_check'
+
 LOGGER = Laclasse::LoggerFactory.get_logger
-LOGGER.info( "Démarrage du publipostage avec #{LOGGER.loggers_count} logger#{LOGGER.loggers_count > 1 ? 's': ''}" )
+LOGGER.info( "Démarrage du publipostage avec #{LOGGER.loggers_count} logger#{LOGGER.loggers_count > 1 ? 's' : ''}" )
+
+Laclasse::Utils::HealthChecker.check
 
 require './api/init.rb'
 
@@ -21,11 +25,11 @@ end
 Laclasse::Helpers::Rack.configure_rake self if defined? REDIS
 
 use OmniAuth::Builder do
-    configure do |config|
-      config.path_prefix =  APP_PATH + '/auth'
-    end
-    provider :cas,  CASAUTH::CONFIG
+  configure do |config|
+    config.path_prefix =  APP_PATH + '/auth'
+  end
+  provider :cas,  CASAUTH::CONFIG
 end
 
 run Rack::URLMap.new( "#{APP_PATH}/api" => ApplicationAPI.new,
-                      "/" => SinatraApp.new )
+                      '/' => SinatraApp.new )
