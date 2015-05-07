@@ -24,7 +24,7 @@ class SinatraApp < Sinatra::Base
   configure do
     set :app_file, __FILE__
     set :root, APP_ROOT
-    set :public_folder, Proc.new { File.join(root, "public") }
+    set :public_folder, proc { File.join(root, 'public') }
     set :inline_templates, true
     set :protection, true
   end
@@ -86,13 +86,11 @@ class SinatraApp < Sinatra::Base
   get "#{APP_PATH}/current-user" do
     if logged?
       data = env['rack.session'][:current_user]
-      {:login => data[:user],
-       :info => data[:info],
-       :roles => data[:info]['ENTPersonRoles'].split(',').map{|role| role.split(':')},
-       :roles_max_priority_etab_actif => data['roles_max_priority_etab_actif']
+      {login: data[:user],
+       info: data[:info],
+       roles: data[:info]['ENTPersonRoles'].split(',').map { |role| role.split(':') },
+       roles_max_priority_etab_actif: data['roles_max_priority_etab_actif']
       }.to_json
-    else
-      nil
     end
   end
 end
