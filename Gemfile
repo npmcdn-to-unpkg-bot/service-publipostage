@@ -28,4 +28,5 @@ group :development do
   gem 'rack-test'
   gem 'rspec'
   gem 'rubocop'
+  gem 'guard'
 end
