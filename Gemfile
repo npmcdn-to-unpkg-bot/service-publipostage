@@ -25,8 +25,11 @@ group :development do
   gem 'sinatra-contrib'
   gem 'shotgun'
   gem 'pry'
+  gem 'pry-coolline'
   gem 'rack-test'
   gem 'rspec'
   gem 'rubocop'
   gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-rspec'
 end
