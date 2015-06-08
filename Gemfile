@@ -19,7 +19,6 @@ gem 'laclasse-common', :git => 'https://github.com/laclasse-com/laclasse-common'
 gem 'grape'
 gem 'rest-client'
 gem 'grape-entity'
-#gem 'annuaire', :git => 'https://github.com/laclasse-com/gem_annuaire'
 
 group :development do
   gem 'sinatra-contrib'
@@ -27,4 +26,5 @@ group :development do
   gem 'pry'
   gem 'rack-test'
   gem 'rspec'
+  gem 'rubocop'
 end
