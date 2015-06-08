@@ -214,3 +214,6 @@ DEPENDENCIES
   sinatra
   sinatra-contrib
   sinatra-sequel
+
+BUNDLED WITH
+   1.10.3
