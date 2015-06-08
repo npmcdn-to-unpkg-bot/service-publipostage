@@ -198,18 +198,18 @@ angular.module('services.constants').value('templateItems',
  [
   { value : '[civilite]', message :  'Civilité' },
   { value : '[nom]', message :  'Nom' },
-  { value : '[prenom]', message :  'Prenom' },
+  { value : '[prenom]', message :  'Prénom' },
   { value : '[adresse]', message :  'Adresse' },
-  { value : '[date]', message :  'Date du Jours' },
+  { value : '[date]', message :  'Date du jour' },
   { value : '[signature]', message :  'Signature' },
   { value : '[nomEleve]', message :  'Nom de l\'élève'        , showOnly : ['info_famille']},
   { value : '[prenomEleve]', message :  'Prénom de l\'élève'  , showOnly : ['info_famille']},
   { value : '[classe]', message :  'Classe' },
   { value : '[matiere]', message :  'Matière'                 , showOnly : ['ecrire_profs']},
-  { value : '[loginLaClasse]', message :  'Login LaClasse.com du destinataire'       , showOnly : ['info_famille', 'ecrire_eleves'] , rolePriorityMin :2},
-  { value : '[pwdLaClasse]', message :  'Mot de passe LaClasse.com du destinataire'  , showOnly : ['info_famille', 'ecrire_eleves'] , rolePriorityMin :2},
-  { value : '[blogEtab]', message :  'Lien blog de l\'etablissement' },
+  { value : '[loginLaClasse]', message :  'Login Laclasse.com du destinataire'       , showOnly : ['info_famille', 'ecrire_eleves'] , rolePriorityMin :2},
+  { value : '[pwdLaClasse]', message :  'Mot de passe Laclasse.com du destinataire'  , showOnly : ['info_famille', 'ecrire_eleves'] , rolePriorityMin :2},
+  { value : '[blogEtab]', message :  'Lien blog de l\'établissement' },
   { value : '[blogRegroupement]', message :  'Lien blog du groupe ou de la classe' },
-  { value : '<a href=\'http://www.laclasse.com\'>Laclasse</a>', message :  'Lien Laclasse.com' }
+  { value : '<a href=\'http://lab.laclasse.com\'>Laclasse</a>', message :  'Lien Laclasse.com v3' }
   ]
 );
