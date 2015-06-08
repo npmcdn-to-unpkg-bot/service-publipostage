@@ -1,4 +1,4 @@
-GIT
+gitGIT
   remote: https://github.com/laclasse-com/laclasse-common
   revision: 2e9797ba499d73263ff60fd918879f4df92c3d51
   branch: feature/addLogger#1

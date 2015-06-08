@@ -371,6 +371,9 @@ Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems',
     function($scope, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems){
 
+        $scope.title = "";.
+        .
+
         //Template items
         $scope.templateItems =  templateItems;
 
