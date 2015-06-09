@@ -368,8 +368,8 @@ Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 }]);
 
 /********************************* Massage controller*****************************************/
-Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems',
-    function($scope, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems){
+Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$filter', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems', 'security', "nameRoles",
+    function($scope, $location, $rootScope, $filter, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems, security, nameRoles){
 
         $scope.title = "";
 
@@ -388,15 +388,46 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', 'Mes
         };
         
         $scope.addToMessage = function(text){
-            
-            /*
-             * Append space if message is not empty and doesn't ends with sparce nor Carriage return
-             */
-            if(_.isString($scope.tinyMessage) && $scope.tinyMessage.length > 0 && !($scope.tinyMessage.endsWith("&nbsp;") || $scope.tinyMessage.endsWith("<br />"))) {
-              text  = " "  + text;
-            }
-            
-            $scope.tinyMessage += text;
+            security.requestCurrentUser().then(function(user) {
+                console.log(user);
+                switch (text){
+                    case "[signature]": 
+                        var nomEtab = "";
+                        var nomRole = "";
+                        user["roles"].forEach(function(role){
+                            if( role[1] == user["info"]["ENTPersonStructRattachRNE"] ){
+                                nomEtab = role[4];
+                                nomRole = nameRoles[role[0]];
+                            }
+                        });                       
+                        text = "<p>"+user["info"]["LaclasseNom"]+" "+user["info"]["LaclassePrenom"]+"</p><p>"+nomRole+"</p><p>"+nomEtab+"</p>";         
+                        break;  
+                    case "[civilite]":
+                        text = user["info"]["LaclasseCivilite"];
+                        break;
+                    case "[nom]":
+                        text = user["info"]["LaclasseNom"];
+                        break;
+                    case "[prenom]":
+                        text = user["info"]["LaclassePrenom"];
+                        break;
+                    case "[date]":
+                        text = $filter('date')(new Date(), 'dd/MM/yyyy');
+                        break;
+                    case "[adresse]":
+                        text = "<p>"+user["all_info"]["adresse"].replace(/%20/g, " ")+"</p><p>"+user["all_info"]["code_postal"]+" "+user["all_info"]["ville"]+"</p>";
+                        break;
+                }
+                
+                /*
+                 * Append space if message is not empty and doesn't ends with sparce nor Carriage return
+                 */
+                if(_.isString($scope.tinyMessage) && $scope.tinyMessage.length > 0 && !($scope.tinyMessage.endsWith("&nbsp;") || $scope.tinyMessage.endsWith("<br />"))) {
+                  text  = " "  + text;
+                }
+                
+                $scope.tinyMessage += text;
+            });
         }
         
         $scope.goToPreview = function(location){

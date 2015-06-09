@@ -1,9 +1,8 @@
 GIT
   remote: https://github.com/laclasse-com/laclasse-common
-  revision: 2e9797ba499d73263ff60fd918879f4df92c3d51
-  branch: feature/addLogger#1
+  revision: 2eabbb9fd99fec49cdc36d42a9f76bd3d7034d41
   specs:
-    laclasse-common (0.3)
+    laclasse-common (0.2.3)
       logstash-logger
       redis-rack (~> 1.5.0)
       rest-client
