@@ -384,14 +384,27 @@ vertical-align:middle;
 cursor:pointer;
 }
 
+ol {
+  margin-top: 10px;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+ol li{
+  list-style-type: none;
+}
+
 input[type=checkbox].css-checkbox:checked + label.css-label {
 background-position: 0 -15px;
 }
+input[type=radio] {
+  vertical-align: top;
+}
+
 
 input[type=radio] + label.css-label {
-  height:15px; 
-  display:inline-block;
-  line-height:15px;
+  width: 95%;
+  line-height:18px;
   background-repeat:no-repeat;
   background-position: 0 0;
   font-size:15px;
