@@ -389,36 +389,7 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$fi
         
         $scope.addToMessage = function(text){
             security.requestCurrentUser().then(function(user) {
-                console.log(user);
-                switch (text){
-                    case "[signature]": 
-                        var nomEtab = "";
-                        var nomRole = "";
-                        user["roles"].forEach(function(role){
-                            if( role[1] == user["info"]["ENTPersonStructRattachRNE"] ){
-                                nomEtab = role[4];
-                                nomRole = nameRoles[role[0]];
-                            }
-                        });                       
-                        text = "<p>"+user["info"]["LaclasseNom"]+" "+user["info"]["LaclassePrenom"]+"</p><p>"+nomRole+"</p><p>"+nomEtab+"</p>";         
-                        break;  
-                    case "[civilite]":
-                        text = user["info"]["LaclasseCivilite"];
-                        break;
-                    case "[nom]":
-                        text = user["info"]["LaclasseNom"];
-                        break;
-                    case "[prenom]":
-                        text = user["info"]["LaclassePrenom"];
-                        break;
-                    case "[date]":
-                        text = $filter('date')(new Date(), 'dd/MM/yyyy');
-                        break;
-                    case "[adresse]":
-                        text = "<p>"+user["all_info"]["adresse"].replace(/%20/g, " ")+"</p><p>"+user["all_info"]["code_postal"]+" "+user["all_info"]["ville"]+"</p>";
-                        break;
-                }
-                
+                               
                 /*
                  * Append space if message is not empty and doesn't ends with sparce nor Carriage return
                  */
