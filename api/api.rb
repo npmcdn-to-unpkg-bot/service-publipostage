@@ -10,6 +10,9 @@ class ApplicationAPI < Grape::API
   content_type :json, 'application/json'
   content_type :pdf, 'application/pdf'
   format :json
+  
+  include Lib::Publipostage
+
   helpers do
     def current_user
       @current_user ||= env['rack.session'][:current_user]
@@ -122,44 +125,14 @@ class ApplicationAPI < Grape::API
   get '/regroupements/:id' do
     content_type 'application/json;charset=UTF-8'
     response = Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_user, params[:id], 'expand' => 'true')
-    if !response.nil?
-      etablissements = []
-      regroupements = []
-      response['etablissements'].each do |etab|
-        etablissements.push(id: etab['id'], nom: etab['nom']) unless etablissements.include?(id: etab['id'], nom: etab['nom'])
-      end
-      response['classes'].each do |classe|
-        classe['id'] = classe['classe_id']
-        classe['libelle'] = classe['classe_libelle']
-        classe['type'] = 'classe'
-        classe['destinataire_libelle'] = classe['classe_libelle']
-        # uniquement les regroupements du profil actif
-        regroupements.push(classe) if response['profil_actif']['etablissement_id'] == classe['etablissement_id']
-      end
-      response['groupes_eleves'].each do |groupe|
-        groupe['id'] = groupe['groupe_id']
-        groupe['libelle'] = groupe['groupe_libelle']
-        groupe['type'] = 'groupe'
-        groupe['destinataire_libelle'] = groupe['groupe_libelle']
-        # uniquement les regroupements du profil actif
-        regroupements.push(groupe) if response['profil_actif']['etablissement_id'] == groupe['etablissement_id']
-      end
-      { etablissements: etablissements, regroupements: regroupements}
-    else
-      return []
-    end
+    Lib::Publipostage.get_regroupements response
   end
   #############################################################################
   desc 'retourner la liste des personnels dans letablissement'
   get '/etablissements/personnels' do
-    personnels = []
     response = Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_personnel, profil_actif_etab_uai + '/personnel', {})
-    response.each do |personnel|
-      personnel['destinataire_libelle'] = personnel['nom'] + ' ' + personnel['prenom']
-      personnels << personnel
-    end
     content_type 'application/json;charset=UTF-8'
-    return personnels
+    return Lib::Publipostage.get_personnels response
   end
   #############################################################################
   desc 'retourner la liste des matieres dans letablissement'
@@ -175,9 +148,8 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc 'retourner les informations de diffusion pour la pupulation et les regroupements passés en paramètre'
   get '/diffusion_info/:population/:regroupements' do
-    mat_string = ('professors' == params[:population] && !params[:matiere].nil? && params[:matiere] != '-1' ) ? '/' + params[:matiere] : ''
     Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_diffusion_info,
-                                                   params[:population] + '/' + params[:regroupements] + mat_string,
+                                                   params[:population] + '/' + params[:regroupements] + Lib::Publipostage.get_matiere_string(params),
                                                    {})
   end
 end
