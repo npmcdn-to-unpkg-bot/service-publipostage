@@ -10,7 +10,7 @@ class ApplicationAPI < Grape::API
   content_type :json, 'application/json'
   content_type :pdf, 'application/pdf'
   format :json
-  
+
   include Lib::Publipostage
 
   helpers do
@@ -148,8 +148,9 @@ class ApplicationAPI < Grape::API
   ############################################################################
   desc 'retourner les informations de diffusion pour la pupulation et les regroupements passés en paramètre'
   get '/diffusion_info/:population/:regroupements' do
+    matiere = Lib::Publipostage.get_matiere_string(params)
     Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_diffusion_info,
-                                                   params[:population] + '/' + params[:regroupements] + Lib::Publipostage.get_matiere_string(params),
+                                                   params[:population] + '/' + params[:regroupements] + matiere,
                                                    {})
   end
 end

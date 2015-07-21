@@ -19,7 +19,7 @@ gem 'grape'
 gem 'rest-client'
 gem 'grape-entity'
 
-gem 'laclasse-common', :git => 'https://github.com/laclasse-com/laclasse-common'
+gem 'laclasse-common', git: 'https://github.com/laclasse-com/laclasse-common'
 
 group :development do
   gem 'sinatra-contrib'
