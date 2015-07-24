@@ -1,24 +1,36 @@
 # -*- encoding: utf-8 -*-
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
+
+require './config/init'
+
 require 'app'
 
+require 'laclasse/laclasse_logger'
+require 'laclasse/helpers/rack'
+
+require 'laclasse/utils/health_check'
+
+LOGGER = Laclasse::LoggerFactory.get_logger
+LOGGER.info( "Démarrage du publipostage avec #{LOGGER.loggers_count} logger#{LOGGER.loggers_count > 1 ? 's' : ''}" )
+
+Laclasse::Utils::HealthChecker.check
+
+require './lib/init'
+require './api/init.rb'
+
 use Rack::Rewrite do
-  #rewrite %r{/app/.*(css|js)/(.*)}, '/$1/$2'
-  #rewrite %{/app/app/.*/.*}, '/app/$1/$2'
-  rewrite %r{^#{APP_PATH}(/(bower_components|fonts|images|scripts|styles|views)/.*(map|css|js|ttf|woff|html|png|jpg|jpeg|gif|svg)[?v=0-9a-zA-Z\-.]*$)}, '/app$1'
+  rewrite %r{^#{APP_PATH}(/(bower_components|fonts|images|scripts|styles|views)/.*(map|css|js|ttf|woff|html|png|jpg|jpeg|gif|svg)[?v=0-9a-zA-Z\-.]*$)}, '/app$1' # rubocop:disable Metrics/LineLength
 end
 
-require 'lib/helpers/session'
-Laclasse::Helpers::Session.configure_rake_session self
+Laclasse::Helpers::Rack.configure_rake self if defined? REDIS
 
 use OmniAuth::Builder do
-    configure do |config|
-      config.path_prefix =  APP_PATH + '/auth'
-    end
-    provider :cas,  CASAUTH::CONFIG
+  configure do |config|
+    config.path_prefix =  APP_PATH + '/auth'
+  end
+  provider :cas,  CASAUTH::CONFIG
 end
-run Rack::URLMap.new(
-                      "#{APP_PATH}/api" => ApplicationAPI.new,
-                      "/" => SinatraApp.new)
-#run SinatraApp
+
+run Rack::URLMap.new( "#{APP_PATH}/api" => ApplicationAPI.new,
+                      '/' => SinatraApp.new )
