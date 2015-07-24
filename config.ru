@@ -16,6 +16,7 @@ LOGGER.info( "Démarrage du publipostage avec #{LOGGER.loggers_count} logger#{LO
 
 Laclasse::Utils::HealthChecker.check
 
+require './lib/init'
 require './api/init.rb'
 
 use Rack::Rewrite do
