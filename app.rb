@@ -86,10 +86,12 @@ class SinatraApp < Sinatra::Base
   get "#{APP_PATH}/current-user" do
     if logged?
       data = env['rack.session'][:current_user]
-      {login: data[:user],
-       info: data[:info],
-       roles: data[:info]['ENTPersonRoles'].split(',').map { |role| role.split(':') },
-       roles_max_priority_etab_actif: data['roles_max_priority_etab_actif']
+      {
+        all_info: data,
+        login: data[:user],
+        info: data[:info],
+        roles: data[:info]['ENTPersonRoles'].split(',').map { |role| role.split(':') },
+        roles_max_priority_etab_actif: data['roles_max_priority_etab_actif']
       }.to_json
     end
   end

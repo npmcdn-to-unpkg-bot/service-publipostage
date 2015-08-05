@@ -368,8 +368,8 @@ Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 }]);
 
 /********************************* Massage controller*****************************************/
-Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems',
-    function($scope, $location, $rootScope, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems){
+Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$filter', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems', 'security', "nameRoles",
+    function($scope, $location, $rootScope, $filter, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems, security, nameRoles){
 
         $scope.title = "";
 
@@ -388,15 +388,17 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', 'Mes
         };
         
         $scope.addToMessage = function(text){
-            
-            /*
-             * Append space if message is not empty and doesn't ends with sparce nor Carriage return
-             */
-            if(_.isString($scope.tinyMessage) && $scope.tinyMessage.length > 0 && !($scope.tinyMessage.endsWith("&nbsp;") || $scope.tinyMessage.endsWith("<br />"))) {
-              text  = " "  + text;
-            }
-            
-            $scope.tinyMessage += text;
+            security.requestCurrentUser().then(function(user) {
+                               
+                /*
+                 * Append space if message is not empty and doesn't ends with sparce nor Carriage return
+                 */
+                if(_.isString($scope.tinyMessage) && $scope.tinyMessage.length > 0 && !($scope.tinyMessage.endsWith("&nbsp;") || $scope.tinyMessage.endsWith("<br />"))) {
+                  text  = " "  + text;
+                }
+                
+                $scope.tinyMessage += text;
+            });
         }
         
         $scope.goToPreview = function(location){
@@ -479,7 +481,7 @@ Controllers.controller('ModeDiffusionCtrl', ['$scope', '$location', '$rootScope'
     $scope.menus = Menus;
 
     $scope.sendMessage = function(location){
-
+        console.log("send message");
       //Set selected diffusion type
       MessageService.setDiffusionType($scope.diffusion_type);
       

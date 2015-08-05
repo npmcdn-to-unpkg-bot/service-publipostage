@@ -210,6 +210,19 @@ angular.module('services.constants').value('templateItems',
   { value : '[pwdLaClasse]', message :  'Mot de passe LaClasse.com du destinataire'  , showOnly : ['info_famille', 'ecrire_eleves'] , rolePriorityMin :2},
   { value : '[blogEtab]', message :  'Lien blog de l\'etablissement' },
   { value : '[blogRegroupement]', message :  'Lien blog du groupe ou de la classe' },
-  { value : '<a href=\'http://www.laclasse.com\'>Laclasse</a>', message :  'Lien Laclasse.com' }
+  { value : '<a href=\'http://www.laclasse.com\'>http://www.laclasse.com</a>', message :  'Lien ENT' }
   ]
+);
+
+angular.module('services.constants').constant('nameRoles' ,
+  {
+    "TECH" : "Super Administrateur",
+    "ADM_ETB": "Administrateur d'établissement",
+    "DIR_ETB": "Directeur d'établissement",
+    "AVS_ETB": "Assistante de vie scolaire",
+    "CPE_ETB": "CPE d'établissement",
+    "PAR_ETB": "Parent",
+    "PROF_ETB": "Enseignant",
+    "ELV_ETB": "Elève"
+  }
 );
