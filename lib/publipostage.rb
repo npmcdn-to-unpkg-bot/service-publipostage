@@ -1,5 +1,9 @@
 # coding: utf-8
+
+# Librairies pour l'application
 module Lib
+  # Module pour le traitement du publiposte
+  # rubocop:disable Metrics/AbcSize
   module Publipostage
     module_function
 
@@ -47,4 +51,6 @@ module Lib
       ('professors' == params[:population] && !params[:matiere].nil? && params[:matiere] != '-1' ) ? '/' + params[:matiere] : ''
     end
   end
+  # rubocop:enable Metrics/AbcSize
+
 end
