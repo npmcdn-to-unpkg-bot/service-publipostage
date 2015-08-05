@@ -481,7 +481,7 @@ Controllers.controller('ModeDiffusionCtrl', ['$scope', '$location', '$rootScope'
     $scope.menus = Menus;
 
     $scope.sendMessage = function(location){
-
+        console.log("send message");
       //Set selected diffusion type
       MessageService.setDiffusionType($scope.diffusion_type);
       

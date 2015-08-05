@@ -58,7 +58,6 @@ class ApplicationAPI < Grape::API
   post '/publipostages' do
     begin
       params[:user_uid] = current_user[:info].uid
-      puts params.inspect
       Laclasse::CrossApp::Sender.post_request_signed(:service_annuaire_publipostage, nil, {}, params)
     rescue => e
       puts e.message
