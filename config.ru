@@ -16,6 +16,7 @@ LOGGER.info( "Démarrage du publipostage avec #{LOGGER.loggers_count} logger#{LO
 
 Laclasse::Utils::HealthChecker.check
 
+require './lib/init'
 require './api/init.rb'
 
 use Rack::Rewrite do
@@ -26,9 +27,9 @@ Laclasse::Helpers::Rack.configure_rake self if defined? REDIS
 
 use OmniAuth::Builder do
   configure do |config|
-    config.path_prefix =  APP_PATH + '/auth'
+    config.path_prefix = APP_PATH + '/auth'
   end
-  provider :cas,  CASAUTH::CONFIG
+  provider :cas, CASAUTH::CONFIG
 end
 
 run Rack::URLMap.new( "#{APP_PATH}/api" => ApplicationAPI.new,
