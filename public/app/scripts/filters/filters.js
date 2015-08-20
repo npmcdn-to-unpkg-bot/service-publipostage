@@ -8,8 +8,8 @@ angular.module('publipostageFilters', []).filter('templateItemsTypeFilter' , ['$
           validEntry = false;
         }
       }
-      if(validEntry && templateItem.rolePriorityMin != undefined) {
-        validEntry = security.getRoleMaxPriority() >= templateItem.rolePriorityMin ;
+      if(validEntry && templateItem.showOnlyAdmin != undefined) {
+        validEntry = (security.isAdmin || security.isSuperAdmin);
       }
       if(validEntry) {
         ret.push(templateItem);

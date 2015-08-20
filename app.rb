@@ -8,6 +8,7 @@ Bundler.require( :default, ENV['RACK_ENV'].to_sym )     # require tout les gems 
 
 require 'laclasse/helpers/authentication'
 require 'laclasse/helpers/app_infos'
+require 'laclasse/helpers/user'
 
 # https://gist.github.com/chastell/1196800
 class Hash
@@ -35,7 +36,8 @@ class SinatraApp < Sinatra::Base
 
   helpers Laclasse::Helpers::Authentication
   helpers Laclasse::Helpers::AppInfos
-
+  helpers Laclasse::Helpers::User
+ 
   get "#{APP_PATH}/" do
     if logged?
       erb :app
@@ -84,12 +86,15 @@ class SinatraApp < Sinatra::Base
   end
 
   get "#{APP_PATH}/current-user" do
+    # TODO : This function should be in Laclasse-common
+    is_super_admin = user[:user_detailed]['roles'].count { |role| role['role_id'] == 'TECH' } > 0
     if logged?
       data = env['rack.session'][:current_user]
-      {login: data[:user],
+       {login: data[:user],
        info: data[:info],
        roles: data[:info]['ENTPersonRoles'].split(',').map { |role| role.split(':') },
-       roles_max_priority_etab_actif: data['roles_max_priority_etab_actif']
+       is_admin: user_is_admin?, 
+       is_super_admin: is_super_admin
       }.to_json
     end
   end
