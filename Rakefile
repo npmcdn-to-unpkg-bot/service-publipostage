@@ -1,4 +1,8 @@
-begin; require 'rubygems'; rescue LoadError; end # rubocop:disable Lint/HandleExceptions
+begin
+  require 'rubygems'
+rescue
+  LoadError
+end
 
 require 'rake'
 require 'rake/clean'
