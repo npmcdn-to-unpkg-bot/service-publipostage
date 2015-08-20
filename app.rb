@@ -4,7 +4,7 @@ require 'rubygems'
 require 'bundler'
 require 'sinatra/reloader'
 
-Bundler.require( :default, ENV['RACK_ENV'].to_sym )     # require tout les gems définis dans Gemfile
+Bundler.require( :default, ENV['RACK_ENV'].to_sym ) # require tout les gems définis dans Gemfile
 
 require 'laclasse/helpers/authentication'
 require 'laclasse/helpers/app_infos'

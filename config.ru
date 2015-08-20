@@ -27,9 +27,9 @@ Laclasse::Helpers::Rack.configure_rake self if defined? REDIS
 
 use OmniAuth::Builder do
   configure do |config|
-    config.path_prefix =  APP_PATH + '/auth'
+    config.path_prefix = APP_PATH + '/auth'
   end
-  provider :cas,  CASAUTH::CONFIG
+  provider :cas, CASAUTH::CONFIG
 end
 
 run Rack::URLMap.new( "#{APP_PATH}/api" => ApplicationAPI.new,

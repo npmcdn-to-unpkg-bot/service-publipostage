@@ -23,7 +23,7 @@ class ApplicationAPI < Grape::API
     end
 
     def profil_actif_etab_uai
-      user =  @current_user[:user_detailed]
+      user = @current_user[:user_detailed]
 
       user['profil_actif']['etablissement_code_uai']
     end

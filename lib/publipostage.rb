@@ -52,5 +52,4 @@ module Lib
     end
   end
   # rubocop:enable Metrics/AbcSize
-
 end
