@@ -1,0 +1,23 @@
+language: ruby
+rvm:
+  - "2.2.0"
+
+
+script:
+  - "bundle exec rubocop -D"
+
+gemfile:
+  - Gemfile
+
+branches:
+  only:
+    - master
+    - develop
+
+notifications:
+  email:
+    recepients:
+      - glemoine@erasme.org
+  slack:
+    rooms:
+      - erasme:IWf0zN63Kuw5HgeJVwhnhxAC#laclassebeta

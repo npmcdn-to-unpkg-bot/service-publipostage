@@ -1,6 +1,6 @@
-#require 'simplecov'
+# require 'simplecov'
 
-#require 'debugger'
+# require 'debugger'
 require 'rspec'
 require 'rack/test'
 

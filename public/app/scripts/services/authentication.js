@@ -43,17 +43,19 @@ angular.module('services.authentication').factory('security', ['$http', '$q', '$
     // Is the current user a super adminstrator?
     isSuperAdmin: function() {
       if (service.isAuthenticated()) {
-        return service.currentUser.roles_max_priority_etab_actif >= 3;
+        // return service.currentUser.roles_max_priority_etab_actif >= 3;
+        return service.currentUser.is_super_admin
       } else{
         return false;
       }
     },
 
-    // Is the current user a super adminstrator?
-    getRoleMaxPriority: function() {
+    // Is the current user an adminstrator?
+    isAdmin: function() {
       if (service.isAuthenticated()) {
-        return service.currentUser.roles_max_priority_etab_actif
-      }else{
+        // return service.currentUser.roles_max_priority_etab_actif >= 3;
+        return service.currentUser.is_admin
+      } else{
         return false;
       }
     },
