@@ -27,7 +27,7 @@
                     <strong>Titre de message:</strong>{{messageObject['title']}} <br/>
                     <strong>Destinataires:</strong><span ng-repeat="destination in messageObject['destinations']"> {{destination['destinataire_libelle']}}{{destination['description'] == null ? '' : '('}}{{destination['description']}}{{destination['description'] == null ? '' : ')'}}{{$last ? '' : ', '}}</span>
                     </p>
-                    <div  class="text-scroll" style="background-color:white; padding-left:5%%; padding-right:5%; padding-top:1%;" ng-bind-html="toTrustedHtml(messageObject['message'])"></div>
+                    <div  class="text-scroll" style="background-color:white; padding-left:5%; padding-right:5%; padding-top:1%;" ng-bind-html="toTrustedHtml(messageObject['message'])"></div>
                 </div>
                 <div style="text-align: center; margin:20px;">
                     <a class="btn btn-publi btn-sm" ng-class="menus[$state.params['type']].color" ng-click="goBackToMessage($state.params['type'])">reéditer</a>
