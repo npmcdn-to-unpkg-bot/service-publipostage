@@ -194,7 +194,10 @@ angular.module('services.constants').value('tinymceOptions', {
   }
 });
 
-angular.module('services.constants').value('templateItems', 
+//angular.module('services.constants').service('Squares', function($rootScope){
+// angular.module('services.constants').value('templateItems', 
+angular.module('services.constants').service('templateItems', function($rootScope){
+ var dataButtons =  
  [
   { value : '[civilite]', message :  'Civilité' },
   { value : '[nom]', message :  'Nom' },
@@ -204,15 +207,18 @@ angular.module('services.constants').value('templateItems',
   { value : '[signature]', message :  'Signature' },
   { value : '[nomEleve]', message :  'Nom de l\'élève'        , showOnly : ['info_famille']},
   { value : '[prenomEleve]', message :  'Prénom de l\'élève'  , showOnly : ['info_famille']},
-  { value : '[classe]', message :  'Classe' },
+  { value : '[classe]', message :  'Classe de l\'élève' },
   { value : '[matiere]', message :  'Matière'                 , showOnly : ['ecrire_profs']},
   { value : '[loginLaClasse]', message :  'Login Laclasse.com du destinataire'       , showOnly : ['info_famille', 'ecrire_eleves'] , showOnlyAdmin :true},
   { value : '[pwdLaClasse]', message :  'Mot de passe Laclasse.com du destinataire'  , showOnly : ['info_famille', 'ecrire_eleves'] , showOnlyAdmin :true},
   { value : '[blogEtab]', message :  'Lien blog de l\'établissement' },
   { value : '[blogRegroupement]', message :  'Lien blog du groupe ou de la classe' },
   { value : '<a href=\'https://v3.laclasse.com\'>Laclasse.com</a>', message :  'Lien Laclasse.com v3' }
-  ]
-);
+  //{ value : '<img src="' + $rootScope.racine_images + 'qr-code-laclasse-v3.svg" />', message :  'QR Code Laclasse' }
+  ];
+// );
+  return dataButtons;
+});
 
 angular.module('services.constants').constant('nameRoles' ,
   {
