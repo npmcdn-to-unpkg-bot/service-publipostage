@@ -403,8 +403,13 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$fi
         
         $scope.goToPreview = function(location){
             console.log('add message to preview');
-            MessageService.addMessage($scope.tinyMessage, $scope.title)
-            $location.path('/apercu/'+location);
+            if ($scope.title == "") {
+                // TODO : affichage du message plus joli qu'une simple alerte.
+                alert('Le titre de votre publipostage est vide !');
+            } else {
+                MessageService.addMessage($scope.tinyMessage, $scope.title)
+                $location.path('/apercu/'+location);
+            }
         }
 
         $scope.goToDestinataire = function(location){
