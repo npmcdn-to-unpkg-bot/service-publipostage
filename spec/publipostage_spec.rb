@@ -17,4 +17,12 @@ describe 'Lib_Publipostage_Test' do
     expect(Lib::Publipostage.get_matiere_string(population: 'professors', matiere: nil)).to eq('')
     expect(Lib::Publipostage.get_matiere_string(population: 'directeurs', matiere: 'anglais')).to eq('')
   end
+
+  it 'retourne un tableau vide si aucun établissement' do
+    ret = Lib::Publipostage.get_regroupements nil
+    expect(ret).to be_an Array
+    expect(ret.size).to eq 0
+  end
+
+
 end

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/laclasse-com/laclasse-common
-  revision: b5b03e2edc4433bb9443fcc4d509305733bacf25
+  revision: d65842198b6a47bcdea343585e7ab9976b7b5656
   specs:
     laclasse-common (0.2.5)
       logstash-logger
@@ -10,7 +10,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.3)
+    activesupport (4.2.4)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -37,6 +37,7 @@ GEM
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
+    docile (1.1.5)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     equalizer (0.0.11)
@@ -87,7 +88,7 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     logstash-event (1.2.02)
-    logstash-logger (0.11.0)
+    logstash-logger (0.12.0)
       logstash-event (~> 1.2)
       stud
     lumberjack (1.0.9)
@@ -97,7 +98,7 @@ GEM
     minitest (5.8.0)
     multi_json (1.11.2)
     multi_xml (0.5.5)
-    mysql2 (0.3.19)
+    mysql2 (0.3.20)
     nenv (0.2.0)
     netrc (0.10.3)
     nokogiri (1.6.6.2)
@@ -182,6 +183,11 @@ GEM
     shellany (0.0.1)
     shotgun (0.9.1)
       rack (>= 1.0)
+    simplecov (0.10.0)
+      docile (~> 1.1.0)
+      json (~> 1.8)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -244,6 +250,7 @@ DEPENDENCIES
   sequel
   sequel_plus
   shotgun
+  simplecov
   sinatra
   sinatra-contrib
   sinatra-sequel

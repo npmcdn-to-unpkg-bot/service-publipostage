@@ -3,18 +3,22 @@
 # Librairies pour l'application
 module Lib
   # Module pour le traitement du publiposte
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
   module Publipostage
     module_function
 
     # tri les infos de l'utilisateur pour en ressortir que les regroupements
     def self.get_regroupements(user_infos)
-      if !user_infos.nil?
-        etablissements = []
-        regroupements = []
-        user_infos['etablissements'].each do |etab|
-          etablissements.push(id: etab['id'], nom: etab['nom']) unless etablissements.include?(id: etab['id'], nom: etab['nom'])
-        end
+      etablissements = []
+      regroupements = []
+      # S'il n'y a pas d'établissement, pas la peine de continuer !
+      return [] if user_infos.nil? || user_infos['etablissements'].nil?
+
+      user_infos['etablissements'].each do |etab|
+        etablissements.push(id: etab['id'], nom: etab['nom']) unless etablissements.include?(id: etab['id'], nom: etab['nom'])
+      end
+
+      unless user_infos['classes'].nil?
         user_infos['classes'].uniq { |classe| classe['classe_id'] }.each do |classe|
           classe['id'] = classe['classe_id']
           classe['libelle'] = classe['classe_libelle']
@@ -23,6 +27,9 @@ module Lib
           # uniquement les regroupements du profil actif
           regroupements.push(classe) if user_infos['profil_actif']['etablissement_id'] == classe['etablissement_id']
         end
+      end
+
+      unless user_infos['groupes_eleves'].nil?
         user_infos['groupes_eleves'].uniq { |groupe| groupe['groupe_id'] }.each do |groupe|
           groupe['id'] = groupe['groupe_id']
           groupe['libelle'] = groupe['groupe_libelle']
@@ -31,10 +38,9 @@ module Lib
           # uniquement les regroupements du profil actif
           regroupements.push(groupe) if user_infos['profil_actif']['etablissement_id'] == groupe['etablissement_id']
         end
-        { etablissements: etablissements, regroupements: regroupements}
-      else
-        return []
       end
+
+      { etablissements: etablissements, regroupements: regroupements}
     end
 
     # fonction qui récupère les infos nécéssaire de la requête
@@ -51,5 +57,5 @@ module Lib
       ('professors' == params[:population] && !params[:matiere].nil? && params[:matiere] != '-1' ) ? '/' + params[:matiere] : ''
     end
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 end

@@ -32,4 +32,5 @@ group :development do
   gem 'guard'
   gem 'guard-bundler'
   gem 'guard-rspec'
+  gem 'simplecov'
 end
