@@ -23,6 +23,4 @@ describe 'Lib_Publipostage_Test' do
     expect(ret).to be_an Array
     expect(ret.size).to eq 0
   end
-
-
 end
