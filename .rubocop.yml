@@ -30,6 +30,9 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Max: 200
 
+Metrics/PerceivedComplexity:
+  Max: 10
+
 Lint/BlockAlignment:
   Enabled: false
 
