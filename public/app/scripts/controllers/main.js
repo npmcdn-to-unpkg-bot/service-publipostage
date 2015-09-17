@@ -371,12 +371,11 @@ Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
 Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$filter', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems', 'security', "nameRoles",
     function($scope, $location, $rootScope, $filter, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems, security, nameRoles){
 
-        $scope.title = "";
-
         //Template items
         $scope.templateItems =  templateItems;
 
         // load message from the root ..
+        $scope.title = MessageService.getMessage()['title'];
         $scope.tinyMessage = MessageService.getMessage()['message'];
         $scope.tinymceOptions =  tinymceOptions;
 
