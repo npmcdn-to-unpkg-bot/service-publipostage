@@ -434,7 +434,11 @@ Controllers.controller('EnvoiCtrl', ['$scope', 'security', '$location', '$rootSc
 
     // get the list of menus
     $scope.menus = Menus;
-    console.debug($scope.menus);
+
+    // What to show
+    $scope.showPdf = false;
+    $scope.showEmail = false;
+    $scope.showNews = false;
 
     // Set counter and displayRules 
     var diffusion_info = $rootScope.diffusion_info;
@@ -452,9 +456,12 @@ Controllers.controller('EnvoiCtrl', ['$scope', 'security', '$location', '$rootSc
         $scope.nb_pdf = diffusion_info.nb_pdf;
         break;
       case 'pdf' : 
-        $scope.showEmail = false;
         $scope.showPdf = true;
         $scope.nb_pdf = diffusion_info.nb_total;
+        break;
+      case 'news' : 
+        $scope.showNews = true;
+        $scope.nb_info = diffusion_info.nb_total;
         break;
     }
   }
