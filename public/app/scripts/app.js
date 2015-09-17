@@ -46,7 +46,7 @@ angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.c
     }
     
     var historique = {
-      name:'histroique',
+      name:'historique',
       url:'/historique/:id',
       templateUrl: APPLICATION_PREFIX+'/views/historique.html',
       controller:'publiCtrl',
