@@ -57,11 +57,3 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         $scope.square = {icone: $rootScope.racine_images + '00_vide.svg'};
         
 }]);
-
-// Controllers.controller('InfoFamilleCtrl', ['$scope', function($scope){
-
-// }]);
-
-// Controllers.controller('Ctrl2', [function() {
-
-// }]);
