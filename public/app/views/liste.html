@@ -8,7 +8,7 @@
             </select>
         </div>
         <label>total = {{totalItems}}</label>
-        <a class='btn btn-danger btn-sm' ng-show="check_all" ng-click="removeSelectedPubli()"> supprimer la selection<i class="fa fa-trash-o"></i></a>
+        <a class='btn btn-danger btn-sm' ng-show="check_all" ng-click="removeSelectedPubli()"> supprimer la selection<span class="glyphicon glyphicon-trash"></span></a>
         <table class="table table-bordered table-hover">
         <thead>
             <th style="text-align:center;vertical-align:middle;"><input type="checkbox"  ng-change="selectAll()" ng-model="check_all" rel="tooltip" title="tous"></th>
@@ -45,11 +45,10 @@
                         <span ng-switch-default>{{publi.message_type}}</span>
                     </span>
                 </td>
-                <td><div class="btn-group-vertical">
-                <a class="btn  btn-default" href="#fichier/{{publi.id}}" tooltip="pdf"><i class="fa fa-file" style="color:red; text-shadow:1px 1px 1px #ccc;"></i></a>
-                <a class="btn  btn-default" tooltip="dupliquer" ng-click="duplicPubli(publi.id)"><i class="fa fa-copy"></i></a>
-                <a class="btn  btn-default" tooltip="supprimer" ng-click="removePubli(publi.id)"><i class="fa fa-trash-o"></i></a>
-                </div>
+                <td>
+                    <a class="btn-xs btn-default" href="#fichier/{{publi.id}}" tooltip="pdf"><span class="glyphicon glyphicon-send"></span></a>
+                    <a class="btn-xs btn-default" ng-click="duplicPubli(publi.id)" tooltip="dupliquer"><span class=" glyphicon glyphicon-duplicate">Duppliquer</span></a>
+                    <a class="btn-xs btn-default" ng-click="removePubli(publi.id)" tooltip="supprimer"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr>
         </tbody>

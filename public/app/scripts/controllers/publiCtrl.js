@@ -46,11 +46,11 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
                         'jaune', 'gris1','gris2', 'gris3', 'gris4' ];
 
     $scope.duplicPubli = function (id) {
-      alert('Duplication pas encore active');
+      alert("La dupplication n'est pas encore activée");
     }
     
     $scope.removePubli = function(id){
-        if(confirm("Voulez-vous supprimer le publipostage?")){
+        if(confirm("Voulez-vous supprimer le publipostage ?")){
             Publipostages.remove({id:id}, function(success){
                 getPublipostages($scope.currentPage, $scope.limit);
             }, function(error){
