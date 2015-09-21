@@ -76,12 +76,15 @@ class ApplicationAPI < Grape::API
 
   ############################################################################
   desc "retourner le fichier pdf d\'un publipostage"
-  get '/publipostage/:id/pdf'do
+  get '/publipostage/:id/pdf' do
     publipostage = Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_publipostage, params[:id], {})
     if publipostage['user_uid'] == current_user[:info]['uid'] ||
        Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_user,
                                                       current_user[:info]['uid'], {})['roles_max_priority_etab_actif'] >= 3
       content_type 'application/pdf'
+      env['api.format'] = :binary
+      header 'Content-Disposition', "inline; filename*=UTF-8''publipostage_#{URI.escape(params[:id])}.pdf"
+
       signed_url = Laclasse::CrossApp::Sender.sign(:service_annuaire_publipostage, params[:id] + '/pdf', {})
       return RestClient.get signed_url
     end
