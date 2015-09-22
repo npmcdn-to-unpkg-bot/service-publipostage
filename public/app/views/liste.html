@@ -1,23 +1,23 @@
 <div class="row">
-    <div class="col-xs-11 col-s-m11 col-md-11 col-lg-11 col-xs-offset-1 col-s-offset-1 col-md-offset-1 col-lg-offset-1">
+    <div class="col-xs-10 col-s-m11 col-md-10 col-lg-10 col-xs-offset-1 col-s-offset-1 col-md-offset-1 col-lg-offset-1">
         <h2> Gestion de vos publipostages</h2>
         <pagination total-items="totalItems" items-per-page="limit" max-size="maxSize" ng-model="currentPage"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="pageChanged(currentPage)"></pagination>
-        <div>
+        <div class="pull-right">
             <label>publipostages par page :</label>&nbsp;
             <select ng-model="limit" ng-options="limit for limit in pageLimits" ng-change="limitChanged(limit)">
-            </select>
+            </select>&nbsp;&nbsp;
+            <label class="label label-default">total : {{totalItems}}</label>
         </div>
-        <label>total = {{totalItems}}</label>
         <a class='btn btn-danger btn-sm' ng-show="check_all" ng-click="removeSelectedPubli()"> supprimer la selection<span class="glyphicon glyphicon-trash"></span></a>
         <table class="table table-bordered table-hover">
         <thead>
             <th style="text-align:center;vertical-align:middle;"><input type="checkbox"  ng-change="selectAll()" ng-model="check_all" rel="tooltip" title="tous"></th>
+            <th>Date</th>
+            <th>Type de message</th>
             <th>Utilisateur</th>
             <th>Titre</th>
-            <th>Date</th>
             <th>Message</th>
             <th>Destinataires</th>
-            <th>Type de message</th>
             <th>Actions</th>
         </thead>
         <tbody>
@@ -25,25 +25,26 @@
                 <td style="text-align:center;vertical-align:middle;">
                     <input type="checkbox"  ng-model="checked[publi.id]" ng-change="selectPubli(publi.id)">
                 </td>
-                <td>
-                    {{publi.user_prenom}} {{publi.user_nom}}
-                </td>
-                <td>{{publi.descriptif}}</td>
                 <td>{{publi.date | date:'dd/M/yyyy HH:mm:ss'}}</td>
-                <!--<td>{{publi.id}}</td>-->
-                <td><p ng-bind-html="toTrustedHtml(publi.message)"></p></td>
-                <td><span ng-switch on="publi.message_type"> 
-                    <span ng-switch-when="ecrire_personnels">{{publi.personnels}}</span>
-                    <span ng-switch-default>{{publi.destinataires }}</span>
-                </td>
                 <td><span ng-switch on="publi.message_type">
                         <span ng-switch-when="info_famille" class="label label-success">{{publi.message_type}}</span>
                         <span ng-switch-when="ecrire_profs" class="label label-primary">{{publi.message_type}}</span>
                         <span ng-switch-when="ecrire_eleves" class="label label-warning">{{publi.message_type}}</span>
                         <span ng-switch-when="ecrire_personnels" class="label label-danger">{{publi.message_type}}</span>
-                        <span ng-switch-when="ecrire_tous" class="violet">{{publi.message_type}}</span>
+                        <span ng-switch-when="ecrire_tous" class="label violet">{{publi.message_type}}</span>
                         <span ng-switch-default>{{publi.message_type}}</span>
                     </span>
+                </td>
+                <td>
+                    {{publi.user_prenom}} {{publi.user_nom}}
+                </td>
+                <td>{{publi.descriptif}}</td>
+                <!--<td>{{publi.id}}</td>-->
+                <td><p ng-bind-html="toTrustedHtml(publi.message)"></p></td>
+                <td><span ng-switch on="publi.message_type"> 
+<!--                     <span ng-switch-when="ecrire_personnels">{{publi.personnels}}</span>
+                    <span ng-switch-default>{{publi.destinataires}}</span> -->
+                    &nbsp;
                 </td>
                 <td>
                     <a class="btn-xs btn-default" href="#fichier/{{publi.id}}" tooltip="pdf"><span class="glyphicon glyphicon-send"></span></a>

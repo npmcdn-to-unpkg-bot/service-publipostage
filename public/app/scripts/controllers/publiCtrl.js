@@ -5,7 +5,7 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
     $scope.tinymceOptions = tinymceOptions;
     
     $scope.pageLimits = [5, 10, 20, 50]; 
-    $scope.limit = 10;
+    $scope.limit = 20;
     $scope.currentPage = 1;
     $scope.maxSize = 5;
 
@@ -14,7 +14,7 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
     var getPublipostages = function(page, limit){
         Publipostages.get({limit:limit, page:page}, function(publis){
         $scope.publis = publis.data;
-        console.log($scope.publis);
+
         $scope.totalItems = publis.total;
         $scope.currentPage = publis.page;
         });
@@ -26,7 +26,7 @@ Controllers.controller('publiCtrl', ['$rootScope', '$sce', 'security', 'Publipos
     };
 
     security.requestCurrentUser().then(function(user) {
-      //console.log(user);
+
       $scope.currentUser = user;
       $scope.color = "#EB5454";
       if (user.info['LaclasseSexe']=="M") {

@@ -20,7 +20,12 @@ angular.module('publipostageFilters', [])
           return ret;
         };
       }
-  ]);
+  ])
 
-
+.filter('myfilter', function () {
+        return function (text) {
+          var str = text.replace(/\s+/g, '');
+          return str.toUpperCase();
+        };
+})
 
