@@ -37,12 +37,15 @@ class ApplicationAPI < Grape::API
   desc 'Retourner la listes des publipostage'
   params do
     optional :limit, type: Integer, desc: 'Nombre maximum de résultat renvoyés'
-    optional :page, type: Integer, desc: "Dans le cas d'une requète paginée"
+    optional :page, type: Integer, desc: "Dans le cas d'une requête paginée"
     optional :sort_col, type: String, desc: 'Nom de la colonne sur laquelle faire le tri'
     optional :sort_dir, type: String, regexp: /^(asc|desc)$/i, desc: 'Direction de tri : ASC ou DESC'
   end
   get '/publipostages' do
-    Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_publipostage, nil, {})
+    r = Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_publipostage, '', {})
+    r['data'].keep_if { |e|  e['user_uid'] == @current_user[:info][:uid] }
+    r['total'] = r['data'].size
+    r
   end
   ############################################################################
   desc 'Retourner un  publipostage par id'
