@@ -23,7 +23,7 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$fi
             security.requestCurrentUser().then(function(user) {
                                
                 /*
-                 * Append space if message is not empty and doesn't ends with sparce nor Carriage return
+                 * Append space if message is not empty and doesn't ends with space nor Carriage return
                  */
                 if(_.isString($scope.tinyMessage) && $scope.tinyMessage.length > 0 && !($scope.tinyMessage.endsWith("&nbsp;") || $scope.tinyMessage.endsWith("<br />"))) {
                   text  = " "  + text;

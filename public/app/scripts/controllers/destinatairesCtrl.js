@@ -251,7 +251,8 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
           }
 
         // Constitution de la phrase.
-        $scope.destinataires_libelle = phrase.replace('@type_dest@', type_dest)
+        $scope.destinataires_libelle = '' + phrase
+                    .replace('@type_dest@', type_dest)
                     .replace('@liste_profils@', liste_profils)
                     .replace('@liste_personnels@', liste_personnels)
                     .replace('@libelle_matiere@', libelle_matiere)
@@ -260,7 +261,7 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
                     .replace('@article_groupes@', article_groupes)
                     .replace('@liste_groupes@', liste_groupes)
                     .replace(/,(\s*)$/, '')
-                    .trim();
+                    .replace(/ +(?= )/g,' ');
     }
 
 }]);
