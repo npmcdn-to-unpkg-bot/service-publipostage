@@ -119,9 +119,9 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         var index = $scope.destinations.indexOf(object);
         var type_dest = Menus[$state.params['type']]['recpitualif'];
         var libelle_matiere = "";
-        var phrase = "@type_dest@ @libelle_matiere@ @article_classes@ @liste_classes@ @article_groupes@ @liste_groupes@";
+        var phrase = "@type_dest@ @liste_personnels@ @libelle_matiere@ @article_classes@ @liste_classes@ @article_groupes@ @liste_groupes@";
         var article_classes = "", article_groupes = "";
-        var liste_classes = "", liste_groupes = "";
+        var liste_classes = "", liste_groupes = "", liste_personnels = "";
         var nbCls = 0, nbGrp = 0;
         var pluriel = "";
 
@@ -132,7 +132,18 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
             $scope.destinations.push(object);
         }
 
+        console.log($scope.destinations);
+
         // Construire une belle phrase représentant la liste des destinataires.
+
+        // Personnels
+        if (type_dest == "Personnels") {
+            type_dest = "Ecrire à";
+            _.each($scope.destinations, function(dest) {
+                liste_personnels += dest.destinataire_libelle;
+                liste_personnels += ", ";
+            });
+        }
 
         // Matière
         if ($scope.matiere != "") {
@@ -170,12 +181,14 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
 
         // Constitution de la phrase.
         $scope.destinataires_libelle = phrase.replace('@type_dest@', type_dest)
+                    .replace('@liste_personnels@', liste_personnels)
                     .replace('@libelle_matiere@', libelle_matiere)
                     .replace('@article_classes@', article_classes)
                     .replace('@liste_classes@', liste_classes)
                     .replace('@article_groupes@', article_groupes)
                     .replace('@liste_groupes@', liste_groupes)
-                    .replace('  ', ' ');
+                    .replace(/,(\s*)$/, '')
+                    .trim();
         console.log($scope.destinataires_libelle);
     };
 
