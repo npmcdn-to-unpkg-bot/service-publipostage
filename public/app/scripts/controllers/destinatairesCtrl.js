@@ -14,6 +14,7 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     if ($state.current.name == "destinataire") {
         MessageService.addMessageType($state.params['type']);
     }
+
     //initialize destinations
     $scope.destinations = new Array();
 
@@ -87,7 +88,7 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     
     $scope.selectAll = function(){
         $scope.selectAllMode = false;
-        if($scope.regroupements != undefined && $scope.regroupements['regroupements'] != undefined) {
+        if ($scope.regroupements != undefined && $scope.regroupements['regroupements'] != undefined) {
           $scope.regroupements['regroupements'].forEach(function(element, index, array){
             if (!element['checked'] || _.isUndefined(element['checked'])){
               element['checked'] = true;
@@ -95,6 +96,13 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
             }
           });
         }
+        if ( $scope.personnels != undefined ) {
+            _.each($scope.personnels, function(person) {
+                person['checked'] = true;
+                $scope.destinations.push(person);
+            });
+        }
+        $scope.formatHumanReadableLabel();
     };
 
     $scope.deselectAll = function(){
@@ -107,14 +115,21 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
             }
           });
         }
+        if ( $scope.personnels != undefined ) {
+            _.each($scope.personnels, function(person) {
+                person['checked'] = false;
+            });
+        }
+        $scope.formatHumanReadableLabel();
     };
 
     $scope.addDestinations = function(){
         MessageService.setMatiere($scope.matiere);
         MessageService.addDestinations($scope.destinations);
+        MessageService.addDestinatairesLabel($scope.destinataires_libelle);
     };
 
-   // Retirer un ajouter dans les listes des destinataires.
+   // Retirer ou ajouter des regroupements. 
    $scope.addRemoveDestination = function(object){
         var index = $scope.destinations.indexOf(object);
          if(index > -1){
@@ -123,6 +138,11 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
             $scope.destinations.push(object);
         }
         $scope.formatHumanReadableLabel();
+    };
+
+   // Retirer ou ajouter des personnels
+    $scope.addRemovePersonnel = function(person) {
+        $scope.addRemoveDestination(person);
     };
 
     $scope.addProfils = function(){

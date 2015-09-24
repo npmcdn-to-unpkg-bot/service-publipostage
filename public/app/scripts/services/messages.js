@@ -26,6 +26,7 @@ angular.module('services.messages').service('MessageService', ['$rootScope' ,fun
         message:'',
         title:'',
         destinations:[],
+        destinataires_libelle:'',
         messageType:'',
         diffusion_type:'', 
         profils:[],
@@ -71,6 +72,10 @@ angular.module('services.messages').service('MessageService', ['$rootScope' ,fun
         $rootScope.messageObject['destinations'] = arry;
     }
     
+    this.addDestinatairesLabel = function (str) {
+        $rootScope.messageObject['destinataires_libelle'] = str;
+    }
+
     this.clearDestinations = function(){
         $rootScope.messageObject['destinations'] = [];
     }

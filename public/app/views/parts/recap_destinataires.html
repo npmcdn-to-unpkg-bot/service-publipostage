@@ -1,3 +1,1 @@
-<strong> {{menus[$state.params["type"]]['recpitualif']}} <span ng-repeat="profil in messageObject['profils']">{{profil}}, </span>  
-  <span ng-repeat="destination in messageObject['destinations']"> {{destination['destinataire_libelle']}}{{$last ? '' : ', '}}</span>
-</strong>
+<strong><small>{{ messageObject['destinataires_libelle'] }}</small></strong>
