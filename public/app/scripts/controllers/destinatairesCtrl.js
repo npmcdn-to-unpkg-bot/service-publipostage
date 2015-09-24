@@ -110,38 +110,88 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     };
 
     $scope.addDestinations = function(){
-        console.log('add destinations ');
         MessageService.setMatiere($scope.matiere);
         MessageService.addDestinations($scope.destinations);
     };
 
-    $scope.addRemoveDestination = function(object){
+   // Retirer un ajouter dans les listes des destinataires.
+   $scope.addRemoveDestination = function(object){
         var index = $scope.destinations.indexOf(object);
-        var type_dest = Menus[$state.params['type']]['recpitualif'];
-        var libelle_matiere = "";
-        var phrase = "@type_dest@ @liste_personnels@ @libelle_matiere@ @article_classes@ @liste_classes@ @article_groupes@ @liste_groupes@";
-        var article_classes = "", article_groupes = "";
-        var liste_classes = "", liste_groupes = "", liste_personnels = "";
-        var nbCls = 0, nbGrp = 0;
-        var pluriel = "";
-
-        // Retirer un ajouter dans les listes des destinataires.
-        if(index > -1){
+         if(index > -1){
             $scope.destinations.splice(index,1);
         }else{
             $scope.destinations.push(object);
         }
+        $scope.formatHumanReadableLabel();
+    };
 
-        console.log($scope.destinations);
+    $scope.addProfils = function(){
+        MessageService.addProfils($scope.selectedProfils); 
+    };
+
+    $scope.squareClass = function(clazz) {
+        return clazz.color + (clazz.checked ? '' : '-clear');
+    }
+
+    // page ecrire tous
+    // list of available profils 
+    $scope.profils = ['eleves', 'profs', 'parents'];
+
+    // les profils sélectionner
+    $scope.selectedProfils = [];
+    $scope.log = function(){
+    }
+
+    // selectionner tous les profils
+    $scope.checkAll = function(){
+        $scope.selectedProfils = [];
+        $scope.selectedProfils = angular.copy($scope.profils);
+    }
+
+    // déselectionner les profils
+    $scope.uncheckAll = function(){
+        $scope.selectedProfils = [];
+    };
+
+    $scope.$watch("selectedProfils", function(arr){
+        $scope.selectedProfils = angular.copy(arr);
+        $scope.formatHumanReadableLabel();
+    }, true);
+
+    $scope.noSelection = function(){
+        if ($state.params['type']=='ecrire_tous')
+            return $scope.destinations.length == 0 || $scope.selectedProfils.length == 0;
+        else
+            return $scope.destinations.length == 0; 
+    }
+
+    //
+    // Fonction de formatage de la liste des destinataires 
+    // Pour la rendre lisible par un humain.
+    //
+    $scope.formatHumanReadableLabel = function(){
+        var type_dest = Menus[$state.params['type']]['recpitualif'];
+        var libelle_matiere = "";
+        var phrase = "@type_dest@ @liste_profils@ @liste_personnels@ @libelle_matiere@ @article_classes@ @liste_classes@ @article_groupes@ @liste_groupes@";
+        var article_classes = "", article_groupes = "";
+        var liste_classes = "", liste_groupes = "", liste_personnels = "", liste_profils = "";
+        var nbCls = 0, nbGrp = 0;
+        var pluriel = "";
 
         // Construire une belle phrase représentant la liste des destinataires.
+        // Profils (ecrire à tous)
+        if (type_dest == "Profils") {
+            type_dest = ($scope.selectedProfils.length == 0) ? "Tous les profils" : type_dest;
+            _.each($scope.selectedProfils, function(p) {
+                liste_profils += p + ", ";
+            });
+        }
 
         // Personnels
         if (type_dest == "Personnels") {
             type_dest = "Ecrire à";
             _.each($scope.destinations, function(dest) {
-                liste_personnels += dest.destinataire_libelle;
-                liste_personnels += ", ";
+                liste_personnels += dest.destinataire_libelle + ", ";
             });
         }
 
@@ -155,6 +205,7 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
             });
         }
 
+        // Classes et Groupes
         _.each($scope.destinations, function(dest) {
             if (dest.type == 'classe') {
                 liste_classes += dest.classe_libelle + ", ";
@@ -181,6 +232,7 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
 
         // Constitution de la phrase.
         $scope.destinataires_libelle = phrase.replace('@type_dest@', type_dest)
+                    .replace('@liste_profils@', liste_profils)
                     .replace('@liste_personnels@', liste_personnels)
                     .replace('@libelle_matiere@', libelle_matiere)
                     .replace('@article_classes@', article_classes)
@@ -189,48 +241,6 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
                     .replace('@liste_groupes@', liste_groupes)
                     .replace(/,(\s*)$/, '')
                     .trim();
-        console.log($scope.destinataires_libelle);
-    };
-
-    $scope.addProfils = function(){
-        console.log('add profils');
-        MessageService.addProfils($scope.selectedProfils);
-    };
-
-    $scope.squareClass = function(clazz) {
-        return clazz.color + (clazz.checked ? '' : '-clear');
-    }
-
-    // page ecrire tous
-    // list of available profils 
-    $scope.profils = ['eleves', 'profs', 'parents'];
-
-    // les profils sélectionner
-    $scope.selectedProfils = [];
-    $scope.log = function(){
-        console.log($scope.selectedProfils);
-    }
-
-    // selectionner tous les profils
-    $scope.checkAll = function(){
-        $scope.selectedProfils = [];
-        $scope.selectedProfils = angular.copy($scope.profils);
-    }
-
-    // déselectionner les profils
-    $scope.uncheckAll = function(){
-        $scope.selectedProfils = [];
-    };
-
-    $scope.$watch("selectedProfils", function(arr){
-        console.log(arr);
-    }, true);
-
-    $scope.noSelection = function(){
-        if ($state.params['type']=='ecrire_tous')
-            return $scope.destinations.length == 0 || $scope.selectedProfils.length == 0;
-        else
-            return $scope.destinations.length == 0; 
     }
 
 }]);
