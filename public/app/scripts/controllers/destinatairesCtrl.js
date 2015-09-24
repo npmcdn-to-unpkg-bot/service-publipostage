@@ -9,7 +9,6 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     $scope.security = security;
     // Libellé représentant le choix des destinataires
     $scope.destinataires_libelle = "";
-    console.log("$scope.destinataires_libelle ==> " + $scope.destinataires_libelle);
 
     // if current state == destinataire
     if ($state.current.name == "destinataire") {
@@ -117,9 +116,12 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     };
 
     $scope.addRemoveDestination = function(object){
-        console.log(object.type + ", " + object.destinataire_libelle);
         var index = $scope.destinations.indexOf(object);
-        var listCls = "", listGrp = "";
+        var type_dest = Menus[$state.params['type']]['recpitualif'];
+        var libelle_matiere = "";
+        var phrase = "@type_dest@ @libelle_matiere@ @article_classes@ @liste_classes@ @article_groupes@ @liste_groupes@";
+        var article_classes = "", article_groupes = "";
+        var liste_classes = "", liste_groupes = "";
         var nbCls = 0, nbGrp = 0;
         var pluriel = "";
 
@@ -131,15 +133,24 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         }
 
         // Construire une belle phrase représentant la liste des destinataires.
-        $scope.destinataires_libelle = Menus[$state.params['type']]['recpitualif'];
+
+        // Matière
+        if ($scope.matiere != "") {
+            _.each($scope.matieres, function (m) {
+                if (m.id == $scope.matiere) {
+                    libelle_matiere = "en " + m.libelle_long.toLowerCase();
+                    libelle_matiere = libelle_matiere.replace('en toutes', '');
+                }
+            });
+        }
 
         _.each($scope.destinations, function(dest) {
             if (dest.type == 'classe') {
-                listCls += dest.classe_libelle + ", ";
+                liste_classes += dest.classe_libelle + ", ";
                 nbCls++;
             }
             if (dest.type == 'groupe') {
-                listGrp += dest.groupe_libelle + ", ";
+                liste_groupes += dest.groupe_libelle + ", ";
                 nbGrp++;
             }
         });
@@ -147,15 +158,24 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         // Gestion du pluriel
         if (nbCls > 0) {
             pluriel = (nbCls > 1) ? "s" : "";
-            $scope.destinataires_libelle += (pluriel != "") ? " des classes de " : " de la classe de ";
-            $scope.destinataires_libelle += listCls;
-        }
+            article_classes = (pluriel != "") ? "des classes de" : "de la classe de";
+         }
 
         if (nbGrp > 0) {
             pluriel = (nbGrp > 1) ? "s" : "";
-            $scope.destinataires_libelle += (pluriel != "") ? " des groupes " : " du groupe ";
-            $scope.destinataires_libelle += listGrp;
-        }
+            article_groupes = (pluriel != "") ? "des groupes" : "du groupe";
+            // Ajouter "et" s'il y a aussi des classes
+            article_groupes = (nbCls > 0) ? "et " + article_groupes : article_groupes;
+          }
+
+        // Constitution de la phrase.
+        $scope.destinataires_libelle = phrase.replace('@type_dest@', type_dest)
+                    .replace('@libelle_matiere@', libelle_matiere)
+                    .replace('@article_classes@', article_classes)
+                    .replace('@liste_classes@', liste_classes)
+                    .replace('@article_groupes@', article_groupes)
+                    .replace('@liste_groupes@', liste_groupes)
+                    .replace('  ', ' ');
         console.log($scope.destinataires_libelle);
     };
 
