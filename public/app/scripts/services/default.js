@@ -132,7 +132,7 @@ angular.module('services.constants').service('Menus', function($rootScope){
 				    left_menu_text:'info famille : pour diffuser un message aux famille d\'élèves',
 				    left_menu_button_text: 'écrire une nouvelle info famille',
 				    right_menu_text: 'écrire aux familles',
-				    recpitualif: 'familles de ',
+				    recpitualif: 'Familles',
             icon :$rootScope.racine_images + 'famille.svg',
             color: "vert",
             icon_div:"famille-icon"
@@ -141,16 +141,16 @@ angular.module('services.constants').service('Menus', function($rootScope){
 				    left_menu_text:'écrire aux prof : pour diffuser un message aux enseignants',
 				    left_menu_button_text: 'écrire aux enseignant',
 				    right_menu_text: 'écrire aux professeurs ',
-				    recpitualif:'enseignant des classes:',
+				    recpitualif:'Enseignants',
             icon :$rootScope.racine_images + 'profs.svg',
             color: "bleu",
             icon_div:"profs-icon"
 				},
 				ecrire_eleves:{
-				    left_menu_text:'écrire aux élèves : pour diffuser un message aux enseignants',
+				    left_menu_text:'écrire aux élèves : pour diffuser un message aux élèves',
 				    left_menu_button_text: 'écrire aux élèves',
 				    right_menu_text: 'écrire aux élèves',
-				    recpitualif:'élèves de: ',
+				    recpitualif:'Elèves',
             icon :$rootScope.racine_images + 'eleves.svg',
             color: "jaune",
             icon_div:"eleves-icon"
@@ -159,16 +159,16 @@ angular.module('services.constants').service('Menus', function($rootScope){
 				    left_menu_text:'écrire à tous',
 				    left_menu_button_text: 'écrire à tous',
 				    right_menu_text: 'écrire à tous',
-				    recpitualif:'profils de: ',
+				    recpitualif:'Profils',
             icon :$rootScope.racine_images + 'tous.svg',
             color: "violet",
             icon_div:"tous-icon"
 				},
         ecrire_personnels:{
-            left_menu_text:'écrire aux personnels',
+            left_menu_text:'écrire aux personnels de l\'éducation nationale',
             left_menu_button_text: 'écrire aux personnels',
             right_menu_text: 'écrire aux personnels',
-            recpitualif:'',
+            recpitualif:'Personnels',
             icon :$rootScope.racine_images + 'personnel.svg',
             color: "rouge",
             icon_div:"personnel-icon"

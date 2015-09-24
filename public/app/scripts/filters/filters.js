@@ -22,10 +22,12 @@ angular.module('publipostageFilters', [])
       }
   ])
 
-.filter('myfilter', function () {
-        return function (text) {
-          var str = text.replace(/\s+/g, '');
-          return str.toUpperCase();
+.filter('myfilter', ['$state', 'security',
+    function ($state , security) {
+        return function (dest) {
+          var text = dest.toSource();
+          return text.replace('/\},/g', '}, <br/>');
         };
-})
+    }
+  ])
 

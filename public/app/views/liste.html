@@ -42,13 +42,13 @@
                 <!--<td>{{publi.id}}</td>-->
                 <td><p ng-bind-html="toTrustedHtml(publi.message)"></p></td>
                 <td><span ng-switch on="publi.message_type"> 
-<!--                     <span ng-switch-when="ecrire_personnels">{{publi.personnels}}</span>
-                    <span ng-switch-default>{{publi.destinataires}}</span> -->
+                    <span ng-switch-when="ecrire_personnels">{{publi.personnels}}</span>
+                    <span ng-switch-default>{{publi.destinataires | myfilter }}</span>
                     &nbsp;
                 </td>
                 <td>
                     <a class="btn-xs btn-default" href="#fichier/{{publi.id}}" tooltip="pdf"><span class="glyphicon glyphicon-send"></span></a>
-                    <a class="btn-xs btn-default" ng-click="duplicPubli(publi.id)" tooltip="dupliquer"><span class=" glyphicon glyphicon-duplicate">Duppliquer</span></a>
+                    <a class="btn-xs btn-default" ng-click="duplicPubli(publi.id)" tooltip="dupliquer"><span class=" glyphicon glyphicon-duplicate">Ré-utiliser</span></a>
                     <a class="btn-xs btn-default" ng-click="removePubli(publi.id)" tooltip="supprimer"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr>

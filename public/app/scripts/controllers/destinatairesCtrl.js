@@ -7,6 +7,10 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
     // making Redirect utils accesible in the scope
     $scope.Redirect = Redirect;
     $scope.security = security;
+    // Libellé représentant le choix des destinataires
+    $scope.destinataires_libelle = "";
+    console.log("$scope.destinataires_libelle ==> " + $scope.destinataires_libelle);
+
     // if current state == destinataire
     if ($state.current.name == "destinataire") {
         MessageService.addMessageType($state.params['type']);
@@ -66,7 +70,6 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
             // Add colors to empty squares
             if ($scope.regroupements['regroupements'].length < 15) {
                 $scope.empty_squares = new Array(15 - $scope.regroupements['regroupements'].length );
-                console.log($scope.empty_squares);
                 for (var i=0;i<$scope.empty_squares.length;i++){
                   $scope.empty_squares[i]={ color:colors[colorIndex++%colors.length] , };
                 }
@@ -111,16 +114,49 @@ Controllers.controller('destinatairesCtrl', ['$scope', 'security','Regroupements
         console.log('add destinations ');
         MessageService.setMatiere($scope.matiere);
         MessageService.addDestinations($scope.destinations);
-        console.log(MessageService.getMessage());
     };
 
     $scope.addRemoveDestination = function(object){
-        var index = $scope.destinations.indexOf(object)
+        console.log(object.type + ", " + object.destinataire_libelle);
+        var index = $scope.destinations.indexOf(object);
+        var listCls = "", listGrp = "";
+        var nbCls = 0, nbGrp = 0;
+        var pluriel = "";
+
+        // Retirer un ajouter dans les listes des destinataires.
         if(index > -1){
             $scope.destinations.splice(index,1);
         }else{
             $scope.destinations.push(object);
         }
+
+        // Construire une belle phrase représentant la liste des destinataires.
+        $scope.destinataires_libelle = Menus[$state.params['type']]['recpitualif'];
+
+        _.each($scope.destinations, function(dest) {
+            if (dest.type == 'classe') {
+                listCls += dest.classe_libelle + ", ";
+                nbCls++;
+            }
+            if (dest.type == 'groupe') {
+                listGrp += dest.groupe_libelle + ", ";
+                nbGrp++;
+            }
+        });
+
+        // Gestion du pluriel
+        if (nbCls > 0) {
+            pluriel = (nbCls > 1) ? "s" : "";
+            $scope.destinataires_libelle += (pluriel != "") ? " des classes de " : " de la classe de ";
+            $scope.destinataires_libelle += listCls;
+        }
+
+        if (nbGrp > 0) {
+            pluriel = (nbGrp > 1) ? "s" : "";
+            $scope.destinataires_libelle += (pluriel != "") ? " des groupes " : " du groupe ";
+            $scope.destinataires_libelle += listGrp;
+        }
+        console.log($scope.destinataires_libelle);
     };
 
     $scope.addProfils = function(){
