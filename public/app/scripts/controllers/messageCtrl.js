@@ -10,7 +10,9 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$fi
         // load message from the root ..
         $scope.title = MessageService.getMessage()['title'];
         $scope.tinyMessage = MessageService.getMessage()['message'];
+        console.log($scope.tinyMessage);
         $scope.tinymceOptions =  tinymceOptions;
+
 
         // get the list of menus
         $scope.menus = Menus;
@@ -27,8 +29,9 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$fi
                 if(_.isString($scope.tinyMessage) && $scope.tinyMessage.length > 0 && !($scope.tinyMessage.endsWith("&nbsp;") || $scope.tinyMessage.endsWith("<br />"))) {
                   text  = " "  + text;
                 }
-                
+                // See where the cursor is, and append text here
                 $scope.tinyMessage += text;
+                $scope.$emit('$tinymce:refresh');
             });
         }
         

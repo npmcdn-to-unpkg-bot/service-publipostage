@@ -178,7 +178,6 @@ angular.module('services.constants').service('Menus', function($rootScope){
 
 angular.module('services.constants').value('tinymceOptions', {
   // Test to place lang elsewhere and have it bower compliant
-  //language:"../../../scripts/externals/tinymce/lang/fr",
   language:"../../../scripts/externals/tinymce/lang/fr",
   menubar: false,
   theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
@@ -190,10 +189,13 @@ angular.module('services.constants').value('tinymceOptions', {
   //custom_elements: "nom,civilite",
   verify_html : false,
   height : 200,
-  forced_root_block: false,
-  handle_event_callback: function (e) {
-      console.log("callback called");
-  }
+  forced_root_block: false
+  // handle_event_callback: function (e) {
+  //     console.log("callback called");
+  // },
+  // onChange: function(e) {
+  //   console.log('TinyMCE content has changed!');
+  // }
 });
 
 //angular.module('services.constants').service('Squares', function($rootScope){
