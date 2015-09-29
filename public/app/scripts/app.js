@@ -31,9 +31,9 @@ angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.c
     
     var gestion = {
       name: 'gestion',
-      url: '/publi',
+      url: '/liste',
       templateUrl: APPLICATION_PREFIX+ '/views/liste.html', 
-      controller:  'publiCtrl',
+      controller:  'listeCtrl',
       authorizedRoles: ["TECH"]
     }
     
@@ -49,7 +49,7 @@ angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.c
       name:'historique',
       url:'/historique/:id',
       templateUrl: APPLICATION_PREFIX+'/views/historique.html',
-      controller:'publiCtrl',
+      controller:'listeCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
 

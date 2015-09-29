@@ -36,7 +36,7 @@ Controllers.controller('MainCtrl', ['$scope', '$sce', 'security','Regroupements'
         $scope.menus = Menus;
         
         $scope.addToMessage = function(text){
-            console.log('clicked');
+            console.log(text);
             console.log($scope.tinyMessage);
             $scope.tinyMessage = $scope.tinyMessage + text; 
         }

@@ -20,8 +20,7 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$fi
         };
         
         $scope.addToMessage = function(text){
-            security.requestCurrentUser().then(function(user) {
-                               
+            security.requestCurrentUser().then(function(user) {    
                 /*
                  * Append space if message is not empty and doesn't ends with space nor Carriage return
                  */
