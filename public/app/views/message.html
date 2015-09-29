@@ -45,12 +45,12 @@
                 <div style="padding:4%">
                     <form role="form">
                         <div class="form-group">
-                          <textarea ui-tinymce="tinymceOptions" ng-model="tinyMessage"></textarea>
+                          <div class="bg-default" text-angular ng-model="htmlMessage"></div>
                         </div>
                     </form>
                     <div style="text-align: center">
                         <a class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" ng-click="goToDestinataire($state.params['type'])">changer de destinataires</a>
-                        <a class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" ng-click="goToPreview($state.params['type'])" ng-disabled="tinyMessage == ''">prévisualiser</a>
+                        <a class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" ng-click="goToPreview($state.params['type'])" ng-disabled="htmlMessage == ''">prévisualiser</a>
                     </div>
                 </div>    
             </div>

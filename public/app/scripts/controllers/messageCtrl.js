@@ -1,18 +1,15 @@
 'use strict';
 
 /********************************* Massage controller*****************************************/
-Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$filter', 'MessageService','Redirect', 'Menus','tinymceOptions', '$state', 'templateItems', 'security', "nameRoles",
-    function($scope, $location, $rootScope, $filter, MessageService, Redirect, Menus, tinymceOptions, $state, templateItems, security, nameRoles){
+Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$filter', 'MessageService','Redirect', 'Menus', '$state', 'templateItems', 'security', "nameRoles",
+    function($scope, $location, $rootScope, $filter, MessageService, Redirect, Menus, $state, templateItems, security, nameRoles){
 
         //Template items
         $scope.templateItems =  templateItems;
 
         // load message from the root ..
         $scope.title = MessageService.getMessage()['title'];
-        $scope.tinyMessage = MessageService.getMessage()['message'];
-        console.log($scope.tinyMessage);
-        $scope.tinymceOptions =  tinymceOptions;
-
+        $scope.htmlMessage = MessageService.getMessage()['message'];
 
         // get the list of menus
         $scope.menus = Menus;
@@ -26,12 +23,13 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$fi
                 /*
                  * Append space if message is not empty and doesn't ends with space nor Carriage return
                  */
-                if(_.isString($scope.tinyMessage) && $scope.tinyMessage.length > 0 && !($scope.tinyMessage.endsWith("&nbsp;") || $scope.tinyMessage.endsWith("<br />"))) {
+                console.log("avant : " + $scope.htmlMessage);
+
+                if(_.isString($scope.htmlMessage) && $scope.htmlMessage.length > 0 && !($scope.htmlMessage.endsWith("&nbsp;") || $scope.htmlMessage.endsWith("<br/>") || $scope.htmlMessage.endsWith("</p>"))) {
                   text  = " "  + text;
                 }
-                // See where the cursor is, and append text here
-                $scope.tinyMessage += text;
-                $scope.$emit('$tinymce:refresh');
+                $scope.htmlMessage += text;
+                console.log("après : " + $scope.htmlMessage);
             });
         }
         
@@ -41,7 +39,8 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$fi
                 // TODO : affichage du message plus joli qu'une simple alerte.
                 alert('Le titre de votre publipostage est vide !');
             } else {
-                MessageService.addMessage($scope.tinyMessage, $scope.title)
+                // MessageService.addMessage($scope.tinyMessage, $scope.title)
+                MessageService.addMessage($scope.htmlMessage, $scope.title)
                 $location.path('/apercu/'+location);
             }
         }

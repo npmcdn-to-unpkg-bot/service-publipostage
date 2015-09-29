@@ -18,7 +18,6 @@ Controllers.controller('HomeCtrl', ['$scope','security', 'Publipostages', 'curre
         $scope.squares = Squares;
         
         security.requestCurrentUser().then(function(user) {
-            //console.log(user);
             $scope.currentUser = user;
             $scope.color = "#EB5454";
             if (user.info['LaclasseSexe']=="M") {

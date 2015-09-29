@@ -22,6 +22,7 @@
     <!-- styles for interfaces -->
     <link href='<%= APP_PATH %>/bower_components/laclasse-common-client/fonts/styles.css?v=<%= APP_VERSION %>' rel='stylesheet' />
     <link href='<%= APP_PATH %>/bower_components/angular-loading-bar/src/loading-bar.css?v=<%= APP_VERSION %>' rel='stylesheet' />
+    <link href='<%= APP_PATH %>/bower_components/textAngular/dist/textAngular.css?v=<%= APP_VERSION %>' rel='stylesheet' />
     <link href='<%= APP_PATH %>/bower_components/laclasse-common-client/css/main.css?v=<%= APP_VERSION %>' rel='stylesheet' />
 
      <!-- Custom styles for this template -->
@@ -48,13 +49,9 @@
               <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand">Laclasse > Publipostage</a>
-            <a class="navbar-brand" href="#"><i class="fa fa-home"></i></a>
+            <a class="navbar-brand" href="#/home"><i class="fa fa-home"></i></a>
           </div>
           <nav class="navbar-collapse collapse" role="navigation">
-              <ul class="navbar-nav nav">
-                  <!--<li><a href="<%= APP_PATH %>/">Home</a></li> -->
-                  <!-- <li><a href="#">Contact</a></li> -->
-              </ul>
               <ul class="nav navbar-nav navbar-right">
                 <% unless logged? %>
                   <li>
@@ -85,25 +82,6 @@
         <%= yield %>
       </div>
     <!-- Site footer -->
-    <!--
-    <div class="bottom">
-        <div class="container">
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4">
-                <p>&copy; Laclasse.com 2014</p>
-            </div>
-            <div class="col-md-4">
-            </div>
-        </div>
-    </div>
-    -->
-      <!--<hr/>
-      <footer>
-        <p>&copy; Laclasse.com 2014</p>
-      </footer> --> 
-    <!--</div>--> <!-- /container -->
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -116,8 +94,11 @@
     <script src="<%= APP_PATH %>/bower_components/angular-ui-router/release/angular-ui-router.js?v=<%= APP_VERSION %>"></script>
     <script src="<%= APP_PATH %>/bower_components/angular-sanitize/angular-sanitize.min.js?v=<%= APP_VERSION %>"></script>
     <script src="<%= APP_PATH %>/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?v=<%= APP_VERSION %>"></script>
-    <script src="<%= APP_PATH %>/bower_components/tinymce/tinymce.min.js?v=<%= APP_VERSION %>"></script>
-    <script src="<%= APP_PATH %>/bower_components/angular-ui-tinymce/src/tinymce.js?v=<%= APP_VERSION %>"></script>
+
+    <script src='<%= APP_PATH %>/bower_components/textAngular/dist/textAngular-rangy.min.js?v=<%= APP_VERSION %>'></script>
+    <script src='<%= APP_PATH %>/bower_components/textAngular/dist/textAngular-sanitize.min.js?v=<%= APP_VERSION %>'></script>
+    <script src='<%= APP_PATH %>/bower_components/textAngular/dist/textAngular.min.js?v=<%= APP_VERSION %>'></script>
+    
     <script src="<%= APP_PATH %>/bower_components/underscore/underscore.js?v=<%= APP_VERSION %>"></script>
     <script src="<%= APP_PATH %>/bower_components/angular-underscore/angular-underscore.js?v=<%= APP_VERSION %>"></script>
     <script src="<%= APP_PATH %>/bower_components/underscore.string/dist/underscore.string.min.js?v=<%= APP_VERSION %>"></script>
@@ -139,7 +120,7 @@
     <script src="<%= APP_PATH %>/scripts/controllers/messageCtrl.js?v=<%= APP_VERSION %>"></script>
     <script src="<%= APP_PATH %>/scripts/controllers/modeDiffusionCtrl.js?v=<%= APP_VERSION %>"></script>
     <script src="<%= APP_PATH %>/scripts/controllers/apercuCtrl.js?v=<%= APP_VERSION %>"></script>
-    <script src="<%= APP_PATH %>/scripts/controllers/publiCtrl.js?v=<%= APP_VERSION %>"></script>
+    <script src="<%= APP_PATH %>/scripts/controllers/listeCtrl.js?v=<%= APP_VERSION %>"></script>
     <script src="<%= APP_PATH %>/scripts/controllers/envoiCtrl.js?v=<%= APP_VERSION %>"></script>
     <script src="<%= APP_PATH %>/scripts/controllers/docCtrl.js?v=<%= APP_VERSION %>"></script>
 

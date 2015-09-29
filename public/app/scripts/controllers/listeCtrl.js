@@ -1,8 +1,8 @@
 'use strict';
 
-Controllers.controller('listeCtrl', ['$rootScope', '$sce', 'security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", 'tinymceOptions',
-  function($scope, $sce, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location , tinymceOptions) {
-    $scope.tinymceOptions = tinymceOptions;
+Controllers.controller('ListeCtrl', ['$rootScope', '$sce', 'security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location",
+  function($scope, $sce, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location ) {
+    // $scope.tinymceOptions = tinymceOptions;
     
     $scope.pageLimits = [5, 10, 20, 50]; 
     $scope.limit = 20;

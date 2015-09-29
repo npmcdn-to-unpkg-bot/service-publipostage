@@ -26,7 +26,6 @@
     "angular-route": "~1.2.16",
     "Font-Awesome": "~4.0.3",
     "angular-ui-router": "~0.2.10",
-    "angular-ui-tinymce": "~0.0.5",
     "angular-mocks": "~1.2.16",
     "angular-scenario": "~1.2.16",
     "angular-loading-bar": "~0.4.1",
