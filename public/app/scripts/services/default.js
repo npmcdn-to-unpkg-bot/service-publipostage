@@ -132,7 +132,7 @@ angular.module('services.constants').service('Menus', function($rootScope){
 				    left_menu_text:'info famille : pour diffuser un message aux famille d\'élèves',
 				    left_menu_button_text: 'écrire une nouvelle info famille',
 				    right_menu_text: 'écrire aux familles',
-				    recpitualif: 'familles de ',
+				    recpitualif: 'Familles',
             icon :$rootScope.racine_images + 'famille.svg',
             color: "vert",
             icon_div:"famille-icon"
@@ -141,16 +141,16 @@ angular.module('services.constants').service('Menus', function($rootScope){
 				    left_menu_text:'écrire aux prof : pour diffuser un message aux enseignants',
 				    left_menu_button_text: 'écrire aux enseignant',
 				    right_menu_text: 'écrire aux professeurs ',
-				    recpitualif:'enseignant des classes:',
+				    recpitualif:'Enseignants',
             icon :$rootScope.racine_images + 'profs.svg',
             color: "bleu",
             icon_div:"profs-icon"
 				},
 				ecrire_eleves:{
-				    left_menu_text:'écrire aux élèves : pour diffuser un message aux enseignants',
+				    left_menu_text:'écrire aux élèves : pour diffuser un message aux élèves',
 				    left_menu_button_text: 'écrire aux élèves',
 				    right_menu_text: 'écrire aux élèves',
-				    recpitualif:'élèves de: ',
+				    recpitualif:'Elèves',
             icon :$rootScope.racine_images + 'eleves.svg',
             color: "jaune",
             icon_div:"eleves-icon"
@@ -159,16 +159,16 @@ angular.module('services.constants').service('Menus', function($rootScope){
 				    left_menu_text:'écrire à tous',
 				    left_menu_button_text: 'écrire à tous',
 				    right_menu_text: 'écrire à tous',
-				    recpitualif:'profils de: ',
+				    recpitualif:'Profils',
             icon :$rootScope.racine_images + 'tous.svg',
             color: "violet",
             icon_div:"tous-icon"
 				},
         ecrire_personnels:{
-            left_menu_text:'écrire aux personnels',
+            left_menu_text:'écrire aux personnels de l\'éducation nationale',
             left_menu_button_text: 'écrire aux personnels',
             right_menu_text: 'écrire aux personnels',
-            recpitualif:'',
+            recpitualif:'Personnels',
             icon :$rootScope.racine_images + 'personnel.svg',
             color: "rouge",
             icon_div:"personnel-icon"
@@ -176,26 +176,6 @@ angular.module('services.constants').service('Menus', function($rootScope){
       };
 });
 
-angular.module('services.constants').value('tinymceOptions', {
-  // Test to place lang elsewhere and have it bower compliant
-  language:"../../../scripts/externals/tinymce/lang/fr",
-  menubar: false,
-  theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-  font_size_style_values: "12px,13px,14px,16px,18px,20px",
-  toolbar: "styleselect,fontsizeselect,sub,sup,|,bold,italic,underline,strikethrough,| alignleft,aligncenter,alignright | bullist,numlist",
-  extended_valid_elements : "nom,civilite",
-  //custom_elements: "nom,civilite",
-  verify_html : false,
-  height : 200,
-  forced_root_block: false,
-  handle_event_callback: function (e) {
-      // put logic here for keypress
-      console.log("callback called");
-  }
-});
-
-//angular.module('services.constants').service('Squares', function($rootScope){
-// angular.module('services.constants').value('templateItems', 
 angular.module('services.constants').service('templateItems', function($rootScope){
  var dataButtons =  
  [
