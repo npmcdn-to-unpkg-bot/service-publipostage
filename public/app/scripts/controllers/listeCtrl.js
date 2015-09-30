@@ -1,8 +1,7 @@
 'use strict';
 
-Controllers.controller('ListeCtrl', ['$rootScope', '$sce', 'security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location",
-  function($scope, $sce, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location ) {
-    // $scope.tinymceOptions = tinymceOptions;
+Controllers.controller('ListeCtrl', ['$rootScope', '$sce', 'security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', "$location", "MessageService", 
+  function($scope, $sce, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location, MessageService ) {
     
     $scope.pageLimits = [5, 10, 20, 50]; 
     $scope.limit = 20;
@@ -46,12 +45,17 @@ Controllers.controller('ListeCtrl', ['$rootScope', '$sce', 'security', 'Publipos
                         'jaune', 'gris1','gris2', 'gris3', 'gris4' ];
 
 
-    $scope.relancerPubli = function (id) {
-      alert("La relance d'un publipostage n'est pas encore activée");
-    }
-
-    $scope.duplicPubli = function (id) {
-      alert("La dupplication n'est pas encore activée");
+    $scope.relancerPubli = function (id, location) {
+    // Récupérer le publipostage sur la base de l'id.
+    Publipostages.get({id:id}, function(success){
+        MessageService.init();
+        MessageService.loadMessage(success);
+        // rediriger à la rédaction du message /#/message/ecrire_tous
+        $location.path('/' + location + '/' + MessageService.getMessage()['messageType']);
+        }, 
+        function(error){
+            console.log(error);
+        });        
     }
     
     $scope.removePubli = function(id){
@@ -96,6 +100,6 @@ Controllers.controller('ListeCtrl', ['$rootScope', '$sce', 'security', 'Publipos
         }
     };
 
-    $scope.$watch('checked', function(newValue){console.log(newValue);}, true);
+    // $scope.$watch('checked', function(newValue){console.log(newValue);}, true);
 
 }]);

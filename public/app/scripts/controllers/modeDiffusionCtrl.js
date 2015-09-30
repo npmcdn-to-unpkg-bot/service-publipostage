@@ -8,35 +8,67 @@ Controllers.controller('ModeDiffusionCtrl', ['$scope', '$location', '$rootScope'
     $scope.menus = Menus;
 
     $scope.sendMessage = function(location){
-        console.log("send message");
+      console.log("send message");
       //Set selected diffusion type
       MessageService.setDiffusionType($scope.diffusion_type);
       
       var message = MessageService.getMessage();
       // check if message is valid ..
       if (message.title != "" && message.message!=""){
-        Publipostages.save({
-                            'descriptif': message.title,
-                            'message': message.message, 
-                            'destinataires':message.destinations,
-                            'destinataires_libelle' :message.destinataires_libelle,
-                            'message_type':message.messageType,
-                            'diffusion_type':message.diffusion_type, 
-                            'profils':message.profils,
-                            'matiere_id' : message.matiere
-                          }, 
-          function(data){
-            $rootScope.created_publi = data;
-            // reinitialize message service
-            MessageService.reset();
-            $location.path('/envoi/'+location);
-          }, 
-          function(error){
-            console.log(error);
-            $location.path('/error/'+error['data'].error);
-            // show a message interface ..
-          }
-        );
+        if (message.id == undefined || message.id == null ) {
+          // Nouveau publipostage
+          console.log("save new publipostage");
+          Publipostages.save({
+                              'descriptif': message.title,
+                              'message': message.message, 
+                              'destinataires':message.destinations,
+                              'destinataires_libelle' :message.destinataires_libelle,
+                              'message_type':message.messageType,
+                              'diffusion_type':message.diffusion_type, 
+                              'profils':message.profils,
+                              'matiere_id' : message.matiere
+                            }, 
+            function(data){
+              $rootScope.created_publi = data;
+              // reinitialize message service
+              MessageService.reset();
+              $location.path('/envoi/'+location);
+            }, 
+            function(error){
+              console.log(error);
+              $location.path('/error/'+error['data'].error);
+              // show a message interface ..
+            }
+          );
+        } 
+        else // MAJ d'un publipostage existant
+        {
+          console.log("update publipostage, id='"+ message.id+"'");
+          Publipostages.update({
+                              'id': message.id,
+                              'descriptif': message.title,
+                              'message': message.message, 
+                              'destinataires':message.destinations,
+                              'destinataires_libelle' :message.destinataires_libelle,
+                              'message_type':message.messageType,
+                              'diffusion_type':message.diffusion_type, 
+                              'profils':message.profils,
+                              'matiere_id' : message.matiere
+                            }, 
+            function(data){
+              $rootScope.created_publi = data;
+              // reinitialize message service
+              MessageService.reset();
+              $location.path('/envoi/'+location);
+            }, 
+            function(error){
+              console.log(error);
+              $location.path('/error/'+error['data'].error);
+              // show a message interface ..
+            }
+          );
+
+        }
       }
     };
 

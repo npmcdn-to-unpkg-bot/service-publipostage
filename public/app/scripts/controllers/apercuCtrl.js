@@ -12,7 +12,6 @@ Controllers.controller('ApercuCtrl', ['$scope', '$location', '$rootScope', '$sta
     };
 
     $scope.goBackToMessage = function(location){
-      //$scope.tinyMessage = MessageService.getMessage()['message'];
       $location.path('/message/'+location);
     };
   }

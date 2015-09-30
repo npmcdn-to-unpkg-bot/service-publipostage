@@ -53,6 +53,24 @@ angular.module('services.messages').service('MessageService', ['$rootScope' ,fun
       }
     }, true);
 
+    // Load Message  
+    this.loadMessage = function(publipostage) {
+      $rootScope.messageObject['id'] =                    publipostage.id;
+      $rootScope.messageObject['date'] =                  publipostage.date;
+      $rootScope.messageObject['message'] =               publipostage.message;
+      $rootScope.messageObject['profils'] =               publipostage.profils;
+      $rootScope.messageObject['messageType'] =           publipostage.message_type;
+      $rootScope.messageObject['title'] =                 publipostage.descriptif;
+      $rootScope.messageObject['matiere'] =               publipostage.matiere_enseignee_id;
+      $rootScope.messageObject['destinataires_libelle'] = publipostage.destinataires_libelle;
+      $rootScope.messageObject['diffusion_type'] =        publipostage.diffusion_type; 
+      if (publipostage.personnels != null) {
+        this.addDestinations(publipostage.personnels);
+      } else{
+        this.addDestinations(publipostage.destinataires);
+      }
+    }
+    
     // add Message  
     this.addMessage = function(message, title) {
         $rootScope.messageObject['message'] = message;
@@ -62,10 +80,6 @@ angular.module('services.messages').service('MessageService', ['$rootScope' ,fun
     this.clearMessage = function(){
         $rootScope.messageObject['message'] = '';
         $rootScope.messageObject['title'] = '';
-    }
-    
-    this.getMessage = function() {
-        return $rootScope.messageObject;
     }
     
     this.addDestinations = function(arry){
@@ -119,6 +133,12 @@ angular.module('services.messages').service('MessageService', ['$rootScope' ,fun
     this.setMatiere = function (matiere) {
       $rootScope.messageObject['matiere'] = matiere;
     };
+
+  // Getters
+  this.getMessage = function() {
+      return $rootScope.messageObject;
+  }
+
 }]);
 
 /************************************************************************************/
