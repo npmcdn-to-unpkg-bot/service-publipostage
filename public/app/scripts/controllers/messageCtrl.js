@@ -23,13 +23,10 @@ Controllers.controller('MassageCtrl', ['$scope', '$location', '$rootScope', '$fi
                 /*
                  * Append space if message is not empty and doesn't ends with space nor Carriage return
                  */
-                console.log("avant : " + $scope.htmlMessage);
-
                 if(_.isString($scope.htmlMessage) && $scope.htmlMessage.length > 0 && !($scope.htmlMessage.endsWith("&nbsp;") || $scope.htmlMessage.endsWith("<br/>") || $scope.htmlMessage.endsWith("</p>"))) {
                   text  = " "  + text;
                 }
                 $scope.htmlMessage += text;
-                console.log("après : " + $scope.htmlMessage);
             });
         }
         

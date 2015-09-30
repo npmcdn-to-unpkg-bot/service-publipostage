@@ -43,7 +43,7 @@ class ApplicationAPI < Grape::API
   end
   get '/publipostages' do
     r = Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_publipostage, '', {})
-    r['data'].keep_if { |e|  e['user_uid'] == @current_user[:info][:uid] }
+    r['data'].select { |e|  e['user_uid'] == @current_user[:info][:uid] }
     r['total'] = r['data'].size
     r
   end

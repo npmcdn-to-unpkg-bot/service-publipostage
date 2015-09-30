@@ -43,9 +43,10 @@
                     &nbsp;
                 </td>
                 <td>
-                    <a class="btn-xs btn-default" href="#fichier/{{publi.id}}" tooltip="pdf"><span class="glyphicon glyphicon-send"></span></a>
-                    <a class="btn-xs btn-default" ng-click="duplicPubli(publi.id)" tooltip="dupliquer"><span class=" glyphicon glyphicon-duplicate">Ré-utiliser</span></a>
-                    <a class="btn-xs btn-default" ng-click="removePubli(publi.id)" tooltip="supprimer"><span class="glyphicon glyphicon-trash"></span></a>
+                    <button type="button" class="btn btn-xs btn-default" ng-click="goTo('/fichier/' + publi.id)" title="Feuilleter le fichier pdf généré"><span class="glyphicon glyphicon-eye-open"></span></button>
+                    <button type="button" class="btn btn-xs btn-default" ng-click="relancerPubli(publi.id, 'message')" title="Ré-générer : relancer ce publipostage"><span class="glyphicon glyphicon-send"></span></button>
+                    <button type="button" class="btn btn-xs btn-default" ng-click="relancerPubli(publi.id, 'destinataire')" title="Modifier ce publipostage"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="removePubli(publi.id)" title="Supprimer ce publipostage"><span class="glyphicon glyphicon-trash"></span></button>
                 </td>
             </tr>
         </tbody>

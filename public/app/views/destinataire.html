@@ -2,7 +2,7 @@
     <div class="col-md-4 col-lg-4">
 	<div class="row-fluid">
 	    <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-		<p style="padding:5px 0px 10px 0px"><a class="navbar-brand" href="#"><i class="fa fa-home fa-2x"></i></a></p><br/>
+		<p style="padding:5px 0px 10px 0px"><a class="navbar-brand" href="#/home"><i class="fa fa-home fa-2x"></i></a></p><br/>
 		<h2 class="transparent visible-md visible-lg">étape 1 : type de message</h2>
 		<p class="menu-text transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</p>
 		<h2>étape 2 : les destinataires</h2>
@@ -59,18 +59,18 @@
 	    </div>
 
 	    <!--show classes only when message type is not ecrire personnels or ecrire tous -->
-	    <div  ng-show="$state.params['type']!='ecrire_personnels'">
+	    <div ng-show="$state.params['type']!='ecrire_personnels'">
 		    <div ng-repeat="classe in regroupements['regroupements'] | filter:searchText | orderBy:'libelle'" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="squareClass(classe)">
-		    <a ng-click="classe.checked=!classe.checked;addRemoveDestination(classe);">
-		      <div class="square-icon">
-			<div class="center-block">
-			    <img class="img-responsive center-block" src="images/00_vide.svg">
-			    <span class="classe-text">{{classe.libelle}}</span>
+			    <a ng-click="classe.checked=!classe.checked;addRemoveDestination(classe);">
+			      <div class="square-icon">
+				<div class="center-block">
+				    <img class="img-responsive center-block" src="images/00_vide.svg">
+				    <span class="classe-text">{{classe.libelle}}</span>
+				</div>
+				<div class="square-text center-block">{{classe.etablissement_nom}}</div>
+			      </div>
+			    </a>
 			</div>
-			<div class="square-text center-block">{{classe.etablissement_nom}}</div>
-		      </div>
-		    </a>
-		</div>
 	    </div>
 
 	    <!--show personnels only when message type is ecrire personnels -->
