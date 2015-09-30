@@ -14,7 +14,6 @@
             <th style="text-align:center;vertical-align:middle;"><input type="checkbox"  ng-change="selectAll()" ng-model="check_all" rel="tooltip" title="tous"></th>
             <th>Date</th>
             <th>Type de message</th>
-            <th>Utilisateur</th>
             <th>Titre</th>
             <th>Message</th>
             <th>Destinataires</th>
@@ -35,15 +34,12 @@
                         <span ng-switch-default>{{publi.message_type}}</span>
                     </span>
                 </td>
-                <td>
-                    {{publi.user_prenom}} {{publi.user_nom}}
-                </td>
                 <td>{{publi.descriptif}}</td>
                 <!--<td>{{publi.id}}</td>-->
                 <td><p ng-bind-html="toTrustedHtml(publi.message)"></p></td>
                 <td><span ng-switch on="publi.message_type"> 
-                    <span ng-switch-when="ecrire_personnels">{{publi.personnels}}</span>
-                    <span ng-switch-default>{{publi.destinataires | myfilter }}</span>
+<!--                     <span ng-switch-when="ecrire_personnels">{{publi.personnels}}</span>
+ -->                    <span ng-switch-default>{{publi.destinataires_libelle }}</span>
                     &nbsp;
                 </td>
                 <td>
@@ -54,7 +50,6 @@
             </tr>
         </tbody>
         </table>
-        <!-- <a class="btn btn-primary btn-sm" tooltip="Nouveau" href="#/creer"><i class="fa fa-plus"></i></a> -->
         <a class="btn btn-primary btn-sm" href="#/" tooltip="retour à la page publique"><i class="fa fa-reply"></i></a>
     </div>
 </div>   
