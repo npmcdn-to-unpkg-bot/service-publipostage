@@ -44,16 +44,16 @@ a:hover {
 }
 
 .classe-text  {
-  margin-left: auto;
-  margin-right: auto;
-  text-align:center;
-  word-wrap:break-word;
+  display:block;
+  background-image: url("../images/00_vide.svg");
   position: absolute;
   top:25%;
-  left:35%;
-  color: white;
-  font-family: Futura Bold;
+  left:5%;
+  width:90%;
+  font-family: Open Sans Regular;
   z-index: 1!important;
+  word-wrap:break-word;
+  color: white;
 }
 
 .groupe-text {
@@ -208,9 +208,10 @@ a:hover {
     font-size: 150%;
   }
 
-  .classe-text{
+/*  .classe-text{
     font-size: 5em;
-  }
+  }*/
+
   .groupe-text{
     font-size: 3em;
   }
