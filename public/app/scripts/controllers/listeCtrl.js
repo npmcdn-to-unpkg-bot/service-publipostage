@@ -45,6 +45,11 @@ Controllers.controller('ListeCtrl', ['$rootScope', '$sce', 'security', 'Publipos
     $scope.colors = [ 'bleu', 'vert', 'rouge', 'violet', 'orange',
                         'jaune', 'gris1','gris2', 'gris3', 'gris4' ];
 
+
+    $scope.relancerPubli = function (id) {
+      alert("La relance d'un publipostage n'est pas encore activée");
+    }
+
     $scope.duplicPubli = function (id) {
       alert("La dupplication n'est pas encore activée");
     }
@@ -77,7 +82,6 @@ Controllers.controller('ListeCtrl', ['$rootScope', '$sce', 'security', 'Publipos
 
     $scope.selectPubli = function(id){
         console.log(id);
-        //$scope.checked[id] = !$scope.checked[id];
     };
 
     $scope.removeSelectedPubli = function(){
