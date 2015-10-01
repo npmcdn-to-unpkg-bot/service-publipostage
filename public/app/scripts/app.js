@@ -1,8 +1,7 @@
 'use strict';
 
-// Declare app level module which depends on filters, and services
 angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.constants', 'ui.bootstrap',
-                         'ui.tinymce', 'services.messages', 'services.authentication', 'angular-underscore',
+                         'textAngular', 'services.messages', 'services.authentication', 'angular-underscore',
                          'underscore.string', 'wizardDirective', 'ui.select2', 'services.resources', 'ngSanitize', 'services.utils', 
                          'pdf', 'chieffancypants.loadingBar', 'services.directives', 'checklist-model' , 'publipostageFilters'])
 .directive('myVisible', function () {
@@ -31,9 +30,9 @@ angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.c
     
     var gestion = {
       name: 'gestion',
-      url: '/publi',
+      url: '/liste',
       templateUrl: APPLICATION_PREFIX+ '/views/liste.html', 
-      controller:  'publiCtrl',
+      controller:  'ListeCtrl',
       authorizedRoles: ["TECH"]
     }
     
@@ -46,10 +45,10 @@ angular.module('myApp', ['myApp.controllers', 'ngRoute', 'ui.router','services.c
     }
     
     var historique = {
-      name:'histroique',
+      name:'historique',
       url:'/historique/:id',
       templateUrl: APPLICATION_PREFIX+'/views/historique.html',
-      controller:'publiCtrl',
+      controller:'ListeCtrl',
       authorizedRoles: ["TECH", "ADM_ETB","PROF_ETB"]
     }
 

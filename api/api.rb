@@ -37,12 +37,15 @@ class ApplicationAPI < Grape::API
   desc 'Retourner la listes des publipostage'
   params do
     optional :limit, type: Integer, desc: 'Nombre maximum de résultat renvoyés'
-    optional :page, type: Integer, desc: "Dans le cas d'une requète paginée"
+    optional :page, type: Integer, desc: "Dans le cas d'une requête paginée"
     optional :sort_col, type: String, desc: 'Nom de la colonne sur laquelle faire le tri'
     optional :sort_dir, type: String, regexp: /^(asc|desc)$/i, desc: 'Direction de tri : ASC ou DESC'
   end
   get '/publipostages' do
-    Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_publipostage, nil, {})
+    r = Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_publipostage, '', {})
+    r['data'].select { |e|  e['user_uid'] == @current_user[:info][:uid] }
+    r['total'] = r['data'].size
+    r
   end
   ############################################################################
   desc 'Retourner un  publipostage par id'
@@ -57,6 +60,7 @@ class ApplicationAPI < Grape::API
     requires :message_type, type: String, desc: 'type de message du publipostage'
     requires :diffusion_type, type: String, desc: "type d'envoi du publipostage"
     requires :destinataires, type: Array, desc: 'destinataires du publipostage'
+    requires :destinataires_libelle, type: String, desc: 'Phrase décrivant les destinataires du publipostage'
   end
   post '/publipostages' do
     begin
@@ -76,12 +80,15 @@ class ApplicationAPI < Grape::API
 
   ############################################################################
   desc "retourner le fichier pdf d\'un publipostage"
-  get '/publipostage/:id/pdf'do
+  get '/publipostage/:id/pdf' do
     publipostage = Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_publipostage, params[:id], {})
     if publipostage['user_uid'] == current_user[:info]['uid'] ||
        Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_user,
                                                       current_user[:info]['uid'], {})['roles_max_priority_etab_actif'] >= 3
       content_type 'application/pdf'
+      env['api.format'] = :binary
+      header 'Content-Disposition', "inline; filename*=UTF-8''publipostage_#{URI.escape(params[:id])}.pdf"
+
       signed_url = Laclasse::CrossApp::Sender.sign(:service_annuaire_publipostage, params[:id] + '/pdf', {})
       return RestClient.get signed_url
     end
