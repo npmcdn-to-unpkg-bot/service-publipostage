@@ -6,20 +6,23 @@
 		<h2 class="transparent visible-md visible-lg">étape 1 : type de message</h2>
 		<p class="menu-text transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</p>
 		<h2>étape 2 : les destinataires</h2>
-		<p class="menu-text"> Sélectionner les classes et les groupes destinataires des messages</p>
+		<p class="menu-text"> Sélectionner les classes et les groupes destinataires des messages
+			<br>
+			<label>Filtre : <input type="text" ng-model="searchText"></label>
+		</p>
 		<form role="form" class="form-inline">
-		    <div ng-show="$state.params['type']=='ecrire_profs'">
-			<label>Choisir une matiere : </label>
-			    <select class="form-control" ng-model="matiere" ng-options="matiere.id as matiere.libelle_long for matiere in matieres"></select>
-		    </div>
-		    <br/>
-		    <div  ng-show="$state.params['type']=='ecrire_tous'">
-			<label><p class="menu-text">Choisir des profils : </p></label>
-			<p ng-repeat="profil in profils">
-			    <input class="css-checkbox" id="{{profil}}" type="checkbox" checklist-model="selectedProfils" checklist-value="profil"/>
-			    <label for="{{profil}}" class="css-label">{{profil}} </label>
-			</p>
-		    </div>
+			<div ng-show="$state.params['type']=='ecrire_profs'">
+				<label>Choisir une matiere : </label>
+				<select class="form-control" ng-model="matiere" ng-options="matiere.id as matiere.libelle_long for matiere in matieres"></select>
+			</div>
+			<br/>
+			<div  ng-show="$state.params['type']=='ecrire_tous'">
+				<label><p class="menu-text">Choisir des profils : </p></label>
+				<p ng-repeat="profil in profils">
+					<input class="css-checkbox" id="{{profil}}" type="checkbox" checklist-model="selectedProfils" checklist-value="profil"/>
+					<label for="{{profil}}" class="css-label">{{profil}} </label>
+				</p>
+			</div>
 		</form>
 		<p class="menu-text-hidden">
 			<small><strong>{{destinataires_libelle}}</strong></small>
@@ -32,9 +35,6 @@
 		</br>
 		</br>
 		<a class="btn btn-info btn-sm visible-md visible-lg">voir l'historique</a>
-
-		<br><br>
-		<input type="text" ng-model="searchText">
 	    </div>
 	</div>
     </div>
