@@ -22,8 +22,8 @@
 		    </div>
 		</form>
 		<p class="menu-text-hidden">
-            <small><strong>{{destinataires_libelle}}</strong></small>
-            </strong>         
+	    <small><strong>{{destinataires_libelle}}</strong></small>
+	    </strong>
 		</p>
 
 		</br>
@@ -43,8 +43,8 @@
 			  <div class="center-block">
 			      <img class="img-responsive center-block" ng-src="{{menus[$state.params['type']].icon}}">
 			  </div>
-              <div class="square-text center-block" ng-if="$state.params['type']=='ecrire_personnels'">Tout le monde</div>
-              <div class="square-text center-block" ng-if="$state.params['type']!='ecrire_personnels'">Tous les regroupements</div>
+	      <div class="square-text center-block" ng-if="$state.params['type']=='ecrire_personnels'">Tout le monde</div>
+	      <div class="square-text center-block" ng-if="$state.params['type']!='ecrire_personnels'">Tous les regroupements</div>
 			</div>
 		    </a>
 		    <a ng-click="deselectAll()" ng-hide="selectAllMode">
@@ -52,15 +52,15 @@
 			  <div class="center-block">
 			    <img class="img-responsive center-block" ng-src="{{menus[$state.params['type']].icon}}">
 			  </div>
-              <div class="square-text center-block" ng-if="$state.params['type']=='ecrire_personnels'">Personne</div>
-              <div class="square-text center-block" ng-if="$state.params['type']!='ecrire_personnels'">Annuler</div>
+	      <div class="square-text center-block" ng-if="$state.params['type']=='ecrire_personnels'">Personne</div>
+	      <div class="square-text center-block" ng-if="$state.params['type']!='ecrire_personnels'">Annuler</div>
 			</div>
 		    </a>
 	    </div>
 
 	    <!--show classes only when message type is not ecrire personnels or ecrire tous -->
 	    <div ng-show="$state.params['type']!='ecrire_personnels'">
-		    <div ng-repeat="classe in regroupements['regroupements'] | filter:searchText | orderBy:'libelle'" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="squareClass(classe)">
+		    <div ng-repeat="classe in regroupements['regroupements'] | filter:searchText | orderBy:'type' | orderBy:'libelle'" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="squareClass(classe)">
 			    <a ng-click="classe.checked=!classe.checked;addRemoveDestination(classe);">
 			      <div class="square-icon">
 				<div class="center-block">
@@ -75,18 +75,18 @@
 
 	    <!--show personnels only when message type is ecrire personnels -->
 	    <div  ng-show="$state.params['type']=='ecrire_personnels'">
-    		<div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris4-clear">
-    		    <a ng-click="person.checked=!person.checked;addRemovePersonnel(person)">
-    			<div class="square-icon">
-    			    <div class="text-icon">
-    				{{person.prenom}} {{person.nom}}
-    				<span>{{person.description}}</span>
-    				<br/>
-    				<span class="glyphicon-class" ng-show="person.checked" id="checked"><i class="fa fa-check-square-o fa-lg"></i></span>
-    			    </div>
-    			</div>
-    		    </a>
-    		</div>
+		<div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris4-clear">
+		    <a ng-click="person.checked=!person.checked;addRemovePersonnel(person)">
+			<div class="square-icon">
+			    <div class="text-icon">
+				{{person.prenom}} {{person.nom}}
+				<span>{{person.description}}</span>
+				<br/>
+				<span class="glyphicon-class" ng-show="person.checked" id="checked"><i class="fa fa-check-square-o fa-lg"></i></span>
+			    </div>
+			</div>
+		    </a>
+		</div>
 	    </div>
 
 	    <!-- empty squares -->
