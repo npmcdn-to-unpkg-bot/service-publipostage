@@ -1,8 +1,10 @@
 AllCops:
   Exclude:
+    - config/**/*
     - vendor/**/*
     - public/**/*
     - spec/javascripts/**/*
+    - spec/**/*
     - tasks/**/*
     - Guardfile
 

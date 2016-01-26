@@ -1,108 +1,113 @@
 <div class="row-fluid">
-    <div class="col-md-4 col-lg-4">
-	<div class="row-fluid">
-	    <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-		<p style="padding:5px 0px 10px 0px"><a class="navbar-brand" href="#/home"><i class="fa fa-home fa-2x"></i></a></p><br/>
-		<h2 class="transparent visible-md visible-lg">étape 1 : type de message</h2>
-		<p class="menu-text transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</p>
-		<h2>étape 2 : les destinataires</h2>
-		<p class="menu-text"> Sélectionner les classes et les groupes destinataires des messages
-			<br>
-			<label>Filtre : <input type="text" ng-model="searchText"></label>
-		</p>
-		<form role="form" class="form-inline">
-			<div ng-show="$state.params['type']=='ecrire_profs'">
-				<label>Choisir une matiere : </label>
-				<select class="form-control" ng-model="matiere" ng-options="matiere.id as matiere.libelle_long for matiere in matieres"></select>
-			</div>
-			<br/>
-			<div  ng-show="$state.params['type']=='ecrire_tous'">
-				<label><p class="menu-text">Choisir des profils : </p></label>
-				<p ng-repeat="profil in profils">
-					<input class="css-checkbox" id="{{profil}}" type="checkbox" checklist-model="selectedProfils" checklist-value="profil"/>
-					<label for="{{profil}}" class="css-label">{{profil}} </label>
-				</p>
-			</div>
-		</form>
-		<p class="menu-text-hidden">
-			<small><strong>{{destinataires_libelle}}</strong></small>
-			</strong>
-		</p>
+  <div class="col-md-4 col-lg-4">
+    <div class="row-fluid">
+      <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+        <p style="padding:5px 0px 10px 0px"><a class="navbar-brand" href="#/home"><i class="fa fa-home fa-2x"></i></a></p>
+        <br/>
+        <h2 class="transparent visible-md visible-lg">étape 1 : type de message</h2>
+        <p class="menu-text transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</p>
+        <h2>étape 2 : les destinataires</h2>
+        <p class="menu-text"> Sélectionner les classes et les groupes destinataires des messages
+          <br>
+          <label>Filtre :
+            <input type="text" ng-model="searchText">
+          </label>
+        </p>
+        <form role="form" class="form-inline">
+          <div ng-show="$state.params['type']=='ecrire_profs'">
+            <label>Choisir une matiere : </label>
+            <select class="form-control" ng-model="matiere" ng-options="matiere.id as matiere.libelle_long for matiere in matieres"></select>
+          </div>
+          <br/>
+          <div ng-show="$state.params['type']=='ecrire_tous'">
+            <label>
+              <p class="menu-text">Choisir des profils : </p>
+            </label>
+            <p ng-repeat="profil in profils">
+              <input class="css-checkbox" id="{{profil}}" type="checkbox" checklist-model="selectedProfils" checklist-value="profil" />
+              <label for="{{profil}}" class="css-label">{{profil}} </label>
+            </p>
+          </div>
+        </form>
+        <p class="menu-text-hidden">
+          <small><strong>{{destinataires_libelle}}</strong></small>
+          </strong>
+        </p>
 
-		</br>
-		</br>
-		<p class="text-center"><a class='btn btn-sm btn-white' ng-disabled="noSelection()" ng-click="addDestinations();addProfils();Redirect.goToMessage($state.params['type'])">suivant</a></p>
-		</br>
-		</br>
-		<a class="btn btn-info btn-sm visible-md visible-lg">voir l'historique</a>
-	    </div>
-	</div>
+        </br>
+        </br>
+        <p class="text-center"><a class='btn btn-sm btn-white' ng-disabled="noSelection()" ng-click="addDestinations();addProfils();Redirect.goToMessage($state.params['type'])">suivant</a></p>
+        </br>
+        </br>
+        <a class="btn btn-info btn-sm visible-md visible-lg">voir l'historique</a>
+      </div>
     </div>
-    <div class="col-md-8 col-lg-8">
-	    <div class="row-fluid">
-		    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris3" >
-			    <a ng-click="selectAll()" ng-show="selectAllMode">
-				    <div class="square-icon">
-					    <div class="center-block">
-						    <img class="img-responsive center-block" ng-src="{{menus[$state.params['type']].icon}}">
-					    </div>
-					    <div class="square-text center-block" ng-if="$state.params['type']=='ecrire_personnels'">Tout le monde</div>
-					    <div class="square-text center-block" ng-if="$state.params['type']!='ecrire_personnels'">Tous les regroupements</div>
-				    </div>
-			    </a>
-			    <a ng-click="deselectAll()" ng-hide="selectAllMode">
-				    <div class="square-icon">
-					    <div class="center-block">
-						    <img class="img-responsive center-block" ng-src="{{menus[$state.params['type']].icon}}">
-					    </div>
-					    <div class="square-text center-block" ng-if="$state.params['type']=='ecrire_personnels'">Personne</div>
-					    <div class="square-text center-block" ng-if="$state.params['type']!='ecrire_personnels'">Annuler</div>
-				    </div>
-			    </a>
-		    </div>
+  </div>
+  <div class="col-md-8 col-lg-8">
+    <div class="row-fluid">
+      <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris3">
+        <a ng-click="selectAll()" ng-show="selectAllMode">
+          <div class="square-icon">
+            <div class="center-block">
+              <img class="img-responsive center-block" ng-src="{{menus[$state.params['type']].icon}}">
+            </div>
+            <div class="square-text center-block" ng-if="$state.params['type']=='ecrire_personnels'">Tout le monde</div>
+            <div class="square-text center-block" ng-if="$state.params['type']!='ecrire_personnels'">Tous les regroupements</div>
+          </div>
+        </a>
+        <a ng-click="deselectAll()" ng-hide="selectAllMode">
+          <div class="square-icon">
+            <div class="center-block">
+              <img class="img-responsive center-block" ng-src="{{menus[$state.params['type']].icon}}">
+            </div>
+            <div class="square-text center-block" ng-if="$state.params['type']=='ecrire_personnels'">Personne</div>
+            <div class="square-text center-block" ng-if="$state.params['type']!='ecrire_personnels'">Annuler</div>
+          </div>
+        </a>
+      </div>
 
-		    <!--show classes only when message type is not ecrire personnels or ecrire tous -->
-		    <div ng-show="$state.params['type']!='ecrire_personnels'">
-			    <div ng-repeat="classe in regroupements['regroupements'] | filter:searchText | orderBy:'type' | orderBy:'libelle'" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="squareClass(classe)">
-				    <a ng-click="classe.checked=!classe.checked;addRemoveDestination(classe);">
-					    <div class="square-icon">
-						    <div class="center-block">
-							    <img class="img-responsive center-block" src="images/00_vide.svg">
-							    <span class="classe-text">{{classe.libelle}}</span>
-						    </div>
-						    <div class="square-text center-block">{{classe.etablissement_nom}}</div>
-					    </div>
-				    </a>
-			    </div>
-		    </div>
+      <!--show classes only when message type is not ecrire personnels or ecrire tous -->
+      <div ng-show="$state.params['type']!='ecrire_personnels'">
+        <div ng-repeat="classe in regroupements['regroupements'] | filter:searchText | orderBy:'type' | orderBy:'libelle'" class="col-xs-6 col-sm-6 col-md-3 col-lg-3" ng-class="squareClass(classe)">
+          <a ng-click="classe.checked=!classe.checked;addRemoveDestination(classe);">
+            <div class="square-icon">
+              <div class="center-block">
+                <img class="img-responsive center-block" src="images/00_vide.svg">
+                <span class="classe-text">{{classe.libelle}}</span>
+              </div>
+              <div class="square-text center-block">{{classe.etablissement_nom}}</div>
+            </div>
+          </a>
+        </div>
+      </div>
 
-		    <!--show personnels only when message type is ecrire personnels -->
-		    <div  ng-show="$state.params['type']=='ecrire_personnels'">
-			    <div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris4-clear">
-				    <a ng-click="person.checked=!person.checked;addRemovePersonnel(person)">
-					    <div class="square-icon">
-						    <div class="text-icon">
-							    {{person.prenom}} {{person.nom}}
-							    <span>{{person.description}}</span>
-							    <br/>
-							    <span class="glyphicon-class" ng-show="person.checked" id="checked"><i class="fa fa-check-square-o fa-lg"></i></span>
-						    </div>
-					    </div>
-				    </a>
-			    </div>
-		    </div>
+      <!--show personnels only when message type is ecrire personnels -->
+      <div ng-show="$state.params['type']=='ecrire_personnels'">
+        <div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris4-clear">
+          <a ng-click="person.checked=!person.checked;addRemovePersonnel(person)">
+            <div class="square-icon">
+              <div class="text-icon">
+                {{person.prenom}} {{person.nom}}
+                <span>{{person.description}}</span>
+                <br/>
+                <span class="glyphicon-class" ng-show="person.checked" id="checked"><i class="fa fa-check-square-o fa-lg"></i></span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
 
-		    <!-- empty squares -->
-		    <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}-clear">
-			    <a>
-				    <div class="square-icon">
-					    <div class="center-block">
-						    <img class="img-responsive center-block" src="images/00_vide.svg">
-					    </div>
-					    <div class="square-text"></div>
-				    </div>
-			    </a>
-		    </div>
-	    </div>
+      <!-- empty squares -->
+      <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}-clear">
+        <a>
+          <div class="square-icon">
+            <div class="center-block">
+              <img class="img-responsive center-block" src="images/00_vide.svg">
+            </div>
+            <div class="square-text"></div>
+          </div>
+        </a>
+      </div>
     </div>
+  </div>
 </div>
