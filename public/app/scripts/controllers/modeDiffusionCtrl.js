@@ -8,7 +8,6 @@ angular.module( 'myApp' )
                                           $scope.menus = Menus;
 
                                           $scope.sendMessage = function(location){
-                                              console.log("send message");
                                               //Set selected diffusion type
                                               MessageService.setDiffusionType($scope.diffusion_type);
 
@@ -43,7 +42,6 @@ angular.module( 'myApp' )
                                                   }
                                                   else // MAJ d'un publipostage existant
                                                   {
-                                                      console.log("update publipostage, id='"+ message.id+"'");
                                                       Publipostages.update({
                                                           'id': message.id,
                                                           'descriptif': message.title,

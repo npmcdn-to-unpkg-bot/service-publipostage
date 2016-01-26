@@ -100,7 +100,4 @@ angular.module( 'myApp' )
                                                                });
                                       }
                                   };
-
-                                  // $scope.$watch('checked', function(newValue){console.log(newValue);}, true);
-
                               }]);
