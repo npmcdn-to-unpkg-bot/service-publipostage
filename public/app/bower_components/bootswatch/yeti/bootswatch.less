@@ -1,8 +1,13 @@
-// Yeti 3.1.1
+// Yeti 3.3.5
 // Bootswatch
 // -----------------------------------------------------
 
-@import url("//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");
+@web-font-path: "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700";
+
+.web-font(@path) {
+  @import url("@{path}");
+}
+.web-font(@web-font-path);
 
 // Navbar =====================================================================
 
@@ -18,6 +23,21 @@
   &-collapse {
     border-top-color: @dropdown-divider-bg;
     .box-shadow(none);
+  }
+
+  .btn {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  &-form {
+    margin-top: 7px;
+    margin-bottom: 5px;
+
+    .form-control {
+      height: auto;
+      padding: @padding-xs-vertical @padding-xs-horizontal;
+    }
   }
 
   .dropdown {
@@ -79,18 +99,18 @@
 // Buttons ====================================================================
 
 .btn {
-  padding: 14px 28px;
+  padding: @padding-base-vertical @padding-base-horizontal;
 
   &-lg {
-    padding: 16px 32px;
+    padding: @padding-large-vertical @padding-large-horizontal;
   }
 
   &-sm {
-    padding: 8px 16px;
+    padding: @padding-small-vertical @padding-small-horizontal;
   }
 
   &-xs {
-    padding: 4px 8px;
+    padding: @padding-xs-vertical @padding-xs-horizontal;
   }
 }
 
@@ -225,12 +245,6 @@ table {
 
 // Forms ======================================================================
 
-input,
-.form-control {
-  padding: 7px;
-  font-size: @font-size-small;
-}
-
 label,
 .control-label,
 .help-block,
@@ -240,11 +254,9 @@ label,
   font-weight: normal;
 }
 
-.form-group .btn,
-.input-group-addon,
-.input-group-btn .btn {
-  padding: 8px 14px;
-  font-size: @font-size-small;
+input[type="radio"],
+input[type="checkbox"] {
+  margin-top: 1px;
 }
 
 // Navs =======================================================================
@@ -310,12 +322,14 @@ label,
     }
   }
 
-  &-lg > li > a {
+  &-lg > li > a,
+  &-lg > li > span {
     padding-left: 22px;
     padding-right: 22px;
   }
 
-  &-sm > li > a {
+  &-sm > li > a,
+  &-sm > li > span {
     padding: 0 5px;
   }
 }
@@ -333,11 +347,21 @@ label,
 
 // Indicators =================================================================
 
+.close {
+  opacity: 0.4;
+  text-decoration: none;
+  text-shadow: none;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
+}
+
 .alert {
   font-size: @font-size-small;
   font-weight: 300;
 
-  a,
   .alert-link {
     font-weight: normal;
     color: #fff;
@@ -404,5 +428,17 @@ label,
   &-footer {
     border-top-right-radius: 0;
     border-top-left-radius: 0;
+  }
+
+  &-default {
+    .close {
+      color: @text-color;
+    }
+  }
+}
+
+.modal {
+  .close {
+    color: @text-color;
   }
 }
