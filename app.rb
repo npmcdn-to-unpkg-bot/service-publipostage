@@ -2,23 +2,12 @@
 
 require 'rubygems'
 require 'bundler'
-require 'sinatra/reloader'
 
 Bundler.require( :default, ENV['RACK_ENV'].to_sym ) # require tout les gems définis dans Gemfile
 
 require 'laclasse/helpers/authentication'
 require 'laclasse/helpers/app_infos'
 require 'laclasse/helpers/user'
-
-# https://gist.github.com/chastell/1196800
-class Hash
-  def to_html
-    [ '<ul>',
-      map { |k, v| ["<li><strong>#{k}</strong> : ", v.respond_to?(:to_html) ? v.to_html : "<span>#{v}</span></li>"] },
-      '</ul>'
-    ].join
-  end
-end
 
 # Application Sinatra servant de base
 class SinatraApp < Sinatra::Base

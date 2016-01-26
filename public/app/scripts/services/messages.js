@@ -3,33 +3,36 @@
 /************************************************************************************/
 /*                   service to show flash messages and responses                  */
 /************************************************************************************/
-angular.module('services.messages', []); 
+angular.module('services.messages', []);
 
-angular.module('services.messages').factory("FlashServiceStyled", ['$rootScope', function($rootScope) {
-  return {
-    show: function(message, classe) {
-      $rootScope.flashMessage = message;
-      $rootScope.flashStyle = classe
-    },
-    clear: function() {
-      $rootScope.flashMessage = "";
-      $rootScope.flashStyle ="alert"; 
-    }
-  }
-}]);
+angular.module('services.messages')
+    .factory( "FlashServiceStyled",
+              [ '$rootScope',
+                function( $rootScope ) {
+                    return {
+                        show: function(message, classe) {
+                            $rootScope.flashMessage = message;
+                            $rootScope.flashStyle = classe
+                        },
+                        clear: function() {
+                            $rootScope.flashMessage = "";
+                            $rootScope.flashStyle ="alert";
+                        }
+                    }
+                }]);
 
 /* MessageService is the service that represents the sent message */
 angular.module('services.messages').service('MessageService', ['$rootScope' ,function ($rootScope) {
 
-  this.reset = function() {
-    $rootScope.messageObject = { 
-        message:'',
-        title:'',
-        destinations:[],
-        destinataires_libelle:'',
-        messageType:'',
-        diffusion_type:'', 
-        profils:[],
+    this.reset = function() {
+        $rootScope.messageObject = {
+            message:'',
+            title:'',
+            destinations:[],
+            destinataires_libelle:'',
+            messageType:'',
+            diffusion_type:'',
+            profils:[],
         matiere: ''
       };
     };
@@ -44,16 +47,16 @@ angular.module('services.messages').service('MessageService', ['$rootScope' ,fun
         this.reset() ;
       }
     };
-    
+
     this.init();
-    
+
     $rootScope.$watch('messageObject' , function () {
       if(sessionStorage != undefined) {
         sessionStorage.messageObject = JSON.stringify($rootScope.messageObject);
       }
     }, true);
 
-    // Load Message  
+    // Load Message
     this.loadMessage = function(publipostage) {
       $rootScope.messageObject['id'] =                    publipostage.id;
       $rootScope.messageObject['date'] =                  publipostage.date;
@@ -63,29 +66,29 @@ angular.module('services.messages').service('MessageService', ['$rootScope' ,fun
       $rootScope.messageObject['title'] =                 publipostage.descriptif;
       $rootScope.messageObject['matiere'] =               publipostage.matiere_enseignee_id;
       $rootScope.messageObject['destinataires_libelle'] = publipostage.destinataires_libelle;
-      $rootScope.messageObject['diffusion_type'] =        publipostage.diffusion_type; 
+      $rootScope.messageObject['diffusion_type'] =        publipostage.diffusion_type;
       if (publipostage.personnels != null) {
         this.addDestinations(publipostage.personnels);
       } else{
         this.addDestinations(publipostage.destinataires);
       }
     }
-    
-    // add Message  
+
+    // add Message
     this.addMessage = function(message, title) {
         $rootScope.messageObject['message'] = message;
         $rootScope.messageObject['title'] = title;
     }
-    
+
     this.clearMessage = function(){
         $rootScope.messageObject['message'] = '';
         $rootScope.messageObject['title'] = '';
     }
-    
+
     this.addDestinations = function(arry){
         $rootScope.messageObject['destinations'] = arry;
     }
-    
+
     this.addDestinatairesLabel = function (str) {
         $rootScope.messageObject['destinataires_libelle'] = str;
     }
@@ -101,15 +104,15 @@ angular.module('services.messages').service('MessageService', ['$rootScope' ,fun
     this.clearProfils = function(){
         $rootScope.messageObject['profils'] = [];
     }
-    
+
     this.setDiffusionType = function(diffusion_type){
         $rootScope.messageObject['diffusion_type'] = diffusion_type;
     }
-    
+
     this.clearDiffusionType = function(){
         $rootScope.messageObject['diffusion_type'] = '';
     }
-    
+
     this.addMessageType = function(type){
       $rootScope.messageObject['messageType'] = type;
     }
