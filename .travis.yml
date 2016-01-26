@@ -5,6 +5,9 @@ rvm:
 script:
   - "bundle exec rubocop -D"
 
+before_install:
+  - gem install bundler -v 1.10.2
+
 gemfile:
   - Gemfile
 
