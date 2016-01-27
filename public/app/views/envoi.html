@@ -1,46 +1,48 @@
 <div class="row-fluid">
-    <div class="col-md-4 col-lg-4">
-        <div class="row">
-            <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <p style="padding:5px 0px 10px 0px"><a class="navbar-brand" href="#/home"><i class="fa fa-home fa-2x"></i></a></p><br/>
-                <h2 class="transparent visible-md visible-lg">étape 1 : type de message</h2>
-                <h2 class="menu-text-transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</h2>
-                <h2 class="transparent visible-md visible-lg">étape 2 : les destinataires</h2>
-                <p class="menu-text-hidden visible-md visible-lg">
-                  <ng-include src="'views/parts/recap_destinataires.html'" />
-                </p>
-                <h2 class="transparent visible-md visible-lg">étape 3 : message</h2>
-                <h2 class="transparent visible-md visible-lg">étape 4 : aperçu</h2>
-                <h2><strong>étape 5 : envoi </strong></h2>
-                <p class="menu-text">Le message a été sauvegardé dans les modèles</p>
+  <div class="col-md-4 col-lg-4">
+    <div class="row">
+      <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+        <p style="padding:5px 0px 10px 0px"><a class="navbar-brand" href="#/home"><i class="fa fa-home fa-2x"></i></a></p>
+        <br/>
+        <h2 class="transparent visible-md visible-lg">étape 1 : type de message</h2>
+        <h2 class="menu-text-transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</h2>
+        <h2 class="transparent visible-md visible-lg">étape 2 : les destinataires</h2>
+        <p class="menu-text-hidden visible-md visible-lg">
+          <ng-include src="'views/parts/recap_destinataires.html'" />
+        </p>
+        <h2 class="transparent visible-md visible-lg">étape 3 : message</h2>
+        <h2 class="transparent visible-md visible-lg">étape 4 : aperçu</h2>
+        <h2><strong>étape 5 : envoi </strong></h2>
+        <p class="menu-text">Le message a été sauvegardé dans les modèles</p>
 
-            </div>
-        </div>
+      </div>
     </div>
-    <div class="col-md-8 col-lg-8" ng-class="menus[$state.params['type']].color">
-        <!-- icon -->
-        <div class="row" ng-class="menus[$state.params['type']].color">
-            <img ng-src="{{menus[$state.params['type']].icon}}"  class="img-responsive center-block"/>
-        </div>
-        <!-- text -->
-        <div class="row" ng-class="menus[$state.params['type']].color">
-            <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <div class="center-block">
-                    <p class="square-text center-block">Le message est créé !</p>
-
-                    <p class="square-text center-block" ng-if="showNews">Le message a été diffusé en ligne  sur la page info famille.</p>
-                    
-                    <p class="square-text center-block" ng-if="showEmail">{{nb_email}} messages ont été envoyés par mails.</p>
-
-                    <p class="square-text center-block" ng-if="showPdf">{{nb_pdf}} messages sont à télécharger dans un fichier pdf </p>
-                    
-                    <p class="square-text center-block"><a ng-if="showPdf" href="api/publipostage/{{created_publi.id}}/pdf" target="_blank"><img src="images/pdf.svg" width="36"/></p>
-                    <p></p>
-                    <p style="text-align:center">
-                        <a class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" href="#/">écrire un autre message</a>
-                    </p>
-                </div>
-            </div>
-        </div>
+  </div>
+  <div class="col-md-8 col-lg-8" ng-class="menus[$state.params['type']].color">
+    <!-- icon -->
+    <div class="row" ng-class="menus[$state.params['type']].color">
+      <img ng-src="{{menus[$state.params['type']].icon}}" class="img-responsive center-block" />
     </div>
+    <!-- text -->
+    <div class="row" ng-class="menus[$state.params['type']].color">
+      <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+        <div class="center-block">
+          <p class="square-text center-block">Le message est créé !</p>
+
+          <p class="square-text center-block" ng-if="showNews">Le message a été diffusé en ligne sur la page info famille.</p>
+
+          <p class="square-text center-block" ng-if="showEmail">{{nb_email}} messages ont été envoyés par mails.</p>
+
+          <p class="square-text center-block" ng-if="showPdf">{{nb_pdf}} messages sont à télécharger dans un fichier pdf </p>
+
+          <p class="square-text center-block">
+            <a ng-if="showPdf" href="api/publipostage/{{created_publi.id}}/pdf" target="_blank"><img src="images/pdf.svg" width="36" /></p>
+          <p></p>
+          <p style="text-align:center">
+            <a class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" href="#/">écrire un autre message</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

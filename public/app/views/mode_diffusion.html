@@ -1,66 +1,71 @@
 <div class="row-fluid">
-    <div class="col-md-4 col-lg-4" style="border-left: 1px solid #eee;">
-        <div class="row">
-            <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <p style="padding:5px 0px 10px 0px"><a class="navbar-brand" href="#/home"><i class="fa fa-home fa-2x"></i></a></p><br/>
-                <h2 class="transparent visible-lg visible-md">Etape 1 : type de message</h2>
-                <h2 class="menu-text-transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</h2>
-                <h2 class="transparent visible-lg visible-md">Etape 2 : les destinataires</h2>
-                <p class="menu-text-hidden visible-md visible-lg">
-                  <ng-include src="'views/parts/recap_destinataires.html'" />
-                </p>
-                <h2 class="transparent visible-lg visible-md">Etape 3 : message</h2>
-                <h2 class="transparent visible-lg visible-md">Etape 4 : aperçu</h2>
-                <h2><strong>Etape 5: mode de diffusion</strong></h2>
-                <p class="menu-text">
-                    Choisir les modes de
-                    diffusion du message
-                </p>    
-            </div>
-        </div>
+  <div class="col-md-4 col-lg-4" style="border-left: 1px solid #eee;">
+    <div class="row">
+      <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+        <p style="padding:5px 0px 10px 0px"><a class="navbar-brand" href="#/home"><i class="fa fa-home fa-2x"></i></a></p>
+        <br/>
+        <h2 class="transparent visible-lg visible-md">Etape 1 : type de message</h2>
+        <h2 class="menu-text-transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</h2>
+        <h2 class="transparent visible-lg visible-md">Etape 2 : les destinataires</h2>
+        <p class="menu-text-hidden visible-md visible-lg">
+          <ng-include src="'views/parts/recap_destinataires.html'" />
+        </p>
+        <h2 class="transparent visible-lg visible-md">Etape 3 : message</h2>
+        <h2 class="transparent visible-lg visible-md">Etape 4 : aperçu</h2>
+        <h2><strong>Etape 5: mode de diffusion</strong></h2>
+        <p class="menu-text">
+          Choisir les modes de diffusion du message
+        </p>
+      </div>
     </div>
-    <div class="col-md-8 col-lg-8">
-        <!-- icon -->
-        <div class="row" ng-class="menus[$state.params['type']].color">
-            <div ng-class="menus[$state.params['type']].icon_div" class="col-md-2 col-md-offset-5"></div>  <!-- col-md-2  col-md-2 to center content -->
-        </div>
-        <!-- destinataire -->
-        <div class="row" ng-class="menus[$state.params['type']].color">
-            <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <div style="margin-left:10%; margin-right:10%;">
-                    <p style="text-align: justify; background-color:white; padding:5%;">
-                        <strong>Destinataires</strong><br />
-                        {{ messageObject['destinataires_libelle'] }}
-                    </p>
+  </div>
+  <div class="col-md-8 col-lg-8">
+    <!-- icon -->
+    <div class="row" ng-class="menus[$state.params['type']].color">
+      <div ng-class="menus[$state.params['type']].icon_div" class="col-md-2 col-md-offset-5"></div>
+      <!-- col-md-2  col-md-2 to center content -->
+    </div>
+    <!-- destinataire -->
+    <div class="row" ng-class="menus[$state.params['type']].color">
+      <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+        <div style="margin-left:10%; margin-right:10%;">
+          <p style="text-align: justify; background-color:white; padding:5%;">
+            <strong>Destinataires</strong>
+            <br /> {{ messageObject['destinataires_libelle'] }}
+          </p>
 
-                    <p style="text-align: justify; background-color:white; padding:5%;">
-                       <strong>Titre de message</strong><br />
-                            {{messageObject['title']}}
-                        </br> 
-                        <strong>Message</strong><br />
-                        <div class="text-scroll" style="background-color:white; padding:5%;" ng-bind-html="messageObject['message']">
-                            
-                        </div>
-                    </p>
-                
-                    <div style="background-color:white; padding:5%;">
-                        <strong>Mode de diffusion</strong>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                    <input id="byMail" type="radio" ng-model="diffusion_type" value="email"> <label for="byMail" class="css-label">{{diffusion_info.nb_email}} mails à envoyer et un fichier pdf à imprimer pour les {{diffusion_info.nb_pdf}} destinataires sans adresse de courrier électronique valide </label>                              
-                            </li>
-                            <li class="list-group-item">
-                                    <input id="byPdf" type="radio" ng-model="diffusion_type" value="pdf"> <label for="byPdf" class="css-label">un fichier pdf à imprimer pour les {{diffusion_info.nb_total}} destinataires</label>
-                            </li>
-                            <li class="list-group-item">
-                                    <input id="byNews" type="radio" ng-model="diffusion_type" value="news"> <label for="byNews" class="css-label">une actualité dans le portail pour les {{diffusion_info.nb_total}} destinataires</label>
-                            </li>
-                        </ul>
-                    </div>
-                <div style="text-align: center; margin: 10px">
-                    <a class="btn btn-publi btn-sm" ng-class="menus[$state.params['type']].color" ng-click="sendMessage($state.params['type'])" ng-disabled="diffusion_type == undefined">envoyer {{diffusion_type}}</a>
-                </div>
+          <p style="text-align: justify; background-color:white; padding:5%;">
+            <strong>Titre de message</strong>
+            <br /> {{messageObject['title']}}
+            </br>
+            <strong>Message</strong>
+            <br />
+            <div class="text-scroll" style="background-color:white; padding:5%;" ng-bind-html="messageObject['message']">
+
             </div>
+          </p>
+
+          <div style="background-color:white; padding:5%;">
+            <strong>Mode de diffusion</strong>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <input id="byMail" type="radio" ng-model="diffusion_type" value="email">
+                <label for="byMail" class="css-label">{{diffusion_info.nb_email}} mails à envoyer et un fichier pdf à imprimer pour les {{diffusion_info.nb_pdf}} destinataires sans adresse de courrier électronique valide </label>
+              </li>
+              <li class="list-group-item">
+                <input id="byPdf" type="radio" ng-model="diffusion_type" value="pdf">
+                <label for="byPdf" class="css-label">un fichier pdf à imprimer pour les {{diffusion_info.nb_total}} destinataires</label>
+              </li>
+              <li class="list-group-item">
+                <input id="byNews" type="radio" ng-model="diffusion_type" value="news">
+                <label for="byNews" class="css-label">une actualité dans le portail pour les {{diffusion_info.nb_total}} destinataires</label>
+              </li>
+            </ul>
+          </div>
+          <div style="text-align: center; margin: 10px">
+            <a class="btn btn-publi btn-sm" ng-class="menus[$state.params['type']].color" ng-click="sendMessage($state.params['type'])" ng-disabled="diffusion_type == undefined">envoyer {{diffusion_type}}</a>
+          </div>
         </div>
-    </div>    
-</div>
+      </div>
+    </div>
+  </div>

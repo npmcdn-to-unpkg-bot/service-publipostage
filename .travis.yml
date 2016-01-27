@@ -1,10 +1,12 @@
 language: ruby
 rvm:
-  - "2.2.0"
-
+  - "2.2.2"
 
 script:
   - "bundle exec rubocop -D"
+
+before_install:
+  - gem install bundler -v 1.10.2
 
 gemfile:
   - Gemfile

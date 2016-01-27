@@ -2,23 +2,12 @@
 
 require 'rubygems'
 require 'bundler'
-require 'sinatra/reloader'
 
 Bundler.require( :default, ENV['RACK_ENV'].to_sym ) # require tout les gems définis dans Gemfile
 
 require 'laclasse/helpers/authentication'
 require 'laclasse/helpers/app_infos'
 require 'laclasse/helpers/user'
-
-# https://gist.github.com/chastell/1196800
-class Hash
-  def to_html
-    [ '<ul>',
-      map { |k, v| ["<li><strong>#{k}</strong> : ", v.respond_to?(:to_html) ? v.to_html : "<span>#{v}</span></li>"] },
-      '</ul>'
-    ].join
-  end
-end
 
 # Application Sinatra servant de base
 class SinatraApp < Sinatra::Base
@@ -90,12 +79,12 @@ class SinatraApp < Sinatra::Base
     if logged?
       is_super_admin = user[:user_detailed]['roles'].count { |role| role['role_id'] == 'TECH' } > 0
       data = env['rack.session'][:current_user]
-        {login: data[:user],
-         info: data[:info],
-         roles: data[:info]['ENTPersonRoles'].split(',').map { |role| role.split(':') },
-         is_admin: user_is_admin?,
-         is_super_admin: is_super_admin
-       }.to_json
+      { login: data[:user],
+        info: data[:info],
+        roles: data[:info]['ENTPersonRoles'].split(',').map { |role| role.split(':') },
+        is_admin: user_is_admin?,
+        is_super_admin: is_super_admin
+      }.to_json
     end
   end
 end

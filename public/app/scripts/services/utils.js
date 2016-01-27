@@ -1,32 +1,34 @@
 'use strict';
 
 /************************************************************************************/
-/*                   utils service      								            */
+/*                   utils service                                                  */
 /************************************************************************************/
-angular.module('services.utils', []); 
-angular.module('services.utils').factory("Redirect", ['$location', function($location) {
-  	return {
-	    goTo: function(location) {
-	     	$location.path(location);
-	    },
-	    goToDestinataire:  function(location){
-            $location.path('/destinataire/'+ location);
+angular.module( 'services.utils', [] )
+  .factory( "Redirect", [ '$location',
+    function ( $location ) {
+      return {
+        goTo: function ( location ) {
+          $location.path( location );
         },
-        goToMessage: function(location){
-            $location.path('/message/'+ location);
+        goToDestinataire: function ( location ) {
+          $location.path( '/destinataire/' + location );
         },
-        goToHistory: function(location){
-            $location.path('/historique/'+location);
+        goToMessage: function ( location ) {
+          $location.path( '/message/' + location );
         },
-        goToPreview: function(location){
-            $location.path('/apercu/'+location);
+        goToHistory: function ( location ) {
+          $location.path( '/historique/' + location );
         },
-        goToAnnonce: function(location){
-            $location.path('/annonce/'+location);
+        goToPreview: function ( location ) {
+          $location.path( '/apercu/' + location );
         },
-        goToEnvoi: function(location){
-            $location.path('/envoi_annonce/'+location);
+        goToAnnonce: function ( location ) {
+          $location.path( '/annonce/' + location );
+        },
+        goToEnvoi: function ( location ) {
+          $location.path( '/envoi_annonce/' + location );
         }
 
-  	}
-}]);
+      };
+    }
+  ] );

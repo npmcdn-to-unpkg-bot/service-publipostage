@@ -15,6 +15,6 @@
     "commit": "54a02b73296705cb2f7edc479f6b4298e1921ac8"
   },
   "_source": "git://github.com/jferiante/gritter.git",
-  "_target": "~1.8.0",
+  "_target": "*",
   "_originalSource": "gritter"
 }
