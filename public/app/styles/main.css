@@ -336,114 +336,114 @@ a:hover {
 .text-icon {
   background-image: url("../images/00_vide.svg");
   width: 213.333px;
-  height: 200px;
+  height: 240px;
   color: white;
-  font-family: Futura Bold;
-  font-size: 100%;
-  z-index: 1!important
+  font-size: 160%;
+  font-weight: bold;
+  z-index: 1!important;
 }
 
 .famille-icon {
-  background-image: url("../images/famille.svg");
-  width: 213.333px;
-  height: 200px;
+    background-image: url("../images/famille.svg");
+    width: 213.333px;
+    height: 200px;
 }
 
 .profs-icon {
-  background-image: url("../images/profs.svg");
-  width: 213.333px;
-  height: 200px;
+    background-image: url("../images/profs.svg");
+    width: 213.333px;
+    height: 200px;
 }
 
 .eleves-icon {
-  background-image: url("../images/eleves.svg");
-  width: 213.333px;
-  height: 200px;
+    background-image: url("../images/eleves.svg");
+    width: 213.333px;
+    height: 200px;
 }
 
 .tous-icon {
-  background-image: url("../images/tous.svg");
-  width: 213.333px;
-  height: 200px;
+    background-image: url("../images/tous.svg");
+    width: 213.333px;
+    height: 200px;
 }
 
 .personnel-icon {
-  background-image: url("../images/personnel.svg");
-  width: 213.333px;
-  height: 200px;
+    background-image: url("../images/personnel.svg");
+    width: 213.333px;
+    height: 200px;
 }
 
 .annonce_icon {
-  background-image: url("../images/annonce.svg");
-  width: 213.333px;
-  height: 200px;
+    background-image: url("../images/annonce.svg");
+    width: 213.333px;
+    height: 200px;
 }
 
 
 /*.squares li:hover{opacity:0.1;}@media (min-width:768px){.bs-glyphicons{margin-left:0;margin-right:0}.bs-glyphicon*/
 
 .square-icon {
-  display: block;
-  text-align: center;
-  word-wrap: break-word;
-  padding: 5%;
-  font-size: 100%;
+    display: block;
+    text-align: center;
+    word-wrap: break-word;
+    padding: 5%;
+    font-size: 100%;
 }
 
 input[type=checkbox].css-checkbox {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
 }
 
 input[type=checkbox].css-checkbox + label.css-label {
-  padding-left: 20px;
-  height: 15px;
-  display: inline-block;
-  line-height: 15px;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  font-size: 15px;
-  vertical-align: middle;
-  cursor: pointer;
+    padding-left: 20px;
+    height: 15px;
+    display: inline-block;
+    line-height: 15px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    font-size: 15px;
+    vertical-align: middle;
+    cursor: pointer;
 }
 
 ol {
-  margin-top: 10px;
-  margin-left: 0;
-  padding-left: 0;
+    margin-top: 10px;
+    margin-left: 0;
+    padding-left: 0;
 }
 
 ol li {
-  list-style-type: none;
+    list-style-type: none;
 }
 
 input[type=checkbox].css-checkbox:checked + label.css-label {
-  background-position: 0 -15px;
+    background-position: 0 -15px;
 }
 
 input[type=radio] {
-  vertical-align: top;
+    vertical-align: top;
 }
 
 input[type=radio] + label.css-label {
-  width: 95%;
-  line-height: 18px;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  font-size: 15px;
-  vertical-align: middle;
-  cursor: pointer;
-  background-image: none;
+    width: 95%;
+    line-height: 18px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    font-size: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
 }
 
 .css-label {
-  background-image: url(http://csscheckbox.com/checkboxes/lite-plus.png);
+    background-image: url(http://csscheckbox.com/checkboxes/lite-plus.png);
 }
 
 
@@ -544,6 +544,8 @@ thumb {
 #checked {
     color: #eb5454;
     font-size: 1.5em;
+    position: absolute;
+    bottom: 1em;
 }
 
 .btn-publi {
