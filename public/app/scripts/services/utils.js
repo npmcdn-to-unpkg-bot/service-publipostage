@@ -1,10 +1,9 @@
 'use strict';
 
 /************************************************************************************/
-/*                   utils service                                                                                  */
+/*                   utils service                                                  */
 /************************************************************************************/
-angular.module( 'services.utils', [] );
-angular.module( 'services.utils' )
+angular.module( 'services.utils', [] )
   .factory( "Redirect", [ '$location',
     function ( $location ) {
       return {

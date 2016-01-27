@@ -1,108 +1,102 @@
 'use strict';
 
 /****************************************************************************************/
-/* 			WIZARD	Directive				                */
-/* Thanks to : https://github.com/smsohan/angular_wizard/
+/*                      WIZARD	Directive                                               */
+/* Thanks to : https://github.com/smsohan/angular_wizard/                               */
 /****************************************************************************************/
-var wizardDirective = angular.module( 'wizardDirective', [] )
+angular.module( 'wizardDirective', [] )
+    .directive( 'wizard',
+                function() {
+                    return {
+                        restrict: 'E',
+                        transclude: true,
 
-//angular.module('wizardWizardDirective',[])
-angular.module( 'wizardDirective' ).directive( 'wizard', function () {
+                        scope: {
+                            onBeforeStepChange: '&',
+                            onStepChanging: '&',
+                            onAfterStepChange: '&'
+                        },
 
-  return {
-    restrict: 'E',
-    transclude: true,
+                        templateUrl: 'wizard.html',
 
-    scope: {
-      onBeforeStepChange: '&',
-      onStepChanging: '&',
-      onAfterStepChange: '&',
-    },
+                        replace: true,
 
-    templateUrl: 'wizard.html',
+                        link: function ( scope ) {
+                            scope.currentStepIndex = 0;
+                            scope.steps[ scope.currentStepIndex ].currentStep = true;
+                        },
 
-    replace: true,
+                        controller: function ( $scope ) {
+                            $scope.steps = [];
 
-    link: function ( scope ) {
-      scope.currentStepIndex = 0;
-      scope.steps[ scope.currentStepIndex ].currentStep = true;
-    },
+                            this.registerStep = function ( step ) {
+                                $scope.steps.push( step );
+                            };
 
-    controller: function ( $scope ) {
-      $scope.steps = [];
+                            var toggleSteps = function ( showIndex ) {
+                                var event = {
+                                    event: {
+                                        fromStep: $scope.currentStepIndex,
+                                        toStep: showIndex
+                                    }
+                                };
 
-      this.registerStep = function ( step ) {
-        $scope.steps.push( step );
-      }
+                                if ( $scope.onBeforeStepChange ) {
+                                    $scope.onBeforeStepChange( event );
+                                }
+                                $scope.steps[ $scope.currentStepIndex ].currentStep = false;
 
-      var toggleSteps = function ( showIndex ) {
-        var event = {
-          event: {
-            fromStep: $scope.currentStepIndex,
-            toStep: showIndex
-          }
-        };
+                                if ( $scope.onStepChanging ) {
+                                    $scope.onStepChanging( event );
+                                }
+                                $scope.currentStepIndex = showIndex;
 
-        if ( $scope.onBeforeStepChange ) {
-          $scope.onBeforeStepChange( event );
-        }
-        $scope.steps[ $scope.currentStepIndex ].currentStep = false;
+                                $scope.steps[ $scope.currentStepIndex ].currentStep = true;
+                                if ( $scope.onAfterStepChange ) {
+                                    $scope.onAfterStepChange( event );
+                                }
+                            };
 
-        if ( $scope.onStepChanging ) {
-          $scope.onStepChanging( event );
-        }
-        $scope.currentStepIndex = showIndex;
+                            $scope.showNextStep = function () {
+                                toggleSteps( $scope.currentStepIndex + 1 );
+                            };
 
-        $scope.steps[ $scope.currentStepIndex ].currentStep = true;
-        if ( $scope.onAfterStepChange ) {
-          $scope.onAfterStepChange( event );
-        }
-      }
+                            $scope.showPreviousStep = function () {
+                                toggleSteps( $scope.currentStepIndex - 1 );
+                            };
 
-      $scope.showNextStep = function () {
-        toggleSteps( $scope.currentStepIndex + 1 );
-      }
+                            $scope.hasNext = function () {
+                                return $scope.currentStepIndex < ( $scope.steps.length - 1 );
+                            };
 
-      $scope.showPreviousStep = function () {
-        toggleSteps( $scope.currentStepIndex - 1 );
-      }
+                            $scope.hasPrevious = function () {
+                                return $scope.currentStepIndex > 0;
+                            };
 
-      $scope.hasNext = function () {
-        return $scope.currentStepIndex < ( $scope.steps.length - 1 );
-      }
+                            $scope.reset = function () {
+                                toggleSteps( 0 );
+                            };
+                        }
+                    };
+                } )
+    .directive( 'step',
+                function() {
+                    return {
+                        require: "^wizard",
+                        restrict: 'E',
+                        transclude: true,
+                        scope: {
+                            title: '@'
+                        },
+                        template: '<div class="panel panel-default" ng-show="currentStep">' +
+                            '<div class="panel-heading"><h4>{{title}}{{currentStepIndex}}</h4></div>' +
+                            '<div class="panel-body">' +
+                            '<div ng-transclude></div>' +
+                            '</div></div>',
+                        replace: true,
 
-      $scope.hasPrevious = function () {
-        return $scope.currentStepIndex > 0;
-      }
-
-      $scope.reset = function () {
-        toggleSteps( 0 );
-      }
-
-    }
-  };
-
-} );
-
-angular.module( 'wizardDirective' ).directive( 'step', function () {
-
-  return {
-    require: "^wizard",
-    restrict: 'E',
-    transclude: true,
-    scope: {
-      title: '@'
-    },
-    template: '<div class="panel panel-default" ng-show="currentStep">' +
-      '<div class="panel-heading"><h4>{{title}}{{currentStepIndex}}</h4></div>' +
-      '<div class="panel-body">' +
-      '<div ng-transclude></div>' +
-      '</div></div>',
-    replace: true,
-
-    link: function ( scope, element, attrs, wizardController ) {
-      wizardController.registerStep( scope );
-    }
-  };
-
-} );
+                        link: function ( scope, element, attrs, wizardController ) {
+                            wizardController.registerStep( scope );
+                        }
+                    };
+                } );
