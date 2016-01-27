@@ -73,6 +73,27 @@ class ApplicationAPI < Grape::API
     end
   end
   ############################################################################
+  desc 'mettre à jour un publipostage'
+  params do
+    requires :id
+    requires :descriptif, type: String, desc: 'descriptif du publipostage'
+    requires :message, type: String, desc: 'message du publipostage'
+    requires :message_type, type: String, desc: 'type de message du publipostage'
+    requires :diffusion_type, type: String, desc: "type d'envoi du publipostage"
+    requires :destinataires, type: Array, desc: 'destinataires du publipostage'
+    requires :destinataires_libelle, type: String, desc: 'Phrase décrivant les destinataires du publipostage'
+  end
+  put '/publipostages/:id' do
+    begin
+      params[:user_uid] = current_user[:info].uid
+      Laclasse::CrossApp::Sender.put_request_signed(:service_annuaire_publipostage, nil, {}, params)
+    rescue => e
+      puts e.message
+      puts e.backtrace[0...10]
+      error!(e.message, 400)
+    end
+  end
+  ############################################################################
 
   desc 'duppliquer un publipostage'
   post '/publipostage/:id' do
