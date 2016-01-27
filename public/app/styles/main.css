@@ -449,155 +449,109 @@ input[type=radio] + label.css-label {
 
 /* transparent colors */
 
-.bleu-clear {
-  background-color: #1aa1cc;
-  opacity: 0.3;
-}
-
-.vert-clear {
-  background-color: #80ba66;
-  opacity: 0.3;
-}
-
-.rouge-clear {
-  background-color: #eb5454;
-  opacity: 0.3;
-}
-
-.orange-clear {
-  background-color: #ff5f00;
-  opacity: 0.3;
-}
-
-.violet-clear {
-  background-color: #9c75ab;
-  opacity: 0.3;
-}
-
-.jaune-clear {
-  background-color: #e8c254;
-  opacity: 0.3;
-}
-
-.gris1-clear {
-  background-color: #b2b2b2;
-  opacity: 0.3;
-}
-
-.gris2-clear {
-  background-color: #8e8e8e;
-  opacity: 0.3;
-}
-
-.gris3-clear {
-  background-color: #505050;
-  opacity: 0.3;
-}
-
-.gris4-clear {
-  background-color: #323232;
-  opacity: 0.3;
+.clear {
+    opacity: 0.3;
 }
 
 a {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .area {
-  width: 50%;
-  height: 300px;
-  padding: 0;
-  border: 1px solid #ccc;
+    width: 50%;
+    height: 300px;
+    padding: 0;
+    border: 1px solid #ccc;
 }
 
 
 /* override  angular loading bar css */
 
 #loading-bar-spinner {
-  display: block;
-  position: fixed;
-  z-index: 2000;
-  top: 50%;
-  left: 50%;
+    display: block;
+    position: fixed;
+    z-index: 2000;
+    top: 50%;
+    left: 50%;
 }
 
 #loading-bar .bar {
-  -webkit-transition: width 350ms;
-  -moz-transition: width 350ms;
-  -o-transition: width 350ms;
-  transition: width 350ms;
-  background: red;
-  position: fixed;
-  z-index: 2000;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
+    -webkit-transition: width 350ms;
+    -moz-transition: width 350ms;
+    -o-transition: width 350ms;
+    transition: width 350ms;
+    background: red;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
 }
 
 .banner .container {
-  background-color: white;
-  min-height: 200px;
-  padding: 40px 30px 30px 40px;
+    background-color: white;
+    min-height: 200px;
+    padding: 40px 30px 30px 40px;
 }
 
 p {
-  font-family: 'Lato', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 .text-scroll {
-  height: 200px;
-  overflow: scroll;
-  overflow-x: hidden;
+    height: 200px;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 
 /* scorll bar style chrome*/
 
 ::-webkit-scrollbar {
-  width: 8px;
+    width: 8px;
 }
 
 
 /* Track */
 
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
 }
 
 
 /* Handle */
 
 ::-webkit-scrollbar-thumb {
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  background: #C0C0C0;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #C0C0C0;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 ::-webkit-scrollbar-thumb:window-inactive {
-  background: rgba(255, 0, 0, 0.4);
+    background: rgba(255, 0, 0, 0.4);
 }
 
 scrollbars,
 thumb {
-  -moz-appearance: none !important;
-  background-color: #C0C0C0;
+    -moz-appearance: none !important;
+    background-color: #C0C0C0;
 }
 
 #checked {
-  color: #eb5454;
-  font-size: 1.5em;
+    color: #eb5454;
+    font-size: 1.5em;
 }
 
 .btn-publi {
-  border-color: white;
-  color: white
+    border-color: white;
+    color: white
 }
 
 .btn-publi:hover {
-  background-color: white;
-  color: #505050;
+    background-color: white;
+    color: #505050;
 }

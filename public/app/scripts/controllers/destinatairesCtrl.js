@@ -160,123 +160,123 @@ angular.module( 'myApp' )
       };
 
       $scope.squareClass = function ( clazz ) {
-        return clazz.color + ( clazz.checked ? '' : '-clear' );
+          return clazz.color + ( clazz.checked ? '' : ' clear' );
       };
 
-      // page ecrire tous
-      // list of available profils
-      $scope.profils = [ 'eleves', 'profs', 'parents' ];
+        // page ecrire tous
+        // list of available profils
+        $scope.profils = [ 'eleves', 'profs', 'parents' ];
 
-      // les profils sélectionner
-      $scope.selectedProfils = [];
-      $scope.log = function () {}
-
-      // selectionner tous les profils
-      $scope.checkAll = function () {
+        // les profils sélectionner
         $scope.selectedProfils = [];
-        $scope.selectedProfils = angular.copy( $scope.profils );
-      };
+        $scope.log = function () {};
 
-      // déselectionner les profils
-      $scope.uncheckAll = function () {
-        $scope.selectedProfils = [];
-      };
+        // selectionner tous les profils
+        $scope.checkAll = function () {
+            $scope.selectedProfils = [];
+            $scope.selectedProfils = angular.copy( $scope.profils );
+        };
 
-      $scope.$watch( "selectedProfils", function ( arr ) {
-        $scope.selectedProfils = angular.copy( arr );
-        $scope.formatHumanReadableLabel();
-      }, true );
+        // déselectionner les profils
+        $scope.uncheckAll = function () {
+            $scope.selectedProfils = [];
+        };
 
-      $scope.noSelection = function () {
-        if ( $state.params[ 'type' ] == 'ecrire_tous' )
-          return $scope.destinations.length == 0 || $scope.selectedProfils.length == 0;
-        else
-          return $scope.destinations.length == 0;
-      };
+        $scope.$watch( "selectedProfils", function ( arr ) {
+            $scope.selectedProfils = angular.copy( arr );
+            $scope.formatHumanReadableLabel();
+        }, true );
 
-      //
-      // Fonction de formatage de la liste des destinataires
-      // Pour la rendre lisible par un humain.
-      //
-      $scope.formatHumanReadableLabel = function () {
-        var type_dest = Menus[ $state.params[ 'type' ] ][ 'recpitualif' ];
-        var libelle_matiere = "";
-        var phrase = "@type_dest@ @liste_profils@ @liste_personnels@ @libelle_matiere@ @article_classes@ @liste_classes@ @article_groupes@ @liste_groupes@";
-        var article_classes = "",
-          article_groupes = "";
-        var liste_classes = "",
-          liste_groupes = "",
-          liste_personnels = "",
-          liste_profils = "";
-        var nbCls = 0,
-          nbGrp = 0;
-        var pluriel = "";
+        $scope.noSelection = function () {
+            if ( $state.params[ 'type' ] == 'ecrire_tous' )
+                return $scope.destinations.length == 0 || $scope.selectedProfils.length == 0;
+            else
+                return $scope.destinations.length == 0;
+        };
 
-        // Construire une belle phrase représentant la liste des destinataires.
-        // Profils (ecrire à tous)
-        if ( type_dest == "Profils" ) {
-          type_dest = ( $scope.selectedProfils.length == 0 ) ? "Tous les profils" : type_dest;
-          _.each( $scope.selectedProfils, function ( p ) {
-            liste_profils += p + ", ";
-          } );
-        }
+        //
+        // Fonction de formatage de la liste des destinataires
+        // Pour la rendre lisible par un humain.
+        //
+        $scope.formatHumanReadableLabel = function () {
+            var type_dest = Menus[ $state.params[ 'type' ] ][ 'recpitualif' ];
+            var libelle_matiere = "";
+            var phrase = "@type_dest@ @liste_profils@ @liste_personnels@ @libelle_matiere@ @article_classes@ @liste_classes@ @article_groupes@ @liste_groupes@";
+            var article_classes = "",
+                article_groupes = "";
+            var liste_classes = "",
+                liste_groupes = "",
+                liste_personnels = "",
+                liste_profils = "";
+            var nbCls = 0,
+                nbGrp = 0;
+            var pluriel = "";
 
-        // Personnels
-        if ( type_dest == "Personnels" ) {
-          type_dest = "Ecrire à";
-          _.each( $scope.destinations, function ( dest ) {
-            liste_personnels += dest.destinataire_libelle + ", ";
-          } );
-        }
-
-        // Matière
-        if ( $scope.matiere != "" ) {
-          _.each( $scope.matieres, function ( m ) {
-            if ( m.id == $scope.matiere ) {
-              libelle_matiere = "en " + m.libelle_long.toLowerCase();
-              libelle_matiere = libelle_matiere.replace( 'en toutes', '' );
+            // Construire une belle phrase représentant la liste des destinataires.
+            // Profils (ecrire à tous)
+            if ( type_dest == "Profils" ) {
+                type_dest = ( $scope.selectedProfils.length == 0 ) ? "Tous les profils" : type_dest;
+                _.each( $scope.selectedProfils, function ( p ) {
+                    liste_profils += p + ", ";
+                } );
             }
-          } );
-        }
 
-        // Classes et Groupes
-        _.each( $scope.destinations, function ( dest ) {
-          if ( dest.type == 'classe' ) {
-            liste_classes += dest.classe_libelle + ", ";
-            nbCls++;
-          }
-          if ( dest.type == 'groupe' ) {
-            liste_groupes += dest.groupe_libelle + ", ";
-            nbGrp++;
-          }
-        } );
+            // Personnels
+            if ( type_dest == "Personnels" ) {
+                type_dest = "Ecrire à";
+                _.each( $scope.destinations, function ( dest ) {
+                    liste_personnels += dest.destinataire_libelle + ", ";
+                } );
+            }
 
-        // Gestion du pluriel
-        if ( nbCls > 0 ) {
-          pluriel = ( nbCls > 1 ) ? "s" : "";
-          article_classes = ( pluriel != "" ) ? "des classes de" : "de la classe de";
-        }
+            // Matière
+            if ( $scope.matiere != "" ) {
+                _.each( $scope.matieres, function ( m ) {
+                    if ( m.id == $scope.matiere ) {
+                        libelle_matiere = "en " + m.libelle_long.toLowerCase();
+                        libelle_matiere = libelle_matiere.replace( 'en toutes', '' );
+                    }
+                } );
+            }
 
-        if ( nbGrp > 0 ) {
-          pluriel = ( nbGrp > 1 ) ? "s" : "";
-          article_groupes = ( pluriel != "" ) ? "des groupes" : "du groupe";
-          // Ajouter "et" s'il y a aussi des classes
-          article_groupes = ( nbCls > 0 ) ? "et " + article_groupes : article_groupes;
-        }
+            // Classes et Groupes
+            _.each( $scope.destinations, function ( dest ) {
+                if ( dest.type == 'classe' ) {
+                    liste_classes += dest.classe_libelle + ", ";
+                    nbCls++;
+                }
+                if ( dest.type == 'groupe' ) {
+                    liste_groupes += dest.groupe_libelle + ", ";
+                    nbGrp++;
+                }
+            } );
 
-        // Constitution de la phrase.
-        $scope.destinataires_libelle = '' + phrase
-          .replace( '@type_dest@', type_dest )
-          .replace( '@liste_profils@', liste_profils )
-          .replace( '@liste_personnels@', liste_personnels )
-          .replace( '@libelle_matiere@', libelle_matiere )
-          .replace( '@article_classes@', article_classes )
-          .replace( '@liste_classes@', liste_classes )
-          .replace( '@article_groupes@', article_groupes )
-          .replace( '@liste_groupes@', liste_groupes )
-          .replace( /,(\s*)$/, '' )
-          .replace( / +(?= )/g, ' ' );
-      };
+            // Gestion du pluriel
+            if ( nbCls > 0 ) {
+                pluriel = ( nbCls > 1 ) ? "s" : "";
+                article_classes = ( pluriel != "" ) ? "des classes de" : "de la classe de";
+            }
+
+            if ( nbGrp > 0 ) {
+                pluriel = ( nbGrp > 1 ) ? "s" : "";
+                article_groupes = ( pluriel != "" ) ? "des groupes" : "du groupe";
+                // Ajouter "et" s'il y a aussi des classes
+                article_groupes = ( nbCls > 0 ) ? "et " + article_groupes : article_groupes;
+            }
+
+            // Constitution de la phrase.
+            $scope.destinataires_libelle = '' + phrase
+                .replace( '@type_dest@', type_dest )
+                .replace( '@liste_profils@', liste_profils )
+                .replace( '@liste_personnels@', liste_personnels )
+                .replace( '@libelle_matiere@', libelle_matiere )
+                .replace( '@article_classes@', article_classes )
+                .replace( '@liste_classes@', liste_classes )
+                .replace( '@article_groupes@', article_groupes )
+                .replace( '@liste_groupes@', liste_groupes )
+                .replace( /,(\s*)$/, '' )
+                .replace( / +(?= )/g, ' ' );
+        };
 
     }
-  ] );
+              ] );

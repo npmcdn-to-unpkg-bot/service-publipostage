@@ -66,77 +66,77 @@ angular.module( 'services.constants' )
                                }, {
                                    id: '',
                                    icon: $rootScope.racine_images + '00_vide.svg',
-                                   color: 'rouge-clear',
+                                   color: 'rouge clear',
                                    text: '',
                                    url: '',
                                    active: false
                                }, {
                                    id: '',
                                    icon: $rootScope.racine_images + '00_vide.svg',
-                                   color: 'vert-clear',
+                                   color: 'vert clear',
                                    text: '',
                                    url: '',
                                    active: false
                                }, {
                                    id: '',
                                    icon: $rootScope.racine_images + '00_vide.svg',
-                                   color: 'bleu-clear',
+                                   color: 'bleu clear',
                                    text: '',
                                    url: '',
                                    active: false
                                }, {
                                    id: '',
                                    icon: $rootScope.racine_images + '00_vide.svg',
-                                   color: 'bleu-clear',
+                                   color: 'bleu clear',
                                    text: '',
                                    url: '',
                                    active: false
                                }, {
                                    id: '',
                                    icon: $rootScope.racine_images + '00_vide.svg',
-                                   color: 'vert-clear',
+                                   color: 'vert clear',
                                    text: '',
                                    url: '',
                                    active: false
                                }, {
                                    id: '',
                                    icon: $rootScope.racine_images + '00_vide.svg',
-                                   color: 'violet-clear',
+                                   color: 'violet clear',
                                    text: '',
                                    url: '',
                                    active: false
                                }, {
                                    id: '',
                                    icon: $rootScope.racine_images + '00_vide.svg',
-                                   color: 'jaune-clear',
+                                   color: 'jaune clear',
                                    text: '',
                                    url: '',
                                    active: false
                                }, {
                                    id: 'admin',
                                    icon: $rootScope.racine_images + '00_vide.svg',
-                                   color: 'rouge-clear',
+                                   color: 'rouge clear',
                                    text: '',
                                    url: '',
                                    active: false
                                }, {
                                    id: '',
                                    icon: $rootScope.racine_images + '00_vide.svg',
-                                   color: 'bleu-clear',
+                                   color: 'bleu clear',
                                    text: '',
                                    url: '',
                                    active: true
                                }, {
                                    id: '',
                                    icon: $rootScope.racine_images + '00_vide.svg',
-                                   color: 'jaune-clear',
+                                   color: 'jaune clear',
                                    text: '',
                                    url: '',
                                    active: true
                                }, {
                                    id: '',
                                    icon: $rootScope.racine_images + '00_vide.svg',
-                                   color: 'vert-clear',
+                                   color: 'vert clear',
                                    text: '',
                                    url: '',
                                    active: true

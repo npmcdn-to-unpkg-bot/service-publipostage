@@ -83,7 +83,7 @@
 
       <!--show personnels only when message type is ecrire personnels -->
       <div ng-show="$state.params['type']=='ecrire_personnels'">
-        <div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris4-clear">
+          <div ng-repeat="person in personnels" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris4 clear">
           <a ng-click="person.checked=!person.checked;addRemovePersonnel(person)">
             <div class="square-icon">
               <div class="text-icon">
@@ -98,7 +98,7 @@
       </div>
 
       <!-- empty squares -->
-      <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}}-clear">
+      <div ng-repeat="emptysquare in empty_squares track by $index" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{emptysquare.color}} clear emptysquare">
         <a>
           <div class="square-icon">
             <div class="center-block">
