@@ -33,6 +33,7 @@ class ApplicationAPI < Grape::API
   before do
     authenticate!
   end
+
   ############################################################################
   desc 'Retourner la listes des publipostage'
   params do
@@ -47,11 +48,13 @@ class ApplicationAPI < Grape::API
     r['total'] = r['data'].size
     r
   end
+
   ############################################################################
   desc 'Retourner un  publipostage par id'
   get 'publipostages/:id' do
     Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_publipostage, params[:id], {})
   end
+
   ############################################################################
   desc 'creer un nouveau publipostage'
   params do
@@ -72,6 +75,7 @@ class ApplicationAPI < Grape::API
       error!(e.message, 400)
     end
   end
+
   ############################################################################
   desc 'mettre à jour un publipostage'
   params do
@@ -93,12 +97,7 @@ class ApplicationAPI < Grape::API
       error!(e.message, 400)
     end
   end
-  ############################################################################
-
-  desc 'duppliquer un publipostage'
-  post '/publipostage/:id' do
-  end
-
+  
   ############################################################################
   desc "retourner le fichier pdf d\'un publipostage"
   get '/publipostage/:id/pdf' do
@@ -115,12 +114,7 @@ class ApplicationAPI < Grape::API
     end
     error!('Vous n\'êtes pas le créateur de ce publipostage', 401)
   end
-
-  ############################################################################
-  desc 'modifier un publipostage'
-  put '/publipostages/:id' do
-  end
-
+  
   ############################################################################
   desc 'supprimer un publipostage'
   delete '/publipostages/:id' do
@@ -154,6 +148,7 @@ class ApplicationAPI < Grape::API
     response = Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_user, params[:id], 'expand' => 'true')
     Lib::Publipostage.get_regroupements response
   end
+  
   #############################################################################
   desc 'retourner la liste des personnels dans letablissement'
   get '/etablissements/personnels' do
@@ -161,17 +156,13 @@ class ApplicationAPI < Grape::API
     content_type 'application/json;charset=UTF-8'
     return Lib::Publipostage.get_personnels response
   end
+  
   #############################################################################
   desc 'retourner la liste des matieres dans letablissement'
   get '/etablissements/matieres' do
     Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_personnel, profil_actif_etab_uai + '/matieres', {})
   end
-  ############################################################################
-  desc 'send a notification'
-  post '/notification/:uai/:profil/:uid/:type' do
-    # puts request.inspect
-  end
-
+  
   ############################################################################
   desc 'retourner les informations de diffusion pour la pupulation et les regroupements passés en paramètre'
   get '/diffusion_info/:population/:regroupements' do
