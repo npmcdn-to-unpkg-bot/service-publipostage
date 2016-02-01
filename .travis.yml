@@ -1,4 +1,7 @@
 language: ruby
+
+sudo: false
+
 rvm:
   - "2.2.2"
 
@@ -6,7 +9,10 @@ script:
   - "bundle exec rubocop -D"
 
 before_install:
-  - gem install bundler -v 1.10.2
+  - "gem install -v 1.10.6 bundler --no-rdoc --no-ri"
+
+install:
+  - "bundle _1.10.6_ install"
 
 gemfile:
   - Gemfile
