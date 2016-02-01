@@ -68,63 +68,63 @@ a:hover {
   top: 33%;
   left: 25%;
   color: white;
-  font-family: Futura Bold;
+  font-weight: bold; /* font-family: Futura Bold; */
   z-index: 1!important
 }
 
 .btn-white {
-  color: #1aa1cc;
-  border-color: #1aa1cc;
-  background-color: white;
+    color: #1aa1cc;
+    border-color: #1aa1cc;
+    background-color: white;
 }
 
 .btn-custom {
-  border-color: white;
-  color: white
+    border-color: white;
+    color: white
 }
 
 
 /* Responsive: Portrait tablets and up */
 
 @media screen and (min-width: 768px) {
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
+    .header,
+    .marketing,
+    .footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    /* Space out the masthead */
+    .header {
+        margin-bottom: 30px;
+    }
+    /* Remove the bottom border on the jumbotron for visual effect */
+    .jumbotron {
+        border-bottom: 0;
+    }
 }
 
 @media screen and (max-width: 768px) {
-  h1 {
-    font-size: 150%;
-  }
-  h2 {
-    font-size: 120%;
-  }
-  .square-text {
-    font-size: 16px;
-  }
-  .menu-text {
-    font-size: 120%;
-  }
-  .menu-text-hidden {
-    font-size: 120%;
-  }
-  .classe-text {
-    font-size: 3em;
-  }
-  .groupe-text {
-    font-size: 1.5em;
-  }
+    h1 {
+        font-size: 150%;
+    }
+    h2 {
+        font-size: 120%;
+    }
+    .square-text {
+        font-size: 16px;
+    }
+    .menu-text {
+        font-size: 120%;
+    }
+    .menu-text-hidden {
+        font-size: 120%;
+    }
+    .classe-text {
+        font-size: 3em;
+    }
+    .groupe-text {
+        font-size: 1.5em;
+    }
 }
 
 
@@ -134,213 +134,213 @@ a:hover {
 /* Small devices (tablets, 768px and up) */
 
 @media screen and (min-width: 768px) {
-  h1 {
-    font-size: 150%;
-  }
-  h2 {
-    font-size: 120%;
-  }
-  .square-text {
-    font-size: 16px;
-  }
-  .menu-text {
-    font-size: 120%;
-  }
-  .menu-text-hidden {
-    font-size: 120%;
-  }
-  .classe-text {
-    font-size: 3em;
-  }
-  .groupe-text {
-    font-size: 1.5em;
-  }
+    h1 {
+        font-size: 150%;
+    }
+    h2 {
+        font-size: 120%;
+    }
+    .square-text {
+        font-size: 16px;
+    }
+    .menu-text {
+        font-size: 120%;
+    }
+    .menu-text-hidden {
+        font-size: 120%;
+    }
+    .classe-text {
+        font-size: 3em;
+    }
+    .groupe-text {
+        font-size: 1.5em;
+    }
 }
 
 
 /* Medium devices (desktops, 992px and up) */
 
 @media screen and (min-width: 992px) {
-  h1 {
-    font-size: 150%;
-  }
-  h2 {
-    font-size: 120%;
-  }
-  .square-text {
-    font-size: 16px;
-  }
-  .menu-text {
-    font-size: 120%;
-  }
-  .menu-text-hidden {
-    font-size: 120%;
-  }
-  .classe-text {
-    font-size: 3em;
-  }
-  .groupe-text {
-    font-size: 1.5em;
-  }
+    h1 {
+        font-size: 150%;
+    }
+    h2 {
+        font-size: 120%;
+    }
+    .square-text {
+        font-size: 16px;
+    }
+    .menu-text {
+        font-size: 120%;
+    }
+    .menu-text-hidden {
+        font-size: 120%;
+    }
+    .classe-text {
+        font-size: 3em;
+    }
+    .groupe-text {
+        font-size: 1.5em;
+    }
 }
 
 
 /* Large devices (large desktops, 1200px and up) */
 
 @media screen and (min-width: 1200px) {
-  h1 {
-    font-size: 200%;
-  }
-  h2 {
-    font-size: 150%;
-  }
-  .square-text {
-    font-size: 16px;
-  }
-  .menu-text {
-    font-size: 150%;
-  }
-  .menu-text-hidden {
-    font-size: 150%;
-  }
-  /*  .classe-text{
+    h1 {
+        font-size: 200%;
+    }
+    h2 {
+        font-size: 150%;
+    }
+    .square-text {
+        font-size: 16px;
+    }
+    .menu-text {
+        font-size: 150%;
+    }
+    .menu-text-hidden {
+        font-size: 150%;
+    }
+    /*  .classe-text{
     font-size: 5em;
   }*/
-  .groupe-text {
-    font-size: 3em;
-  }
+    .groupe-text {
+        font-size: 3em;
+    }
 }
 
 .badge {
-  padding: 1px 9px 2px;
-  font-size: 12.025px;
-  font-weight: bold;
-  white-space: nowrap;
-  color: #ffffff;
-  background-color: #999999;
-  -webkit-border-radius: 9px;
-  -moz-border-radius: 9px;
-  border-radius: 9px;
+    padding: 1px 9px 2px;
+    font-size: 12.025px;
+    font-weight: bold;
+    white-space: nowrap;
+    color: #ffffff;
+    background-color: #999999;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
 }
 
 .badge:hover {
-  color: #ffffff;
-  text-decoration: none;
-  cursor: pointer;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .badge-error {
-  background-color: #b94a48;
+    background-color: #b94a48;
 }
 
 .badge-error:hover {
-  background-color: #953b39;
+    background-color: #953b39;
 }
 
 .badge-warning {
-  background-color: #f89406;
+    background-color: #f89406;
 }
 
 .badge-warning:hover {
-  background-color: #c67605;
+    background-color: #c67605;
 }
 
 .badge-success {
-  background-color: #468847;
+    background-color: #468847;
 }
 
 .badge-success:hover {
-  background-color: #356635;
+    background-color: #356635;
 }
 
 .badge-info {
-  background-color: #3a87ad;
+    background-color: #3a87ad;
 }
 
 .badge-info:hover {
-  background-color: #2d6987;
+    background-color: #2d6987;
 }
 
 .badge-inverse {
-  background-color: #333333;
+    background-color: #333333;
 }
 
 .badge-inverse:hover {
-  background-color: #1a1a1a;
+    background-color: #1a1a1a;
 }
 
 
 /* The CSS */
 
 .styled-select select {
-  background: transparent;
-  width: 268px;
-  padding: 5px;
-  font-size: 16px;
-  line-height: 1;
-  border: 0;
-  border-radius: 0;
-  height: 34px;
-  -webkit-appearance: none;
+    background: transparent;
+    width: 268px;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 0;
+    height: 34px;
+    -webkit-appearance: none;
 }
 
 .squares {
-  margin: 0 -19px 20px -16px;
-  overflow: hidden
+    margin: 0 -19px 20px -16px;
+    overflow: hidden
 }
 
 .squares .squares-list {
-  padding-left: 0;
-  list-style: none
+    padding-left: 0;
+    list-style: none
 }
 
 .squares-list li {
-  float: left;
-  width: 25%;
-  height: 127.56px;
-  font-size: 100%;
-  text-align: center;
+    float: left;
+    width: 25%;
+    height: 127.56px;
+    font-size: 100%;
+    text-align: center;
 }
 
 .square {
-  margin-top: 5px;
-  margin-bottom: 10px;
-  font-size: 24px
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 24px
 }
 
 .square-image {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .menu-text-black {
-  font-size: 150%;
-  width: 100%;
-  font-family: Futura Bold;
+    font-size: 150%;
+    width: 100%;
+    font-weight: bold; /* font-family: Futura Bold; */
 }
 
 .empty-icon {
-  background-image: url("../images/00_vide.svg");
-  width: 213.333px;
-  height: 200px;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 90px;
-  word-wrap: break-word;
-  font-size: 300%;
-  color: white;
-  font-family: Futura Bold;
-  z-index: 1!important
+    background-image: url("../images/00_vide.svg");
+    width: 213.333px;
+    height: 200px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 90px;
+    word-wrap: break-word;
+    font-size: 300%;
+    color: white;
+    font-weight: bold; /* font-family: Futura Bold; */
+    z-index: 1!important
 }
 
 .text-icon {
-  background-image: url("../images/00_vide.svg");
-  width: 213.333px;
-  height: 240px;
-  color: white;
-  font-size: 160%;
-  font-weight: bold;
-  z-index: 1!important;
+    background-image: url("../images/00_vide.svg");
+    width: 213.333px;
+    height: 240px;
+    color: white;
+    font-size: 160%;
+    font-weight: bold;
+    z-index: 1!important;
 }
 
 .famille-icon {
