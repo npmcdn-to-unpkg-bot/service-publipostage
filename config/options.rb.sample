@@ -6,7 +6,7 @@ APP_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 # /!\ Il est obligatoire de mettre l'application sous un virtual path du fait de notre architecture HAProxy.
 # On définit ici un virtual path sans le slash final.
 APP_PATH = '/publi'
-APP_VERSION = '1.0'
+APP_VERSION = %x(git describe --tag).chomp
 SESSION_KEY = 'MyKeyForTheSession'
 
 # CAS Configuration.
