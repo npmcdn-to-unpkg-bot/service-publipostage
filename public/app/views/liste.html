@@ -9,13 +9,15 @@
             </th>
             <th>Date</th>
             <th>Type de message</th>
+            <th>Mode de diffusion</th>
             <th>Titre</th>
             <th>Message</th>
             <th>Destinataires</th>
             <th>Actions</th>
         </thead>
         <tbody>
-            <tr ng-repeat="publi in publis" data-ng-if="publi.user_uid == currentUser.info.uid">
+            <tr ng-repeat="publi in publis"
+                ng:if="publi.user_uid == currentUser.info.uid">
                 <td style="text-align:center;vertical-align:middle;">
                     <input type="checkbox" ng-model="checked[publi.id]" ng-change="selectPubli(publi.id)">
                 </td>
@@ -24,6 +26,13 @@
                     <span class="label"
                           ng-class="{'label-success': publi.message_type == 'info_famille', 'label-primary': publi.message_type == 'ecrire_profs', 'label-warning': publi.message_type == 'ecrire_eleves', 'label-danger': publi.message_type == 'ecrire_personnels', 'violet': publi.message_type == 'ecrire_tous'}">{{publi.message_type}}</span>
     </span>
+                </td>
+                <td>{{publi.diffusion_type}}
+                    <button type="button" class="btn btn-xs btn-default"
+                            ng-click="goTo( '/fichier/' + publi.id )"
+                            ng:if="publi.diffusion_type == 'pdf'"
+                            title="Feuilleter le fichier pdf généré"><span class="glyphicon glyphicon-eye-open"></span>
+                    </button>
                 </td>
                 <td>{{publi.descriptif}}</td>
                 <td>
@@ -34,19 +43,15 @@
                 </td>
                 <td>
                     <button type="button" class="btn btn-xs btn-default"
-                            ng-click="goTo('/fichier/' + publi.id)"
-                            title="Feuilleter le fichier pdf généré"><span class="glyphicon glyphicon-eye-open"></span>
-                    </button>
-                    <button type="button" class="btn btn-xs btn-default"
-                            ng-click="relancerPubli(publi.id, 'message')"
+                            ng-click="relancerPubli( publi.id, 'message' )"
                             title="Ré-générer : relancer ce publipostage"><span class="glyphicon glyphicon-send"></span>
                     </button>
                     <button type="button" class="btn btn-xs btn-default"
-                            ng-click="relancerPubli(publi.id, 'destinataire')"
+                            ng-click="relancerPubli( publi.id, 'destinataire' )"
                             title="Modifier ce publipostage"><span class="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button type="button" class="btn btn-xs btn-danger"
-                            ng-click="removePubli(publi.id)"
+                            ng-click="removePubli( publi.id )"
                             title="Supprimer ce publipostage"><span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </td>
