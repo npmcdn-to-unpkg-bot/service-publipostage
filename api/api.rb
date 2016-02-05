@@ -90,7 +90,7 @@ class ApplicationAPI < Grape::API
   put '/publipostages/:id' do
     begin
       params[:user_uid] = current_user[:info].uid
-      Laclasse::CrossApp::Sender.put_request_signed(:service_annuaire_publipostage, nil, {}, params)
+      Laclasse::CrossApp::Sender.put_request_signed( :service_annuaire_publipostage, "#{params[:id]}", {}, params )
     rescue => e
       puts e.message
       puts e.backtrace[0...10]
