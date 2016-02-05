@@ -20,7 +20,7 @@ class SinatraApp < Sinatra::Base
     set :inline_templates, true
     set :protection, true
   end
-  
+
   helpers Laclasse::Helpers::Authentication
   helpers Laclasse::Helpers::AppInfos
   helpers Laclasse::Helpers::User

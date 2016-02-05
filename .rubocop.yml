@@ -23,6 +23,9 @@ Style/SpaceInsideRangeLiteral:
 Style/AsciiComments:
   Enabled: false
 
+Style/UnneededInterpolation:
+  Enabled: false
+
 Metrics/ClassLength:
   Max: 300
 
