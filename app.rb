@@ -5,6 +5,8 @@ require 'bundler'
 
 Bundler.require( :default, ENV['RACK_ENV'].to_sym ) # require tout les gems définis dans Gemfile
 
+require 'tilt/erb'
+
 require 'laclasse/helpers/authentication'
 require 'laclasse/helpers/app_infos'
 require 'laclasse/helpers/user'
@@ -18,11 +20,7 @@ class SinatraApp < Sinatra::Base
     set :inline_templates, true
     set :protection, true
   end
-
-  configure :development do
-    register Sinatra::Reloader
-  end
-
+  
   helpers Laclasse::Helpers::Authentication
   helpers Laclasse::Helpers::AppInfos
   helpers Laclasse::Helpers::User
