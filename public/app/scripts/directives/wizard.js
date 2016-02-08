@@ -88,7 +88,7 @@ angular.module( 'wizardDirective', [] )
                         scope: {
                             title: '@'
                         },
-                        template: '<div class="panel panel-default" ng-show="currentStep">' +
+                        template: '<div class="panel panel-default" ng-if="currentStep">' +
                             '<div class="panel-heading"><h4>{{title}}{{currentStepIndex}}</h4></div>' +
                             '<div class="panel-body">' +
                             '<div ng-transclude></div>' +

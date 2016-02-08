@@ -42,7 +42,7 @@
   <body ng-app="myApp" data-ng-strict-di>
 
       <!-- Site header and navigation -->
-      <header class="top navbar-inverse" style="visibility:hidden;" role="navigation" ng-show="showHeader()" my-visible="showHeader()" >
+      <header class="top navbar-inverse" style="visibility:hidden;" role="navigation" ng-if="showHeader()" my-visible="showHeader()" >
           <div class="container">
               <div class="navbar-header">
                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
