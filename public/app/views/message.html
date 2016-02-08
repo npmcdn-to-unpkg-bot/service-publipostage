@@ -28,34 +28,34 @@
           <div class="form-group">
             <a class="btn btn-default btn-sm" ng-click="showtoolbar=!showtoolbar">Inserer des données</a>
             <br/>
-            <div ng-show="showtoolbar">
-              <div class="btn-group">
-                <a class="btn btn-default btn-sm" ng-repeat="item in templateItems | templateItemsTypeFilter" ng-click="addToMessage(item.value)">{{item.message}}</a>
-              </div>
+            <div ng-if="showtoolbar">
+                <div class="btn-group">
+                    <a class="btn btn-default btn-sm" ng-repeat="item in templateItems | templateItemsTypeFilter" ng-click="addToMessage(item.value)">{{item.message}}</a>
+                </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-xs-2">
-        <div ng-class="menus[$state.params['type']].icon_div"></div>
+          <div ng-class="menus[$state.params['type']].icon_div"></div>
       </div>
       <div class="col-xs-2">
       </div>
     </div>
     <div class="row" ng-class="menus[$state.params['type']].color">
-      <div class="col-xs-12">
-        <div style="padding:4%">
-          <form role="form">
-            <div class="form-group">
-              <div class="bg-default" text-angular ng-model="htmlMessage"></div>
+        <div class="col-xs-12">
+            <div style="padding:4%">
+                <form role="form">
+                    <div class="form-group">
+                        <div class="bg-default" text-angular ng-model="htmlMessage"></div>
+                    </div>
+                </form>
+                <div style="text-align: center">
+                    <a class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" ng-click="goToDestinataire($state.params['type'])">changer de destinataires</a>
+                    <a class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" ng-click="goToPreview($state.params['type'])" ng-disabled="htmlMessage == ''">prévisualiser</a>
+                </div>
             </div>
-          </form>
-          <div style="text-align: center">
-            <a class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" ng-click="goToDestinataire($state.params['type'])">changer de destinataires</a>
-            <a class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" ng-click="goToPreview($state.params['type'])" ng-disabled="htmlMessage == ''">prévisualiser</a>
-          </div>
         </div>
-      </div>
     </div>
   </div>
 </div>

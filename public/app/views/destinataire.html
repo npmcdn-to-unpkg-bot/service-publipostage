@@ -14,12 +14,12 @@
                     </label>
                 </p>
                 <form role="form" class="form-inline">
-                    <div ng-show="$state.params['type']=='ecrire_profs'">
+                    <div ng-if="$state.params['type']=='ecrire_profs'">
                         <label>Choisir une matiere : </label>
                         <select class="form-control" ng-model="matiere" ng-options="matiere.id as matiere.libelle_long for matiere in matieres"></select>
                     </div>
                     <br/>
-                    <div ng-show="$state.params['type']=='ecrire_tous'">
+                    <div ng-if="$state.params['type']=='ecrire_tous'">
                         <label>
                             <p class="menu-text">Choisir des profils : </p>
                         </label>
@@ -46,7 +46,7 @@
     <div class="col-md-8 col-lg-8">
         <div class="row-fluid">
             <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 gris3">
-                <a ng-click="selectAll()" ng-show="selectAllMode">
+                <a ng-click="selectAll()" ng-if="selectAllMode">
                     <div class="square-icon">
                         <div class="center-block">
                             <img class="img-responsive center-block" ng-src="{{menus[$state.params['type']].icon}}">
@@ -67,22 +67,24 @@
             </div>
 
             <!--show classes only when message type is not ecrire personnels or ecrire tous -->
-            <div ng-show="$state.params['type']!='ecrire_personnels'">
-                <div ng-repeat="classe in regroupements['regroupements'] | orderBy:['type','libelle'] | filter:{ libelle: searchText }" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{classe.color}}" ng-class="{'clear': !classe.checked}">
-                    <a ng-click="classe.checked=!classe.checked;addRemoveDestination(classe);">
+            <div ng-if="$state.params['type']!='ecrire_personnels'">
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{regroupement.color}}"
+                     ng-repeat="regroupement in regroupements['regroupements'] | orderBy:['type','libelle'] | filter:{ libelle: searchText }"
+                     ng-class="{'clear': !regroupement.checked}">
+                    <a ng-click="regroupement.checked=!regroupement.checked;addRemoveDestination(regroupement);">
                         <div class="square-icon">
                             <div class="center-block">
                                 <img class="img-responsive center-block" src="images/00_vide.svg">
-                                <span class="classe-text">{{classe.libelle}}</span>
+                                <span class="classe-text">{{regroupement.libelle}}</span>
                             </div>
-                            <div class="square-text center-block">{{classe.etablissement_nom}}</div>
+                            <div class="square-text center-block">{{regroupement.etablissement_nom}}</div>
                         </div>
                     </a>
                 </div>
             </div>
 
             <!--show personnels only when message type is ecrire personnels -->
-            <div ng-show="$state.params['type']=='ecrire_personnels'">
+            <div ng-if="$state.params['type']=='ecrire_personnels'">
                 <div ng-repeat="person in personnels | filter:searchText"
                      class="col-xs-6 col-sm-6 col-md-3 col-lg-3 clear"
                      ng-class="{'gris2': !person.checked, 'gris4': person.checked}">
@@ -92,7 +94,7 @@
                                 {{person.prenom}} {{person.nom}}
                                 <span>{{person.description}}</span>
                                 <br/>
-                                <span class="glyphicon-class" ng-show="person.checked" id="checked"><i class="fa fa-check-square-o fa-lg"></i></span>
+                                <span class="glyphicon-class" ng-if="person.checked" id="checked"><i class="fa fa-check-square-o fa-lg"></i></span>
                             </div>
                         </div>
                     </a>
