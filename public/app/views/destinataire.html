@@ -83,7 +83,7 @@
 
             <!--show personnels only when message type is ecrire personnels -->
             <div ng-show="$state.params['type']=='ecrire_personnels'">
-                <div ng-repeat="person in personnels"
+                <div ng-repeat="person in personnels | filter:searchText"
                      class="col-xs-6 col-sm-6 col-md-3 col-lg-3 clear"
                      ng-class="{'gris2': !person.checked, 'gris4': person.checked}">
                     <a ng-click="person.checked=!person.checked;addRemovePersonnel(person)">
