@@ -1,35 +1,24 @@
 'use strict';
 
 angular.module( 'myApp', [ 'angular-underscore',
-    'checklist-model',
-    'chieffancypants.loadingBar',
-    'ngRoute',
-    'ngSanitize',
-    'pdf',
-    'publipostageFilters',
-    'services.authentication',
-    'services.constants',
-    'services.directives',
-    'services.messages',
-    'services.resources',
-    'services.utils',
-    'textAngular',
-    'ui.bootstrap',
-    'ui.router',
-    'ui.select2',
+                           'checklist-model',
+                           'chieffancypants.loadingBar',
+                           'ngRoute',
+                           'ngSanitize',
+                           'pdf',
+                           'publipostageFilters',
+                           'services.authentication',
+                           'services.constants',
+                           'services.directives',
+                           'services.messages',
+                           'services.resources',
+                           'services.utils',
+                           'textAngular',
+                           'ui.bootstrap',
+                           'ui.router',
+                           'ui.select2',
                            'underscore.string'
                          ] )
-    .directive( 'myVisible',
-                function () {
-                    return {
-                        link: function ( scope, element, attrs ) {
-                            scope.$watch( attrs.myVisible,
-                                          function ( value ) {
-                                              element[ 0 ].style.visibility = value ? 'visible' : 'hidden';
-                                          } );
-                        }
-                    };
-                } )
     .config( [ '$urlRouterProvider', '$stateProvider', 'APPLICATION_PREFIX',
                function ( $urlRouterProvider, $stateProvider, APPLICATION_PREFIX ) {
                    /* defining states for routing */
@@ -160,43 +149,44 @@ angular.module( 'myApp', [ 'angular-underscore',
     .config( [ '$provide', '$httpProvider',
                function ( $provide, $httpProvider ) {
                    // Intercept http calls.
-                   $provide.factory( 'HttpInterceptor', [ '$q', '$location',
-                                                          function ( $q, $location ) {
-                                                              return {
-                                                                  // On request success
-                                                                  request: function ( config ) {
-                                                                      // Return the config or wrap it in a promise if blank.
-                                                                      return config || $q.when( config );
-                                                                  },
-                                                                  // On request failure
-                                                                  requestError: function ( rejection ) {
-                                                                      // Return the promise rejection.
-                                                                      return $q.reject( rejection );
-                                                                  },
-                                                                  // On response success
-                                                                  response: function ( response ) {
-                                                                      // Return the response or promise.
-                                                                      return response || $q.when( response );
-                                                                  },
-                                                                  // On response failture
-                                                                  responseError: function ( rejection ) {
-                                                                      if ( rejection.status == 0 ) {
-                                                                          $location.path( '/' );
-                                                                      }
-                                                                      if ( rejection.status == 403 || rejection.status == 401 ) {
-                                                                          // not authorized go to public page
-                                                                          $location.path( '/' );
-                                                                      }
-                                                                      if ( rejection.status == 400 || rejection.status == 404 || rejection.status == 500 ) {
-                                                                          //server or response error
-                                                                          $location.path( '/error/' + rejection.status );
-                                                                      }
-                                                                      // Return the promise rejection.
-                                                                      return $q.reject( rejection );
-                                                                  }
-                                                              };
-                                                          }
-                                                        ] );
+                   $provide.factory( 'HttpInterceptor',
+                                     [ '$q', '$location',
+                                       function ( $q, $location ) {
+                                           return {
+                                               // On request success
+                                               request: function ( config ) {
+                                                   // Return the config or wrap it in a promise if blank.
+                                                   return config || $q.when( config );
+                                               },
+                                               // On request failure
+                                               requestError: function ( rejection ) {
+                                                   // Return the promise rejection.
+                                                   return $q.reject( rejection );
+                                               },
+                                               // On response success
+                                               response: function ( response ) {
+                                                   // Return the response or promise.
+                                                   return response || $q.when( response );
+                                               },
+                                               // On response failture
+                                               responseError: function ( rejection ) {
+                                                   if ( rejection.status == 0 ) {
+                                                       $location.path( '/' );
+                                                   }
+                                                   if ( rejection.status == 403 || rejection.status == 401 ) {
+                                                       // not authorized go to public page
+                                                       $location.path( '/' );
+                                                   }
+                                                   if ( rejection.status == 400 || rejection.status == 404 || rejection.status == 500 ) {
+                                                       //server or response error
+                                                       $location.path( '/error/' + rejection.status );
+                                                   }
+                                                   // Return the promise rejection.
+                                                   return $q.reject( rejection );
+                                               }
+                                           };
+                                       }
+                                     ] );
                    // Add the interceptor to the $httpProvider.
                    $httpProvider.interceptors.push( 'HttpInterceptor' );
                }
