@@ -68,7 +68,7 @@
 
             <!--show classes only when message type is not ecrire personnels or ecrire tous -->
             <div ng-show="$state.params['type']!='ecrire_personnels'">
-                <div ng-repeat="classe in regroupements['regroupements'] | filter:searchText | orderBy:'type' | orderBy:'libelle'" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{classe.color}}" ng-class="{'clear': !classe.checked}">
+                <div ng-repeat="classe in regroupements['regroupements'] | orderBy:['type','libelle'] | filter:{ libelle: searchText }" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{classe.color}}" ng-class="{'clear': !classe.checked}">
                     <a ng-click="classe.checked=!classe.checked;addRemoveDestination(classe);">
                         <div class="square-icon">
                             <div class="center-block">
