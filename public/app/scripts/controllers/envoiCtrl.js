@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module( 'myApp' )
+angular.module( 'publipostageClientApp' )
   .controller( 'EnvoiCtrl', [ '$scope', 'security', '$location', '$rootScope', 'MessageService', '$state', 'Menus',
     function ( $scope, security, $location, $rootScope, MessageService, $state, Menus ) {
 

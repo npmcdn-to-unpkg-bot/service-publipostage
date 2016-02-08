@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module( 'myApp' )
+angular.module( 'publipostageClientApp' )
     .controller( 'ModeDiffusionCtrl',
                  [ '$scope', '$location', '$rootScope', '$state', 'Menus', 'MessageService', 'Publipostages', 'DiffusionInfo',
                    function ( $scope, $location, $rootScope, $state, Menus, MessageService, Publipostages, DiffusionInfo ) {

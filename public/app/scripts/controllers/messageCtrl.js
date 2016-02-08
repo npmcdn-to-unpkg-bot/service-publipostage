@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module( 'myApp' )
+angular.module( 'publipostageClientApp' )
   .controller( 'MessageCtrl', [ '$scope', '$location', '$rootScope', '$filter', 'MessageService', 'Redirect', 'Menus', '$state', 'templateItems', 'security', "nameRoles",
     function ( $scope, $location, $rootScope, $filter, MessageService, Redirect, Menus, $state, templateItems, security, nameRoles ) {
 

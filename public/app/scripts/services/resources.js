@@ -2,7 +2,7 @@
 /*                       Service Resources                                                */
 /******************************************************************************************/
 
-angular.module( 'services.resources', [ 'ngResource', 'services.constants' ] )
+angular.module( 'publipostageClientApp' )
     .factory( 'Publipostages', [ '$resource', 'BASE_SERVICE_URL', function ( $resource, BASE_SERVICE_URL ) {
         var baseUrl = BASE_SERVICE_URL + '/publipostages/:id';
         return $resource( baseUrl, {

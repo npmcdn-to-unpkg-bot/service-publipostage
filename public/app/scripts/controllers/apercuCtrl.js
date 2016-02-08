@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module( 'myApp' )
+angular.module( 'publipostageClientApp' )
   .controller( 'ApercuCtrl',
                [ '$scope', '$location', '$rootScope', '$state', '$sce', 'Menus', 'MessageService',
                  function( $scope, $location, $rootScope, $state, $sce, Menus, MessageService ) {

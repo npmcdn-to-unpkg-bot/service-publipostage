@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module( 'myApp' )
+angular.module( 'publipostageClientApp' )
   .controller( 'HomeCtrl', [ '$scope', '$location', '$rootScope', '$stateParams',
     'security', 'Publipostages', 'currentUser', 'MessageService', 'Redirect', 'Squares',
     'SVG_AVATAR_F', 'SVG_AVATAR_M',

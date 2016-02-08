@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module( 'services.directives', [] )
+angular.module( 'publipostageClientApp' )
     .directive( 'gritterAdd',
                 [ '$rootScope',
                   function( $rootScope ) {
                       return {
                           restrict: 'A',
                           link: function ( scope, element ) {
-                              scope.$watch( 'grittorMessage', function ( newmsg ) {
+                              scope.$watch( 'gritterMessage', function ( newmsg ) {
                                   if ( !angular.isUndefined( newmsg ) ) {
                                       element.gritter.add( {
                                           title: 'Annonce de ' + newmsg.from + ' le ' + newmsg.at,
@@ -21,7 +21,7 @@ angular.module( 'services.directives', [] )
                           },
                           controller: [ '$scope', function ( $scope ) {
                               $rootScope.$on( "growlMessage", function ( event, message ) {
-                                  $scope.grittorMessage = message;
+                                  $scope.gritterMessage = message;
                               } );
                           } ]
                       };

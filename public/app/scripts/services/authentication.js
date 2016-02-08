@@ -1,6 +1,6 @@
 'use strict';
 /* service authentication */
-angular.module( 'services.authentication', [] )
+angular.module( 'publipostageClientApp' )
     .factory( 'currentUser', function () {
         return { user: null,
                  info: {},

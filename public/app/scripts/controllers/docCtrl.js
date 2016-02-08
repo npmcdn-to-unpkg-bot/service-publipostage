@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module( 'myApp' )
+angular.module( 'publipostageClientApp' )
   .controller( 'DocCtrl',
                [ '$scope', '$state',
                  function( $scope, $state ) {

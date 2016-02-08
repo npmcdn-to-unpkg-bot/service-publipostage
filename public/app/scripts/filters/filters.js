@@ -1,4 +1,4 @@
-angular.module( 'publipostageFilters', [] )
+angular.module( 'publipostageClientApp' )
     .filter( 'templateItemsTypeFilter',
              [ '$state', 'security',
                function( $state, security ) {

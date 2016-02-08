@@ -39,7 +39,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
   <![endif]-->
   </head>
-  <body ng-app="myApp" data-ng-strict-di>
+  <body ng-app="publipostageClientApp" data-ng-strict-di>
 
       <!-- Site header and navigation -->
       <header class="top navbar-inverse" role="navigation" ng-if="showHeader()" >
@@ -127,19 +127,19 @@
       <script src="<%= APP_PATH %>/scripts/controllers/docCtrl.js?v=<%= APP_VERSION %>"></script>
 
       <!-- <script src="<%= APP_PATH %>/scripts/services/constants.js?v=<%= APP_VERSION %>"></script> -->
-      <script>
-       'use strict';
-
-       /* constant for static pages routing */
-       angular.module('services.constants', []);
-       angular.module('services.constants').constant('APPLICATION_PREFIX', '<%=APP_PATH%>');
-       angular.module('services.constants').constant('BASE_SERVICE_URL', '<%=APP_PATH%>/api');
-      </script>
       <script src="<%= APP_PATH %>/scripts/services/default.js?v=<%= APP_VERSION %>"></script>
       <script src="<%= APP_PATH %>/scripts/services/authentication.js?v=<%= APP_VERSION %>"></script>
       <script src="<%= APP_PATH %>/scripts/services/messages.js?v=<%= APP_VERSION %>"></script>
       <script src="<%= APP_PATH %>/scripts/services/resources.js?v=<%= APP_VERSION %>"></script>
       <script src="<%= APP_PATH %>/scripts/directives/directives.js?v=<%= APP_VERSION %>"></script>
       <script src="<%= APP_PATH %>/scripts/services/utils.js?v=<%= APP_VERSION %>"></script>
+      <script>
+       'use strict';
+
+       /* constant for static pages routing */
+       angular.module('publipostageClientApp')
+              .constant('APPLICATION_PREFIX', '<%=APP_PATH%>')
+              .constant('BASE_SERVICE_URL', '<%=APP_PATH%>/api');
+      </script>
   </body>
 </html>

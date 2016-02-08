@@ -3,7 +3,7 @@
 /************************************************************************************/
 /*                   service to show flash messages and responses                  */
 /************************************************************************************/
-angular.module( 'services.messages', [] )
+angular.module( 'publipostageClientApp' )
     .factory( 'FlashServiceStyled',
               [ '$rootScope',
                 function ( $rootScope ) {

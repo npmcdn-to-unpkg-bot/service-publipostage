@@ -1,24 +1,19 @@
 'use strict';
 
-angular.module( 'myApp', [ 'angular-underscore',
-                           'checklist-model',
-                           'chieffancypants.loadingBar',
-                           'ngRoute',
-                           'ngSanitize',
-                           'pdf',
-                           'publipostageFilters',
-                           'services.authentication',
-                           'services.constants',
-                           'services.directives',
-                           'services.messages',
-                           'services.resources',
-                           'services.utils',
-                           'textAngular',
-                           'ui.bootstrap',
-                           'ui.router',
-                           'ui.select2',
-                           'underscore.string'
-                         ] )
+angular.module( 'publipostageClientApp', [
+    'angular-underscore',
+    'checklist-model',
+    'chieffancypants.loadingBar',
+    'ngResource',
+    // 'ngRoute',
+    'ngSanitize',
+    'pdf',
+    'textAngular',
+    'ui.bootstrap',
+    'ui.router',
+    'ui.select2',
+    // 'underscore.string'
+] )
     .config( [ '$urlRouterProvider', '$stateProvider', 'APPLICATION_PREFIX',
                function ( $urlRouterProvider, $stateProvider, APPLICATION_PREFIX ) {
                    /* defining states for routing */
