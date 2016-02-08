@@ -109,7 +109,7 @@ angular.module( 'publipostageClientApp' )
                        } else {
                            var regroupements = '';
                            _.each( $rootScope.messageObject[ 'destinations' ], function ( el ) {
-                               var splitChar = "_"
+                               var splitChar = "_";
                                if ( !_.isUndefined( el.classe_id ) ) {
                                    regroupements += el.classe_id + splitChar;
                                } else if ( !_.isUndefined( el.groupe_id ) ) {
@@ -120,20 +120,23 @@ angular.module( 'publipostageClientApp' )
 
                                //Cas des élèves
                                if ( $location.$$path.indexOf( '/mode_diffusion/ecrire_eleves' ) == 0 ) {
-                                   DiffusionInfo.listStudents( {
+                                   DiffusionInfo.get( {
+                                       population: 'students',
                                        regroupements: regroupements
                                    }, function ( data ) {
                                        $scope.addDiffusionData( data );
                                    } );
                                } else if ( $location.$$path.indexOf( '/mode_diffusion/ecrire_profs' ) == 0 ) {
-                                   DiffusionInfo.listProfessors( {
+                                   DiffusionInfo.get( {
+                                       population: 'professors',
                                        regroupements: regroupements,
                                        matiere: MessageService.getMessage().matiere
                                    }, function ( data ) {
                                        $scope.addDiffusionData( data );
                                    } );
                                } else if ( $location.$$path.indexOf( '/mode_diffusion/info_famille' ) == 0 ) {
-                                   DiffusionInfo.listFamilly( {
+                                   DiffusionInfo.get( {
+                                       population: 'familly',
                                        regroupements: regroupements
                                    }, function ( data ) {
                                        $scope.addDiffusionData( data );
@@ -141,21 +144,24 @@ angular.module( 'publipostageClientApp' )
                                } else if ( $location.$$path.indexOf( '/mode_diffusion/ecrire_tous' ) == 0 ) {
                                    var profiles = $rootScope.messageObject[ 'profils' ];
                                    if ( _.contains( profiles, "parents" ) ) {
-                                       DiffusionInfo.listFamilly( {
+                                       DiffusionInfo.get( {
+                                           population: 'family',
                                            regroupements: regroupements
                                        }, function ( data ) {
                                            $scope.addDiffusionData( data );
                                        } );
                                    }
                                    if ( _.contains( profiles, "profs" ) ) {
-                                       DiffusionInfo.listProfessors( {
+                                       DiffusionInfo.get( {
+                                           population: 'professors',
                                            regroupements: regroupements
                                        }, function ( data ) {
                                            $scope.addDiffusionData( data );
                                        } );
                                    }
                                    if ( _.contains( profiles, "eleves" ) ) {
-                                       DiffusionInfo.listStudents( {
+                                       DiffusionInfo.get( {
+                                           population: 'students',
                                            regroupements: regroupements
                                        }, function ( data ) {
                                            $scope.addDiffusionData( data );

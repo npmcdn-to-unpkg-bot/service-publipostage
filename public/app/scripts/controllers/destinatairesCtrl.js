@@ -22,23 +22,23 @@ angular.module( 'publipostageClientApp' )
                        }
 
                        var getPersonnel = function ( uai ) {
-                           Personnels.all( {},
-                                           function ( personnels ) {
-                                               $scope.personnels = personnels;
-                                               var selectdestinationsIds = new Array();
-                                               _( MessageService.getMessage().destinations ).each( function ( dest ) {
-                                                   selectdestinationsIds.push( dest.id );
-                                               } );
-                                               _( $scope.personnels ).each( function ( element ) {
-                                                   if ( _( selectdestinationsIds ).contains( element.id ) ) {
-                                                       element[ 'checked' ] = true;
-                                                       $scope.destinations.push( element );
-                                                   }
-                                               } );
-                                           },
-                                           function ( error ) {
-                                               console.log( error );
-                                           } );
+                           Personnels.query( {},
+                                             function ( personnels ) {
+                                                 $scope.personnels = personnels;
+                                                 var selectdestinationsIds = new Array();
+                                                 _( MessageService.getMessage().destinations ).each( function ( dest ) {
+                                                     selectdestinationsIds.push( dest.id );
+                                                 } );
+                                                 _( $scope.personnels ).each( function ( element ) {
+                                                     if ( _( selectdestinationsIds ).contains( element.id ) ) {
+                                                         element[ 'checked' ] = true;
+                                                         $scope.destinations.push( element );
+                                                     }
+                                                 } );
+                                             },
+                                             function ( error ) {
+                                            console.log( error );
+                                        } );
                        };
                        // get the list of menus
                        $scope.menus = Menus;
@@ -146,11 +146,11 @@ angular.module( 'publipostageClientApp' )
                            var article_classes = "",
                                article_groupes = "";
                            var liste_classes = "",
-                               liste_groupes = "",
-                               liste_personnels = "",
-                               liste_profils = "";
+                           liste_groupes = "",
+                           liste_personnels = "",
+                           liste_profils = "";
                            var nbCls = 0,
-                               nbGrp = 0;
+                           nbGrp = 0;
                            var pluriel = "";
 
                            // Construire une belle phrase représentant la liste des destinataires.
@@ -232,7 +232,7 @@ angular.module( 'publipostageClientApp' )
                                        libelle_long: 'Toutes'
                                    } ];
                                    $scope.matiere = _.isUndefined( MessageService.getMessage().matiere ) ? $scope.matieres[ 0 ].id : MessageService.getMessage().matiere;
-                                   Matieres.all( {}, function ( matieres ) {
+                                   Matieres.query( {}, function ( matieres ) {
                                        $scope.matieres = $scope.matieres.concat( matieres );
                                    } );
                                }
