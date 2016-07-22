@@ -25,7 +25,7 @@ class SinatraApp < Sinatra::Base
   helpers Laclasse::Helpers::AppInfos
   helpers Laclasse::Helpers::User
 
-  get "#{APP_PATH}/" do
+  get "#{APP_PATH}/?" do
     if logged?
       erb :app
     else
@@ -81,8 +81,7 @@ class SinatraApp < Sinatra::Base
         info: data[:info],
         roles: data[:info]['ENTPersonRoles'].split(',').map { |role| role.split(':') },
         is_admin: user_is_admin?,
-        is_super_admin: is_super_admin
-      }.to_json
+        is_super_admin: is_super_admin }.to_json
     end
   end
 end

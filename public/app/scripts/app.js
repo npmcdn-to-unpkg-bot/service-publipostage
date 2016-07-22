@@ -1,141 +1,84 @@
 'use strict';
 
-angular.module( 'publipostageClientApp', [
-    'angular-underscore',
-    'checklist-model',
-    'chieffancypants.loadingBar',
-    'ngResource',
-    // 'ngRoute',
-    'ngSanitize',
-    'pdf',
-    'textAngular',
-    'ui.bootstrap',
-    'ui.router',
-    'ui.select2',
-    // 'underscore.string'
-] )
+angular.module( 'publipostageClientApp', [ 'angular-underscore',
+                                           'checklist-model',
+                                           'chieffancypants.loadingBar',
+                                           'ngResource',
+                                           'ngSanitize',
+                                           'pdf',
+                                           'textAngular',
+                                           'ui.bootstrap',
+                                           'ui.router',
+                                           'ui.select2' ] )
     .config( [ '$urlRouterProvider', '$stateProvider', 'APPLICATION_PREFIX',
                function ( $urlRouterProvider, $stateProvider, APPLICATION_PREFIX ) {
+                   var checkMessage = function ( forPage ) {
+                       return function ( $q, $timeout, MessageService ) {
+                           var deferred = $q.defer();
+                           if ( !MessageService.isValid( forPage ) ){
+                               deferred.reject( 'invalid message' );
+                           } else{
+                               deferred.resolve( 'valid message' );
+                           }
+                           return deferred.promise;
+                       };
+                   };
+
                    /* defining states for routing */
-                   var home = {
-                       name: 'home',
-                       url: '/',
-                       templateUrl: APPLICATION_PREFIX + '/views/home.html',
-                       controller: 'HomeCtrl',
-                       authorizedRoles: "all"
-                   };
-
-                   var gestion = {
-                       name: 'gestion',
-                       url: '/liste',
-                       templateUrl: APPLICATION_PREFIX + '/views/liste.html',
-                       controller: 'ListeCtrl',
-                       authorizedRoles: [ "TECH", "ADM_ETB", "PROF_ETB" ]
-                   };
-
-                   var historique = {
-                       name: 'historique',
-                       url: '/historique/:id',
-                       templateUrl: APPLICATION_PREFIX + '/views/historique.html',
-                       controller: 'ListeCtrl',
-                       authorizedRoles: [ "TECH", "ADM_ETB", "PROF_ETB" ]
-                   };
-
-                   var checkMessage = function ( $q, $timeout, MessageService, forPage ) {
-                       var deferred = $q.defer();
-                       if ( !MessageService.isValid( forPage ) )
-                           deferred.reject( "invalid message" );
-                       else
-                           deferred.resolve( "valid message" );
-                       return deferred.promise;
-                   };
-
-                   var destinataire = {
-                       name: 'destinataire',
-                       url: '/destinataire/:type',
-                       templateUrl: APPLICATION_PREFIX + '/views/destinataire.html',
-                       controller: 'destinatairesCtrl',
-                       authorizedRoles: [ "TECH", "ADM_ETB", "PROF_ETB", "ELV_ETB" ],
-                       resolve: {
-                           checkMessage: function ( $q, $timeout, MessageService ) {
-                               return checkMessage( $q, $timeout, MessageService, this.name );
-                           }
-                       }
-                   };
-
-                   var message = {
-                       name: 'message',
-                       url: '/message/:type',
-                       templateUrl: APPLICATION_PREFIX + '/views/message.html',
-                       controller: 'MessageCtrl',
-                       authorizedRoles: [ "TECH", "ADM_ETB", "PROF_ETB" ],
-                       resolve: {
-                           checkMessage: function ( $q, $timeout, MessageService ) {
-                               return checkMessage( $q, $timeout, MessageService, this.name );
-                           }
-                       }
-                   };
-
-                   var apercu = {
-                       name: 'apercu',
-                       url: '/apercu/:type',
-                       templateUrl: APPLICATION_PREFIX + '/views/apercu.html',
-                       controller: 'ApercuCtrl',
-                       authorizedRoles: [ "TECH", "ADM_ETB", "PROF_ETB" ],
-                       resolve: {
-                           checkMessage: function ( $q, $timeout, MessageService ) {
-                               return checkMessage( $q, $timeout, MessageService, this.name );
-                           }
-                       }
-                   };
-
-                   var mode_diffusion = {
-                       name: 'mode_diffusion',
-                       url: '/mode_diffusion/:type',
-                       templateUrl: APPLICATION_PREFIX + '/views/mode_diffusion.html',
-                       controller: 'ModeDiffusionCtrl',
-                       authorizedRoles: [ "TECH", "ADM_ETB", "PROF_ETB" ],
-                       resolve: {
-                           checkMessage: function ( $q, $timeout, MessageService ) {
-                               return checkMessage( $q, $timeout, MessageService, this.name );
-                           }
-                       }
-                   };
-
-                   var envoi = {
-                       name: 'envoi',
-                       url: '/envoi/:type',
-                       templateUrl: APPLICATION_PREFIX + '/views/envoi.html',
-                       controller: 'EnvoiCtrl',
-                       authorizedRoles: [ "TECH", "ADM_ETB", "PROF_ETB" ]
-                   };
-
-
-                   var fichier = {
-                       name: 'fichier',
-                       url: '/fichier/:id',
-                       templateUrl: APPLICATION_PREFIX + '/views/pdfviewer.html',
-                       controller: 'DocCtrl',
-                       authorizedRoles: "all"
-                   };
-
-                   var error = {
-                       name: 'error',
-                       url: '/error/:message',
-                       templateUrl: APPLICATION_PREFIX + '/views/error.html',
-                       authorizedRoles: "all"
-                   };
-
-                   $stateProvider.state( home )
-                       .state( gestion )
-                       .state( historique )
-                       .state( destinataire )
-                       .state( message )
-                       .state( apercu )
-                       .state( mode_diffusion )
-                       .state( envoi )
-                       .state( error )
-                       .state( fichier );
+                   $stateProvider
+                       .state( { name: 'home',
+                                 url: '/',
+                                 templateUrl: APPLICATION_PREFIX + '/views/home.html',
+                                 controller: 'HomeCtrl',
+                                 authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ] } )
+                       .state( { name: 'gestion',
+                                 url: '/liste',
+                                 templateUrl: APPLICATION_PREFIX + '/views/liste.html',
+                                 controller: 'ListeCtrl',
+                                 authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ] } )
+                       .state( { name: 'historique',
+                                 url: '/historique/:id',
+                                 templateUrl: APPLICATION_PREFIX + '/views/historique.html',
+                                 controller: 'ListeCtrl',
+                                 authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ] } )
+                       .state( { name: 'destinataire',
+                                 url: '/destinataire/:type',
+                                 templateUrl: APPLICATION_PREFIX + '/views/destinataire.html',
+                                 controller: 'destinatairesCtrl',
+                                 authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ],
+                                 resolve: { checkMessage: checkMessage( 'destinataire' ) } } )
+                       .state( { name: 'message',
+                                 url: '/message/:type',
+                                 templateUrl: APPLICATION_PREFIX + '/views/message.html',
+                                 controller: 'MessageCtrl',
+                                 authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ],
+                                 resolve: { checkMessage: checkMessage( 'message' ) } } )
+                       .state( { name: 'apercu',
+                                 url: '/apercu/:type',
+                                 templateUrl: APPLICATION_PREFIX + '/views/apercu.html',
+                                 controller: 'ApercuCtrl',
+                                 authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ],
+                                 resolve: { checkMessage: checkMessage( 'apercu' ) } } )
+                       .state( { name: 'mode_diffusion',
+                                 url: '/mode_diffusion/:type',
+                                 templateUrl: APPLICATION_PREFIX + '/views/mode_diffusion.html',
+                                 controller: 'ModeDiffusionCtrl',
+                                 authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ],
+                                 resolve: { checkMessage: checkMessage( 'mode_diffusion' ) } } )
+                       .state( { name: 'envoi',
+                                 url: '/envoi/:type',
+                                 templateUrl: APPLICATION_PREFIX + '/views/envoi.html',
+                                 controller: 'EnvoiCtrl',
+                                 authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ] } )
+                       .state( { name: 'error',
+                                 url: '/error/:message',
+                                 templateUrl: APPLICATION_PREFIX + '/views/error.html',
+                                 authorizedRoles: 'all' } )
+                       .state( { name: 'fichier',
+                                 url: '/fichier/:id',
+                                 templateUrl: APPLICATION_PREFIX + '/views/pdfviewer.html',
+                                 controller: 'DocCtrl',
+                                 authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ] } );
 
                    $urlRouterProvider.otherwise( '/' );
 
@@ -229,6 +172,6 @@ angular.module( 'publipostageClientApp', [
                 $rootScope.title = "title";
 
                 window.scope = $rootScope;
-                FlashServiceStyled.show( 'bienvenue au publispostage', 'alert alert-success' );
+                FlashServiceStyled.show( 'bienvenue dans le publispostage', 'alert alert-success' );
             }
           ] );
