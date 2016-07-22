@@ -2,8 +2,8 @@
 
 angular.module( 'publipostageClientApp' )
   .controller( 'ApercuCtrl',
-               [ '$scope', '$location', '$rootScope', '$state', '$sce', 'Menus', 'MessageService',
-                 function( $scope, $location, $rootScope, $state, $sce, Menus, MessageService ) {
+               [ '$scope', '$rootScope', '$state', '$sce', 'Menus',
+                 function( $scope, $rootScope, $state, $sce, Menus ) {
                      // get the list of menus
                      $scope.menus = Menus;
 
@@ -12,7 +12,7 @@ angular.module( 'publipostageClientApp' )
                      };
 
                      $scope.goBackToMessage = function ( location ) {
-                         $location.path( '/message/' + location );
+                         $state.go( 'message', { type: location } );
                      };
                  }
                ] );
