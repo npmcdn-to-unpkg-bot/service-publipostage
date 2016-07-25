@@ -5,31 +5,10 @@
 /************************************************************************************/
 angular.module( 'publipostageClientApp' )
     .factory( 'Redirect',
-              [ '$location',
-                function ( $location ) {
-                    return {
-                        goTo: function ( location ) {
-                            $location.path( location );
-                        },
-                        goToDestinataire: function ( location ) {
-                            $location.path( '/destinataire/' + location );
-                        },
-                        goToMessage: function ( location ) {
-                            $location.path( '/message/' + location );
-                        },
-                        goToHistory: function ( location ) {
-                            $location.path( '/historique/' + location );
-                        },
-                        goToPreview: function ( location ) {
-                            $location.path( '/apercu/' + location );
-                        },
-                        goToAnnonce: function ( location ) {
-                            $location.path( '/annonce/' + location );
-                        },
-                        goToEnvoi: function ( location ) {
-                            $location.path( '/envoi_annonce/' + location );
-                        }
-
-                    };
+              [ '$location', '$state',
+                function ( $location, $state ) {
+                    return { goTo: function( view, params ) {
+                        $state.go( view, params, { location: true, reload: true } );
+                    } };
                 }
               ] );
