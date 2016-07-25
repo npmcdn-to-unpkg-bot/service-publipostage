@@ -89,6 +89,7 @@ angular.module( 'publipostageClientApp' )
                                    _($rootScope.messageObject.profils).each( function( profil ) {
                                        DiffusionInfo.get( { population: infer_population( profil ),
                                                             regroupements: regroupements })
+                                           .$promise
                                            .then( function ( data ) {
                                                addDiffusionData( data );
                                            } );
@@ -104,7 +105,8 @@ angular.module( 'publipostageClientApp' )
                                    };
 
                                    DiffusionInfo.get( { population: infer_population( $rootScope.messageObject.messageType ),
-                                                        regroupements: regroupements })
+                                                        regroupements: regroupements } )
+                                       .$promise
                                        .then( function ( data ) {
                                            addDiffusionData( data );
                                        } );
