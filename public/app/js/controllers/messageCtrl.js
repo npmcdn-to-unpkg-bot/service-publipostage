@@ -27,12 +27,8 @@ angular.module( 'publipostageClientApp' )
                      };
 
                      $scope.goToPreview = function ( location ) {
-                         if ( _($scope.title).isEmpty() ) {
-                             alert( 'Le titre de votre publipostage est vide !' );
-                         } else {
-                             MessageService.addMessage( $scope.htmlMessage, $scope.title );
-                             $state.go( 'apercu', { type: location } );
-                         }
+                         MessageService.addMessage( $scope.htmlMessage, $scope.title );
+                         $state.go( 'apercu', { type: location } );
                      };
 
                      $scope.goToDestinataire = function ( location ) {

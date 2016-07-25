@@ -33,8 +33,8 @@
         <div class="text-scroll" style="background-color:white; padding:5%;" ng-bind-html="toTrustedHtml(messageObject['message'])"></div>
       </div>
       <div style="text-align: center; margin:20px;">
-        <a class="btn btn-publi btn-sm" ng-class="menus[$state.params['type']].color" ng-click="goBackToMessage($state.params['type'])">reéditer</a>
-        <a class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" href="#/mode_diffusion/{{$state.params['type']}}">choisir le mode de diffusion</a>
+          <button class="btn btn-publi btn-sm" ng-class="menus[$state.params['type']].color" ng-click="goBackToMessage($state.params['type'])">reéditer</button>
+          <button class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" href="#/mode_diffusion/{{$state.params['type']}}">choisir le mode de diffusion</button>
       </div>
     </div>
   </div>

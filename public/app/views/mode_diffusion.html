@@ -62,14 +62,14 @@
                         </ul>
                     </div>
                     <div style="text-align: center; margin: 10px">
-                        <a class="btn btn-publi btn-sm"
-                           ng-class="menus[$state.params['type']].color"
-                           ng-click="sendMessage($state.params['type'])"
-                           ng-disabled="diffusion_type == undefined">
+                        <button class="btn btn-publi btn-sm"
+                                ng-class="menus[$state.params['type']].color"
+                                ng-click="sendMessage($state.params['type'])"
+                                ng-disabled="diffusion_type == undefined">
                             <span ng-if="diffusion_type == 'pdf'">générer</span>
                             <span ng-if="diffusion_type != 'pdf'">envoyer</span>
                             {{diffusion_type}}
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
