@@ -2,8 +2,8 @@
 
 angular.module( 'publipostageClientApp' )
     .controller( 'HistoriqueCtrl',
-                 [ '$rootScope', '$sce', 'security', 'Publipostages', 'SVG_AVATAR_F', 'SVG_AVATAR_M', '$location', 'MessageService',
-                   function ( $scope, $sce, security, Publipostages, SVG_AVATAR_F, SVG_AVATAR_M, $location, MessageService ) {
+                 [ '$rootScope', '$sce', 'security', 'Publipostages', '$location', 'MessageService',
+                   function ( $scope, $sce, security, Publipostages, $location, MessageService ) {
                        $scope.pageLimits = [ 5, 10, 20, 50 ];
                        $scope.limit = 20;
                        $scope.currentPage = 1;
@@ -98,14 +98,6 @@ angular.module( 'publipostageClientApp' )
 
                        security.requestCurrentUser().then( function ( user ) {
                            $scope.currentUser = user;
-                           $scope.color = "#EB5454";
-                           if ( user.info[ 'LaclasseSexe' ] == "M" ) {
-                               $scope.avatar = SVG_AVATAR_M;
-                           } else if ( user.info[ 'LaclasseSexe' ] == "F" ) {
-                               $scope.avatar = SVG_AVATAR_F;
-                           } else {
-                               $scope.avatar = "";
-                           }
                        } );
                    }
                  ] );
