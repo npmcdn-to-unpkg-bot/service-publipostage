@@ -37,8 +37,8 @@ angular.module( 'publipostageClientApp' )
                                                  } );
                                              },
                                              function ( error ) {
-                                            console.log( error );
-                                        } );
+                                                 console.log( error );
+                                             } );
                        };
                        // get the list of menus
                        $scope.menus = Menus;
@@ -146,11 +146,11 @@ angular.module( 'publipostageClientApp' )
                            var article_classes = "",
                                article_groupes = "";
                            var liste_classes = "",
-                           liste_groupes = "",
-                           liste_personnels = "",
-                           liste_profils = "";
+                               liste_groupes = "",
+                               liste_personnels = "",
+                               liste_profils = "";
                            var nbCls = 0,
-                           nbGrp = 0;
+                               nbGrp = 0;
                            var pluriel = "";
 
                            // Construire une belle phrase représentant la liste des destinataires.
@@ -277,4 +277,4 @@ angular.module( 'publipostageClientApp' )
                                       },
                                       true );
                    }
-                                       ] );
+                 ] );
