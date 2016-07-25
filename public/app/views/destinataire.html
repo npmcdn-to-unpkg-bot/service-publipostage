@@ -30,7 +30,7 @@
                     </div>
                 </form>
                 <p class="menu-text-hidden">
-                    <small><strong>{{destinataires_libelle}}</strong></small>
+                    <small><strong>{{formatHumanReadableLabel()}}</strong></small>
                     </strong>
                 </p>
 
@@ -54,7 +54,7 @@
                         <div class="square-text center-block" ng-if="$state.params['type']!='ecrire_personnels'">Tous les regroupements</div>
                     </div>
                 </a>
-                <a ng-click="deselectAll()" ng-hide="selectAllMode">
+                <a ng-click="deselectAll()" ng-if="!selectAllMode">
                     <div class="square-icon">
                         <div class="center-block">
                             <img class="img-responsive center-block" ng-src="{{menus[$state.params['type']].icon}}">

@@ -62,7 +62,6 @@ angular.module( 'publipostageClientApp' )
                                    $scope.destinations.push( person );
                                } );
                            }
-                           $scope.formatHumanReadableLabel();
                        };
 
                        $scope.deselectAll = function () {
@@ -80,7 +79,6 @@ angular.module( 'publipostageClientApp' )
                                    person[ 'checked' ] = false;
                                } );
                            }
-                           $scope.formatHumanReadableLabel();
                        };
 
                        $scope.addDestinations = function () {
@@ -97,7 +95,6 @@ angular.module( 'publipostageClientApp' )
                            } else {
                                $scope.destinations.push( object );
                            }
-                           $scope.formatHumanReadableLabel();
                        };
 
                        // Retirer ou ajouter des personnels
@@ -206,7 +203,7 @@ angular.module( 'publipostageClientApp' )
                            }
 
                            // Constitution de la phrase.
-                           $scope.destinataires_libelle = '' + phrase
+                           return '' + phrase
                                .replace( '@type_dest@', type_dest )
                                .replace( '@liste_profils@', liste_profils )
                                .replace( '@liste_personnels@', liste_personnels )
@@ -273,7 +270,6 @@ angular.module( 'publipostageClientApp' )
                        $scope.$watch( "selectedProfils",
                                       function ( arr ) {
                                           $scope.selectedProfils = angular.copy( arr );
-                                          $scope.formatHumanReadableLabel();
                                       },
                                       true );
                    }
