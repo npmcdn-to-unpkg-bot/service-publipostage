@@ -70,7 +70,7 @@
                 <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{regroupement.color}}"
                      ng-repeat="regroupement in regroupements['regroupements'] | orderBy:['type','libelle'] | filter:{ libelle: searchText }"
                      ng-class="{'clear': !regroupement.checked}">
-                    <a ng-click="regroupement.checked=!regroupement.checked;addRemoveDestination(regroupement);">
+                    <a ng-click="addRemoveDestination( regroupement );">
                         <div class="square-icon">
                             <div class="center-block">
                                 <img class="img-responsive center-block" src="images/00_vide.svg">
@@ -87,7 +87,7 @@
                 <div ng-repeat="person in personnels | filter:searchText"
                      class="col-xs-6 col-sm-6 col-md-3 col-lg-3 clear"
                      ng-class="{'gris2': !person.checked, 'gris4': person.checked}">
-                    <a ng-click="person.checked=!person.checked;addRemovePersonnel(person)">
+                    <a ng-click="addRemoveDestination( person )">
                         <div class="square-icon">
                             <div class="text-icon">
                                 {{person.prenom}} {{person.nom}}

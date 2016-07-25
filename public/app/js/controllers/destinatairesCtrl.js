@@ -95,11 +95,7 @@ angular.module( 'publipostageClientApp' )
                            } else {
                                $scope.destinations.push( object );
                            }
-                       };
-
-                       // Retirer ou ajouter des personnels
-                       $scope.addRemovePersonnel = function ( person ) {
-                           $scope.addRemoveDestination( person );
+                           object.checked = !object.checked;
                        };
 
                        $scope.addProfils = function () {
