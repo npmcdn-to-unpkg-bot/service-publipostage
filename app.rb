@@ -74,13 +74,11 @@ class SinatraApp < Sinatra::Base
   get "#{APP_PATH}/current-user" do
     # TODO : This function should be in Laclasse-common
     if logged?
-      is_super_admin = user[:user_detailed]['roles'].count { |role| role['role_id'] == 'TECH' } > 0
-      data = env['rack.session'][:current_user]
-      { login: data[:user],
-        info: data[:info],
-        roles: data[:info]['ENTPersonRoles'].split(',').map { |role| role.split(':') },
+      { login: user[:user],
+        info: user[:info],
+        roles: user[:user_detailed]['roles'].map { |role| role['role_id'] }.uniq,
         is_admin: user_is_admin?,
-        is_super_admin: is_super_admin }.to_json
+        is_super_admin: user_is_super_admin? }.to_json
     end
   end
 end
