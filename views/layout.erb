@@ -81,7 +81,6 @@
              ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="<%= APP_PATH %>/vendor/jquery/dist/jquery.min.js?v=<%= APP_VERSION %>"></script>
-        <!-- <script src="<%= APP_PATH %>/vendor/bootstrap/dist/js/bootstrap.min.js?v=<%= APP_VERSION %>"></script> -->
         <script src="<%= APP_PATH %>/vendor/angular/angular.js?v=<%= APP_VERSION %>"></script>
         <script src="<%= APP_PATH %>/vendor/angular-resource/angular-resource.min.js?v=<%= APP_VERSION %>"></script>
         <script src="<%= APP_PATH %>/vendor/angular-route/angular-route.js?v=<%= APP_VERSION %>"></script>
@@ -107,7 +106,10 @@
 
         <script src="<%= APP_PATH %>/js/app.js?v=<%= APP_VERSION %>"></script>
 
+        <script src="<%= APP_PATH %>/js/directives/directives.js?v=<%= APP_VERSION %>"></script>
+
         <script src="<%= APP_PATH %>/js/filters/filters.js?v=<%= APP_VERSION %>"></script>
+
         <script src="<%= APP_PATH %>/js/controllers/homeCtrl.js?v=<%= APP_VERSION %>"></script>
         <script src="<%= APP_PATH %>/js/controllers/destinatairesCtrl.js?v=<%= APP_VERSION %>"></script>
         <script src="<%= APP_PATH %>/js/controllers/messageCtrl.js?v=<%= APP_VERSION %>"></script>
@@ -117,13 +119,11 @@
         <script src="<%= APP_PATH %>/js/controllers/envoiCtrl.js?v=<%= APP_VERSION %>"></script>
         <script src="<%= APP_PATH %>/js/controllers/docCtrl.js?v=<%= APP_VERSION %>"></script>
 
-        <!-- <script src="<%= APP_PATH %>/js/services/constants.js?v=<%= APP_VERSION %>"></script> -->
         <script src="<%= APP_PATH %>/js/services/default.js?v=<%= APP_VERSION %>"></script>
-        <script src="<%= APP_PATH %>/js/services/authentication.js?v=<%= APP_VERSION %>"></script>
+        <script src="<%= APP_PATH %>/js/services/security.js?v=<%= APP_VERSION %>"></script>
         <script src="<%= APP_PATH %>/js/services/messages.js?v=<%= APP_VERSION %>"></script>
         <script src="<%= APP_PATH %>/js/services/resources.js?v=<%= APP_VERSION %>"></script>
-        <script src="<%= APP_PATH %>/js/directives/directives.js?v=<%= APP_VERSION %>"></script>
-        <script src="<%= APP_PATH %>/js/services/utils.js?v=<%= APP_VERSION %>"></script>
+        <script src="<%= APP_PATH %>/js/services/redirect.js?v=<%= APP_VERSION %>"></script>
         <script>
          'use strict';
 
