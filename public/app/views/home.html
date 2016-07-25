@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-8 col-md-8 col-md-8">
+    <div class="col-sm-8 col-md-8 col-md-8 damier">
         <div class="row-fluid">
             <div ng-repeat="square in squares" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 {{ square.color }}">
                 <a ng-if="square.view" ng-click="addMessageType('message type');Redirect.goTo(square.view, square.view_params)" ng-disabled="!security.isAdmin()">
