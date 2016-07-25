@@ -2,11 +2,11 @@
 
 angular.module( 'publipostageClientApp' )
   .controller( 'HomeCtrl',
-               [ '$scope', '$location', '$rootScope', '$stateParams',
-                 'security', 'Publipostages', 'currentUser', 'MessageService', 'Redirect', 'Squares',
+               [ '$scope', '$rootScope', '$stateParams',
+                 'security', 'Publipostages', 'MessageService', 'Redirect', 'Squares',
                  'SVG_AVATAR_F', 'SVG_AVATAR_M',
-                 function ( $scope, $location, $rootScope, $stateParams,
-                            security, Publipostages, currentUser, MessageService, Redirect, Squares,
+                 function ( $scope, $rootScope, $stateParams,
+                            security, Publipostages, MessageService, Redirect, Squares,
                             SVG_AVATAR_F, SVG_AVATAR_M ) {
                      $scope.Redirect = Redirect;
                      $scope.security = security;

@@ -2,9 +2,9 @@
 
 angular.module( 'publipostageClientApp' )
     .controller( 'destinatairesCtrl',
-                 [ '$scope', 'security', 'Regroupements', '$location', '$rootScope', 'MessageService', 'Redirect',
+                 [ '$scope', 'security', 'Regroupements', '$rootScope', 'MessageService', 'Redirect',
                    'colors', 'Menus', '$state', 'Personnels', 'Matieres',
-                   function ( $scope, security, Regroupements, $location, $rootScope, MessageService, Redirect,
+                   function ( $scope, security, Regroupements, $rootScope, MessageService, Redirect,
                               colors, Menus, $state, Personnels, Matieres ) {
                        // making Redirect utils accesible in the scope
                        $scope.Redirect = Redirect;

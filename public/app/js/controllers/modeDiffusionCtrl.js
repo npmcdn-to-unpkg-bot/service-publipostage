@@ -2,8 +2,8 @@
 
 angular.module( 'publipostageClientApp' )
     .controller( 'ModeDiffusionCtrl',
-                 [ '$scope', '$location', '$rootScope', '$state', 'Menus', 'MessageService', 'Publipostages', 'DiffusionInfo',
-                   function ( $scope, $location, $rootScope, $state, Menus, MessageService, Publipostages, DiffusionInfo ) {
+                 [ '$scope', '$rootScope', '$state', 'Menus', 'MessageService', 'Publipostages', 'DiffusionInfo',
+                   function ( $scope, $rootScope, $state, Menus, MessageService, Publipostages, DiffusionInfo ) {
                        $scope.menus = Menus;
 
                        $scope.sendMessage = function ( location ) {

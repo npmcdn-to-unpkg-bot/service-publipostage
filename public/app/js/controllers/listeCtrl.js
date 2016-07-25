@@ -2,8 +2,8 @@
 
 angular.module( 'publipostageClientApp' )
     .controller( 'ListeCtrl',
-                 [ '$rootScope', '$sce', 'security', 'Publipostages', 'currentUser', 'SVG_AVATAR_F', 'SVG_AVATAR_M', '$location', 'MessageService',
-                   function ( $scope, $sce, security, Publipostages, currentUser, SVG_AVATAR_F, SVG_AVATAR_M, $location, MessageService ) {
+                 [ '$rootScope', '$sce', 'security', 'Publipostages', 'SVG_AVATAR_F', 'SVG_AVATAR_M', '$location', 'MessageService',
+                   function ( $scope, $sce, security, Publipostages, SVG_AVATAR_F, SVG_AVATAR_M, $location, MessageService ) {
                        $scope.pageLimits = [ 5, 10, 20, 50 ];
                        $scope.limit = 20;
                        $scope.currentPage = 1;
