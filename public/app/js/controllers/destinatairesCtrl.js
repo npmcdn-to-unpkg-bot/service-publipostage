@@ -10,9 +10,6 @@ angular.module( 'publipostageClientApp' )
                        $scope.Redirect = Redirect;
                        $scope.security = security;
 
-                       // Libellé représentant le choix des destinataires
-                       $scope.destinataires_libelle = "";
-
                        //initialize destinations
                        $scope.destinations = new Array();
 
@@ -22,23 +19,23 @@ angular.module( 'publipostageClientApp' )
                        }
 
                        var getPersonnel = function ( uai ) {
-                           Personnels.query( {},
-                                             function ( personnels ) {
-                                                 $scope.personnels = personnels;
-                                                 var selectdestinationsIds = new Array();
-                                                 _( MessageService.getMessage().destinations ).each( function ( dest ) {
-                                                     selectdestinationsIds.push( dest.id );
-                                                 } );
-                                                 _( $scope.personnels ).each( function ( element ) {
-                                                     if ( _( selectdestinationsIds ).contains( element.id ) ) {
-                                                         element[ 'checked' ] = true;
-                                                         $scope.destinations.push( element );
-                                                     }
-                                                 } );
-                                             },
-                                             function ( error ) {
-                                                 console.log( error );
-                                             } );
+                           Personnels.query( {} )
+                               .$promise.then( function ( personnels ) {
+                                   $scope.personnels = personnels;
+                                   var selectdestinationsIds = new Array();
+                                   _( MessageService.getMessage().destinations ).each( function ( dest ) {
+                                       selectdestinationsIds.push( dest.id );
+                                   } );
+                                   _( $scope.personnels ).each( function ( element ) {
+                                       if ( _( selectdestinationsIds ).contains( element.id ) ) {
+                                           element.checked = true;
+                                           $scope.destinations.push( element );
+                                       }
+                                   } );
+                               },
+                                               function ( error ) {
+                                       console.log( error );
+                                   } );
                        };
                        // get the list of menus
                        $scope.menus = Menus;
@@ -48,17 +45,15 @@ angular.module( 'publipostageClientApp' )
 
                        $scope.selectAll = function () {
                            $scope.selectAllMode = false;
-                           if ( $scope.regroupements != undefined && $scope.regroupements[ 'regroupements' ] != undefined ) {
-                               $scope.regroupements[ 'regroupements' ].forEach( function ( element, index, array ) {
-                                   if ( !element[ 'checked' ] || _.isUndefined( element[ 'checked' ] ) ) {
-                                       element[ 'checked' ] = true;
-                                       $scope.destinations.push( element );
-                                   }
+                           if ( !_($scope.regroupements).isUndefined() && !_($scope.regroupements.regroupements).isUndefined() ) {
+                               $scope.regroupements.regroupements.forEach( function ( element, index, array ) {
+                                   element.checked = true;
+                                   $scope.destinations.push( element );
                                } );
                            }
-                           if ( $scope.personnels != undefined ) {
-                               _.each( $scope.personnels, function ( person ) {
-                                   person[ 'checked' ] = true;
+                           if ( !_($scope.personnels).isUndefined() ) {
+                               _($scope.personnels).each( function ( person ) {
+                                   person.checked = true;
                                    $scope.destinations.push( person );
                                } );
                            }
@@ -81,12 +76,6 @@ angular.module( 'publipostageClientApp' )
                            }
                        };
 
-                       $scope.addDestinations = function () {
-                           MessageService.setMatiere( $scope.matiere );
-                           MessageService.addDestinations( $scope.destinations );
-                           MessageService.addDestinatairesLabel( $scope.destinataires_libelle );
-                       };
-
                        // Retirer ou ajouter des regroupements.
                        $scope.addRemoveDestination = function ( object ) {
                            var index = $scope.destinations.indexOf( object );
@@ -96,10 +85,6 @@ angular.module( 'publipostageClientApp' )
                                $scope.destinations.push( object );
                            }
                            object.checked = !object.checked;
-                       };
-
-                       $scope.addProfils = function () {
-                           MessageService.addProfils( $scope.selectedProfils );
                        };
 
                        // page ecrire tous
@@ -139,11 +124,11 @@ angular.module( 'publipostageClientApp' )
                            var article_classes = "",
                                article_groupes = "";
                            var liste_classes = "",
-                               liste_groupes = "",
-                               liste_personnels = "",
-                               liste_profils = "";
+                           liste_groupes = "",
+                           liste_personnels = "",
+                           liste_profils = "";
                            var nbCls = 0,
-                               nbGrp = 0;
+                           nbGrp = 0;
                            var pluriel = "";
 
                            // Construire une belle phrase représentant la liste des destinataires.
@@ -210,6 +195,16 @@ angular.module( 'publipostageClientApp' )
                                .replace( '@liste_groupes@', liste_groupes )
                                .replace( /,(\s*)$/, '' )
                                .replace( / +(?= )/g, ' ' );
+                       };
+
+                       $scope.next = function () {
+                           MessageService.setMatiere( $scope.matiere );
+                           MessageService.addDestinations( $scope.destinations );
+                           MessageService.addDestinatairesLabel( $scope.destinataires_libelle );
+
+                           MessageService.addProfils( $scope.selectedProfils );
+
+                           Redirect.goTo( 'message', { type: $state.params.type } );
                        };
 
                        // get the list of user regroupements
