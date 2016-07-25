@@ -10,10 +10,6 @@ angular.module( 'publipostageClientApp' )
                      $scope.security = security;
                      $scope.squares = Squares;
 
-                     $scope.addMessageType = function ( type ) {
-                         MessageService.addMessageType( type );
-                     };
-
                      Publipostages.get( {} )
                          .$promise
                          .then( function ( publis ) {

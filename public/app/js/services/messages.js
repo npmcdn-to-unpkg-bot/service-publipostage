@@ -7,16 +7,15 @@ angular.module( 'publipostageClientApp' )
     .factory( 'FlashServiceStyled',
               [ '$rootScope',
                 function ( $rootScope ) {
-                    return {
-                        show: function ( message, classe ) {
-                            $rootScope.flashMessage = message;
-                            $rootScope.flashStyle = classe;
-                        },
-                        clear: function () {
-                            $rootScope.flashMessage = '';
-                            $rootScope.flashStyle = 'alert';
-                        }
-                    };
+                    return { show: function ( message, classe ) {
+                        $rootScope.flashMessage = message;
+                        $rootScope.flashStyle = classe;
+                    },
+                             clear: function () {
+                                 $rootScope.flashMessage = '';
+                                 $rootScope.flashStyle = 'alert';
+                             }
+                           };
                 }
               ] )
 /* MessageService is the service that represents the sent message */
@@ -24,25 +23,23 @@ angular.module( 'publipostageClientApp' )
               [ '$rootScope',
                 function ( $rootScope ) {
                     this.reset = function () {
-                        $rootScope.messageObject = {
-                            message: '',
-                            title: '',
-                            destinations: [],
-                            destinataires_libelle: '',
-                            messageType: '',
-                            diffusion_type: '',
-                            profils: [],
-                            matiere: ''
-                        };
+                        $rootScope.messageObject = { message: '',
+                                                     title: '',
+                                                     destinations: [],
+                                                     destinataires_libelle: '',
+                                                     messageType: '',
+                                                     diffusion_type: '',
+                                                     profils: [],
+                                                     matiere: '' };
                     };
 
                     this.init = function () {
-                        if ( sessionStorage != undefined && sessionStorage.messageObject != undefined ) {
+                        if ( !_(sessionStorage).isUndefined() && !_(sessionStorage.messageObject).isUndefined() ) {
                             try {
                                 $rootScope.messageObject = JSON.parse( sessionStorage.messageObject );
                             } catch ( e ) {}
                         }
-                        if ( $rootScope.messageObject == undefined ) {
+                        if ( _($rootScope.messageObject).isUndefined() ) {
                             this.reset();
                         }
                     };
@@ -50,34 +47,30 @@ angular.module( 'publipostageClientApp' )
                     this.init();
 
                     $rootScope.$watch( 'messageObject', function () {
-                        if ( sessionStorage != undefined ) {
+                        if ( !_(sessionStorage).isUndefined() ) {
                             sessionStorage.messageObject = JSON.stringify( $rootScope.messageObject );
                         }
                     }, true );
 
                     // Load Message
                     this.loadMessage = function ( publipostage ) {
-                        $rootScope.messageObject[ 'id' ] = publipostage.id;
-                        $rootScope.messageObject[ 'date' ] = publipostage.date;
-                        $rootScope.messageObject[ 'message' ] = publipostage.message;
-                        $rootScope.messageObject[ 'profils' ] = publipostage.profils;
-                        $rootScope.messageObject[ 'messageType' ] = publipostage.message_type;
-                        $rootScope.messageObject[ 'title' ] = publipostage.descriptif;
-                        $rootScope.messageObject[ 'matiere' ] = publipostage.matiere_enseignee_id;
-                        $rootScope.messageObject[ 'destinataires_libelle' ] = publipostage.destinataires_libelle;
-                        $rootScope.messageObject[ 'diffusion_type' ] = publipostage.diffusion_type;
+                        $rootScope.messageObject.id = publipostage.id;
+                        $rootScope.messageObject.date = publipostage.date;
+                        $rootScope.messageObject.message = publipostage.message;
+                        $rootScope.messageObject.profils = publipostage.profils;
+                        $rootScope.messageObject.messageType = publipostage.message_type;
+                        $rootScope.messageObject.title = publipostage.descriptif;
+                        $rootScope.messageObject.matiere = publipostage.matiere_enseignee_id;
+                        $rootScope.messageObject.destinataires_libelle = publipostage.destinataires_libelle;
+                        $rootScope.messageObject.diffusion_type = publipostage.diffusion_type;
 
-                        if ( publipostage.personnels != null ) {
-                            this.addDestinations( publipostage.personnels );
-                        } else {
-                            this.addDestinations( publipostage.destinataires );
-                        }
+                        this.addDestinations( _(publipostage.personnels).isNull() ? publipostage.destinataires : publipostage.personnels );
                     };
 
                     // add Message
                     this.addMessage = function ( message, title ) {
-                        $rootScope.messageObject[ 'message' ] = message;
-                        $rootScope.messageObject[ 'title' ] = title;
+                        $rootScope.messageObject.message = message;
+                        $rootScope.messageObject.title = title;
                     };
 
                     this.clearMessage = function () {
@@ -85,11 +78,11 @@ angular.module( 'publipostageClientApp' )
                     };
 
                     this.addDestinations = function ( arry ) {
-                        $rootScope.messageObject[ 'destinations' ] = arry;
+                        $rootScope.messageObject.destinations = arry;
                     };
 
                     this.addDestinatairesLabel = function ( str ) {
-                        $rootScope.messageObject[ 'destinataires_libelle' ] = str;
+                        $rootScope.messageObject.destinataires_libelle = str;
                     };
 
                     this.clearDestinations = function () {
@@ -97,7 +90,7 @@ angular.module( 'publipostageClientApp' )
                     };
 
                     this.addProfils = function ( arry ) {
-                        $rootScope.messageObject[ 'profils' ] = arry;
+                        $rootScope.messageObject.profils = arry;
                     };
 
                     this.clearProfils = function () {
@@ -105,7 +98,7 @@ angular.module( 'publipostageClientApp' )
                     };
 
                     this.setDiffusionType = function ( diffusion_type ) {
-                        $rootScope.messageObject[ 'diffusion_type' ] = diffusion_type;
+                        $rootScope.messageObject.diffusion_type = diffusion_type;
                     };
 
                     this.clearDiffusionType = function () {
@@ -113,11 +106,11 @@ angular.module( 'publipostageClientApp' )
                     };
 
                     this.addMessageType = function ( type ) {
-                        $rootScope.messageObject[ 'messageType' ] = type;
+                        $rootScope.messageObject.messageType = type;
                     };
 
                     this.setMatiere = function ( matiere ) {
-                        $rootScope.messageObject[ 'matiere' ] = matiere;
+                        $rootScope.messageObject.matiere = matiere;
                     };
 
                     // Getters
@@ -129,12 +122,11 @@ angular.module( 'publipostageClientApp' )
                         switch ( forPage ) {
                         case "mode_diffusion":
                         case "apercu":
-                            return !_( $rootScope.messageObject[ 'message' ] ).isEmpty();
+                            return !_( $rootScope.messageObject.message ).isEmpty();
                         case "message":
-                            return !_( $rootScope.messageObject[ 'destinations' ] ).isEmpty();
-                        case "destinataire":
-                            return !_( $rootScope.messageObject[ 'messageType' ] ).isEmpty();
+                            return !_( $rootScope.messageObject.destinations ).isEmpty();
+                        default:
+                            return true;
                         }
-                        return true;
                     };
                 } ] );
