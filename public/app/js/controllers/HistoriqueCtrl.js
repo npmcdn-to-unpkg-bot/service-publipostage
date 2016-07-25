@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module( 'publipostageClientApp' )
-    .controller( 'ListeCtrl',
+    .controller( 'HistoriqueCtrl',
                  [ '$rootScope', '$sce', 'security', 'Publipostages', 'SVG_AVATAR_F', 'SVG_AVATAR_M', '$location', 'MessageService',
                    function ( $scope, $sce, security, Publipostages, SVG_AVATAR_F, SVG_AVATAR_M, $location, MessageService ) {
                        $scope.pageLimits = [ 5, 10, 20, 50 ];
