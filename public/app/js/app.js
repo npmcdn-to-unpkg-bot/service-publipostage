@@ -129,8 +129,8 @@ angular.module( 'publipostageClientApp', [ 'angular-underscore',
                    $httpProvider.interceptors.push( 'HttpInterceptor' );
                }
              ] )
-    .run( [ '$rootScope', '$location', 'FlashServiceStyled', 'security', 'currentUser', '$state', 'MessageService', 'APPLICATION_PREFIX',
-            function ( $rootScope, $location, FlashServiceStyled, security, currentUser, $state, MessageService, APPLICATION_PREFIX ) {
+    .run( [ '$rootScope', 'FlashServiceStyled', 'security', '$state', 'MessageService', 'APPLICATION_PREFIX',
+            function ( $rootScope, FlashServiceStyled, security, $state, MessageService, APPLICATION_PREFIX ) {
                 $rootScope.showHeader = function ( argument ) {
                     try {
                         return window.self === window.top;
