@@ -36,11 +36,6 @@ angular.module( 'publipostageClientApp', [ 'angular-underscore',
                                  templateUrl: APPLICATION_PREFIX + '/views/liste.html',
                                  controller: 'ListeCtrl',
                                  authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ] } )
-                       .state( { name: 'historique',
-                                 url: '/historique/:id',
-                                 templateUrl: APPLICATION_PREFIX + '/views/historique.html',
-                                 controller: 'ListeCtrl',
-                                 authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ] } )
                        .state( { name: 'destinataire',
                                  url: '/destinataire/:type',
                                  templateUrl: APPLICATION_PREFIX + '/views/destinataire.html',
