@@ -15,10 +15,10 @@ angular.module( 'publipostageClientApp', [ 'angular-underscore',
                    var checkMessage = function ( forPage ) {
                        return function ( $q, $timeout, MessageService ) {
                            var deferred = $q.defer();
-                           if ( !MessageService.isValid( forPage ) ){
-                               deferred.reject( 'invalid message' );
-                           } else{
+                           if ( MessageService.isValid( forPage ) ) {
                                deferred.resolve( 'valid message' );
+                           } else{
+                               deferred.reject( 'invalid message' );
                            }
                            return deferred.promise;
                        };
