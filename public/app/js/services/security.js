@@ -1,68 +1,39 @@
 'use strict';
-/* service authentication */
+
 angular.module( 'publipostageClientApp' )
-    .factory( 'currentUser', function () {
-        return { user: null,
-                 info: {},
-                 etablissement: null };
-    } )
-    .factory( 'security', [ '$http', '$q', '$location', 'APPLICATION_PREFIX', function ( $http, $q, $location, APPLICATION_PREFIX ) {
-        // Redirect to the given url (defaults to '/')
-        function redirect( url ) {
-            url = url || '/';
-            $location.path( url );
-        }
+    .factory( 'security',
+              [ '$http', '$q', 'APPLICATION_PREFIX',
+                function ( $http, $q, APPLICATION_PREFIX ) {
+                    // The public API of the service
+                    var service = { currentUser: null,
 
-        // The public API of the service
-        var service = {
-            // Information about the current user
-            currentUser: null,
-            // Ask the backend to see if a user is already authenticated - this may be from a previous session.
-            requestCurrentUser: function () {
-                if ( service.isAuthenticated() ) {
-                    return $q.when( service.currentUser );
-                } else {
-                    return $http.get( APPLICATION_PREFIX + "/current-user" ).then( function ( response ) {
-                        service.currentUser = response.data;
-                        return service.currentUser;
-                    } );
-                }
-            },
-            // Is the current user authenticated?
-            isAuthenticated: function () {
-                return !!service.currentUser;
-            },
-            // Is the current user a super adminstrator?
-            isSuperAdmin: function () {
-                if ( service.isAuthenticated() ) {
-                    // return service.currentUser.roles_max_priority_etab_actif >= 3;
-                    return service.currentUser.is_super_admin;
-                } else {
-                    return false;
-                }
-            },
-            // Is the current user an adminstrator?
-            isAdmin: function () {
-                if ( service.isAuthenticated() ) {
-                    // return service.currentUser.roles_max_priority_etab_actif >= 3;
-                    return service.currentUser.is_admin;
-                } else {
-                    return false;
-                }
-            },
-            isAuthorized: function ( allowedRoles ) {
-                if ( allowedRoles == "all" ) {
-                    return true;
-                } else {
-                    var allowed = _.filter( allowedRoles, function ( allowedRole ) {
-                        return !!( _.find( service.currentUser.roles, function ( role ) {
-                            return _.contains( role, allowedRole );
-                        } ) );
-                    } );
-                    return !( _.isEmpty( allowed ) );
-                }
-            }
-        };
+                                    requestCurrentUser: function() {
+                                        if ( _(service.currentUser).isNull() ) {
+                                            return $http.get( APPLICATION_PREFIX + "/current-user" ).then( function ( response ) {
+                                                service.currentUser = response.data;
+                                                return service.currentUser;
+                                            } );
+                                        } else {
+                                            return $q.when( service.currentUser );
+                                        }
+                                    },
 
-        return service;
-    } ] );
+                                    isAuthenticated: function() {
+                                        return !!service.currentUser;
+                                    },
+
+                                    isSuperAdmin: function() {
+                                        return service.isAuthenticated() && service.currentUser.is_super_admin;
+                                    },
+
+                                    isAdmin: function() {
+                                        return service.isAuthenticated() && service.currentUser.is_admin;
+                                    },
+
+                                    isAuthorized: function( allowedRoles ) {
+                                        return service.isAuthenticated() && ( allowedRoles === "all" || _(allowedRoles).union( service.currentUser.roles ).length > 0 );
+                                    }
+                                  };
+
+                    return service;
+                } ] );

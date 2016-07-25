@@ -90,39 +90,26 @@ angular.module( 'publipostageClientApp', [ 'angular-underscore',
                    $provide.factory( 'HttpInterceptor',
                                      [ '$q', '$location',
                                        function ( $q, $location ) {
-                                           return {
-                                               // On request success
-                                               request: function ( config ) {
-                                                   // Return the config or wrap it in a promise if blank.
-                                                   return config || $q.when( config );
-                                               },
-                                               // On request failure
-                                               requestError: function ( rejection ) {
-                                                   // Return the promise rejection.
-                                                   return $q.reject( rejection );
-                                               },
-                                               // On response success
-                                               response: function ( response ) {
-                                                   // Return the response or promise.
-                                                   return response || $q.when( response );
-                                               },
-                                               // On response failture
-                                               responseError: function ( rejection ) {
-                                                   if ( rejection.status == 0 ) {
-                                                       $location.path( '/' );
-                                                   }
-                                                   if ( rejection.status == 403 || rejection.status == 401 ) {
-                                                       // not authorized go to public page
-                                                       $location.path( '/' );
-                                                   }
-                                                   if ( rejection.status == 400 || rejection.status == 404 || rejection.status == 500 ) {
-                                                       //server or response error
-                                                       $location.path( '/error/' + rejection.status );
-                                                   }
-                                                   // Return the promise rejection.
-                                                   return $q.reject( rejection );
-                                               }
-                                           };
+                                           return { request: function( config ) {
+                                               return config || $q.when( config );
+                                           },
+                                                    requestError: function( rejection ) {
+                                                        return $q.reject( rejection );
+                                                    },
+                                                    response: function( response ) {
+                                                        return response || $q.when( response );
+                                                    },
+                                                    responseError: function( rejection ) {
+                                                        if ( rejection.status == 0 || rejection.status == 403 || rejection.status == 401 ) {
+                                                            $location.path( '/' );
+                                                        }
+                                                        if ( rejection.status == 400 || rejection.status == 404 || rejection.status == 500 ) {
+                                                            $location.path( '/error/' + rejection.status );
+                                                        }
+
+                                                        return $q.reject( rejection );
+                                                    }
+                                                  };
                                        }
                                      ] );
                    // Add the interceptor to the $httpProvider.
@@ -139,23 +126,18 @@ angular.module( 'publipostageClientApp', [ 'angular-underscore',
                     }
                 };
 
-                $rootScope.$location = $location;
                 $rootScope.racine_images = APPLICATION_PREFIX + '/images/';
 
                 // check authorization before changing states .
                 $rootScope.$on( '$stateChangeStart', function ( event, toState, toParams, fromState, fromParams ) {
                     // before loading the new state => check rights
-                    security.requestCurrentUser().then( function ( user ) {
-                        currentUser = user;
-                        if ( security.isAuthenticated() ) {
-                            var authorized = security.isAuthorized( toState.authorizedRoles );
-                            if ( !authorized && toState.url != fromState.url && fromState.url != '^' ) {
-                                // you do not have rights ..
+                    security.requestCurrentUser()
+                        .then( function ( user ) {
+                            if ( security.isAuthenticated() && !security.isAuthorized( toState.authorizedRoles ) && toState.url != fromState.url && fromState.url != '^' ) {
                                 event.preventDefault();
                                 $state.transitionTo( 'home' );
                             }
-                        }
-                    } );
+                        } );
                 } );
 
                 //check resolve errors ..
