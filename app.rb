@@ -46,8 +46,8 @@ class SinatraApp < Sinatra::Base
 
   get "#{APP_PATH}/auth/:provider/callback" do
     init_session( request.env )
-    redirect params[:url] if params[:url] != "#{env['rack.url_scheme']}://#{env['HTTP_HOST']}#{APP_PATH}/"
-    redirect "#{APP_PATH}/"
+    redirect( params[:url] ) if params[:url] != "#{env['rack.url_scheme']}://#{env['HTTP_HOST']}#{APP_PATH}/"
+    redirect( "#{APP_PATH}/" )
   end
 
   get "#{APP_PATH}/auth/failure" do
@@ -60,8 +60,7 @@ class SinatraApp < Sinatra::Base
 
   get "#{APP_PATH}/protected" do
     throw(:halt, [401, "Not authorized\n"]) unless session[:authenticated]
-    erb "<pre>#{request.env['omniauth.auth'].to_json}</pre><hr>
-       <a href='<%= APP_PATH %>/logout'>Logout</a>"
+    erb "<pre>#{request.env['omniauth.auth'].to_json}</pre><hr><a href='<%= APP_PATH %>/logout'>Logout</a>"
   end
 
   get "#{APP_PATH}/login" do
