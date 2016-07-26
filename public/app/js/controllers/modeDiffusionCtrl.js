@@ -63,7 +63,7 @@ angular.module( 'publipostageClientApp' )
                                    data.with_email += 1;
                                }
                            } );
-                           $scope.addDiffusionData( data );
+                           addDiffusionData( data );
                        } else {
                            var regroupements = _.chain( $rootScope.messageObject[ 'destinations' ]).map( function ( el ) {
                                if ( _(el).has( 'classe_id' ) ) {
