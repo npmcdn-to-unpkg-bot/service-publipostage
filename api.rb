@@ -60,8 +60,8 @@ class ApplicationAPI < Grape::API
     optional :sort_dir, type: String, regexp: /^(asc|desc)$/i, desc: 'Direction de tri : ASC ou DESC'
   end
   get '/publipostages' do
-    r = Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_publipostage, '', {})
-    r['data'].select { |e| e['user_uid'] == @current_user[:info][:uid] }
+    params[:uid] = current_user[:info].uid
+    r = Laclasse::CrossApp::Sender.send_request_signed( :service_annuaire_publipostage, '', params )
     r['total'] = r['data'].size
     r
   end
