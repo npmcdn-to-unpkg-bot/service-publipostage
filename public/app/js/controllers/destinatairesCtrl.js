@@ -6,6 +6,7 @@ angular.module( 'publipostageClientApp' )
                    'colors', 'Menus', '$state', 'Personnels', 'Matieres',
                    function ( $scope, security, Regroupements, $rootScope, MessageService, Redirect,
                               colors, Menus, $state, Personnels, Matieres ) {
+                       $scope.scope = $scope;
                        $scope.menus = Menus;
 
                        $scope.destinations = function() {
@@ -66,7 +67,7 @@ angular.module( 'publipostageClientApp' )
                                if ( $state.params.type == 'ecrire_profs' ) {
                                    $scope.matieres = [ { id: -1,
                                                          libelle_long: 'Toutes' } ];
-                                   $scope.matiere = _(MessageService.getMessage().matiere).isUndefined() ? $scope.matieres[ 0 ].id : MessageService.getMessage().matiere;
+                                   $scope.matiere = _(MessageService.getMessage().matiere).isUndefined() || _(MessageService.getMessage().matiere).isEmpty() ? $scope.matieres[ 0 ].id : MessageService.getMessage().matiere;
                                    Matieres.query( {} )
                                        .$promise.then( function ( matieres ) {
                                            $scope.matieres = $scope.matieres.concat( matieres );
