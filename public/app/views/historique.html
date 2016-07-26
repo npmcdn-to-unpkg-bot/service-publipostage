@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-xs-10 col-s-m11 col-md-10 col-lg-10 col-xs-offset-1 col-s-offset-1 col-md-offset-1 col-lg-offset-1">
     <h2> Gestion de vos publipostages</h2>
-    <button class='btn btn-danger btn-sm' ng-if="check_all" ng-click="removeSelectedPubli()"> supprimer la selection<span class="glyphicon glyphicon-trash"></span></button>
+    <button class='btn btn-danger btn-sm' ng-disabled="!checked_many()" ng-click="removeSelectedPubli()"> supprimer la selection<span class="glyphicon glyphicon-trash"></span></button>
     <table class="table table-bordered table-hover">
         <thead>
             <th style="text-align:center;vertical-align:middle;">
@@ -16,10 +16,9 @@
             <th>Actions</th>
         </thead>
         <tbody>
-            <tr ng-repeat="publi in publis"
-                ng:if="publi.user_uid == currentUser.info.uid">
+            <tr ng-repeat="publi in publis.data">
                 <td style="text-align:center;vertical-align:middle;">
-                    <input type="checkbox" ng-model="checked[publi.id]" ng-change="selectPubli(publi.id)">
+                    <input type="checkbox" ng-model="publi.checked">
                 </td>
                 <td>{{publi.date | date:'dd/M/yyyy HH:mm:ss'}}</td>
                 <td>
@@ -28,11 +27,11 @@
     </span>
                 </td>
                 <td>{{publi.diffusion_type}}
-                    <button type="button" class="btn btn-xs btn-default"
-                            ng-click="goTo( '/fichier/' + publi.id )"
-                            ng:if="publi.diffusion_type == 'pdf'"
-                            title="Feuilleter le fichier pdf généré"><span class="glyphicon glyphicon-eye-open"></span>
-                    </button>
+                    <a type="button" class="btn btn-xs btn-default"
+                       data-ui-sref="fichier( { id: publi.id } )"
+                       ng:if="publi.diffusion_type == 'pdf'"
+                       title="Feuilleter le fichier pdf généré"><span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
                 </td>
                 <td>{{publi.descriptif}}</td>
                 <td>

@@ -2,59 +2,50 @@
 
 angular.module( 'publipostageClientApp' )
     .controller( 'HistoriqueCtrl',
-                 [ '$rootScope', '$sce', 'security', 'Publipostages', '$location', 'MessageService',
-                   function ( $scope, $sce, security, Publipostages, $location, MessageService ) {
+                 [ '$rootScope', '$sce', '$q', 'security', 'Publipostages', 'Redirect', 'MessageService',
+                   function ( $scope, $sce, $q, security, Publipostages, Redirect, MessageService ) {
                        $scope.pageLimits = [ 5, 10, 20, 50 ];
                        $scope.limit = 20;
                        $scope.currentPage = 1;
                        $scope.maxSize = 5;
-                       $scope.checked = {};
                        $scope.check_all = false;
 
-                       var getPublipostages = function ( page, limit ) {
-                           Publipostages.get( {
-                               limit: limit,
-                               page: page
-                           }, function ( publis ) {
-                               $scope.publis = publis.data;
+                       $scope.checked_many = function() {
+                           return _($scope).has( 'publis' ) && _($scope.publis.data).where({ checked: true }).length > 0;
+                       };
 
-                               $scope.totalItems = publis.total;
-                               $scope.currentPage = publis.page;
-                           } );
+                       var getPublipostages = function ( page, limit ) {
+                           Publipostages.get( { limit: limit,
+                                                page: page } )
+                               .$promise.then( function ( response ) {
+                                   $scope.publis = response;
+                                   _($scope.publis.data).each( function( publi ) {
+                                       publi.checked = false;
+                                   } );
+                               } );
                        };
 
                        $scope.toTrustedHtml = function ( html_code ) {
                            return $sce.trustAsHtml( html_code );
                        };
 
-                       $scope.goTo = function ( location ) {
-                           $location.path( location );
-                       };
-
                        $scope.relancerPubli = function ( id, location ) {
                            // Récupérer le publipostage sur la base de l'id.
-                           Publipostages.get( {
-                               id: id
-                           }, function ( success ) {
-                               MessageService.init();
-                               MessageService.loadMessage( success );
-                               // rediriger à la rédaction du message /#/message/ecrire_tous
-                               $location.path( '/' + location + '/' + MessageService.getMessage()[ 'messageType' ] );
-                           },
-                                              function ( error ) {
-                                                  console.log( error );
-                                              } );
+                           Publipostages.get( { id: id } )
+                               .$promise.then( function ( success ) {
+                                   MessageService.init();
+                                   MessageService.loadMessage( success );
+
+                                   Redirect.goTo( location, { type: MessageService.getMessage()[ 'messageType' ] } );
+                               } );
                        };
 
                        $scope.removePubli = function ( id ) {
                            if ( confirm( "Voulez-vous supprimer le publipostage ?" ) ) {
-                               Publipostages.remove( {
-                                   id: id
-                               }, function ( success ) {
-                                   getPublipostages( $scope.currentPage, $scope.limit );
-                               }, function ( error ) {
-                                   console.log( error );
-                               } );
+                               Publipostages.remove( { id: id } )
+                                   .$promise.then( function ( success ) {
+                                       getPublipostages( $scope.currentPage, $scope.limit );
+                                   } );
                            }
                        };
 
@@ -70,33 +61,29 @@ angular.module( 'publipostageClientApp' )
 
                        $scope.selectAll = function () {
                            $scope.check_all = !$scope.check_all;
-                           angular.forEach( $scope.publis, function ( publi ) {
-                               $scope.checked[ publi.id ] = !$scope.checked[ publi.id ];
+                           _($scope.publis.data).each( function( publi ) {
+                               publi.checked = !publi.checked;
                            } );
                        };
 
-                       $scope.selectPubli = function ( id ) {
-                           console.log( id );
-                       };
-
                        $scope.removeSelectedPubli = function () {
-                           if ( confirm( "Voulez-vous supprimer les publipostages sélectionnés?" ) ) {
-                               Publipostages.remove( {
-                                   id: angular.toJson( $scope.checked )
-                               },
-                                                     function ( success ) {
-                                                         $scope.check_all = false;
-                                                         getPublipostages( $scope.currentPage, $scope.limit );
-                                                     },
-                                                     function ( error ) {
-                                                         console.log( error );
-                                                     } );
+                           if ( confirm( "Voulez-vous supprimer le(s) publipostages sélectionné(s) ?" ) ) {
+                               var promesses = _.chain($scope.publis.data)
+                                   .where({ checked: true })
+                                   .map( function( publi ) {
+                                       return Publipostages.remove( { id: publi.id } ).$promise;
+                                   } )
+                                   .value();
+
+                               $q.all( promesses ).then( function( success ) {
+                                   getPublipostages( $scope.currentPage, $scope.limit );
+                               } );
                            }
                        };
 
                        getPublipostages( $scope.currentPage, $scope.limit );
 
-                       security.requestCurrentUser().then( function ( user ) {
+                       security.requestCurrentUser().then( function( user ) {
                            $scope.currentUser = user;
                        } );
                    }
