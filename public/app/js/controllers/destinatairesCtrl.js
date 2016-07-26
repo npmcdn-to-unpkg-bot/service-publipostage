@@ -6,136 +6,118 @@ angular.module( 'publipostageClientApp' )
                    'colors', 'Menus', '$state', 'Personnels', 'Matieres',
                    function ( $scope, security, Regroupements, $rootScope, MessageService, Redirect,
                               colors, Menus, $state, Personnels, Matieres ) {
-                       // making Redirect utils accesible in the scope
-                       $scope.Redirect = Redirect;
-                       $scope.security = security;
-
-                       //initialize destinations
-                       $scope.destinations = new Array();
-
-                       // if current state == destinataire
-                       if ( $state.current.name == "destinataire" ) {
-                           MessageService.addMessageType( $state.params[ 'type' ] );
-                       }
-
-                       var getPersonnel = function ( uai ) {
-                           Personnels.query( {} )
-                               .$promise.then( function ( personnels ) {
-                                   $scope.personnels = personnels;
-                                   var selectdestinationsIds = new Array();
-                                   _( MessageService.getMessage().destinations ).each( function ( dest ) {
-                                       selectdestinationsIds.push( dest.id );
-                                   } );
-                                   _( $scope.personnels ).each( function ( element ) {
-                                       if ( _( selectdestinationsIds ).contains( element.id ) ) {
-                                           element.checked = true;
-                                           $scope.destinations.push( element );
-                                       }
-                                   } );
-                               },
-                                               function ( error ) {
-                                       console.log( error );
-                                   } );
-                       };
-                       // get the list of menus
                        $scope.menus = Menus;
 
-                       /* select all functionality */
-                       $scope.selectAllMode = true;
-
-                       $scope.selectAll = function () {
-                           $scope.selectAllMode = false;
-                           if ( !_($scope.regroupements).isUndefined() && !_($scope.regroupements.regroupements).isUndefined() ) {
-                               $scope.regroupements.regroupements.forEach( function ( element, index, array ) {
-                                   element.checked = true;
-                                   $scope.destinations.push( element );
-                               } );
-                           }
-                           if ( !_($scope.personnels).isUndefined() ) {
-                               _($scope.personnels).each( function ( person ) {
-                                   person.checked = true;
-                                   $scope.destinations.push( person );
-                               } );
-                           }
+                       $scope.destinations = function() {
+                           return _($scope.data).where({ checked: true });
                        };
 
-                       $scope.deselectAll = function () {
-                           $scope.selectAllMode = true;
-                           $scope.destinations = [];
-                           if ( $scope.regroupements != undefined && $scope.regroupements[ 'regroupements' ] != undefined ) {
-                               $scope.regroupements[ 'regroupements' ].forEach( function ( element, index, array ) {
-                                   if ( element[ 'checked' ] || _.isUndefined( element[ 'checked' ] ) ) {
-                                       element[ 'checked' ] = false;
-                                   }
-                               } );
-                           }
-                           if ( $scope.personnels != undefined ) {
-                               _.each( $scope.personnels, function ( person ) {
-                                   person[ 'checked' ] = false;
-                               } );
-                           }
+                       /* select all functionality */
+                       $scope.are_all_selected = function () {
+                           return _.chain($scope.data).findWhere( { checked: false } ).isUndefined().value();
+                       };
+
+                       $scope.toggle_all_checked = function( value ) {
+                           _($scope.data).each( function ( item ) {
+                               item.checked = value;
+                           } );
+                       };
+
+                       $scope.noSelection = function () {
+                           if ( $state.params.type == 'ecrire_tous' )
+                               return _.chain($scope.data).findWhere( { checked: true } ).isUndefined().value() || $scope.selectedProfils.length == 0;
+                           else
+                               return _.chain($scope.data).findWhere( { checked: true } ).isUndefined().value();
                        };
 
                        // Retirer ou ajouter des regroupements.
                        $scope.addRemoveDestination = function ( object ) {
-                           var index = $scope.destinations.indexOf( object );
-                           if ( index > -1 ) {
-                               $scope.destinations.splice( index, 1 );
-                           } else {
-                               $scope.destinations.push( object );
-                           }
                            object.checked = !object.checked;
                        };
 
                        // page ecrire tous
-                       // list of available profils
                        $scope.profils = [ 'eleves', 'profs', 'parents' ];
-
-                       // les profils sélectionner
                        $scope.selectedProfils = [];
-                       $scope.log = function () {};
 
-                       // selectionner tous les profils
-                       $scope.checkAll = function () {
-                           $scope.selectedProfils = angular.copy( $scope.profils );
+                       $scope.next = function () {
+                           MessageService.setMatiere( $scope.matiere );
+                           MessageService.addDestinations( $scope.destinations() );
+                           MessageService.addDestinatairesLabel( $scope.destinataires_libelle );
+
+                           MessageService.addProfils( $scope.selectedProfils );
+
+                           Redirect.goTo( 'message', { type: $state.params.type } );
                        };
 
-                       // déselectionner les profils
-                       $scope.uncheckAll = function () {
-                           $scope.selectedProfils = [];
-                       };
+                       MessageService.addMessageType( $state.params.type );
+
+                       security.requestCurrentUser().then( function ( user ) {
+                           $scope.currentUser = user;
+
+                           if ( $state.params.type == 'ecrire_personnels' ) {
+                               Personnels.query( {} )
+                                   .$promise.then( function ( personnels ) {
+                                       $scope.data = _( personnels ).map( function ( element ) {
+                                           element.checked = false;
+                                           return element;
+                                       } );
+                                   } );
+                           } else {
+                               if ( $state.params.type == 'ecrire_profs' ) {
+                                   $scope.matieres = [ { id: -1,
+                                                         libelle_long: 'Toutes' } ];
+                                   $scope.matiere = _(MessageService.getMessage().matiere).isUndefined() ? $scope.matieres[ 0 ].id : MessageService.getMessage().matiere;
+                                   Matieres.query( {} )
+                                       .$promise.then( function ( matieres ) {
+                                           $scope.matieres = $scope.matieres.concat( matieres );
+                                       } );
+                               }
+
+                               Regroupements.get( { id: user.info.uid } )
+                                   .$promise.then( function ( response ) {
+                                       var colorIndex = 0;
+                                       $scope.data = _(response.regroupements).map( function ( element ) {
+                                           element.checked = false;
+                                           element.color = colors[ colorIndex++ % colors.length ];
+
+                                           return element;
+                                       } );
+                                   } );
+                           }
+                       } );
 
 
-                       $scope.noSelection = function () {
-                           if ( $state.params[ 'type' ] == 'ecrire_tous' )
-                               return $scope.destinations.length == 0 || $scope.selectedProfils.length == 0;
-                           else
-                               return $scope.destinations.length == 0;
-                       };
+
+
+
+
+
+
 
                        //
                        // Fonction de formatage de la liste des destinataires
                        // Pour la rendre lisible par un humain.
                        //
                        $scope.formatHumanReadableLabel = function () {
-                           var type_dest = Menus[ $state.params[ 'type' ] ][ 'recpitualif' ];
-                           var libelle_matiere = "";
                            var phrase = "@type_dest@ @liste_profils@ @liste_personnels@ @libelle_matiere@ @article_classes@ @liste_classes@ @article_groupes@ @liste_groupes@";
+
+                           var type_dest = Menus[ $state.params.type ].recapitulatif;
+                           var libelle_matiere = "";
                            var article_classes = "",
                                article_groupes = "";
                            var liste_classes = "",
-                           liste_groupes = "",
-                           liste_personnels = "",
-                           liste_profils = "";
+                               liste_groupes = "",
+                               liste_personnels = "",
+                               liste_profils = "";
                            var nbCls = 0,
-                           nbGrp = 0;
+                               nbGrp = 0;
                            var pluriel = "";
 
                            // Construire une belle phrase représentant la liste des destinataires.
                            // Profils (ecrire à tous)
                            if ( type_dest == "Profils" ) {
                                type_dest = ( $scope.selectedProfils.length == 0 ) ? "Tous les profils" : type_dest;
-                               _.each( $scope.selectedProfils, function ( p ) {
+                               _($scope.selectedProfils).each( function ( p ) {
                                    liste_profils += p + ", ";
                                } );
                            }
@@ -143,14 +125,14 @@ angular.module( 'publipostageClientApp' )
                            // Personnels
                            if ( type_dest == "Personnels" ) {
                                type_dest = "Ecrire à";
-                               _.each( $scope.destinations, function ( dest ) {
+                               _($scope.destinations()).each( function ( dest ) {
                                    liste_personnels += dest.destinataire_libelle + ", ";
                                } );
                            }
 
                            // Matière
                            if ( $scope.matiere != "" ) {
-                               _.each( $scope.matieres, function ( m ) {
+                               _($scope.matieres).each( function ( m ) {
                                    if ( m.id == $scope.matiere ) {
                                        libelle_matiere = "en " + m.libelle_long.toLowerCase();
                                        libelle_matiere = libelle_matiere.replace( 'en toutes', '' );
@@ -159,7 +141,7 @@ angular.module( 'publipostageClientApp' )
                            }
 
                            // Classes et Groupes
-                           _.each( $scope.destinations, function ( dest ) {
+                           _($scope.destinations()).each( function ( dest ) {
                                if ( dest.type == 'classe' ) {
                                    liste_classes += dest.classe_libelle + ", ";
                                    nbCls++;
@@ -196,72 +178,5 @@ angular.module( 'publipostageClientApp' )
                                .replace( /,(\s*)$/, '' )
                                .replace( / +(?= )/g, ' ' );
                        };
-
-                       $scope.next = function () {
-                           MessageService.setMatiere( $scope.matiere );
-                           MessageService.addDestinations( $scope.destinations );
-                           MessageService.addDestinatairesLabel( $scope.destinataires_libelle );
-
-                           MessageService.addProfils( $scope.selectedProfils );
-
-                           Redirect.goTo( 'message', { type: $state.params.type } );
-                       };
-
-                       // get the list of user regroupements
-                       security.requestCurrentUser().then( function ( user ) {
-                           $scope.currentUser = user;
-                           if ( $state.params[ 'type' ] == 'ecrire_personnels' ) {
-                               getPersonnel( $scope.currentUser.info[ 'ENTPersonStructRattachRNE' ] );
-                           } else {
-
-                               if ( $state.params[ 'type' ] == 'ecrire_profs' ) {
-                                   $scope.matieres = [ {
-                                       id: -1,
-                                       libelle_long: 'Toutes'
-                                   } ];
-                                   $scope.matiere = _.isUndefined( MessageService.getMessage().matiere ) ? $scope.matieres[ 0 ].id : MessageService.getMessage().matiere;
-                                   Matieres.query( {}, function ( matieres ) {
-                                       $scope.matieres = $scope.matieres.concat( matieres );
-                                   } );
-                               }
-
-                               Regroupements.get( {
-                                   id: user.info[ 'uid' ]
-                               }, function ( regroupements ) {
-                                   var selectdestinationsIds = new Array();
-                                   _.each( MessageService.getMessage().destinations, function ( dest ) {
-                                       selectdestinationsIds.push( dest.id );
-                                   } );
-
-                                   $scope.regroupements = regroupements;
-                                   // add colors to classes
-                                   var colorIndex = 0;
-                                   $scope.regroupements[ 'regroupements' ].forEach( function ( element, index, array ) {
-                                       element[ 'color' ] = colors[ colorIndex++ % colors.length ];
-                                       if ( _.contains( selectdestinationsIds, element.id ) ) {
-                                           element[ 'checked' ] = true;
-                                           $scope.destinations.push( element );
-                                       }
-                                   } );
-                                   // Add colors to empty squares
-                                   if ( $scope.regroupements[ 'regroupements' ].length < 15 ) {
-                                       $scope.empty_squares = new Array( 15 - $scope.regroupements[ 'regroupements' ].length );
-                                       for ( var i = 0; i < $scope.empty_squares.length; i++ ) {
-                                           $scope.empty_squares[ i ] = {
-                                               color: colors[ colorIndex++ % colors.length ]
-                                           };
-                                       }
-                                   } else {
-                                       $scope.empty_squares = [];
-                                   }
-                               } );
-                           }
-                       } );
-
-                       $scope.$watch( "selectedProfils",
-                                      function ( arr ) {
-                                          $scope.selectedProfils = angular.copy( arr );
-                                      },
-                                      true );
                    }
                  ] );
