@@ -17,26 +17,25 @@
     </div>
   </div>
 </div>
-<div class="col-md-8 col-lg-8" ng-class="menus[$state.params['type']].color">
-  <div class="row" ng-class="menus[$state.params['type']].color">
-    <div ng-class="menus[$state.params['type']].icon_div" class="famille-icon col-md-2 col-md-offset-5"></div>
-    <!-- col-md-2  col-md-2 to center content -->
-  </div>
-  <div class="row" ng-class="menus[$state.params['type']].color">
-    <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-      <div style="margin-left:10%; margin-right:10%;">
-        <p style="text-align: ustify; background-color:white; padding:5%;">
-          <strong>Titre de message : </strong>{{messageObject['title']}}
-          <br/>
-          <strong>Destinataires : </strong> {{ messageObject['destinataires_libelle'] }}
-        </p>
-        <div class="text-scroll" style="background-color:white; padding:5%;" ng-bind-html="toTrustedHtml(messageObject['message'])"></div>
-      </div>
-      <div style="text-align: center; margin:20px;">
-          <button class="btn btn-publi btn-sm" ng-class="menus[$state.params['type']].color" ng-click="goBackToMessage($state.params['type'])">reéditer</button>
-          <button class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" href="#/mode_diffusion/{{$state.params['type']}}">choisir le mode de diffusion</button>
-      </div>
+<div class="col-md-8 col-lg-8" ng-class="menus[$state.params.type].color">
+    <div class="row">
+        <div ng-class="menus[$state.params.type].icon_div" class="famille-icon col-md-2 col-md-offset-5"></div>
     </div>
-  </div>
+    <div class="row">
+        <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+            <div style="margin-left:10%; margin-right:10%;">
+                <p style="text-align: justify; background-color:white; padding:5%;">
+                    <strong>Titre de message : </strong>{{messageObject.title}}
+                    <br/>
+                    <strong>Destinataires : </strong> {{ messageObject.destinataires_libelle }}
+                </p>
+                <div class="text-scroll" style="background-color:white; padding:5%;" ng-bind-html="toTrustedHtml(messageObject.message)"></div>
+            </div>
+            <div style="text-align: center; margin:20px;">
+                <button class="btn btn-publi btn-sm" ng-click="goBackToMessage($state.params.type)">reéditer</button>
+                <button class='btn btn-publi btn-sm' ui-sref="mode_diffusion({ type: $state.params.type })">choisir le mode de diffusion</button>
+            </div>
+        </div>
+    </div>
 </div>
 </div>

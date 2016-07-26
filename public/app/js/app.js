@@ -72,7 +72,7 @@ angular.module( 'publipostageClientApp', [ 'angular-underscore',
                        .state( { name: 'fichier',
                                  url: '/fichier/:id',
                                  templateUrl: APPLICATION_PREFIX + '/views/pdfviewer.html',
-                                 controller: 'DocCtrl',
+                                 controller: 'PDFViewerCtrl',
                                  authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ] } );
 
                    $urlRouterProvider.otherwise( '/' );

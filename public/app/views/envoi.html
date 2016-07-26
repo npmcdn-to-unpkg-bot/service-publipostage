@@ -18,31 +18,31 @@
       </div>
     </div>
   </div>
-  <div class="col-md-8 col-lg-8" ng-class="menus[$state.params['type']].color">
-    <!-- icon -->
-    <div class="row" ng-class="menus[$state.params['type']].color">
-      <img ng-src="{{menus[$state.params['type']].icon}}" class="img-responsive center-block" />
-    </div>
-    <!-- text -->
-    <div class="row" ng-class="menus[$state.params['type']].color">
-      <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-        <div class="center-block">
-          <p class="square-text center-block">Le message est créé !</p>
-
-          <p class="square-text center-block" ng-if="showNews">Le message a été diffusé en ligne sur la page info famille.</p>
-
-          <p class="square-text center-block" ng-if="showEmail">{{nb_email}} messages ont été envoyés par mails.</p>
-
-          <p class="square-text center-block" ng-if="showPdf">{{nb_pdf}} messages sont à télécharger dans un fichier pdf </p>
-
-          <p class="square-text center-block">
-            <a ng-if="showPdf" href="api/publipostage/{{created_publi.id}}/pdf" target="_blank"><img src="images/pdf.svg" width="36" /></p>
-          <p></p>
-          <p style="text-align:center">
-              <button class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" href="#/">écrire un autre message</button>
-          </p>
-        </div>
+  <div class="col-md-8 col-lg-8" ng-class="menus[$state.params.type].color">
+      <!-- icon -->
+      <div class="row">
+          <img ng-src="{{menus[$state.params.type].icon}}" class="img-responsive center-block" />
       </div>
-    </div>
+      <!-- text -->
+      <div class="row">
+          <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
+              <div class="center-block">
+                  <p class="square-text center-block">Le message est créé !</p>
+
+                  <p class="square-text center-block" ng-if="showNews">Le message a été diffusé en ligne sur la page info famille.</p>
+
+                  <p class="square-text center-block" ng-if="showEmail">{{nb_email}} messages ont été envoyés par mails.</p>
+
+                  <p class="square-text center-block" ng-if="showPdf">{{nb_pdf}} messages sont à télécharger dans un fichier pdf </p>
+
+                  <p class="square-text center-block">
+                      <a ng-if="showPdf" href="api/publipostage/{{created_publi.id}}/pdf" target="_blank"><img src="images/pdf.svg" width="36" /></p>
+                          <p></p>
+                          <p style="text-align:center">
+                              <button class='btn btn-publi btn-sm' ui-sref="home">écrire un autre message</button>
+                          </p>
+              </div>
+          </div>
+      </div>
   </div>
 </div>

@@ -21,56 +21,48 @@
     </div>
     <div class="col-md-8 col-lg-8">
         <!-- icon -->
-        <div class="row" ng-class="menus[$state.params['type']].color">
-            <div ng-class="menus[$state.params['type']].icon_div" class="col-md-2 col-md-offset-5"></div>
+        <div class="row" ng-class="menus[$state.params.type].color">
+            <div ng-class="menus[$state.params.type].icon_div" class="col-md-2 col-md-offset-5"></div>
         </div>
         <!-- destinataire -->
-        <div class="row" ng-class="menus[$state.params['type']].color">
+        <div class="row" ng-class="menus[$state.params.type].color">
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
-                <div style="margin-left:10%; margin-right:10%;">
-                    <p style="text-align: justify; background-color:white; padding:5%;">
-                        <strong>Destinataires</strong>
-                        <br /> {{ messageObject['destinataires_libelle'] }}
-                    </p>
+                <div style="margin:1% 10%; text-align: justify; background-color:white; padding: 1em 5em;">
+                    <h3 style="">Titre de message</h3>
+                    {{messageObject['title']}}
+                </div>
 
-                    <p style="text-align: justify; background-color:white; padding:5%;">
-                        <strong>Titre de message</strong>
-                        <br /> {{messageObject['title']}}
-            </br>
-            <strong>Message</strong>
-            <br />
-            <div class="text-scroll" style="background-color:white; padding:5%;" ng-bind-html="messageObject['message']">
+                <div style="margin:1% 10%; text-align: justify; background-color:white; padding: 1em 5em;"">
+                    <h3>Message</h3>
+                    <div class="text-scroll" style="background-color:white; padding: 1em 5em;" ng-bind-html="messageObject['message']"> </div>
+                </div>
 
-            </div>
-                    </p>
-
-                    <div style="background-color:white; padding:5%;">
-                        <strong>Mode de diffusion</strong>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <input id="byMail" type="radio" ng-model="diffusion_type" value="email">
-                                <label for="byMail" class="css-label">{{diffusion_info.nb_email}} mails à envoyer et un fichier pdf à imprimer pour les {{diffusion_info.nb_pdf}} destinataires sans adresse de courrier électronique valide </label>
-                            </li>
-                            <li class="list-group-item">
-                                <input id="byPdf" type="radio" ng-model="diffusion_type" value="pdf">
-                                <label for="byPdf" class="css-label">un fichier pdf à imprimer pour les {{diffusion_info.nb_total}} destinataires</label>
-                            </li>
-                            <li class="list-group-item">
-                                <input id="byNews" type="radio" ng-model="diffusion_type" value="news">
-                                <label for="byNews" class="css-label">une actualité dans le portail pour les {{diffusion_info.nb_total}} destinataires</label>
-                            </li>
-                        </ul>
-                    </div>
-                    <div style="text-align: center; margin: 10px">
-                        <button class="btn btn-publi btn-sm"
-                                ng-class="menus[$state.params['type']].color"
-                                ng-click="sendMessage($state.params['type'])"
-                                ng-disabled="diffusion_type == undefined">
-                            <span ng-if="diffusion_type == 'pdf'">générer</span>
-                            <span ng-if="diffusion_type != 'pdf'">envoyer</span>
-                            {{diffusion_type}}
-                        </button>
-                    </div>
+                <div style="margin:1% 10%; text-align: justify; background-color:white; padding: 1em 5em;">
+                    <strong>Mode de diffusion</strong>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <input id="byMail" type="radio" ng-model="diffusion_type" value="email">
+                            <label for="byMail" class="css-label">{{diffusion_info.nb_email}} mails à envoyer et un fichier pdf à imprimer pour les {{diffusion_info.nb_pdf}} destinataires sans adresse de courrier électronique valide </label>
+                        </li>
+                        <li class="list-group-item">
+                            <input id="byPdf" type="radio" ng-model="diffusion_type" value="pdf">
+                            <label for="byPdf" class="css-label">un fichier pdf à imprimer pour les {{diffusion_info.nb_total}} destinataires</label>
+                        </li>
+                        <li class="list-group-item">
+                            <input id="byNews" type="radio" ng-model="diffusion_type" value="news">
+                            <label for="byNews" class="css-label">une actualité dans le portail pour les {{diffusion_info.nb_total}} destinataires</label>
+                        </li>
+                    </ul>
+                </div>
+                <div style="text-align: center; margin: 10px">
+                    <button class="btn btn-publi btn-sm"
+                            ng-class="menus[$state.params.type].color"
+                            ng-click="sendMessage($state.params.type)"
+                            ng-disabled="diffusion_type == undefined">
+                        <span ng-if="diffusion_type == 'pdf'">générer</span>
+                        <span ng-if="diffusion_type != 'pdf'">envoyer</span>
+                        {{diffusion_type}}
+                    </button>
                 </div>
             </div>
         </div>
