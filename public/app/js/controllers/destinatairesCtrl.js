@@ -42,7 +42,7 @@ angular.module( 'publipostageClientApp' )
                        $scope.next = function () {
                            MessageService.setMatiere( $scope.matiere );
                            MessageService.addDestinations( $scope.destinations() );
-                           MessageService.addDestinatairesLabel( $scope.destinataires_libelle );
+                           MessageService.addDestinatairesLabel( $scope.formatHumanReadableLabel() );
 
                            MessageService.addProfils( $scope.selectedProfils );
 
