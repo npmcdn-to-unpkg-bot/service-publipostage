@@ -550,7 +550,8 @@ thumb {
 
 .btn-publi {
     border-color: white;
-    color: white
+    color: white;
+    background-color: transparent;
 }
 
 .btn-publi:hover {

@@ -56,7 +56,7 @@ angular.module( 'publipostageClientApp' )
                        if ( $rootScope.messageObject.messageType == 'ecrire_personnels' ) {
                            var data = { with_email: 0,
                                         without_email: 0 };
-                           _($rootScope.messageObject[ 'destinations' ]).each( function ( el ) {
+                           _($rootScope.messageObject.destinations).each( function ( el ) {
                                if ( _.isEmpty( el.email_principal ) ) {
                                    data.without_email += 1;
                                } else {
@@ -65,53 +65,54 @@ angular.module( 'publipostageClientApp' )
                            } );
                            addDiffusionData( data );
                        } else {
-                           var regroupements = _.chain( $rootScope.messageObject[ 'destinations' ]).map( function ( el ) {
-                               if ( _(el).has( 'classe_id' ) ) {
-                                   return el.classe_id;
-                               } else if (  _(el).has( 'groupe_id' ) ) {
-                                   return el.groupe_id;
-                               } else {
-                                   return null;
-                               }
-                           } ).compact().value().join('_');
+                           var regroupements = _.chain( $rootScope.messageObject.destinations )
+                               .map( function( el ) {
+                                   if ( _(el).has( 'classe_id' ) ) {
+                                       return el.classe_id;
+                                   } else if (  _(el).has( 'groupe_id' ) ) {
+                                       return el.groupe_id;
+                                   } else {
+                                       return null;
+                                   }
+                               } ).compact().value().join('_');
 
                            if ( !_(regroupements).isEmpty() ) {
-                               if ( $rootScope.messageObject.messageType === 'ecrire_tous' ) {
-                                   var infer_population = function( profil ) {
-                                       switch( profil ) {
-                                       case 'eleves': return 'students';
-                                       case 'profs': return 'professors';
-                                       case 'parents': return 'family';
-                                       default: return null;
-                                       }
-                                   };
+                           if ( $rootScope.messageObject.messageType === 'ecrire_tous' ) {
+                               var infer_population = function( profil ) {
+                                   switch( profil ) {
+                                   case 'eleves': return 'students';
+                                   case 'profs': return 'professors';
+                                   case 'parents': return 'family';
+                                   default: return null;
+                                   }
+                               };
 
-                                   _($rootScope.messageObject.profils).each( function( profil ) {
-                                       DiffusionInfo.get( { population: infer_population( profil ),
-                                                            regroupements: regroupements })
-                                           .$promise
-                                           .then( function ( data ) {
-                                               addDiffusionData( data );
-                                           } );
-                                   } );
-                               } else {
-                                   var infer_population = function( diffusion_type ) {
-                                       switch( diffusion_type ) {
-                                       case 'ecrire_eleves': return 'students';
-                                       case 'ecrire_profs': return 'professors';
-                                       case 'info_famille': return 'family';
-                                       default: return null;
-                                       }
-                                   };
-
-                                   DiffusionInfo.get( { population: infer_population( $rootScope.messageObject.messageType ),
-                                                        regroupements: regroupements } )
+                               _($rootScope.messageObject.profils).each( function( profil ) {
+                                   DiffusionInfo.get( { population: infer_population( profil ),
+                                                        regroupements: regroupements })
                                        .$promise
                                        .then( function ( data ) {
                                            addDiffusionData( data );
                                        } );
-                               }
+                               } );
+                           } else {
+                               var infer_population = function( message_type ) {
+                                   switch( message_type ) {
+                                   case 'ecrire_eleves': return 'students';
+                                   case 'ecrire_profs': return 'professors';
+                                   case 'info_famille': return 'family';
+                                   default: return null;
+                                   }
+                               };
+
+                               DiffusionInfo.get( { population: infer_population( $rootScope.messageObject.messageType ),
+                                                    regroupements: regroupements } )
+                                   .$promise
+                                   .then( function ( data ) {
+                                       addDiffusionData( data );
+                                   } );
                            }
                        }
                    }
-                 ] );
+                 }
+               ] );

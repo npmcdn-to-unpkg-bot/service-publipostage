@@ -45,8 +45,8 @@
                     </div>
                 </form>
                 <div style="text-align: center">
-                    <button class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" ng-click="goToDestinataire($state.params['type'])">changer de destinataires</button>
-                    <button class='btn btn-publi btn-sm' ng-class="menus[$state.params['type']].color" ng-click="goToPreview($state.params['type'])" ng-disabled="htmlMessage == '' || title == ''">prévisualiser</button>
+                    <button class="btn btn-publi btn-sm" ng-click="goToDestinataire($state.params.type)">changer de destinataires</button>
+                    <button class="btn btn-publi btn-sm" ng-click="goToPreview($state.params.type)" ng-disabled="htmlMessage == '' || title == ''">prévisualiser</button>
                 </div>
             </div>
         </div>

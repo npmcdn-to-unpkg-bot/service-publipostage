@@ -7,8 +7,8 @@ angular.module( 'publipostageClientApp' )
                      $scope.templateItems = templateItems;
 
                      // load message from the root ..
-                     $scope.title = MessageService.getMessage()[ 'title' ];
-                     $scope.htmlMessage = MessageService.getMessage()[ 'message' ];
+                     $scope.title = MessageService.getMessage().title;
+                     $scope.htmlMessage = MessageService.getMessage().message;
 
                      // get the list of menus
                      $scope.menus = Menus;
