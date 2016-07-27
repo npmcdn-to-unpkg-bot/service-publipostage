@@ -78,7 +78,7 @@ angular.module( 'publipostageClientApp' )
                     };
 
                     this.addDestinations = function ( arry ) {
-                        $rootScope.messageObject.destinations = arry;
+                        $rootScope.messageObject.destinations = _(arry).isString() ? JSON.parse( arry ) : arry;
                     };
 
                     this.addDestinatairesLabel = function ( str ) {
