@@ -190,7 +190,7 @@ angular.module( 'publipostageClientApp' )
                                message: 'Lien blog de l\'établissement' },
                              { value: '[blogRegroupement]',
                                message: 'Lien blog du groupe ou de la classe' },
-                             { value: '<a href=\'https://v3.laclasse.com\'>Laclasse.com</a>',
+                             { value: '<a href=\'https://www.laclasse.com\'>Laclasse.com</a>',
                                message: 'Lien Laclasse.com' } ];
                 }
               ] );
