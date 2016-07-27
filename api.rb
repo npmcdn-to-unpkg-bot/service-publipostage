@@ -120,11 +120,9 @@ class ApplicationAPI < Grape::API
   get '/publipostage/:id/pdf' do
     publipostage = Laclasse::CrossApp::Sender.send_request_signed(:service_annuaire_publipostage, params[:id], {})
 
-    # rubocop:disable Metrics/LineLength
     error!('Vous n\'êtes pas le créateur de ce publipostage', 401) unless publipostage['user_uid'] == current_user[:info]['uid'] ||
                                                                           Laclasse::CrossApp::Sender.send_request_signed( :service_annuaire_user,
                                                                                                                           current_user[:info]['uid'], {})['roles_max_priority_etab_actif'] >= 3
-    # rubocop:enable Metrics/LineLength
 
     content_type 'application/pdf'
     env['api.format'] = :binary

@@ -20,7 +20,7 @@ require_relative './lib/publipostage'
 require_relative './api'
 
 use Rack::Rewrite do
-  rewrite %r{^#{APP_PATH}(/(vendor|fonts|images|js|css|views)/.*(map|css|js|ttf|woff|html|png|jpg|jpeg|gif|svg)[?v=0-9a-zA-Z\-.]*$)}, '/app$1' # rubocop:disable Metrics/LineLength
+  rewrite %r{^#{APP_PATH}(/(vendor|fonts|images|js|css|views)/.*(map|css|js|ttf|woff|html|png|jpg|jpeg|gif|svg)[?v=0-9a-zA-Z\-.]*$)}, '/app$1'
 end
 
 Laclasse::Helpers::Rack.configure_rake self if defined? REDIS

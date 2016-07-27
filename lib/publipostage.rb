@@ -3,7 +3,7 @@
 # Librairies pour l'application
 module Publipostage
   # Module pour le traitement du publiposte
-  # rubocop:disable Metrics/AbcSize, Metrics/LineLength
+  # rubocop:disable Metrics/AbcSize
   module Utils
     module_function
 
@@ -56,5 +56,5 @@ module Publipostage
       ('professors' == params[:population] && !params[:matiere].nil? && params[:matiere] != '-1' ) ? "/#{params[:matiere]}" : ''
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/LineLength
+  # rubocop:enable Metrics/AbcSize
 end
