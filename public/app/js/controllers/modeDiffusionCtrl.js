@@ -78,42 +78,42 @@ angular.module( 'publipostageClientApp' )
                                } ).compact().value().join('_');
 
                            if ( !_(regroupements).isEmpty() ) {
-                           if ( $rootScope.messageObject.messageType === 'ecrire_tous' ) {
-                               var infer_population = function( profil ) {
-                                   switch( profil ) {
-                                   case 'eleves': return 'students';
-                                   case 'profs': return 'professors';
-                                   case 'parents': return 'family';
-                                   default: return null;
-                                   }
-                               };
+                               if ( $rootScope.messageObject.messageType === 'ecrire_tous' ) {
+                                   var infer_population = function( profil ) {
+                                       switch( profil ) {
+                                       case 'eleves': return 'students';
+                                       case 'profs': return 'professors';
+                                       case 'parents': return 'family';
+                                       default: return null;
+                                       }
+                                   };
 
-                               _($rootScope.messageObject.profils).each( function( profil ) {
-                                   DiffusionInfo.get( { population: infer_population( profil ),
-                                                        regroupements: regroupements })
+                                   _($rootScope.messageObject.profils).each( function( profil ) {
+                                       DiffusionInfo.get( { population: infer_population( profil ),
+                                                            regroupements: regroupements })
+                                           .$promise
+                                           .then( function ( data ) {
+                                               addDiffusionData( data );
+                                           } );
+                                   } );
+                               } else {
+                                   var infer_population = function( message_type ) {
+                                       switch( message_type ) {
+                                       case 'ecrire_eleves': return 'students';
+                                       case 'ecrire_profs': return 'professors';
+                                       case 'info_famille': return 'family';
+                                       default: return null;
+                                       }
+                                   };
+
+                                   DiffusionInfo.get( { population: infer_population( $rootScope.messageObject.messageType ),
+                                                        regroupements: regroupements } )
                                        .$promise
                                        .then( function ( data ) {
                                            addDiffusionData( data );
                                        } );
-                               } );
-                           } else {
-                               var infer_population = function( message_type ) {
-                                   switch( message_type ) {
-                                   case 'ecrire_eleves': return 'students';
-                                   case 'ecrire_profs': return 'professors';
-                                   case 'info_famille': return 'family';
-                                   default: return null;
-                                   }
-                               };
-
-                               DiffusionInfo.get( { population: infer_population( $rootScope.messageObject.messageType ),
-                                                    regroupements: regroupements } )
-                                   .$promise
-                                   .then( function ( data ) {
-                                       addDiffusionData( data );
-                                   } );
+                               }
                            }
                        }
                    }
-                 }
-               ] );
+                 ] );

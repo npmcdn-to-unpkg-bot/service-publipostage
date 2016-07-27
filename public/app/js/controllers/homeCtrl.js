@@ -3,18 +3,13 @@
 angular.module( 'publipostageClientApp' )
   .controller( 'HomeCtrl',
                [ '$scope', '$rootScope', '$stateParams',
-                 'security', 'Publipostages', 'MessageService', 'Redirect', 'Squares',
+                 'security', 'MessageService', 'Redirect', 'Squares',
                  function ( $scope, $rootScope, $stateParams,
-                            security, Publipostages, MessageService, Redirect, Squares ) {
+                            security, MessageService, Redirect, Squares ) {
                      $scope.Redirect = Redirect;
                      $scope.security = security;
                      $scope.squares = Squares;
 
-                     Publipostages.get( {} )
-                         .$promise
-                         .then( function ( publis ) {
-                             $scope.publis = publis.data;
-                         } );
 
                      security.requestCurrentUser()
                          .then( function ( user ) {
