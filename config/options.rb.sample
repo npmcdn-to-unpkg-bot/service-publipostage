@@ -9,6 +9,8 @@ APP_PATH = '/publi'
 APP_VERSION = %x(git describe --tag).chomp
 SESSION_KEY = 'MyKeyForTheSession'
 
+FORBIDDEN_PROFILES = %w(TUT ELV)
+
 # CAS Configuration.
 module CASAUTH
   CONFIG = {

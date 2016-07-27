@@ -25,14 +25,6 @@ class SinatraApp < Sinatra::Base
   helpers Laclasse::Helpers::AppInfos
   helpers Laclasse::Helpers::User
 
-  get "#{APP_PATH}/?" do
-    if logged?
-      erb :app
-    else
-      login! "#{APP_PATH}/"
-    end
-  end
-
   get "#{APP_PATH}/status" do
     content_type :json
 
@@ -42,6 +34,16 @@ class SinatraApp < Sinatra::Base
     app_status[:reason] = 'L\'application fonctionne.'
 
     app_status.to_json
+  end
+
+  before do
+    pass if %r{#{APP_PATH}/(auth|login|status)/} =~ request.path
+    login!( request.path_info ) unless logged?
+    throw(:halt, [401, "Votre profil ne vous donne pas le droit d'accès à cette application.\n"]) if FORBIDDEN_PROFILES.include?( user[:user_detailed]['profil_actif']['profil_id'] )
+  end
+
+  get "#{APP_PATH}/?" do
+    erb :app
   end
 
   get "#{APP_PATH}/auth/:provider/callback" do
@@ -72,14 +74,11 @@ class SinatraApp < Sinatra::Base
   end
 
   get "#{APP_PATH}/current-user" do
-    # TODO : This function should be in Laclasse-common
-    if logged?
-      { login: user[:user],
-        info: user[:info],
-        roles: user[:user_detailed]['roles'].map { |role| role['role_id'] }.uniq,
-        is_admin: user_is_admin?,
-        is_super_admin: user_is_super_admin? }.to_json
-    end
+    { login: user[:user],
+      info: user[:info],
+      roles: user[:user_detailed]['roles'].map { |role| role['role_id'] }.uniq,
+      is_admin: user_is_admin?,
+      is_super_admin: user_is_super_admin? }.to_json
   end
 end
 
