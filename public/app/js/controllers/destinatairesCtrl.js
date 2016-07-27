@@ -73,7 +73,8 @@ angular.module( 'publipostageClientApp' )
                                Personnels.query( {} )
                                    .$promise.then( function ( personnels ) {
                                        $scope.data = _( personnels ).map( function ( element ) {
-                                           element.checked = false;
+                                           element.checked = !_.chain(MessageService.getMessage().destinations).findWhere({ id: element.id }).isUndefined().value();
+
                                            return element;
                                        } );
                                    } );
@@ -92,7 +93,7 @@ angular.module( 'publipostageClientApp' )
                                    .$promise.then( function ( response ) {
                                        var colorIndex = 0;
                                        $scope.data = _(response.regroupements).map( function ( element ) {
-                                           element.checked = false;
+                                           element.checked = !_.chain(MessageService.getMessage().destinations).findWhere({ regroupement_id: element.id }).isUndefined().value();
                                            element.color = colors[ colorIndex++ % colors.length ];
 
                                            return element;

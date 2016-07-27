@@ -5,6 +5,7 @@ angular.module( 'publipostageClientApp' )
                  [ '$scope', '$rootScope', '$state', 'Menus', 'MessageService', 'Publipostages', 'DiffusionInfo',
                    function ( $scope, $rootScope, $state, Menus, MessageService, Publipostages, DiffusionInfo ) {
                        $scope.menus = Menus;
+                       $scope.diffusion_type = MessageService.getMessage().diffusion_type;
 
                        $scope.sendMessage = function( location ) {
                            MessageService.setDiffusionType( $scope.diffusion_type );
