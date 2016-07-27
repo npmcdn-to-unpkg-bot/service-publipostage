@@ -7,7 +7,8 @@ angular.module( 'publipostageClientApp' )
               [ '$resource', 'BASE_SERVICE_URL',
                 function ( $resource, BASE_SERVICE_URL ) {
                     return $resource( BASE_SERVICE_URL + '/publipostages/:id',
-                                      { id: '@id' } );
+                                      { id: '@id' },
+                                      { update: { method: 'PUT' } } );
                 } ] )
     .factory( 'Regroupements',
               [ '$resource', 'BASE_SERVICE_URL',
