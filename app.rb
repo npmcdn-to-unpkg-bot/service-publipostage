@@ -39,7 +39,7 @@ class SinatraApp < Sinatra::Base
   before do
     pass if %r{#{APP_PATH}/(auth|login|status)/} =~ request.path
     login!( request.path_info ) unless logged?
-    throw(:halt, [401, "Votre profil ne vous donne pas le droit d'accès à cette application.\n"]) if FORBIDDEN_PROFILES.include?( user[:user_detailed]['profil_actif']['profil_id'] )
+    throw( :halt, [ 401, erb( :message_401 ) ] ) if FORBIDDEN_PROFILES.include?( user[:user_detailed]['profil_actif']['profil_id'] )
   end
 
   get "#{APP_PATH}/?" do
