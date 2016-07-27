@@ -5,42 +5,51 @@
                 <p style="padding:5px 0px 10px 0px"><a class="navbar-brand" ui-sref="home"><i class="fa fa-home fa-2x"></i></a></p>
                 <br/>
                 <h2 class="transparent visible-md visible-lg">étape 1 : type de message</h2>
-                <p class="menu-text transparent">{{menus[$state.params["type"]]['right_menu_text']}} {{}}</p>
+                <p class="menu-text transparent">{{menus[$state.params.type].right_menu_text}}</p>
                 <h2>étape 2 : les destinataires</h2>
-                <p class="menu-text"> Sélectionner les classes et les groupes destinataires des messages
-                    <br>
-                    <label>Filtre :
-                        <input type="text" ng-model="searchText">
-                    </label>
-                </p>
-
-                <button class="btn btn-xl"
-                        ng-click="toggle_all_checked( !are_all_selected() )">
-                    <span ng-if="!are_all_selected()">Tout sélectionner</span>
-                    <span ng-if="are_all_selected()">Tout dé-sélectionner</span>
-                </button>
-
-                <form role="form" class="form-inline">
-                    <div ng-if="$state.params.type=='ecrire_profs'">
-                        <label>Choisir une matiere : </label>
-                        <select class="form-control" ng-model="scope.matiere" ng-options="matiere.id as matiere.libelle_long for matiere in matieres"></select>
-                    </div>
-                    <br/>
-                    <div ng-if="$state.params.type=='ecrire_tous'">
-                        <label>
-                            <p class="menu-text">Choisir des profils : </p>
-                        </label>
-                        <p ng-repeat="profil in profils">
-                            <input class="css-checkbox" id="{{profil}}" type="checkbox" checklist-model="selectedProfils" checklist-value="profil" />
-                            <label for="{{profil}}" class="css-label">{{profil}} </label>
-                        </p>
-                    </div>
-                </form>
+                <p class="menu-text"> Sélectionner les classes et les groupes destinataires des messages</p>
 
                 <p class="menu-text-hidden">
                     <small><strong>{{formatHumanReadableLabel()}}</strong></small>
-                    </strong>
+                    <span class="glyphicon glyphicon-erase" style="cursor: pointer"
+                          data-ng-click="toggle_all_checked( false, true )"
+                          data-ng-if="!noSelection()"></span>
                 </p>
+
+                <fieldset>
+                    <legend>Filtrage
+                        <button class="btn btn-xl pull-right"
+                                ng-click="toggle_all_checked( !are_all_selected(), false )">
+                            <span ng-if="!are_all_selected()">S</span><span ng-if="are_all_selected()">Dé-s</span>électionner tous les éléments affichés
+                        </button>
+                    </legend>
+                    <label>Nom :
+                        <input type="text" ng-model="searchText">
+                    </label> <span class="glyphicon glyphicon-erase" style="cursor: pointer" data-ng-click="searchText = ''"></span>
+                    <br>
+                    <span data-ng-repeat="type in regroupements_types"
+                          data-ng-if="$state.params.type != 'ecrire_personnels'">
+                        <input class="css-checkbox" id="{{type}}" type="checkbox" checklist-model="selected_regroupements_types" checklist-value="type" />
+                        <label for="{{type}}" class="css-label">{{type}}</label>
+                    </span>
+
+                    <form role="form" class="form-inline">
+                        <div ng-if="$state.params.type=='ecrire_profs'">
+                            <label>Choisir une matiere : </label>
+                            <select class="form-control" ng-model="scope.matiere" ng-options="matiere.id as matiere.libelle_long for matiere in matieres"></select>
+                        </div>
+                        <br/>
+                        <div ng-if="$state.params.type=='ecrire_tous'">
+                            <label>
+                                <p class="menu-text">Choisir des profils : </p>
+                            </label>
+                            <p ng-repeat="profil in profils">
+                                <input class="css-checkbox" id="{{profil}}" type="checkbox" checklist-model="selectedProfils" checklist-value="profil" />
+                                <label for="{{profil}}" class="css-label">{{profil}} </label>
+                            </p>
+                        </div>
+                    </form>
+                </fieldset>
 
                 <br/>
                 <br/>
@@ -56,7 +65,7 @@
             <!--show classes only when message type is not ecrire personnels or ecrire tous -->
             <div ng-if="$state.params.type != 'ecrire_personnels'">
                 <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 {{regroupement.color}}"
-                     ng-repeat="regroupement in data | orderBy:['type','libelle'] | filter:{ libelle: searchText }"
+                     ng-repeat="regroupement in data | orderBy:['type','libelle'] | filter:{ libelle: searchText } | filter:filter_regroupements()"
                      ng-class="{'clear': !regroupement.checked}">
                     <a ng-click="addRemoveDestination( regroupement );">
                         <div class="square-icon">

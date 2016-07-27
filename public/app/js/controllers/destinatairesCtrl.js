@@ -2,12 +2,21 @@
 
 angular.module( 'publipostageClientApp' )
     .controller( 'destinatairesCtrl',
-                 [ '$scope', 'security', 'Regroupements', '$rootScope', 'MessageService', 'Redirect',
+                 [ '$scope', '$filter', 'security', 'Regroupements', '$rootScope', 'MessageService', 'Redirect',
                    'colors', 'Menus', '$state', 'Personnels', 'Matieres',
-                   function ( $scope, security, Regroupements, $rootScope, MessageService, Redirect,
+                   function ( $scope, $filter, security, Regroupements, $rootScope, MessageService, Redirect,
                               colors, Menus, $state, Personnels, Matieres ) {
                        $scope.scope = $scope;
                        $scope.menus = Menus;
+                       $scope.searchText = '';
+                       $scope.regroupements_types = [ 'classe', 'groupe' ];
+                       $scope.selected_regroupements_types = angular.copy( $scope.regroupements_types );
+
+                       $scope.filter_regroupements = function() {
+                           return function( regroupement ) {
+                               return _($scope.selected_regroupements_types).contains(regroupement.type);
+                           };
+                       };
 
                        $scope.destinations = function() {
                            return _($scope.data).where({ checked: true });
@@ -18,10 +27,15 @@ angular.module( 'publipostageClientApp' )
                            return _.chain($scope.data).findWhere( { checked: false } ).isUndefined().value();
                        };
 
-                       $scope.toggle_all_checked = function( value ) {
-                           _($scope.data).each( function ( item ) {
-                               item.checked = value;
-                           } );
+                       $scope.toggle_all_checked = function( value, force_all ) {
+                           var data = force_all ? $scope.data : $filter('filter')( $scope.data, { libelle: $scope.searchText } );
+                           _.chain( data )
+                               .select( function( item ) {
+                                   return !force_all && ( $state.params.type == 'ecrire_personnels' ) || $scope.filter_regroupements()( item );
+                               } )
+                               .each( function ( item ) {
+                                   item.checked = value;
+                               } );
                        };
 
                        $scope.noSelection = function () {
