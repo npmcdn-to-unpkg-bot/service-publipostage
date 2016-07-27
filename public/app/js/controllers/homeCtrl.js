@@ -10,6 +10,7 @@ angular.module( 'publipostageClientApp' )
                      $scope.security = security;
                      $scope.squares = Squares;
 
+                     MessageService.reset();
 
                      security.requestCurrentUser()
                          .then( function ( user ) {
