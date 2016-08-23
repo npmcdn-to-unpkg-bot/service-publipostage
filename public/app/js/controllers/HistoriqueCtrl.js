@@ -8,7 +8,7 @@ angular.module( 'publipostageClientApp' )
                        $scope.limit = 20;
                        $scope.currentPage = 1;
                        $scope.maxSize = 5;
-                       $scope.check_all = false;
+                       $scope.all_checked = false;
 
                        $scope.checked_many = function() {
                            return _($scope).has( 'publis' ) && _($scope.publis.data).where({ checked: true }).length > 0;
@@ -22,6 +22,7 @@ angular.module( 'publipostageClientApp' )
                                    _($scope.publis.data).each( function( publi ) {
                                        publi.checked = false;
                                    } );
+                                   $scope.all_checked = false;
                                } );
                        };
 
@@ -30,13 +31,12 @@ angular.module( 'publipostageClientApp' )
                        };
 
                        $scope.relancerPubli = function ( id, location ) {
-                           // Récupérer le publipostage sur la base de l'id.
                            Publipostages.get( { id: id } )
                                .$promise.then( function ( success ) {
                                    MessageService.init();
                                    MessageService.loadMessage( success );
 
-                                   Redirect.goTo( location, { type: MessageService.getMessage()[ 'messageType' ] } );
+                                   Redirect.goTo( location, { type: MessageService.getMessage().messageType } );
                                } );
                        };
 
@@ -49,24 +49,24 @@ angular.module( 'publipostageClientApp' )
                            }
                        };
 
-                       $scope.pageChanged = function ( newValue ) {
-                           getPublipostages( newValue, $scope.limit );
-                       };
+                       // $scope.pageChanged = function ( newValue ) {
+                       //     getPublipostages( newValue, $scope.limit );
+                       // };
 
-                       $scope.limitChanged = function ( newValue ) {
-                           $scope.limit = newValue;
-                           $scope.currentPage = 1;
-                           getPublipostages( $scope.currentPage, newValue );
-                       };
+                       // $scope.limitChanged = function ( newValue ) {
+                       //     $scope.limit = newValue;
+                       //     $scope.currentPage = 1;
+                       //     getPublipostages( $scope.currentPage, newValue );
+                       // };
 
-                       $scope.selectAll = function () {
-                           $scope.check_all = !$scope.check_all;
+                       $scope.toggle_select_all = function () {
+                           $scope.all_checked = !$scope.all_checked;
                            _($scope.publis.data).each( function( publi ) {
-                               publi.checked = !publi.checked;
+                               publi.checked = $scope.all_checked;
                            } );
                        };
 
-                       $scope.removeSelectedPubli = function () {
+                       $scope.delete_selection = function () {
                            if ( confirm( "Voulez-vous supprimer le(s) publipostages sélectionné(s) ?" ) ) {
                                var promesses = _.chain($scope.publis.data)
                                    .where({ checked: true })
