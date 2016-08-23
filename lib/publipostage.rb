@@ -41,7 +41,7 @@ module Publipostage
 
       { etablissements: user_infos['etablissements'].uniq { |etab| { id: etab['id'], nom: etab['nom'] } }
                                                     .map { |etab| { id: etab['id'], nom: etab['nom'] } },
-        regroupements: regroupements}
+        regroupements: regroupements }
     end
 
     # fonction qui récupère les infos nécéssaire de la requête
@@ -53,7 +53,7 @@ module Publipostage
     end
 
     def self.get_matiere_string( params )
-      ('professors' == params[:population] && !params[:matiere].nil? && params[:matiere] != '-1' ) ? "/#{params[:matiere]}" : ''
+      'professors' == params[:population] && params.key?( :matiere ) && params[:matiere] != '-1' ? "/#{params[:matiere]}" : ''
     end
   end
   # rubocop:enable Metrics/AbcSize
