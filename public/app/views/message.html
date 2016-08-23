@@ -15,38 +15,40 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8 col-lg-8" style="padding:1em 5em" ng-class="menus[$state.params.type].color">
+    <div class="col-md-8 col-lg-8" style="padding:1em 5em" ng:class="menus[$state.params.type].color">
         <div class="row">
             <div class="col-xs-8">
                 <form role="form">
                     <div class="form-group">
                         <label for="title">Titre du message:</label>
-                        <input type="text" class="form-control" ng-model="title" id="titre" placeholder="Saissisez un titre">
+                        <input type="text" class="form-control" ng:model="title" id="titre" placeholder="Saissisez un titre">
                     </div>
                 </form>
                 <div class="form-group">
                     <fieldset>
                         <legend>Insérer des données</legend>
                         <div class="btn-group">
-                            <button class="btn btn-default btn-sm" ng-repeat="item in templateItems | templateItemsTypeFilter" ng-click="addToMessage(item.value)">{{item.message}}</button>
+                            <button class="btn btn-default btn-sm"
+                                    ng:repeat="item in templateItems | templateItemsTypeFilter"
+                                    ng:click="addToMessage( item.value );">{{item.message}}</button>
                         </div>
                     </fieldset>
                 </div>
             </div>
             <div class="col-xs-4">
-                <div ng-class="menus[$state.params.type].icon_div"></div>
+                <div ng:class="menus[$state.params.type].icon_div"></div>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
                 <form role="form">
                     <div class="form-group">
-                        <div class="bg-default" text-angular ng-model="htmlMessage"></div>
+                        <div id="editor" class="bg-default" text-angular ng:model="htmlMessage"></div>
                     </div>
                 </form>
                 <div style="text-align: center">
-                    <button class="btn btn-publi btn-sm" ng-click="goToDestinataire($state.params.type)">changer de destinataires</button>
-                    <button class="btn btn-publi btn-sm" ng-click="goToPreview($state.params.type)" ng-disabled="htmlMessage == '' || title == ''">prévisualiser</button>
+                    <button class="btn btn-publi btn-sm" ng:click="goToDestinataire($state.params.type)">changer de destinataires</button>
+                    <button class="btn btn-publi btn-sm" ng:click="goToPreview($state.params.type)" ng:disabled="htmlMessage == '' || title == ''">prévisualiser</button>
                 </div>
             </div>
         </div>
