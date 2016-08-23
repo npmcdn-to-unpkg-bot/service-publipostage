@@ -4,9 +4,9 @@
             <div class="col-xs-12 col-s-m12 col-md-12 col-lg-12">
                 <p style="padding:5px 0px 10px 0px"><a class="navbar-brand" ui-sref="home"><i class="fa fa-home fa-2x"></i></a></p>
                 <br/>
-                <h2 class="transparent visible-md visible-lg">étape 1 : type de message</h2>
+                <h2 class="transparent visible-md visible-lg">Étape 1 : type de message</h2>
                 <p class="menu-text transparent">{{menus[$state.params.type].right_menu_text}}</p>
-                <h2>étape 2 : les destinataires</h2>
+                <h2>Étape 2 : les destinataires</h2>
                 <p class="menu-text"> Sélectionner les classes et les groupes destinataires des messages</p>
 
                 <p class="menu-text-hidden">
@@ -45,7 +45,7 @@
                             </label>
                             <p ng-repeat="profil in profils">
                                 <input class="css-checkbox" id="{{profil}}" type="checkbox" checklist-model="selectedProfils" checklist-value="profil" />
-                                <label for="{{profil}}" class="css-label">{{profil}} </label>
+                                <label for="{{profil}}" class="css-label">{{profils_labels[ profil ]}} </label>
                             </p>
                         </div>
                     </form>

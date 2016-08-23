@@ -52,6 +52,9 @@ angular.module( 'publipostageClientApp' )
 
                        // page ecrire tous
                        $scope.profils = [ 'eleves', 'profs', 'parents' ];
+                       $scope.profils_labels = { eleves: 'élèves',
+                                                 profs: 'enseignants',
+                                                 parents: 'parents' };
                        $scope.selectedProfils = [];
 
                        $scope.next = function () {
@@ -133,8 +136,8 @@ angular.module( 'publipostageClientApp' )
                            // Profils (ecrire à tous)
                            if ( type_dest == "Profils" ) {
                                type_dest = ( $scope.selectedProfils.length == 0 ) ? "Tous les profils" : type_dest;
-                               _($scope.selectedProfils).each( function ( p ) {
-                                   liste_profils += p + ", ";
+                               _($scope.selectedProfils).each( function ( profil ) {
+                                   liste_profils += $scope.profils_labels[ profil ] + ", ";
                                } );
                            }
 
