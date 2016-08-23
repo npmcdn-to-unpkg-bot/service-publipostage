@@ -5,7 +5,6 @@ angular.module( 'publipostageClientApp', [ 'angular-underscore',
                                            'chieffancypants.loadingBar',
                                            'ngResource',
                                            'ngSanitize',
-                                           'pdf',
                                            'textAngular',
                                            'ui.bootstrap',
                                            'ui.router',
@@ -68,12 +67,7 @@ angular.module( 'publipostageClientApp', [ 'angular-underscore',
                        .state( { name: 'error',
                                  url: '/error/:message',
                                  templateUrl: APPLICATION_PREFIX + '/views/error.html',
-                                 authorizedRoles: 'all' } )
-                       .state( { name: 'fichier',
-                                 url: '/fichier/:id',
-                                 templateUrl: APPLICATION_PREFIX + '/views/pdfviewer.html',
-                                 controller: 'PDFViewerCtrl',
-                                 authorizedRoles: [ 'TECH', 'ADM_ETB', 'PROF_ETB' ] } );
+                                 authorizedRoles: 'all' } );
 
                    $urlRouterProvider.otherwise( '/' );
 
